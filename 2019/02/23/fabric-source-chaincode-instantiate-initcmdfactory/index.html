@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="推荐参考两个博客：    fabric源码解析——序 : 国内同道的源码分析系列，模块化   Hyperledger Fabric源码深度解析 : 对MSP，BCCSP的介绍到位  To know the internals of certain permissioned blockchain platform : IBM员工，参与HF项目的概念总结文章系列  选择peer chaincode i">
+<meta name="keywords" content="Hyperledger Fabric,源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程">
+<meta property="og:url" content="https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="推荐参考两个博客：    fabric源码解析——序 : 国内同道的源码分析系列，模块化   Hyperledger Fabric源码深度解析 : 对MSP，BCCSP的介绍到位  To know the internals of certain permissioned blockchain platform : IBM员工，参与HF项目的概念总结文章系列  选择peer chaincode i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-18T05:02:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程">
+<meta name="twitter:description" content="推荐参考两个博客：    fabric源码解析——序 : 国内同道的源码分析系列，模块化   Hyperledger Fabric源码深度解析 : 对MSP，BCCSP的介绍到位  To know the internals of certain permissioned blockchain platform : IBM员工，参与HF项目的概念总结文章系列  选择peer chaincode i">
+
+
+
+
+
+
+  <link rel="canonical" href="https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程 | Simplexity</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simplexity</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 15:35:09" itemprop="dateCreated datePublished" datetime="2019-02-23T15:35:09+08:00">2019-02-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-18 13:02:08" itemprop="dateModified" datetime="2019-05-18T13:02:08+08:00">2019-05-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>推荐参考两个博客：  </p>
+<ul>
+<li><a href="https://blog.csdn.net/idsuf698987/article/details/74907281" target="_blank" rel="noopener">fabric源码解析——序</a> : 国内同道的源码分析系列，模块化  </li>
+<li><a href="https://www.chaindesk.cn/witbook/30/467" target="_blank" rel="noopener">Hyperledger Fabric源码深度解析</a> : 对MSP，BCCSP的介绍到位 </li>
+<li><a href="https://blockchain-fabric.blogspot.com/" target="_blank" rel="noopener">To know the internals of certain permissioned blockchain platform</a> : IBM员工，参与HF项目的概念总结文章系列</li>
+</ul>
+<p><em>选择peer chaincode instantiate作为开篇，是因为笔者学习官网过程中没有完全理解install与instantiate的区别，所以选择深入源码学习来加深理解</em></p>
+<p>官网<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>例子中，命令为  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br></pre></td></tr></table></figure>
+<p>此前，需要先设置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot;</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></table></figure>
+<p>客户端调用<code>peer chaincode instatiate</code>命令部署chaincode，代码在‘peer/chaincode/instantiate.go’这个文件下，命令关联的方法是<code>chaincodeDeploy</code>(使用了流行的第三方命令行cobra库，具体可自行学习)。</p>
+<a id="more"></a>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">chaincodeDeploy</span><span class="params">(cmd *cobra.Command, args []<span class="keyword">string</span>, cf *ChaincodeCmdFactory)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> cf == <span class="literal">nil</span> &#123;</span><br><span class="line">        cf, err = InitCmdFactory(cmd.Name(), <span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> cf.BroadcastClient.Close()</span><br><span class="line"></span><br><span class="line">    env, err := instantiate(cmd, cf)</span><br><span class="line"></span><br><span class="line">    err = cf.BroadcastClient.Send(env)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法主要分为3个步骤（源码只列出关键步骤，省略判断逻辑及错误处理等，下同）。  </p>
+<ol>
+<li>入参<code>cf *ChaincodeCmdFactory</code>为nil，未初始化。（可回溯到peer启动<code>peer/main.go#main</code>时看到<code>mainCmd.AddCommand(chaincode.Cmd(nil))</code>）。初始化chaincode命令工厂，包含客户端及辅助类。这个方法在所有的chaincode命令前都先执行，入参有所不同。<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ChaincodeCmdFactory holds the clients used by ChaincodeCmd</span></span><br><span class="line"><span class="keyword">type</span> ChaincodeCmdFactory <span class="keyword">struct</span> &#123;</span><br><span class="line">    EndorserClients []pb.EndorserClient     <span class="comment">// 与endorser交互的客户端</span></span><br><span class="line">    DeliverClients  []api.PeerDeliverClient     <span class="comment">// </span></span><br><span class="line">    Certificate     tls.Certificate     <span class="comment">//</span></span><br><span class="line">    Signer          msp.SigningIdentity        </span><br><span class="line">    BroadcastClient common.BroadcastClient      <span class="comment">// 与orderer交互的客户端</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面关注下初始化的过程<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// peer/chaincode/common.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitCmdFactory</span><span class="params">(cmdName <span class="keyword">string</span>, isEndorserRequired, isOrdererRequired <span class="keyword">bool</span>)</span> <span class="params">(*ChaincodeCmdFactory, error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> isEndorserRequired &#123;</span><br><span class="line">        <span class="keyword">if</span> err = validatePeerConnectionParameters(cmdName); err != <span class="literal">nil</span> &#123;&#125; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i, address := <span class="keyword">range</span> peerAddresses &#123;</span><br><span class="line">            endorserClient, err := common.GetEndorserClientFnc(address, tlsRootCertFile)</span><br><span class="line">            endorserClients = <span class="built_in">append</span>(endorserClients, endorserClient)</span><br><span class="line">            </span><br><span class="line">            deliverClient, err := common.GetPeerDeliverClientFnc(address, tlsRootCertFile)</span><br><span class="line">            deliverClients = <span class="built_in">append</span>(deliverClients, deliverClient)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    certificate, err := common.GetCertificateFnc()</span><br><span class="line"></span><br><span class="line">    signer, err := common.GetDefaultSignerFnc()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> broadcastClient common.BroadcastClient</span><br><span class="line">    <span class="keyword">if</span> isOrdererRequired &#123;</span><br><span class="line">        endorserClient := endorserClients[<span class="number">0</span>]</span><br><span class="line">        orderingEndpoints, err := common.GetOrdererEndpointOfChainFnc(channelID, signer, endorserClient)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// override viper env</span></span><br><span class="line">        viper.Set(<span class="string">"orderer.address"</span>, orderingEndpoints[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        broadcastClient, err = common.GetBroadcastClientFnc()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &amp;ChaincodeCmdFactory&#123;</span><br><span class="line">        EndorserClients: endorserClients,</span><br><span class="line">        DeliverClients:  deliverClients,</span><br><span class="line">        Signer:          signer,</span><br><span class="line">        BroadcastClient: broadcastClient,</span><br><span class="line">        Certificate:     certificate,</span><br><span class="line">    &#125;, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>入参为<code>cmdName(命令名) string(命令名), isEndorserRequired（是否需要初始化endorser client）, isOrdererRequired（是否需要初始化orderer broadcast client） bool</code>。这个是根据命令传参，例如instantiate部署chaincode既需要endorser背书，也需要orderer排序打包并且扩散全网，而install安装则只需要背书。</li>
+<li>instantiate需要背书，<code>isEndorserRequired=true</code>。<code>validatePeerConnectionParameters</code>校验命令参数。例如，校验peerAddresses个数及相应的tlsRootCertFiles匹配。注意，这里有<code>// currently only support multiple peer addresses for invoke</code>注释，对非invoke方法只能传入一个peerAddress，如install，instantiate。这也说明，这些操作只能作用于单个节点，而且下面也可以看到只需要单个节点的背书。</li>
+<li><p><code>GetEndorserClientFnc</code>和<code>GetPeerDeliverClientFnc</code>方法非常类似。都是构造以下这个client(主要是grpc client, hyperledger fabric使用grpc作为rpc方案)，数据结构完全一致，只是后续的用途有所不同。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetEndorserClient returns a new endorser client. If the both the address and</span></span><br><span class="line"><span class="comment">// tlsRootCertFile are not provided, the target values for the client are taken</span></span><br><span class="line"><span class="comment">// from the configuration settings for "peer.address" and</span></span><br><span class="line"><span class="comment">// "peer.tls.rootcert.file"</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetEndorserClient</span><span class="params">(address, tlsRootCertFile <span class="keyword">string</span>)</span> <span class="params">(pb.EndorserClient, error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> address != <span class="string">""</span> &#123;</span><br><span class="line">        <span class="comment">// 从命令行传入peer address, --peerAddresses, --tlsRootCertFiles</span></span><br><span class="line">        peerClient, err = NewPeerClientForAddress(address, tlsRootCertFile)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 从环境变量读取peer address</span></span><br><span class="line">        peerClient, err = NewPeerClientFromEnv()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> peerClient.Endorser()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;PeerClient&#123;</span><br><span class="line">    commonClient: commonClient&#123;</span><br><span class="line">        GRPCClient: gClient,    <span class="comment">// grpc client. 工程使用grpc作为节点间的远程调用方案</span></span><br><span class="line">        address:    address,    <span class="comment">// “peer.address”</span></span><br><span class="line">        sn:         override   <span class="comment">// "peer.tls.serverhostoverride"</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，命令里并没有提供<code>peerAddress</code>和<code>tlsRootCertFile</code>这两个参数，因此从环境变量里读取。在源码中，使用了流行的第三方库viper来进行配置加载和管理。也就是我们要先设置的变量<code>CORE_PEER_ADDRESS</code>和<code>CORE_PEER_TLS_ROOTCERT_FILE</code>。</p>
+</li>
+<li><p>生成客户端X509证书<code>GetCertificateFnc</code>。客户端通信时是否需要校验X509证书是由环境变量<code>peer.tls.enabled</code>和<code>peer.tls.clientAuthRequired</code>这两个参数决定的。在该tutorial例子中并没有设置。如果需要校验，则另外需要提供两个参数<code>peer.tls.clientKey.file</code>和<code>peer.tls.clientCert.file</code>，分别对应节点的public/private key文件。需要说明的是，在前面构造的endorseClient和peerDeliverClient过程中，也已经读取这两个参数和文件，生成X509 key pair，可以进行tls通信。这里的方法也是构建peerClient，获取该key pair。（TODO：以后专题分析加密）</p>
+</li>
+<li><p><code>GetDefaultSignerFnc</code>调用本地MSP<code>mspmgmt.GetLocalMSP().GetDefaultSigningIdentity()</code>获取signer，后续用于发送的proposal进行签名，构造signedProposal。（TODO：以后专题分析msp成员管理服务）</p>
+</li>
+<li><p><code>isOrdererRequired</code>这个参数初始化时候传入，根据后续操作是否需要与orderer交互乃至全网同步而是否选择初始化。chaincode instantiate需要全网同步，因此需要初始化。命令行<code>-o</code>参数指定orderer地址，如果没有指定，则通过<code>GetOrdererEndpointOfChainFnc</code>获取orderer地址。这个是通过调用cscc（configuration system chaincode，配置系统链码）的GetConfigBlock方法（参数为channelId）实现的。流程与一般的chaincode调用相似。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetOrdererEndpointOfChain</span><span class="params">(chainID <span class="keyword">string</span>, signer msp.SigningIdentity, endorserClient pb.EndorserClient)</span> <span class="params">([]<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">	<span class="comment">// query cscc for chain config block</span></span><br><span class="line">	invocation := &amp;pb.ChaincodeInvocationSpec&#123;</span><br><span class="line">		ChaincodeSpec: &amp;pb.ChaincodeSpec&#123;</span><br><span class="line">			Type:        pb.ChaincodeSpec_Type(pb.ChaincodeSpec_Type_value[<span class="string">"GOLANG"</span>]),</span><br><span class="line">			ChaincodeId: &amp;pb.ChaincodeID&#123;Name: <span class="string">"cscc"</span>&#125;,</span><br><span class="line">			Input:       &amp;pb.ChaincodeInput&#123;Args: [][]<span class="keyword">byte</span>&#123;[]<span class="keyword">byte</span>(cscc.GetConfigBlock), []<span class="keyword">byte</span>(chainID)&#125;&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	creator, err := signer.Serialize()</span><br><span class="line">	prop, _, err := putils.CreateProposalFromCIS(pcommon.HeaderType_CONFIG, <span class="string">""</span>, invocation, creator)</span><br><span class="line">	signedProp, err := putils.GetSignedProposal(prop, signer)</span><br><span class="line"></span><br><span class="line">	proposalResp, err := endorserClient.ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// parse config block</span></span><br><span class="line">	block, err := putils.GetBlockFromBlockBytes(proposalResp.Response.Payload)</span><br><span class="line">	envelopeConfig, err := putils.ExtractEnvelope(block, <span class="number">0</span>)</span><br><span class="line">	bundle, err := channelconfig.NewBundleFromEnvelope(envelopeConfig)</span><br><span class="line">	<span class="keyword">return</span> bundle.ChannelConfig().OrdererAddresses(), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>构造<code>ChaincodeInvocationSpec</code>cis描述该chaincode请求，包含请求的语言（GOLAND），chaincodeId（“cscc”），具体请求Input（cscc.GetConfigBlock）等。这个请求体格式通用于所有的系统及普通chaincode。然后，构造proplsal，并通过上面MSP获取的signer进行签名，在被调用方需要依次判断该节点是否有权限调用chaincode。  </li>
+<li>接着，通过上面构建等endorserClient进行grpc调用<code>grpc.Invoke(ctx, &quot;/protos.Endorser/ProcessProposal&quot;, in, out, c.cc, opts...)</code>，简单介绍下参数(ctx context.Context，in *SignedProposal, opts …grpc.CallOption, out ProposalResponse, c.cc endorser.grpc.ClientConn)。此处grpc调用的方法是<code>/protos.Endorser/ProcessProposal</code>，endorser端校验，调用cscc，得到结果ProposalResponse返回。这个后面详述。  </li>
+<li>最后，从rpc调用的结果bytes依次反序列化成block，获取并反序列化block中第一个envelope，把envelope的payload反序列化成configtx，并且获取相应的信息channelConfig，最后从channelConfig中获取到OrdererAddresses。（这里的结构处理是根据cscc的GetConfigBlock调用结果）选择第一个orderer的地址重写为系统变量<code>orderer.address</code>。(TODO：这里是否会把所有的请求都集中到第一个orderer有待研究cscc的方法)  </li>
+</ul>
+<ol>
+<li><code>GetBroadcastClientFnc</code>与上面的<code>GetEndorserClient</code>主要流程非常相似，主要区别有两点。第一，<code>GetEndorserClient</code>构建的client，使用的是peer的设置，而<code>GetBroadcastClientFnc</code>获取的是orderer的设置，从环境变量里获取构造参数，<code>configFromEnv(&quot;orderer&quot;)</code>，这里<code>orderer.address</code>这个参数正是上面的方法从chaincode config block里获取并设置为环境变量的。第二，调用了<code>orderClient.Broadcast()</code>，这里<code>grpc.NewClientStream(ctx, &amp;_AtomicBroadcast_serviceDesc.Streams[0], c.cc, &quot;/orderer.AtomicBroadcast/Broadcast&quot;, opts...)</code>直接指明了grpc的远程调用方法为<code>&quot;/orderer.AtomicBroadcast/Broadcast&quot;</code>.</li>
+</ol>
+<p>至此，完成了chaincode调用的初始化构造过程。后续的chaincode调用就可以直接使用此过程中构建的client及signer等执行不同的操作。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
+          
+            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/fabric-tutorial-learning/" rel="next" title="Hyperledger Fabric（V1.4.0）官网Tutorial学习">
+                <i class="fa fa-chevron-left"></i> Hyperledger Fabric（V1.4.0）官网Tutorial学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/fabric-source-chaincode-instantiate-peer/" rel="prev" title="Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程">
+                Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
+            
+              <p class="site-author-name" itemprop="name">Travis Wong</p>
+              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
+<!-- END LOCAL -->
+
+<style>
+#gitment-container a {
+  border-bottom: none;
+}
+
+</style>
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: '1550907309000',
+      owner: 'simplexity-ckcclc',
+      repo: 'gitment-comments',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: 'ab2011234194ade1678b2b4d771b0aa55e768632',
+      
+        client_id: 'd91524ebfcf0e898c853'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

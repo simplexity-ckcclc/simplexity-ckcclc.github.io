@@ -1,0 +1,46 @@
+@startuml
+
+== install - 初始化 ==
+
+Peer -> Peer : InitCmdFactory
+note left : 1. 参考instantiate\n2. chaincode source code进行gzip压缩，tar打包
+
+== install - 背书 ==
+
+Peer -> Endorser : invoke lscc.install（代码tar包）
+
+Endorser -> Endorser : 
+note right : 检查校验，将代码包存放本地路径（${peer.fileSystemPath}/chaincodes）
+
+Endorser -> Peer : proposalResponse
+
+== instantiate - 初始化 ==
+
+Peer -> Peer : InitCmdFactory
+note left : 1. 初始化endorserClient，ordererClient \n2. 获取LocalMSP.SigningIdentity（signer）
+Peer -> Endorser : grpc.Invoke(cscc.GetConfigBlock, channelID)
+Endorser -> Peer : channelConfig，获取OrdererAddresses构造ordererClient
+
+== instantiate - 背书 ==
+
+Peer -> Endorser : invoke lscc.deploy
+note left : instantiate的chaincode信息构造proposal，签名
+
+Endorser -> Endorser : 
+note right : 1. preProcess（校验数据结构，签名，acl等）\n2. simulate（调用lscc，使用install的chaincode构造docker镜像和容器。\n    容器里调用chaincode的main方法shim.Start启动，并且与peer建立grpc stream.\n    调用lscc.Invoke通过putState初始化acc的值，然后调用acc.Init)\n3. endorse(lscc.Invoke的response和read-write set构建proposalResponse，签名)
+
+Endorser -> Peer : signedProposalResponse
+
+Peer -> Peer : 收集&处理response
+note left : 1. 比较所有的response返回的结果是一致的 \n2. 构造transaction（原始的proposal的payload，header，\n    repsponse的payload，各个resp相应的endorsement）
+
+== instantiate - 排序 ==
+
+Peer -> Orderer : ordererClient send common.Envelop
+
+Orderer -> Orderer : process & order
+note right : 1. 三种方式，solo，kafka，raft\n2. 生成区块提交本地账本，通过deliver服务同步到节点
+
+Orderer -> Peer : response
+
+@enduml

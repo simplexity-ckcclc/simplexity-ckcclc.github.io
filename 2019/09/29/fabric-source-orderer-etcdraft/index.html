@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Raft可以说是Fabric 1.X系列的首个真正意义的共识算法。Fabric的实现主要涉及到三个类，chain.go &amp;lt;-&amp;gt; etcdraft/node.go &amp;lt;-&amp;gt; raft/node.go, 其中raft/node.go是etcd的开源包，chain.go是实现共识算法的主要类，etcdraft/node.go则是相当于适配模式下的适配器，用于连接两者，对实现屏蔽Ra">
+<meta name="keywords" content="Hyperledger Fabric,源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fabric 1.4源码分析 - orderer的raft实现">
+<meta property="og:url" content="https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="Raft可以说是Fabric 1.X系列的首个真正意义的共识算法。Fabric的实现主要涉及到三个类，chain.go &amp;lt;-&amp;gt; etcdraft/node.go &amp;lt;-&amp;gt; raft/node.go, 其中raft/node.go是etcd的开源包，chain.go是实现共识算法的主要类，etcdraft/node.go则是相当于适配模式下的适配器，用于连接两者，对实现屏蔽Ra">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-09T12:51:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fabric 1.4源码分析 - orderer的raft实现">
+<meta name="twitter:description" content="Raft可以说是Fabric 1.X系列的首个真正意义的共识算法。Fabric的实现主要涉及到三个类，chain.go &amp;lt;-&amp;gt; etcdraft/node.go &amp;lt;-&amp;gt; raft/node.go, 其中raft/node.go是etcd的开源包，chain.go是实现共识算法的主要类，etcdraft/node.go则是相当于适配模式下的适配器，用于连接两者，对实现屏蔽Ra">
+
+
+
+
+
+
+  <link rel="canonical" href="https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Fabric 1.4源码分析 - orderer的raft实现 | Simplexity</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simplexity</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fabric 1.4源码分析 - orderer的raft实现
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-29 11:05:19" itemprop="dateCreated datePublished" datetime="2019-09-29T11:05:19+08:00">2019-09-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-09 20:51:36" itemprop="dateModified" datetime="2020-03-09T20:51:36+08:00">2020-03-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/09/29/fabric-source-orderer-etcdraft/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/09/29/fabric-source-orderer-etcdraft/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Raft可以说是Fabric 1.X系列的首个真正意义的共识算法。Fabric的实现主要涉及到三个类，<code>chain.go &lt;-&gt; etcdraft/node.go &lt;-&gt; raft/node.go</code>, 其中<code>raft/node.go</code>是etcd的开源包，<code>chain.go</code>是实现共识算法的主要类，<code>etcdraft/node.go</code>则是相当于适配模式下的适配器，用于连接两者，对实现屏蔽Raft的具体实现方案。</p>
+<a id="more"></a>
+<p>首先看<code>chain.go</code>的struct（略去部分field），包含<code>etcdraft/node.go</code>对象。调用<code>chain.go#Start</code>方法时（省略），内部调用了<code>etcdraft/node.go#start</code>方法。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Chain <span class="keyword">struct</span> &#123;</span><br><span class="line">    rpc RPC</span><br><span class="line"></span><br><span class="line">    raftID    <span class="keyword">uint64</span></span><br><span class="line">    channelID <span class="keyword">string</span></span><br><span class="line">    lastKnownLeader <span class="keyword">uint64</span></span><br><span class="line"></span><br><span class="line">    submitC  <span class="keyword">chan</span> *submit</span><br><span class="line">    applyC   <span class="keyword">chan</span> apply</span><br><span class="line">    observeC <span class="keyword">chan</span>&lt;- raft.SoftState <span class="comment">// Notifies external observer on leader change (passed in optionally as an argument for tests)</span></span><br><span class="line">    snapC    <span class="keyword">chan</span> *raftpb.Snapshot <span class="comment">// Signal to catch up with snapshot</span></span><br><span class="line">    gcC      <span class="keyword">chan</span> *gc              <span class="comment">// Signal to take snapshot</span></span><br><span class="line"></span><br><span class="line">    configInflight       <span class="keyword">bool</span> <span class="comment">// this is true when there is config block or ConfChange in flight</span></span><br><span class="line">    blockInflight        <span class="keyword">int</span>  <span class="comment">// number of in flight blocks</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// needed by snapshotting</span></span><br><span class="line">    sizeLimit        <span class="keyword">uint32</span> <span class="comment">// SnapshotIntervalSize in bytes</span></span><br><span class="line">    accDataSize      <span class="keyword">uint32</span> <span class="comment">// accumulative data size since last snapshot</span></span><br><span class="line">    lastSnapBlockNum <span class="keyword">uint64</span></span><br><span class="line">    confState        raftpb.ConfState <span class="comment">// Etcdraft requires ConfState to be persisted within snapshot</span></span><br><span class="line"></span><br><span class="line">    createPuller CreateBlockPuller <span class="comment">// func used to create BlockPuller on demand</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// this is exported so that test can use `Node.Status()` to get raft node status.</span></span><br><span class="line">    Node *node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Start instructs the orderer to begin serving the chain and keep it current.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Chain)</span> <span class="title">Start</span><span class="params">()</span></span> &#123;</span><br><span class="line">    c.Node.start(c.fresh, isJoin)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 响应c.gcC channel的信号，进行c.Node.takeSnapshot操作，并且将过期的可配置个数前的消息和snapshot清空</span></span><br><span class="line">    <span class="keyword">go</span> c.gc()</span><br><span class="line">    <span class="keyword">go</span> c.serveRequest()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// </span></span><br><span class="line">    es := c.newEvictionSuspector()</span><br><span class="line">    interval := DefaultLeaderlessCheckInterval</span><br><span class="line">    c.periodicChecker.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> node <span class="keyword">struct</span> &#123;</span><br><span class="line">    chainID <span class="keyword">string</span></span><br><span class="line">    storage *RaftStorage    <span class="comment">// raft的wal, ram等持久化或者暂存内存实现类</span></span><br><span class="line">    config  *raft.Config</span><br><span class="line">    rpc RPC     <span class="comment">// 负责节点间的grpc通信，管理与各个节点的grpc client/stream</span></span><br><span class="line">    chain *Chain</span><br><span class="line">    raft.Node   <span class="comment">// 开源库etcd的raft节点实现</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>etcdraft/node.go#run</code>是其主要逻辑。(以下截取展示部分逻辑)。实际上可以看到，开源库etcd的raft节点实现只管理raft相关的propose, commit, election等过程，而把其他的业务相关留给使用方，包括节点间通信等。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">    <span class="comment">//// n为来自开源库etcd的raft节点raft.Node，通知消息</span></span><br><span class="line">    <span class="keyword">case</span> rd := &lt;-n.Ready():</span><br><span class="line">        <span class="comment">// wal </span></span><br><span class="line">        <span class="keyword">if</span> err := n.storage.Store(rd.Entries, rd.HardState, rd.Snapshot); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            n.logger.Panicf(<span class="string">"Failed to persist etcd/raft data: %s"</span>, err)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 落后和新加入节点需要同步的snapshot</span></span><br><span class="line">        <span class="keyword">if</span> !raft.IsEmptySnap(rd.Snapshot) &#123;</span><br><span class="line">            n.chain.snapC &lt;- &amp;rd.Snapshot</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// skip empty apply。 来自raft节点的新消息（提议的提交信息rd.CommittedEntries，或者状态变换rd.SoftState，如新leader，节点数量变化等等）</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(rd.CommittedEntries) != <span class="number">0</span> || rd.SoftState != <span class="literal">nil</span> &#123;</span><br><span class="line">            n.chain.applyC &lt;- apply&#123;rd.CommittedEntries, rd.SoftState&#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        n.Advance()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// TODO(jay_guo) leader can write to disk in parallel with replicating to the followers and them writing to their disks. Check 10.2.1 in thesis</span></span><br><span class="line">        <span class="comment">// 调用rpc RPC，交由管理的grpc client发送</span></span><br><span class="line">        n.send(rd.Messages)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>Orderer消息的入口还是<code>chain.go#Order</code>和<code>chain.go#Configure</code>，实际上最后调用<code>chain.go#Submit</code>，其如注释所说，如果本节点是leader则发送到submitC channel内，否则通过rpc发送到leader节点。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Submit forwards the incoming request to:</span></span><br><span class="line"><span class="comment">// - the local serveRequest goroutine if this is leader</span></span><br><span class="line"><span class="comment">// - the actual leader via the transport mechanism</span></span><br><span class="line"><span class="comment">// The call fails if there's no leader elected yet.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Chain)</span> <span class="title">Submit</span><span class="params">(req *orderer.SubmitRequest, sender <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    leadC := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">uint64</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> c.submitC &lt;- &amp;submit&#123;req, leadC&#125;:</span><br><span class="line">        lead := &lt;-leadC</span><br><span class="line">        <span class="keyword">if</span> lead != c.raftID &#123;</span><br><span class="line">            <span class="keyword">if</span> err := c.rpc.SendSubmit(lead, req); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                c.Metrics.ProposalFailures.Add(<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>chain.go</code>的运行主体在<code>chain.go#serveRequest</code>，其中主要是<code>select</code>。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="comment">// 来自于`chain.go#Submit`，也就是提交的proposal，这里主要是判断当前是leader才会进行propose。</span></span><br><span class="line">    <span class="comment">// 如果当前节点是leader，则调用`consensus.ConsenterSupport#ProcessConfigMsg/ProcessNormalMsg`，然后调用`support.BlockCutter().Ordered`切割batch。</span></span><br><span class="line">    <span class="comment">// 对切割后还有pending的消息启动timer，也就是下面的`&lt;-timer.C():`分支，到期后在进行切割。</span></span><br><span class="line">    <span class="keyword">case</span> s := &lt;-submitC:</span><br><span class="line">        <span class="comment">// 与orderer的其他实现一致，可参考[Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程]</span></span><br><span class="line">        batches, pending, err := c.ordered(s.req)</span><br><span class="line">        <span class="keyword">if</span> pending &#123;</span><br><span class="line">            startTimer() <span class="comment">// no-op if timer is already started</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            stopTimer()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        c.propose(propC, bc, batches...)</span><br><span class="line">    <span class="comment">// 来自上文提到的`etcdraft/node.go#run`，也就是开源库etcd的raft节点raft.Node的通知消息</span></span><br><span class="line">    <span class="comment">// 这部分消息可能包含leader的切换，最新的记录在消息的`chain.go/apply/raft.SoftState/Lead`字段，进而相应的`propC, cancelProp = becomeLeader()`或者`becomeFollower()`。</span></span><br><span class="line">    <span class="comment">// propC即上面的propose方法的参数，在becomeLeader内处理，即调用`raft.go#Node.Propose`进行propose</span></span><br><span class="line">    <span class="keyword">case</span> app := &lt;-c.applyC:</span><br><span class="line">        <span class="comment">// 这里的entries是CommittedEntries，即需要commit的entry，也就是leader当初propose的block</span></span><br><span class="line">        <span class="comment">// n.chain.applyC &lt;- apply&#123;rd.CommittedEntries, rd.SoftState&#125;</span></span><br><span class="line">        c.apply(app.entries)</span><br><span class="line">    <span class="keyword">case</span> &lt;-timer.C():</span><br><span class="line">    <span class="comment">// snapC    chan *raftpb.Snapshot // Signal to catch up with snapshot</span></span><br><span class="line">    <span class="comment">// 来自于`etcdraft/node.go#run`, select-case的`rd := &lt;-n.Ready():`内`n.chain.snapC &lt;- &amp;rd.Snapshot`，即底层raft的需要同步的snapshot。</span></span><br><span class="line">    <span class="comment">// 用于落后或者新加入的节点追上当前的消息状态</span></span><br><span class="line">    <span class="keyword">case</span> sn := &lt;-c.snapC:</span><br><span class="line">        c.catchUp(sn); err != <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">case</span> &lt;-c.doneC:</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Chain)</span> <span class="title">propose</span><span class="params">(ch <span class="keyword">chan</span>&lt;- *common.Block, bc *blockCreator, batches ...[]*common.Envelope)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 如果前面调用的c.ordered(s.req)切割出来的batches非空，则创建一个新block，并且在becomeLeader里的propC里调用c.Node.Propose()</span></span><br><span class="line">    <span class="keyword">for</span> _, batch := <span class="keyword">range</span> batches &#123;</span><br><span class="line">        b := bc.createNextBlock(batch)</span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> ch &lt;- b:</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// if it is config block, then we should wait for the commit of the block</span></span><br><span class="line">        <span class="keyword">if</span> utils.IsConfigBlock(b) &#123;</span><br><span class="line">            c.configInflight = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        c.blockInflight++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">becomeLeader := <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="params">(<span class="keyword">chan</span>&lt;- *common.Block, </span></span></span><br><span class="line"><span class="function"><span class="params">    // Leader should call Propose in <span class="keyword">go</span> routine, because this method may be blocked</span></span></span><br><span class="line"><span class="function"><span class="params">    // <span class="keyword">if</span> node is leaderless (this can happen when leader steps down in a heavily</span></span></span><br><span class="line"><span class="function"><span class="params">    // loaded network)</span>. <span class="title">We</span> <span class="title">need</span> <span class="title">to</span> <span class="title">make</span> <span class="title">sure</span> <span class="title">applyC</span> <span class="title">can</span> <span class="title">still</span> <span class="title">be</span> <span class="title">consumed</span> <span class="title">properly</span>.</span></span><br><span class="line"><span class="function">    <span class="title">ctx</span>, <span class="title">cancel</span> := <span class="title">context</span>.<span class="title">WithCancel</span><span class="params">(context.Background()</span>)</span></span><br><span class="line"><span class="function">    <span class="title">go</span> <span class="title">func</span><span class="params">(ctx context.Context, ch &lt;-<span class="keyword">chan</span> *common.Block)</span></span> &#123;</span><br><span class="line">        <span class="keyword">for</span> &#123;</span><br><span class="line">            <span class="keyword">select</span> &#123;</span><br><span class="line">            <span class="keyword">case</span> b := &lt;-ch:</span><br><span class="line">                data := utils.MarshalOrPanic(b)</span><br><span class="line">                <span class="keyword">if</span> err := c.Node.Propose(ctx, data); err != ni</span><br><span class="line">                &#123;...&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;(ctx, ch)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ch, cancel</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Chain)</span> <span class="title">apply</span><span class="params">(ents []raftpb.Entry)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> position <span class="keyword">int</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> ents &#123;</span><br><span class="line">        <span class="keyword">switch</span> ents[i].Type &#123;</span><br><span class="line">        <span class="comment">// 调用writeBlock，将commitEntry里的block写入账本</span></span><br><span class="line">        <span class="comment">// accDataSize是累计的block数据大小</span></span><br><span class="line">        <span class="keyword">case</span> raftpb.EntryNormal:</span><br><span class="line">            position = i</span><br><span class="line">            c.accDataSize += <span class="keyword">uint32</span>(<span class="built_in">len</span>(ents[i].Data))</span><br><span class="line">            block := utils.UnmarshalBlockOrPanic(ents[i].Data)</span><br><span class="line">            c.writeBlock(block, ents[i].Index)</span><br><span class="line">        <span class="keyword">case</span> raftpb.EntryConfChange:</span><br><span class="line">            ...</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">if</span> ents[i].Index &gt; c.appliedIndex &#123;</span><br><span class="line">            c.appliedIndex = ents[i].Index</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// accDataSize是累计的block数据大小，大于配置的sizeLimit后，写入c.gcC channel,在`chain.go#gc`内处理c.Node.takeSnapshot</span></span><br><span class="line">    <span class="keyword">if</span> c.accDataSize &gt;= c.sizeLimit &#123;</span><br><span class="line">        b := utils.UnmarshalBlockOrPanic(ents[position].Data)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> c.gcC &lt;- &amp;gc&#123;index: c.appliedIndex, state: c.confState, data: ents[position].Data&#125;:</span><br><span class="line">            c.accDataSize = <span class="number">0</span></span><br><span class="line">            c.lastSnapBlockNum = b.Header.Number</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>chain.go#gc</code><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Chain)</span> <span class="title">gc</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> g := &lt;-c.gcC:</span><br><span class="line">            c.Node.takeSnapshot(g.index, g.state, g.data)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>总体架构流程如上，具体细节可以参考以下，这些参考比较详细都描述了实现细节。</p>
+<h4 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h4><p><a href="https://www.jianshu.com/p/667c3cf7cb76" target="_blank" rel="noopener">Hyperledger-Fabric源码分析（orderer-consensus-etcdraft）</a><br><a href="https://tinywell.com/2019/05/15/fabric-raft-source/" target="_blank" rel="noopener">Fabric raft 共识源码浅析</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
+          
+            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/07/go-channel-demo/" rel="next" title="Go语言穷人版渠道匹配demo（WIP）">
+                <i class="fa fa-chevron-left"></i> Go语言穷人版渠道匹配demo（WIP）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/19/fabric-chaincode-lifecycle-uml/" rel="prev" title="Fabric 1.4 chaincode lifecycle(install & instantiate)">
+                Fabric 1.4 chaincode lifecycle(install & instantiate) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
+            
+              <p class="site-author-name" itemprop="name">Travis Wong</p>
+              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ref"><span class="nav-number">1.</span> <span class="nav-text">Ref.</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
+<!-- END LOCAL -->
+
+<style>
+#gitment-container a {
+  border-bottom: none;
+}
+
+</style>
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: '1569726319000',
+      owner: 'simplexity-ckcclc',
+      repo: 'gitment-comments',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: 'ab2011234194ade1678b2b4d771b0aa55e768632',
+      
+        client_id: 'd91524ebfcf0e898c853'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

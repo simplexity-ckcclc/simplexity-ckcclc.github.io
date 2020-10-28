@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在orderer/consensus/kafka/chain.go里，与solo一样实现了orderer/common/broadcast/broadcast.go#">
+<meta name="keywords" content="Hyperledger Fabric,源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fabric 1.4源码分析 - orderer的kafka实现">
+<meta property="og:url" content="https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在orderer/consensus/kafka/chain.go里，与solo一样实现了orderer/common/broadcast/broadcast.go#">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-18T05:02:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fabric 1.4源码分析 - orderer的kafka实现">
+<meta name="twitter:description" content="在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在orderer/consensus/kafka/chain.go里，与solo一样实现了orderer/common/broadcast/broadcast.go#">
+
+
+
+
+
+
+  <link rel="canonical" href="https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Fabric 1.4源码分析 - orderer的kafka实现 | Simplexity</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simplexity</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fabric 1.4源码分析 - orderer的kafka实现
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-07 15:17:56" itemprop="dateCreated datePublished" datetime="2019-03-07T15:17:56+08:00">2019-03-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-18 13:02:08" itemprop="dateModified" datetime="2019-05-18T13:02:08+08:00">2019-05-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/03/07/fabric-source-orderer-kafka/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/07/fabric-source-orderer-kafka/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在<code>orderer/consensus/kafka/chain.go</code>里，与solo一样实现了<code>orderer/common/broadcast/broadcast.go#Consenter</code>这个接口。在orderer的处理消息时<code>orderer/common/broadcast/broadcast.go#Handle</code>，调用了其<code>Order</code>方法。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">Order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> chain.order(env, configSeq, <span class="keyword">int64</span>(<span class="number">0</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>, originalOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    marshaledEnv, err := utils.Marshal(env)</span><br><span class="line">    <span class="keyword">if</span> !chain.enqueue(newNormalMessage(marshaledEnv, configSeq, originalOffset)) &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"cannot enqueue"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue accepts a message and returns true on acceptance, or false otheriwse.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">enqueue</span><span class="params">(kafkaMsg *ab.KafkaMessage)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">// The post path</span></span><br><span class="line">            payload, err := utils.Marshal(kafkaMsg)</span><br><span class="line"></span><br><span class="line">            message := newProducerMessage(chain.channel, payload)</span><br><span class="line">            <span class="keyword">if</span> _, _, err = chain.producer.SendMessage(message); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>: <span class="comment">// Not ready yet</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProducerMessage</span><span class="params">(channel channel, pld []<span class="keyword">byte</span>)</span> *<span class="title">sarama</span>.<span class="title">ProducerMessage</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;sarama.ProducerMessage&#123;</span><br><span class="line">        Topic: channel.topic(),</span><br><span class="line">        Key:   sarama.StringEncoder(strconv.Itoa(<span class="keyword">int</span>(channel.partition()))), </span><br><span class="line">        Value: sarama.ByteEncoder(pld),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a href="https://github.com/Shopify/sarama" target="_blank" rel="noopener">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
+<a id="more"></a>
+<p>接下来分析<code>sarama.SyncProducer</code>的初始化，以及相应的kafka consumer消费过程。kafka的初始化方法是<code>orderer/consensus/kafka/chain.go#startThread</code>。从这个一直回溯到<code>chainsupport.go#start</code>，总共有两个地方调用。一是<code>registar.go#NewRegistrar</code>，这里从ledgerFactory里的记录找出existingChains重建；二是<code>registar.go#newChain</code>,接收到消息的payload.Header.ChannelHeader.Type为<code>cb.HeaderType_ORDERER_TRANSACTION</code>时新建。这里以新建chain（channel）为例。<code>newChain</code>方法里调用了<code>newChainSupport</code>,里面初始化chainsupport的Chain参数<code>cs.Chain, err = consenter.HandleChain(cs, metadata)</code>。这里的consenter是<code>consensus.go#Consenter</code>接口,这里的实现类是<code>orderer/consensus/kafka/consenter.go:consenterImpl</code>.<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newChainSupport</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	registrar *Registrar,</span></span></span><br><span class="line"><span class="function"><span class="params">	ledgerResources *ledgerResources,</span></span></span><br><span class="line"><span class="function"><span class="params">	consenters <span class="keyword">map</span>[<span class="keyword">string</span>]consensus.Consenter,</span></span></span><br><span class="line"><span class="function"><span class="params">	signer crypto.LocalSigner,</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> *<span class="title">ChainSupport</span></span> &#123;</span><br><span class="line">    <span class="comment">// Read in the last block and metadata for the channel</span></span><br><span class="line">    lastBlock := blockledger.GetBlock(ledgerResources, ledgerResources.Height()<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    metadata, err := utils.GetMetadataFromBlock(lastBlock, cb.BlockMetadataIndex_ORDERER)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Construct limited support needed as a parameter for additional support</span></span><br><span class="line">    cs := &amp;ChainSupport&#123;</span><br><span class="line">        ledgerResources: ledgerResources,</span><br><span class="line">        LocalSigner:     signer,</span><br><span class="line">        cutter:          blockcutter.NewReceiverImpl(ledgerResources),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set up the msgprocessor</span></span><br><span class="line">    cs.Processor = msgprocessor.NewStandardChannel(cs, msgprocessor.CreateStandardChannelFilters(cs))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set up the block writer</span></span><br><span class="line">    cs.BlockWriter = newBlockWriter(lastBlock, registrar, cs)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set up the consenter</span></span><br><span class="line">    cs.Chain, err = consenter.HandleChain(cs, metadata)</span><br><span class="line">    <span class="keyword">return</span> cs</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// HandleChain creates/returns a reference to a consensus.Chain object for the given set of support resources. Implements the consensus.Consenter interface. </span></span><br><span class="line"><span class="comment">// Called by consensus.newChainSupport(), which is itself called by multichannel.NewManagerImpl() when ranging over the ledgerFactory's existingChains.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(consenter *consenterImpl)</span> <span class="title">HandleChain</span><span class="params">(support consensus.ConsenterSupport, metadata *cb.Metadata)</span> <span class="params">(consensus.Chain, error)</span></span> &#123;</span><br><span class="line">    lastOffsetPersisted, lastOriginalOffsetProcessed, lastResubmittedConfigOffset := getOffsets(metadata.Value, support.ChainID())</span><br><span class="line">    <span class="keyword">return</span> newChain(consenter, support, lastOffsetPersisted, lastOriginalOffsetProcessed, lastResubmittedConfigOffset)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getOffsets</span><span class="params">(metadataValue []<span class="keyword">byte</span>, chainID <span class="keyword">string</span>)</span> <span class="params">(persisted <span class="keyword">int64</span>, processed <span class="keyword">int64</span>, resubmitted <span class="keyword">int64</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> metadataValue != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">// Extract orderer-related metadata from the tip of the ledger first</span></span><br><span class="line">        kafkaMetadata := &amp;ab.KafkaMetadata&#123;&#125;</span><br><span class="line">        proto.Unmarshal(metadataValue, kafkaMetadata);</span><br><span class="line">        <span class="keyword">return</span> kafkaMetadata.LastOffsetPersisted,</span><br><span class="line">            kafkaMetadata.LastOriginalOffsetProcessed,</span><br><span class="line">            kafkaMetadata.LastResubmittedConfigOffset</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sarama.OffsetOldest - <span class="number">1</span>, <span class="keyword">int64</span>(<span class="number">0</span>), <span class="keyword">int64</span>(<span class="number">0</span>) <span class="comment">// default</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>从上一个区块<code>blockledger.GetBlock(ledgerResources, ledgerResources.Height()-1)</code>获取元数据，也就是<code>BlockMetadata.Metadata</code>内key为<code>cb.BlockMetadataIndex_SIGNATURES</code>的值，在instantiate（8）里提及其他三种。从<code>getOffsets</code>里看到，如果说当前channel已经存在也消费过数据，例如重启回复的情况下，则使用的是metadata里记录的值。如果是新建channel，则使用了默认<code>LastOffsetPersisted</code>,<code>LastOriginalOffsetProcessed</code>,<code>LastResubmittedConfigOffset</code>这三个值分别取<code>sarama.OffsetOldest - 1</code>,0,0。具体参数的含义后面分析。</li>
+<li>接着调用<code>chain.go#newChain</code>，里面主要是构建了<code>orderer/consensus/kafka/chain.go:chainImpl</code>这个实体。其中需要关注的是<code>chainImpl.channel</code>这个参数初始化为<code>newChannel(support.ChainID(), defaultPartition)</code>.即kafka的topic为<code>support.ChainID()</code>（即channel名），partition为固定值0，这也就是前面提到的channel的topic和partition。<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// channel.go</span></span><br><span class="line"><span class="keyword">const</span> defaultPartition = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns a new channel for a given topic name and partition number.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newChannel</span><span class="params">(topic <span class="keyword">string</span>, partition <span class="keyword">int32</span>)</span> <span class="title">channel</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;channelImpl&#123;</span><br><span class="line">        tpc: fmt.Sprintf(<span class="string">"%s"</span>, topic),</span><br><span class="line">        prt: partition,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p>下面再具体分析<code>chain.go#startThread</code><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Called by Start().</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">startThread</span><span class="params">(chain *chainImpl)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Set up the producer</span></span><br><span class="line">    chain.producer, err = setupProducerForChannel(chain.consenter.retryOptions(), chain.haltChan, chain.SharedConfig().KafkaBrokers(), chain.consenter.brokerConfig(), chain.channel)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Have the producer post the CONNECT message</span></span><br><span class="line">    <span class="keyword">if</span> err = sendConnectMessage(chain.consenter.retryOptions(), chain.haltChan, chain.producer, chain.channel); err != <span class="literal">nil</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set up the parent consumer</span></span><br><span class="line">    chain.parentConsumer, err = setupParentConsumerForChannel(chain.consenter.retryOptions(), chain.haltChan, chain.SharedConfig().KafkaBrokers(), chain.consenter.brokerConfig(), chain.channel)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set up the channel consumer</span></span><br><span class="line">    chain.channelConsumer, err = setupChannelConsumerForChannel(chain.consenter.retryOptions(), chain.haltChan, chain.parentConsumer, chain.channel, chain.lastOffsetPersisted+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    chain.doneProcessingMessagesToBlocks = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">close</span>(chain.startChan)                <span class="comment">// Broadcast requests will now go through</span></span><br><span class="line">    chain.errorChan = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;) <span class="comment">// Deliver requests will also go through</span></span><br><span class="line"></span><br><span class="line">    chain.processMessagesToBlocks() <span class="comment">// Keep up to date with the channel</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><code>setupProducerForChannel</code>尝试用配置好的参数创建kafka的producer(<code>sarama.SyncProducer</code>)，并且加上了失败重试机制。配置在<code>orderer.yaml</code>文件里。</li>
+<li><code>sendConnectMessage</code>使用刚创建的kafka producer发送<code>ab.KafkaMessage_Connect</code>消息，payload为nil，只是为了保证配置正确能正常返送。（<em>Post a CONNECT message to the channel using the given retry options. This prevents the panicking that would occur if we were to set up a consumer and seek on a partition that hadn’t been written to yet.</em> ）这里也加上失败重连机制。</li>
+<li><code>setupParentConsumerForChannel</code>和<code>setupChannelConsumerForChannel</code>构造<code>sarama.PartitionConsumer</code>,只消费指定partition的数据，这里消费的就是初始化时设置的channle.Partition(),实际上是<code>const defaultPartition = 0</code>。失败重试。</li>
+<li><code>processMessagesToBlocks</code>真正的<code>sarama.PartitionConsumer</code>消费数据，处理数据。这个方法里有比较多的<code>select-case</code>，首先是处理<code>case kafkaErr := &lt;-chain.channelConsumer.Errors():</code>，这里错误分两种，一种是<code>sarama.ErrOffsetOutOfRange:</code>,这类错误无法通过自动重试回复，则重新发送连接消息推进offset,<code>go sendConnectMessage(chain.consenter.retryOptions(), chain.haltChan, chain.producer, chain.channel)</code>；另一种错误则是可以通过自带的重试机制回复，这里有两个变量和case分支。1)<code>case &lt;-topicPartitionSubscriptionResumed:</code>错误时添加监听器，成功重连后打印日志；2）<code>case &lt;-deliverSessionTimedOut:</code>重连超时，则再次发送连接消息<code>go sendConnectMessage(...)</code>。这个<code>select-case</code>里交织着处理这两个变量分支的代码。</li>
+</ol>
+<hr>
+<p> 接下来是重要的两个case。第一个<code>case &lt;-chain.timer:</code>这里是在当前channel设置的timer到期后，发送<code>&amp;ab.KafkaMessage_TimeToCut</code>消息到kafka通知所有orderer，这里的参数为下一个block的number（<code>chain.lastCutBlockNumber+1</code>）。第二个<code>case in, ok := &lt;-chain.channelConsumer.Messages():</code>里kafka收到的消息类型总共有三种。</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">   <span class="keyword">select</span> &#123;</span><br><span class="line">   <span class="keyword">case</span> in, ok := &lt;-chain.channelConsumer.Messages():</span><br><span class="line">       <span class="keyword">switch</span> msg.Type.(<span class="keyword">type</span>) &#123;</span><br><span class="line">       <span class="keyword">case</span> *ab.KafkaMessage_Connect:</span><br><span class="line">           _ = chain.processConnect(chain.ChainID())</span><br><span class="line">       <span class="keyword">case</span> *ab.KafkaMessage_TimeToCut:</span><br><span class="line">           <span class="keyword">if</span> err := chain.processTimeToCut(msg.GetTimeToCut(), in.Offset); err != <span class="literal">nil</span> &#123;...&#125;</span><br><span class="line">       <span class="keyword">case</span> *ab.KafkaMessage_Regular:</span><br><span class="line">           <span class="keyword">if</span> err := chain.processRegular(msg.GetRegular(), in.Offset); err != <span class="literal">nil</span> &#123;...&#125;</span><br><span class="line">       &#125;</span><br><span class="line">   <span class="keyword">case</span> &lt;-chain.timer:</span><br><span class="line">       <span class="keyword">if</span> err := sendTimeToCut(chain.producer, chain.channel, chain.lastCutBlockNumber+<span class="number">1</span>, &amp;chain.timer); err != <span class="literal">nil</span> &#123;...&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>case *ab.KafkaMessage_Connect:</code>前面提到的在<code>startThread</code>启动时发送连接消息和遇到错误时尝试重联都回发送此类消息以推进offset。这里对这类消息不需要处理，仅仅作为记录。</li>
+<li><p><code>case *ab.KafkaMessage_TimeToCut:</code>判断消息里要求cut的blocknum是否是当前节点本地block数据的下一个block，如果是的话，直接将当前汇集的batch切割，剩下的跟instantiate（8）里solo的流程一致，写入block。这里有所区别的是这里要提交kafka的metadata到block里，而这部分metadata写入了<code>bw.lastBlock.Metadata.Metadata[cb.BlockMetadataIndex_ORDERER</code>里，也就是上面提到在重启chain时候从block的<code>BlockMetadata.Metadata</code>内取key为<code>cb.BlockMetadataIndex_SIGNATURES</code>的值来获取kafka消费消息。回顾对比solo方式，在调用<code>chain.WriteBlock()</code>时，传入的第二个参数为nil。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">processTimeToCut</span><span class="params">(ttcMessage *ab.KafkaMessageTimeToCut, receivedOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	ttcNumber := ttcMessage.GetBlockNumber()</span><br><span class="line">	<span class="keyword">if</span> ttcNumber == chain.lastCutBlockNumber+<span class="number">1</span> &#123;</span><br><span class="line">		chain.timer = <span class="literal">nil</span></span><br><span class="line">		batch := chain.BlockCutter().Cut()</span><br><span class="line">		block := chain.CreateNextBlock(batch)</span><br><span class="line">		metadata := utils.MarshalOrPanic(&amp;ab.KafkaMetadata&#123;</span><br><span class="line">            LastOffsetPersisted:         receivedOffset,</span><br><span class="line">            LastOriginalOffsetProcessed: chain.lastOriginalOffsetProcessed,</span><br><span class="line">		&#125;)</span><br><span class="line">		chain.WriteBlock(block, metadata)</span><br><span class="line">		chain.lastCutBlockNumber++</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> ttcNumber &gt; chain.lastCutBlockNumber+<span class="number">1</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> fmt.Errorf(...)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(bw *BlockWriter)</span> <span class="title">WriteBlock</span><span class="params">(block *cb.Block, encodedMetadataValue []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">	bw.committingBlock.Lock()</span><br><span class="line">	bw.lastBlock = block</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">defer</span> bw.committingBlock.Unlock()</span><br><span class="line">		bw.commitBlock(encodedMetadataValue)</span><br><span class="line">	&#125;()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(bw *BlockWriter)</span> <span class="title">commitBlock</span><span class="params">(encodedMetadataValue []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// Set the orderer-related metadata field</span></span><br><span class="line">	<span class="keyword">if</span> encodedMetadataValue != <span class="literal">nil</span> &#123;</span><br><span class="line">		bw.lastBlock.Metadata.Metadata[cb.BlockMetadataIndex_ORDERER] = utils.MarshalOrPanic(&amp;cb.Metadata&#123;Value: encodedMetadataValue&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">// 省略...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p><code>case *ab.KafkaMessage_Regular:</code>处理消息（envelop）</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">processRegular</span><span class="params">(regularMessage *ab.KafkaMessageRegular, receivedOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// When committing a normal message, we also update `lastOriginalOffsetProcessed` with `newOffset`. It is caller's responsibility to deduce correct value of `newOffset` based on following rules:</span></span><br><span class="line">    <span class="comment">// - if Resubmission is switched off, it should always be zero</span></span><br><span class="line">    <span class="comment">// - if the message is committed on first pass, meaning it's not re-validated and re-ordered, this value should be the same as current `lastOriginalOffsetProcessed`</span></span><br><span class="line">    <span class="comment">// - if the message is re-validated and re-ordered, this value should be the `OriginalOffset` of that Kafka message, so that `lastOriginalOffsetProcessed` is advanced</span></span><br><span class="line">    <span class="comment">// 其实，这个方法就是完成3件事情。</span></span><br><span class="line">    <span class="comment">// 1）如果不需要切割，并且如果chain.timer没有设置则重设timer（用以倒计时发送*ab.KafkaMessage_TimeToCut）；</span></span><br><span class="line">    <span class="comment">// 2）切割，更新KafkaMetadata.LastOffsetPersisted为这个block最后envelope的offset；</span></span><br><span class="line">    <span class="comment">// 3）更新chain.lastOriginalOffsetProcessed，并且用作KafkaMetadata.LastOriginalOffsetProcessed。</span></span><br><span class="line">    commitNormalMsg := <span class="function"><span class="keyword">func</span><span class="params">(message *cb.Envelope, newOffset <span class="keyword">int64</span>)</span></span> &#123;</span><br><span class="line">        batches, pending := chain.BlockCutter().Ordered(message)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(batches) == <span class="number">0</span> &#123;</span><br><span class="line">            <span class="comment">// If no block is cut, we update the `lastOriginalOffsetProcessed`, start the timer if necessary and return</span></span><br><span class="line">            chain.lastOriginalOffsetProcessed = newOffset</span><br><span class="line">            <span class="keyword">if</span> chain.timer == <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="comment">// configtx.yaml里的Orderer: &amp;OrdererDefaults.BatchTimeout</span></span><br><span class="line">                chain.timer = time.After(chain.SharedConfig().BatchTimeout())</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        chain.timer = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">        offset := receivedOffset</span><br><span class="line">        <span class="keyword">if</span> pending || <span class="built_in">len</span>(batches) == <span class="number">2</span> &#123;</span><br><span class="line">            offset--</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            chain.lastOriginalOffsetProcessed = newOffset</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Commit the first block</span></span><br><span class="line">        block := chain.CreateNextBlock(batches[<span class="number">0</span>])</span><br><span class="line">        metadata := utils.MarshalOrPanic(&amp;ab.KafkaMetadata&#123;</span><br><span class="line">            <span class="comment">// LastOffsetPersisted记录的是这个block的最后envelope的offset，也就是消费的最后offset</span></span><br><span class="line">            LastOffsetPersisted:         offset,</span><br><span class="line">            <span class="comment">// LastOriginalOffsetProcessed记录指的是截止该block，originalOffset小于这个值的所有message都已经被排序，即最新处理的originalOffset</span></span><br><span class="line">            LastOriginalOffsetProcessed: chain.lastOriginalOffsetProcessed,</span><br><span class="line">            <span class="comment">// LastResubmittedConfigOffset这个记录的是最近提交的重新校验排序的configMsg的offset</span></span><br><span class="line">            LastResubmittedConfigOffset: chain.lastResubmittedConfigOffset,</span><br><span class="line">        &#125;)</span><br><span class="line">        chain.WriteBlock(block, metadata)</span><br><span class="line">        chain.lastCutBlockNumber++</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Commit the second block if exists</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(batches) == <span class="number">2</span> &#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    seq := chain.Sequence()</span><br><span class="line">    env := &amp;cb.Envelope&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这部分主要是为了兼容v1.1前的版本，前面的版本不支持re-submission</span></span><br><span class="line">    <span class="comment">// 这里的配置在configtx.yaml里，V1_1:true则`chain.SharedConfig().Capabilities().Resubmission()`返回为true。这里分析默认都使用V1.1后的版本</span></span><br><span class="line">    <span class="comment">//Capabilities:</span></span><br><span class="line">    <span class="comment">//  Orderer: &amp;OrdererCapabilities</span></span><br><span class="line">    <span class="comment">//      V1_1: true</span></span><br><span class="line">    <span class="keyword">if</span> regularMessage.Class == ab.KafkaMessageRegular_UNKNOWN || !chain.SharedConfig().Capabilities().Resubmission() &#123;...&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> regularMessage.Class &#123;</span><br><span class="line">    <span class="keyword">case</span> ab.KafkaMessageRegular_NORMAL:</span><br><span class="line">        <span class="comment">// This is a message that is re-validated and re-ordered</span></span><br><span class="line">        <span class="comment">// 普通消息的OriginalOffset为0，因为configSeq改变被重新验证和加入重排序</span></span><br><span class="line">        <span class="keyword">if</span> regularMessage.OriginalOffset != <span class="number">0</span> &#123;</span><br><span class="line">            <span class="comment">// chain.lastOriginalOffsetProcessed记录着最近的处理的重排消息的offset，意味着小于这个的消息都已经处理过，故返回不再重复处理。</span></span><br><span class="line">            <span class="comment">// 从下面的`regularMessage.ConfigSeq &lt; seq`可知，这是因为有多个orderer节点，每个节点都会往kafka重发消息，故可能会存在多条同样的消息（OriginalOffset相同但offset不同）</span></span><br><span class="line">            <span class="keyword">if</span> regularMessage.OriginalOffset &lt;= chain.lastOriginalOffsetProcessed &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 未处理的重排消息按照正常流程往下处理</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The config sequence has advanced，当前的配置已经更新，因此需要重新验证，重发kafka进行re-order</span></span><br><span class="line">        <span class="keyword">if</span> regularMessage.ConfigSeq &lt; seq &#123;</span><br><span class="line">            configSeq, err := chain.ProcessNormalMsg(env)</span><br><span class="line">            <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> fmt.Errorf(<span class="string">"discarding bad normal message because = %s"</span>, err)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 新配置下重新校验通过</span></span><br><span class="line">            <span class="comment">// For both messages that are ordered for the first time or re-ordered, we set original offset to current received offset and re-order it.</span></span><br><span class="line">            <span class="keyword">if</span> err := chain.order(env, configSeq, receivedOffset); err != <span class="literal">nil</span> &#123;...&#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 下面的commitNormalMsg方法里可以看到用offset更新chain.lastOriginalOffsetProcessed，</span></span><br><span class="line">        <span class="comment">// 因此，offset或者保持原值chain.lastOriginalOffsetProcessed（当前消息不是re-order消息），或者采用当前消息的OriginalOffset（当前消息是re-order消息）</span></span><br><span class="line">        offset := regularMessage.OriginalOffset</span><br><span class="line">        <span class="keyword">if</span> offset == <span class="number">0</span> &#123;</span><br><span class="line">            offset = chain.lastOriginalOffsetProcessed</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        commitNormalMsg(env, offset)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> ab.KafkaMessageRegular_CONFIG:</span><br><span class="line">        <span class="comment">// This is a message that is re-validated and re-ordered，同上</span></span><br><span class="line">        <span class="keyword">if</span> regularMessage.OriginalOffset != <span class="number">0</span> &#123;</span><br><span class="line">            <span class="comment">// 同上, normalMsg</span></span><br><span class="line">            <span class="keyword">if</span> regularMessage.OriginalOffset &lt;= chain.lastOriginalOffsetProcessed &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// lastResubmittedConfigOffset这个记录的是最近提交的被重新校验排序的configMsg的offset，如果消息的OriginalOffset等于该值，并且configSeq也相等，则说明已经本地已更新了配置，并且是最新的配置，可以关闭doneReprocessingMsgInFlight这个channel，继续消费（后面详述）</span></span><br><span class="line">            <span class="keyword">if</span> regularMessage.OriginalOffset == chain.lastResubmittedConfigOffset &amp;&amp; <span class="comment">// This is very last resubmitted config message</span></span><br><span class="line">                regularMessage.ConfigSeq == seq &#123; <span class="comment">// AND we don't need to resubmit it again</span></span><br><span class="line">                <span class="built_in">close</span>(chain.doneReprocessingMsgInFlight) <span class="comment">// Therefore, we could finally close the channel to unblock broadcast</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Somebody resubmitted message at offset X, whereas we didn't. This is due to non-determinism where</span></span><br><span class="line">            <span class="comment">// that message was considered invalid by us during revalidation, however somebody else deemed it to</span></span><br><span class="line">            <span class="comment">// be valid, and resubmitted it. We need to advance lastResubmittedConfigOffset in this case in order</span></span><br><span class="line">            <span class="comment">// to enforce consistency across the network.</span></span><br><span class="line">            <span class="keyword">if</span> chain.lastResubmittedConfigOffset &lt; regularMessage.OriginalOffset &#123;</span><br><span class="line">                chain.lastResubmittedConfigOffset = regularMessage.OriginalOffset</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The config sequence has advanced</span></span><br><span class="line">        <span class="keyword">if</span> regularMessage.ConfigSeq &lt; seq &#123; </span><br><span class="line">            <span class="comment">// ProcessConfigUpdateMsg will attempt to apply the config impetus msg to the current configuration, and if successful</span></span><br><span class="line">            <span class="comment">// return the resulting config message and the configSeq the config was computed from.  If the config impetus message</span></span><br><span class="line">            <span class="comment">// is invalid, an error is returned.</span></span><br><span class="line">            <span class="comment">// 在这个方法里，将envelop里指定的配置尝试作用于本地</span></span><br><span class="line">            configEnv, configSeq, err := chain.ProcessConfigMsg(env)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 同上, normalMsg。For both messages that are ordered for the first time or re-ordered, we set original offset to current received offset and re-order it.</span></span><br><span class="line">            <span class="keyword">if</span> err := chain.configure(configEnv, configSeq, receivedOffset); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> fmt.Errorf(<span class="string">"error re-submitting config message because = %s"</span>, err)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 更新lastResubmittedConfigOffset，最新的重新提交configMsg的offset</span></span><br><span class="line">            chain.lastResubmittedConfigOffset = receivedOffset      <span class="comment">// Keep track of last resubmitted message offset</span></span><br><span class="line">            chain.doneReprocessingMsgInFlight = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;) <span class="comment">// Create the channel to block ingress messages</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 同上，normalMsg</span></span><br><span class="line">        offset := regularMessage.OriginalOffset</span><br><span class="line">        <span class="keyword">if</span> offset == <span class="number">0</span> &#123;</span><br><span class="line">            offset = chain.lastOriginalOffsetProcessed</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 同上，commitNormalMsg</span></span><br><span class="line">        commitConfigMsg(env, offset)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 回顾instantiate（8）里<code>orderer/common/broadcast/broadcast.go#Handle</code>提到的，orderer的broacast服务调用<code>processor.WaitReady()</code>, 这里<code>select-case case &lt;-chain.doneReprocessingMsgInFlight:</code>,也就是说，在configMsg进行re-order时，不再对外提供服务接收处理新数据，直到最新的配置已更新，关闭doneReprocessingMsgInFlight这个channel。</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Handle starts a service thread for a given gRPC connection and services the broadcast connection</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(bh *handlerImpl)</span> <span class="title">Handle</span><span class="params">(srv ab.AtomicBroadcast_BroadcastServer)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">    msg, err := srv.Recv()</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">    <span class="keyword">if</span> err = processor.WaitReady(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> srv.Send(&amp;ab.BroadcastResponse&#123;Status: cb.Status_SERVICE_UNAVAILABLE, Info: err.Error()&#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !isConfig &#123;</span><br><span class="line">        configSeq, err := processor.ProcessNormalMsg(msg)</span><br><span class="line">        err = processor.Order(msg, configSeq)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// isConfig</span></span><br><span class="line">        config, configSeq, err := processor.ProcessConfigUpdateMsg(msg)</span><br><span class="line">        err = processor.Configure(config, configSeq)</span><br><span class="line">    &#125;</span><br><span class="line">    err = srv.Send(&amp;ab.BroadcastResponse&#123;Status: cb.Status_SUCCESS&#125;)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">WaitReady</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> error</span><br><span class="line">            <span class="comment">// Block waiting for all re-submitted messages to be reprocessed</span></span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.doneReprocessingMsgInFlight:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>总结来说，fabric的共识算法需要解决两个问题，一是交易消息的有序性，二是恶意节点的拜占庭问题。当前提供的两种共识机制单节点solo和多节点kafka。kafka在fabric的应用中，始终使用了单个partition，这样削弱了kafka本身提供的多分区带来的高性能。这样的考虑处于要最大程度保证交易排序和最后执行的有序性，虽然在v1.1版本后提供的可以re-validate和re-order特性在一定程度上违背了这种强有序性，但是在fabric里共识更重要的是全局一致性，即关键的是block是有序的，而且是一致的，而不在乎顺序是怎样的。但是最重要的是，kafka本身的共识算法并不能解决拜占庭问题，无法容忍网络里恶意节点的存在。这个通过fabric本身的准入审核，签名和策略等机制可以一定程度上预防这个问题。对于拜占庭问题，相对成熟的算法是pbft。在fabric的v0.6版本提供pbft共识机制，v1.0后采用了分割出orderer后，目前仍未提供pbft的相关实现。这个值得后续持续关注。</p>
+<blockquote>
+<p><a href="https://github.com/hyperledger/fabric/tree/release-1.4/orderer" target="_blank" rel="noopener">Hyperledger Fabric Ordering Service</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/kafka.html" target="_blank" rel="noopener">HyperLeger Fabric - Bringing up a Kafka-based Ordering Service</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/blockchain.html" target="_blank" rel="noopener">HyperLeger Fabric - Introduction - Consensus</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/fabric_model.html#consensus" target="_blank" rel="noopener">Hyperledger Fabric Model - Consensus</a><br><a href="https://docs.google.com/document/d/19JihmW-8blTzN99lAubOfseLUZqdrB6sBR0HsRgCAnY/edit" target="_blank" rel="noopener">A Kafka-based Ordering Service for Fabric</a> : 详细介绍fabri orderer应用kafka的设计思想演进过程</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
+          
+            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/06/consensus-paxos-raft/" rel="next" title="共识算法(1) - paxos & raft">
+                <i class="fa fa-chevron-left"></i> 共识算法(1) - paxos & raft
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/11/fabric-orderer-kafka-design/" rel="prev" title="A Kafka-based Ordering Service for Fabric （orderer的应用kafka设计思想）学习笔记">
+                A Kafka-based Ordering Service for Fabric （orderer的应用kafka设计思想）学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
+            
+              <p class="site-author-name" itemprop="name">Travis Wong</p>
+              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
+<!-- END LOCAL -->
+
+<style>
+#gitment-container a {
+  border-bottom: none;
+}
+
+</style>
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: '1551943076000',
+      owner: 'simplexity-ckcclc',
+      repo: 'gitment-comments',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: 'ab2011234194ade1678b2b4d771b0aa55e768632',
+      
+        client_id: 'd91524ebfcf0e898c853'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
