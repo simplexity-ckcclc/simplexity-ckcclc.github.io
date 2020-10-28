@@ -101,7 +101,7 @@
 <meta property="og:description" content="多方安全计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。 1. 不经意传输（OT，Oblivious Transfer）目标如下：  Sender提供可选参数，但是不知道Receiver具体选择哪个 Receiver可以选择其中一个，但是不知道除此之外的其他参数值  1-ou-of-2的实现方案有多种，其中一个基于公私钥机制">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://simplexity.cn/images/mpc-ot.jpg">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.298Z">
+<meta property="og:updated_time" content="2020-10-28T09:32:55.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多方安全计算MPC的若干个概念">
 <meta name="twitter:description" content="多方安全计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。 1. 不经意传输（OT，Oblivious Transfer）目标如下：  Sender提供可选参数，但是不知道Receiver具体选择哪个 Receiver可以选择其中一个，但是不知道除此之外的其他参数值  1-ou-of-2的实现方案有多种，其中一个基于公私钥机制">
@@ -429,7 +429,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2020-10-28 17:32:55" itemprop="dateModified" datetime="2020-10-28T17:32:55+08:00">2020-10-28</time>
               
             
           </span>
@@ -549,6 +549,12 @@
 <li>构造t-1次多项式 f(x)=a<sub>0</sub> + a<sub>1</sub>·x + … + a<sub>t-1</sub> · x<sup>t-1</sup>。 其中，<strong>分享的秘密 S = a<sub>0</sub></strong></li>
 <li>计算f(1), f(2), …, f(n)，分别分发给参与方P1, …, Pn。此时任意至少t个P组合在一起可以接触方程f(x),也就得到秘密S。</li>
 </ol>
+<h3 id="4-差分隐私-DP-Differential-Privacy"><a href="#4-差分隐私-DP-Differential-Privacy" class="headerlink" title="4. 差分隐私(DP, Differential Privacy)"></a>4. 差分隐私(DP, Differential Privacy)</h3><p><strong>中心思想</strong>：无法从结果中反推出单个输入个体的信息。<br><strong>临近数据集</strong>：指的是两个数据集D1，D2只有单个记录不一致。例如，D1={1, 0, 1}, D1={1, 0, 1, 1}。数据操作是count，则count(D1)=2, count(D2)=2, 则可以反推出最后一个输入为1。主要通过两种方式添加噪声，一是根据数据敏感的数值型（服从拉普拉斯分布的随机噪声），二是离散值(指数分布)。添加的噪声分类如下：</p>
+<ul>
+<li>输入噪声： f(x0, x1, …, xn, <em>c</em>) -&gt; f(x0, x1, …, xn + <em>noice</em>, <em>c</em>)</li>
+<li>参数噪声： f(x0, x1, …, xn, <em>c</em>) -&gt; f(x0, x1, …, xn, <em>c</em> + <em>noice</em>)</li>
+<li>输出噪声： f(x0, x1, …, xn, <em>c</em>) -&gt; f(x0, x1, …, xn, <em>c</em>) + <em>noice</em></li>
+</ul>
 
       
     </div>
@@ -798,7 +804,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-不经意传输（OT，Oblivious-Transfer）"><span class="nav-number">1.</span> <span class="nav-text">1. 不经意传输（OT，Oblivious Transfer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-混淆电路（GC，Garbled-Circuit）"><span class="nav-number">2.</span> <span class="nav-text">2. 混淆电路（GC，Garbled Circuit）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-秘密共享-SS-Secret-Sharing"><span class="nav-number">3.</span> <span class="nav-text">3. 秘密共享(SS, Secret-Sharing)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-不经意传输（OT，Oblivious-Transfer）"><span class="nav-number">1.</span> <span class="nav-text">1. 不经意传输（OT，Oblivious Transfer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-混淆电路（GC，Garbled-Circuit）"><span class="nav-number">2.</span> <span class="nav-text">2. 混淆电路（GC，Garbled Circuit）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-秘密共享-SS-Secret-Sharing"><span class="nav-number">3.</span> <span class="nav-text">3. 秘密共享(SS, Secret-Sharing)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-差分隐私-DP-Differential-Privacy"><span class="nav-number">4.</span> <span class="nav-text">4. 差分隐私(DP, Differential Privacy)</span></a></li></ol></div>
             
 
           </div>
