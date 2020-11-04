@@ -364,6 +364,214 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/28/consensus-pbft-paper/" class="post-title-link" itemprop="url">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-28 20:11:29" itemprop="dateCreated datePublished" datetime="2019-03-28T20:11:29+08:00">2019-03-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
+<li>算法的适用范围<blockquote>
+<p>Our algorithm can be used to implement any deterministic replicated service with a state and some operations.</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><em>deterministic</em> ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the execution of an operation in a given state and with a given set of arguments must always produce the same result）</li>
+<li><em>replicated</em> : 多副本</li>
+<li><em>a state and some operations</em> : 服务有相同的初始状态及相同的操作，保证当按相同顺序执行完相同的操作，各个副本的即时状态是完全一致的 (must start in the same state)</li>
+</ul>
+<ol>
+<li>在异步系统中要容忍<code>f</code>个恶意节点，则至少需要<code>3f+1</code>个节点才能提供safety and liveness（<em>Asynchronous Consensus and Broadcast Protocols</em>这篇论文中证明）。</li>
+</ol>
+<ul>
+<li><em>safety</em> : 副本服务满足线性一致性，像在中心化服务中同时原子性的执行操作。不受恶意client数量影响，恶意client的操作可以通过被正常client感知，利用access control来限制。</li>
+<li><em>liveness</em> : 利用同步提供liveness（论文证明）。只要满足<code>3f+1</code>个节点，可以保证client持续重传，并且到达destination的传输时间没有无限的增长情况下，client最终会收到回复。</li>
+</ul>
+<ol>
+<li>算法不提供隐私容错性，即隐私信息会泄漏给恶意节点<blockquote>
+<p>The algorithm does not address the problem of fault- tolerant privacy: a faulty replica may leak information to an attacker.</p>
+</blockquote>
+</li>
+</ol>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/28/consensus-pbft-paper/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -411,12 +619,24 @@
                 
               
 
-              <time title="Created: 2019-03-20 16:11:09 / Modified: 22:35:08" itemprop="dateCreated datePublished" datetime="2019-03-20T16:11:09+08:00">2019-03-20</time>
+              <time title="Created: 2019-03-20 16:11:09" itemprop="dateCreated datePublished" datetime="2019-03-20T16:11:09+08:00">2019-03-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -602,7 +822,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-20 22:26:51" itemprop="dateModified" datetime="2019-03-20T22:26:51+08:00">2019-03-20</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -788,7 +1008,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-16 14:49:33" itemprop="dateModified" datetime="2019-03-16T14:49:33+08:00">2019-03-16</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -983,7 +1203,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-18 13:02:08" itemprop="dateModified" datetime="2019-05-18T13:02:08+08:00">2019-05-18</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -1169,7 +1389,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-28 10:43:41" itemprop="dateModified" datetime="2019-07-28T10:43:41+08:00">2019-07-28</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -1382,7 +1602,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-18 13:02:08" itemprop="dateModified" datetime="2019-05-18T13:02:08+08:00">2019-05-18</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -1567,7 +1787,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-16 14:49:33" itemprop="dateModified" datetime="2019-03-16T14:49:33+08:00">2019-03-16</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -1754,7 +1974,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-18 13:02:08" itemprop="dateModified" datetime="2019-05-18T13:02:08+08:00">2019-05-18</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -1940,7 +2160,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-16 14:49:33" itemprop="dateModified" datetime="2019-03-16T14:49:33+08:00">2019-03-16</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
@@ -2048,192 +2268,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-24 23:47:30" itemprop="dateCreated datePublished" datetime="2019-02-24T23:47:30+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-03-16 14:49:33" itemprop="dateModified" datetime="2019-03-16T14:49:33+08:00">2019-03-16</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>接着继续分析acc的初始化过程，在instantiate(3)里提到<code>endorser.callChaincode</code>有两次的<code>ChaincodeSupport#Execute</code>调用,由代码分析两次不同的<code>ChaincodeMessage</code>的<code>MessageType</code>分别为<code>MessageType_TRANSACTION</code>（对应cis）和<code>MessageType_INIT</code>（对应cds），相应调用lscc的Invoke和acc的Init。具体过程可以参考上节分析。</p>
-<p>先看lscc的<code>Invoke</code>.参考上节提及的<code>execute</code>在两端<code>chaincode/handler.go</code>（peer端）和<code>shim/handler.go</code>（chaincode容器端）的流程，lscc相当于chaincode容器（尽管是inproccontainer），使用<code>shim/handler.go#handleReady</code>里<code>select-case</code>，lscc的<code>ChaincodeMessage_TRANSACTION</code>进入<code>handleTransaction</code>方法。这里的主要流程与上节介绍的<code>handleInit</code>一致，不同的是这里调用的是lscc的<code>Invoke</code>方法。这里需要强调一点，在<code>handleTransaction</code>,<code>handleInit</code>这些<code>handleXXX</code>方法里，进入就是启动goroutinne来运行所有的逻辑，这样可以立刻返回并行来处理下一个请求。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2283,7 +2317,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2304,7 +2338,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>

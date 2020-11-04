@@ -92,23 +92,28 @@
 
 
 
-  <meta name="description" content="Simple is Complex">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simplexity">
-<meta property="og:url" content="https://simplexity.cn/tags/Hyperledger-Fabric/page/3/index.html">
+  <meta name="description" content="由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。  短期内隐私数据。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于">
+<meta name="keywords" content="Hyperledger Fabric,Blockchain">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链上隐私数据（WIP）">
+<meta property="og:url" content="https://simplexity.cn/2020/11/04/privacy-on-chain/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="Simple is Complex">
+<meta property="og:description" content="由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。  短期内隐私数据。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://simplexity.cn/images/fabric-private-data-structure.jpg">
+<meta property="og:image" content="https://simplexity.cn/images/fabric-private-data-phases.jpg">
+<meta property="og:updated_time" content="2020-11-04T11:35:48.181Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simplexity">
-<meta name="twitter:description" content="Simple is Complex">
+<meta name="twitter:title" content="链上隐私数据（WIP）">
+<meta name="twitter:description" content="由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。  短期内隐私数据。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于">
+<meta name="twitter:image" content="https://simplexity.cn/images/fabric-private-data-structure.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://simplexity.cn/tags/Hyperledger-Fabric/page/3/">
+  <link rel="canonical" href="https://simplexity.cn/2020/11/04/privacy-on-chain/">
 
 
 
@@ -118,7 +123,7 @@
   };
 </script>
 
-  <title>Tag: Hyperledger Fabric | Simplexity</title>
+  <title>链上隐私数据（WIP） | Simplexity</title>
   
 
 
@@ -166,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -238,7 +243,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -343,190 +348,268 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Hyperledger Fabric<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/04/privacy-on-chain/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/" itemprop="url">
-            
-              <span itemprop="name">Fabric 1.4源码分析 - chaincode instantiate(4）chaincode容器启动及注册</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">链上隐私数据（WIP）
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-24T23:37:19+08:00" content="2019-02-24">
-          02-24
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          
 
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-11-04 17:15:10 / Modified: 19:35:48" itemprop="dateCreated datePublished" datetime="2020-11-04T17:15:10+08:00">2020-11-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2020/11/04/privacy-on-chain/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/11/04/privacy-on-chain/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/" itemprop="url">
-            
-              <span itemprop="name">Fabric 1.4源码分析 - chaincode instantiate(3）endorser的propocessProposal主过程</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-24T23:31:16+08:00" content="2019-02-24">
-          02-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p>由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。</p>
+<ol>
+<li><strong>短期内隐私数据</strong>。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于可变但是数值范围有限的数据，例如状态值，单价/数量等数值，则避免了统计学上破解。</li>
+<li><strong>长期固定隐私数据</strong>。例如身份证号码，企业社会信用代码等，该数据长期不变，存在若干年后由于量子计算或者相应的密码学被破解导致泄露（当然，随着破解方案的演进，加密方案也会相应的演进，但是对于链上的历史数据则极易受到新的破解方案的威胁）。因此，链上可以保存数值hash，具体的数据链下交换，使用链上的hash值作为验证。同时，对于数值类等取值空间有限的，可以针对每笔交易数据添加盐值后（同样通过链下交换），再做hash上链，避免彩虹表攻击。</li>
+</ol>
+<a id="more"></a>
+<hr>
+<h3 id="Fabric的private-data设计"><a href="#Fabric的private-data设计" class="headerlink" title="Fabric的private data设计"></a>Fabric的private data设计</h3><h4 id="1-transient-data-vs-transient-data-store-vs-private-data-collection"><a href="#1-transient-data-vs-transient-data-store-vs-private-data-collection" class="headerlink" title="1. transient data vs. transient data store vs. private data collection"></a>1. transient data vs. transient data store vs. private data collection</h4><ul>
+<li>transient data: 链码chaincode的输入数据，client发起交易时指定，endorser在背书过程中，将这些数据以gossip的方式点对点发送到其他的拥有权限的相关节点（例如同属于该private data collection的不同组织），链上block里的交易信息并不会包含有这些数据。</li>
+<li>transient data store: 中间存储，存放transient data进行运算后的RW-set，方便后续的gossip交换到其他的authorized节点，在commit阶段，private data hash将会与该部分数据进行校验，无误后提交到private data collection，然后清除transient data store。</li>
+<li>private data collection: 长期存储（由blockToLive参数控制生命）区块执行之后的world state世界状态里，包含有public state和private state，（分别对应着public RW-set和private RW-set）这部分是通过gossip协议从其他节点发送过来的，针对相关的org开放读写权限。包含原始数据和该数据的hash值组成，这样的hash值会被在commit阶段比较private RW-set，以及后续在chaincode里确认该笔数据或者交易的存在真实性。</li>
+</ul>
+<p><img src="/images/fabric-private-data-structure.jpg" alt></p>
+<center>Fig1. 隐私数据存储结构（摘自Ref.3）</center>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p><img src="/images/fabric-private-data-phases.jpg" alt></p>
+<center>Fig2. 隐私数据交互流程（摘自Ref.2）</center>  
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/02/23/fabric-source-chaincode-instantiate-peer/" itemprop="url">
-            
-              <span itemprop="name">Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-23T15:36:22+08:00" content="2019-02-23">
-          02-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/" itemprop="url">
-            
-              <span itemprop="name">Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-23T15:35:09+08:00" content="2019-02-23">
-          02-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/02/23/fabric-tutorial-learning/" itemprop="url">
-            
-              <span itemprop="name">Hyperledger Fabric（V1.4.0）官网Tutorial学习</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-23T15:09:01+08:00" content="2019-02-23">
-          02-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+<ol>
+<li><code>The transactions with the private data hashes get included in blocks as normal. The block with the private data hashes is distributed to all the peers.</code>即private data hash会提交到orderer进行排序，对于没有权限的private data collection，只能获取到其hash作为存证和后续验证。</li>
+<li><code>Note that because gossip distributes the private data peer-to-peer across authorized organizations, it is required to set up anchor peers on the channel, and configure CORE_PEER_GOSSIP_EXTERNALENDPOINT on each peer, in order to bootstrap cross-organization communication.</code>。意味着gossip协议会根据collection的json定义文件里的policy政策传播到符合条件的各个组织。</li>
+</ol>
+<p>当前fabric提供的是hash校验的基本功能，只是数据的真实性校验和数据交换，对于更多的应用场景例如需要计算/比较的，将来可以扩展叠加零知识证明和同态加密运算等，会有更广的应用想象空间。</p>
+<p>Ref：</p>
+<blockquote>
+<ol>
+<li><a href="https://hyperledger-fabric.readthedocs.io/en/latest/private-data/private-data.html?highlight=private" target="_blank" rel="noopener">HyperLedger Fabric官网</a></li>
+<li><a href="https://www.serial-coder.com/post/demystifying-hyperledger-fabric-private-data-collection/" target="_blank" rel="noopener">Demystifying Hyperledger Fabric (2/3): Private Data Collection</a></li>
+<li><a href="https://medium.com/@kctheservant/private-data-and-transient-data-in-hyperledger-fabric-46b5258f391e" target="_blank" rel="noopener">Private Data and Transient Data in Hyperledger Fabric</a></li>
+<li><a href="https://v.qq.com/x/page/a09419gwu90.html" target="_blank" rel="noopener">视频</a> ： IBM工程师介绍private data</li>
+</ol>
+</blockquote>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
+          
+            <a href="/tags/Blockchain/" rel="tag"><i class="fa fa-tag"></i> Blockchain</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/20/mpc-terminology/" rel="next" title="多方安全计算MPC的若干个概念">
+                <i class="fa fa-chevron-left"></i> 多方安全计算MPC的若干个概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/Hyperledger-Fabric/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/tags/Hyperledger-Fabric/">1</a><a class="page-number" href="/tags/Hyperledger-Fabric/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -547,8 +630,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -672,6 +764,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fabric的private-data设计"><span class="nav-number">1.</span> <span class="nav-text">Fabric的private data设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-transient-data-vs-transient-data-store-vs-private-data-collection"><span class="nav-number">1.1.</span> <span class="nav-text">1. transient data vs. transient data store vs. private data collection</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -828,6 +937,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
 
   
 
@@ -838,6 +951,49 @@
 
   
 
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
+<!-- END LOCAL -->
+
+<style>
+#gitment-container a {
+  border-bottom: none;
+}
+
+</style>
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: '1604481310000',
+      owner: 'simplexity-ckcclc',
+      repo: 'gitment-comments',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: 'ab2011234194ade1678b2b4d771b0aa55e768632',
+      
+        client_id: 'd91524ebfcf0e898c853'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
 
 
   

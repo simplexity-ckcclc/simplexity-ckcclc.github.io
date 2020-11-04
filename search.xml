@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>链上隐私数据（WIP）</title>
+      <link href="/2020/11/04/privacy-on-chain/"/>
+      <url>/2020/11/04/privacy-on-chain/</url>
+      
+        <content type="html"><![CDATA[<p>由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。</p><ol><li><strong>短期内隐私数据</strong>。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于可变但是数值范围有限的数据，例如状态值，单价/数量等数值，则避免了统计学上破解。</li><li><strong>长期固定隐私数据</strong>。例如身份证号码，企业社会信用代码等，该数据长期不变，存在若干年后由于量子计算或者相应的密码学被破解导致泄露（当然，随着破解方案的演进，加密方案也会相应的演进，但是对于链上的历史数据则极易受到新的破解方案的威胁）。因此，链上可以保存数值hash，具体的数据链下交换，使用链上的hash值作为验证。同时，对于数值类等取值空间有限的，可以针对每笔交易数据添加盐值后（同样通过链下交换），再做hash上链，避免彩虹表攻击。</li></ol><a id="more"></a><hr><h3 id="Fabric的private-data设计"><a href="#Fabric的private-data设计" class="headerlink" title="Fabric的private data设计"></a>Fabric的private data设计</h3><h4 id="1-transient-data-vs-transient-data-store-vs-private-data-collection"><a href="#1-transient-data-vs-transient-data-store-vs-private-data-collection" class="headerlink" title="1. transient data vs. transient data store vs. private data collection"></a>1. transient data vs. transient data store vs. private data collection</h4><ul><li>transient data: 链码chaincode的输入数据，client发起交易时指定，endorser在背书过程中，将这些数据以gossip的方式点对点发送到其他的拥有权限的相关节点（例如同属于该private data collection的不同组织），链上block里的交易信息并不会包含有这些数据。</li><li>transient data store: 中间存储，存放transient data进行运算后的RW-set，方便后续的gossip交换到其他的authorized节点，在commit阶段，private data hash将会与该部分数据进行校验，无误后提交到private data collection，然后清除transient data store。</li><li>private data collection: 长期存储（由blockToLive参数控制生命）区块执行之后的world state世界状态里，包含有public state和private state，（分别对应着public RW-set和private RW-set）这部分是通过gossip协议从其他节点发送过来的，针对相关的org开放读写权限。包含原始数据和该数据的hash值组成，这样的hash值会被在commit阶段比较private RW-set，以及后续在chaincode里确认该笔数据或者交易的存在真实性。</li></ul><p><img src="/images/fabric-private-data-structure.jpg" alt></p><center>Fig1. 隐私数据存储结构（摘自Ref.3）</center><p><img src="/images/fabric-private-data-phases.jpg" alt></p><center>Fig2. 隐私数据交互流程（摘自Ref.2）</center>  <ol><li><code>The transactions with the private data hashes get included in blocks as normal. The block with the private data hashes is distributed to all the peers.</code>即private data hash会提交到orderer进行排序，对于没有权限的private data collection，只能获取到其hash作为存证和后续验证。</li><li><code>Note that because gossip distributes the private data peer-to-peer across authorized organizations, it is required to set up anchor peers on the channel, and configure CORE_PEER_GOSSIP_EXTERNALENDPOINT on each peer, in order to bootstrap cross-organization communication.</code>。意味着gossip协议会根据collection的json定义文件里的policy政策传播到符合条件的各个组织。</li></ol><p>当前fabric提供的是hash校验的基本功能，只是数据的真实性校验和数据交换，对于更多的应用场景例如需要计算/比较的，将来可以扩展叠加零知识证明和同态加密运算等，会有更广的应用想象空间。</p><p>Ref：</p><blockquote><ol><li><a href="https://hyperledger-fabric.readthedocs.io/en/latest/private-data/private-data.html?highlight=private" target="_blank" rel="noopener">HyperLedger Fabric官网</a></li><li><a href="https://www.serial-coder.com/post/demystifying-hyperledger-fabric-private-data-collection/" target="_blank" rel="noopener">Demystifying Hyperledger Fabric (2/3): Private Data Collection</a></li><li><a href="https://medium.com/@kctheservant/private-data-and-transient-data-in-hyperledger-fabric-46b5258f391e" target="_blank" rel="noopener">Private Data and Transient Data in Hyperledger Fabric</a></li><li><a href="https://v.qq.com/x/page/a09419gwu90.html" target="_blank" rel="noopener">视频</a> ： IBM工程师介绍private data</li></ol></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Blockchain </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Hyperledger Fabric </tag>
+            
+            <tag> Blockchain </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>多方安全计算MPC的若干个概念</title>
       <link href="/2020/10/20/mpc-terminology/"/>
       <url>/2020/10/20/mpc-terminology/</url>
@@ -46,7 +73,7 @@
       <link href="/2020/07/25/bigdata-and-blockchain/"/>
       <url>/2020/07/25/bigdata-and-blockchain/</url>
       
-        <content type="html"><![CDATA[<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><div id="security">  <div class="input-container">  <input type="password" class="form-control" id="pass" placeholder="Article is cheap, show me the password" />    <label for="pass">Article is cheap, show me the password</label>    <div class="bottom-line"></div>  </div></div><div id="decryptionError" style="display: none;">Incorrect Password!</div><div id="noContentError" style="display: none;">No content to display!</div><div id="encrypt-blog" style="display:none">U2FsdGVkX1+sDBCxaR9VC4v7tzPApwWqFCo/w5xHdk8UxH6l81WA7GxqBbfAx8Vri/fdmSjt2ToN03rN82CICYdAOvjXlgYifvcxySsMDw6RcNcIsEXoWVVTXhaevoUWZY9pvXAfhUYaB++g7CKW5KBI/CXE0n0bqtl8u5D1YH3kll8NAyJ8iG79MPhJINEnhHq7cxhxrqhJO9L+mdWSOCnHS2z8obRK3veCNj68ULQ77Gdm0wqopYpL5856AKk+6vwGflD/afzAFTp7CHWp5Cmdcw7h3Dwi43ndrSpfSLNVzvtpU52z53U46a83UfpeHEZb/7xO7oiq3azSItIhMlFtphkxNoLKWPFkCZNIY+7CDk/zBDlZsnBjZ8aG04DgK6AQxWtwohlkzOlAxGEzcdY+KN7TdUGcL/RJBvw+FTJOICTuxoWv70hxCdbeTqqc</div><script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+        <content type="html"><![CDATA[<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><div id="security">  <div class="input-container">  <input type="password" class="form-control" id="pass" placeholder="Article is cheap, show me the password" />    <label for="pass">Article is cheap, show me the password</label>    <div class="bottom-line"></div>  </div></div><div id="decryptionError" style="display: none;">Incorrect Password!</div><div id="noContentError" style="display: none;">No content to display!</div><div id="encrypt-blog" style="display:none">U2FsdGVkX1+SHAuqUW60AMBVKNF4djjVwadA7VC2/feUNaJKH+xKb9ExLjSviEKvY/f26iedOkvlgKkD/oN0+62EQ3QzTFE+/hahB6VCP6It387mpddsrtZdvcOVAtViRTc4QGXLpIzTry4nVbtgZwtZ6Y31HZZKDW0mZn2a2twzJ91QoKC/BezvvwQSNsnnFeuEUtojGg+F07IsyLcxlMANrqbMCwvLSHFikWyF4vpaVKM7ULeMhc295vd2shh0Rp+TAArWv5yPYGhJW0oddvFklHIGazxrbMGOo4UniUqJhLSa9nj2j5cmdZOY/WCyAjdFWeeTswfa0kcnmu0QtMEMy/YgQ+L/VOYT00hDqhl0OMdm95c/ZoK+4BUwyAhwYS5XrUDRxrdXqD5M+C7p3yN0jgq+SSVVl0/dJw6jrjXRgtb+8zy6XwQL/oc5FygJ</div><script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       
       
       
@@ -59,7 +86,7 @@
       <link href="/2020/04/02/fabric-2-0-new-feature/"/>
       <url>/2020/04/02/fabric-2-0-new-feature/</url>
       
-        <content type="html"><![CDATA[<p>Hyperledger Fabric升级到2.0大版本，主要以下有3个新特性。参看官网<a href="https://hyperledger-fabric.readthedocs.io/en/latest/whatsnew.html" target="_blank" rel="noopener">What’s new in Hyperledger Fabric v2.0</a>。同时可以观看IBM员工也是Fabric开发者的系列视频讲座介绍新特性。参看<a href="https://v.qq.com/vplus/6a662f75e9a927ede370ba49c9e883e0#uin=6a662f75e9a927ede370ba49c9e883e0?page=video" target="_blank" rel="noopener">超级账本Hyperledger频道</a>（超级账本网络研讨会2020年系列）。总体来说，2.0版本引入的新特性都是在实际应用过程中的痛点，增进了可用性。</p><ol><li>Decentralized governance for smart contracts<blockquote><p><a href="https://v.qq.com/vplus/6a662f75e9a927ede370ba49c9e883e0#uin=6a662f75e9a927ede370ba49c9e883e0?page=video" target="_blank" rel="noopener">视频</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/chaincode_lifecycle.html" target="_blank" rel="noopener">Fabric chaincode lifecycle</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/deploy_chaincode.html" target="_blank" rel="noopener">Deploying a smart contract to a channel</a></p></blockquote></li><li>Private data enhancements<blockquote><p><a href="https://v.qq.com/vplus/6a662f75e9a927ede370ba49c9e883e0#uin=6a662f75e9a927ede370ba49c9e883e0?page=video" target="_blank" rel="noopener">视频</a></p></blockquote></li><li><p>External chaincode launcher</p><blockquote><p><a href="https://v.qq.com/vplus/6a662f75e9a927ede370ba49c9e883e0#uin=6a662f75e9a927ede370ba49c9e883e0?page=video" target="_blank" rel="noopener">视频</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/cc_service.html" target="_blank" rel="noopener">Chaincode as an external service</a></p></blockquote><p><img src="/images/fabric-2_0-external-chaincode-launcher.jpg" alt></p></li></ol>]]></content>
+        <content type="html"><![CDATA[<p>Hyperledger Fabric升级到2.0大版本，主要以下有3个新特性。参看官网<a href="https://hyperledger-fabric.readthedocs.io/en/latest/whatsnew.html" target="_blank" rel="noopener">What’s new in Hyperledger Fabric v2.0</a>。同时可以观看IBM员工也是Fabric开发者的系列视频讲座介绍新特性。参看<a href="https://v.qq.com/vplus/6a662f75e9a927ede370ba49c9e883e0#uin=6a662f75e9a927ede370ba49c9e883e0?page=video" target="_blank" rel="noopener">超级账本Hyperledger频道</a>（超级账本网络研讨会2020年系列）。总体来说，2.0版本引入的新特性都是在实际应用过程中的痛点，增进了可用性。</p><ol><li>Decentralized governance for smart contracts<blockquote><p><a href="https://v.qq.com/x/page/s09376uefz5.html" target="_blank" rel="noopener">视频</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/chaincode_lifecycle.html" target="_blank" rel="noopener">Fabric chaincode lifecycle</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/deploy_chaincode.html" target="_blank" rel="noopener">Deploying a smart contract to a channel</a></p></blockquote></li><li>Private data enhancements<blockquote><p><a href="https://v.qq.com/x/page/a09419gwu90.html" target="_blank" rel="noopener">视频</a></p></blockquote></li><li><p>External chaincode launcher</p><blockquote><p><a href="https://v.qq.com/x/page/x0944c3pswy.html" target="_blank" rel="noopener">视频</a><br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/cc_service.html" target="_blank" rel="noopener">Chaincode as an external service</a></p></blockquote><p><img src="/images/fabric-2_0-external-chaincode-launcher.jpg" alt></p></li></ol>]]></content>
       
       
       <categories>
