@@ -364,6 +364,193 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-24 23:51:58" itemprop="dateCreated datePublished" datetime="2019-02-24T23:51:58+08:00">2019-02-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>回顾到<code>endorser.go#SimulateProposal</code>,执行完<code>callChaincode</code>后，回顾前面，在这里有两次调用chaincode，分别是lscc的Inovke和acc的Init，<code>callChaincode</code>这里返回的是第一次调用的lscc的response。调用acc Init的结果只判断调用是否正常完成返回<code>pb.ChaincodeMessage_COMPLETED</code>。这是因为在<code>handleInit</code>里对初始化失败，即<code>pb.Response.status</code>不等于200的统一返回<code>pb.ChaincodeMessage_ERROR</code>，这点与Invoke的处理方式是不一样的。Invoke允许<code>pb.ChaincodeMessage.Type</code>=<code>pb.ChaincodeMessage_COMPLETED</code>,但是内层的<code>pb.Response.status</code>不等于200. 若返回<code>pb.ChaincodeMessage_ERROR</code>，则向上层返回error，最终返回<code>&amp;pb.ProposalResponse{Response: &amp;pb.Response{Status: 500, Message: err.Error()}}</code>到<code>peer chainncode instantiate...</code>这个命令的执行节点peer。</p>
+<p>紧接着调用<code>txsim.GetTxSimulationResults()</code>获取上节提到的<code>lockbased_tx_simulator</code>的读写集合。先看下这个<code>txsim</code>是如何传递的。首先初始化后在<code>callChaincode</code>加入context<code>ctxt = context.WithValue(ctxt, chaincode.TXSimulatorKey, txsim)</code>。之后在<code>chaincode/handler</code>里构建<code>TransactionContext</code>实体对象时将txsim从context取出，包裹进这个新建的TransactionContext对象内。这个对象前面有提及，是关联于<code>chainID, txID</code>这两个存放于<code>chaincode/handler.TXContexts.map[string]*TransactionContext</code>里。后面在<code>chaincode/handler.go#handlerTranction</code>里调用<code>txContext, err = h.isValidTxSim(msg.ChannelId, msg.Txid)}</code>也是以此取出该txsim，将读写结果放进读写集readwriteSet。</p>
+<p><code>txsim.GetTxSimulationResults()</code>这里在返回前，先对读写集合按照key排序。这里包含pub和pri两部分数据，先关注pub部分。rwset这部分以后展开专题介绍。然后调用<code>txsim.Done()</code>，签名初始化txsim时候提到获取了ledger的读锁，因此这里需要释放<code>h.txmgr.commitRWLock.RUnlock()</code>。返回共有数据的读写集到<code>endorser#ProcessProposal</code>。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1897,7 +2084,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

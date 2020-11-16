@@ -364,6 +364,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/29/fabric-source-orderer-etcdraft/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的raft实现</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-29 11:05:19" itemprop="dateCreated datePublished" datetime="2019-09-29T11:05:19+08:00">2019-09-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Raft可以说是Fabric 1.X系列的首个真正意义的共识算法。Fabric的实现主要涉及到三个类，<code>chain.go &lt;-&gt; etcdraft/node.go &lt;-&gt; raft/node.go</code>, 其中<code>raft/node.go</code>是etcd的开源包，<code>chain.go</code>是实现共识算法的主要类，<code>etcdraft/node.go</code>则是相当于适配模式下的适配器，用于连接两者，对实现屏蔽Raft的具体实现方案。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/09/29/fabric-source-orderer-etcdraft/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/09/07/go-channel-demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -384,7 +569,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/09/07/go-channel-demo/" class="post-title-link" itemprop="url">Go语言穷人版渠道匹配demo（WIP）</a>
+                <a href="/2019/09/07/go-channel-demo/" class="post-title-link" itemprop="url">Go语言穷人版渠道匹配demo</a>
               
             
           </h1>
@@ -428,7 +613,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2020-11-16 10:57:43" itemprop="dateModified" datetime="2020-11-16T10:57:43+08:00">2020-11-16</time>
               
             
           </span>
@@ -464,7 +649,7 @@
       
         
           
-            <p>github地址（WIP） ： <a href="https://github.com/simplexity-ckcclc/gochannel" target="_blank" rel="noopener">simplexity-ckcclc/gochannel</a> </p>
+            <p>github地址: <a href="https://github.com/simplexity-ckcclc/gochannel" target="_blank" rel="noopener">simplexity-ckcclc/gochannel</a> </p>
 <p>这是穷人版的渠道匹配，处理新增激活设备与点击的匹配，简化了后台管理接口及第三方平台对接接口，仅保留逻辑。</p>
 <p><img src="/images/gochannel-structure.png" alt></p>
 <h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a><em>TODO</em></h4><ol>
@@ -1156,7 +1341,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2020-11-16 10:55:27" itemprop="dateModified" datetime="2020-11-16T10:55:27+08:00">2020-11-16</time>
               
             
           </span>
@@ -1227,7 +1412,7 @@
 <p>摘自: <a href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/" target="_blank" rel="noopener">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
 </li>
 <li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt></p>
-<p>   |字段|含义|<br> |—-|—-|<br> |<strong>nonce</strong>|A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account. |<br> |<strong>balance</strong>|A scalar value equal to the number of Wei owned by this address.|<br> |<strong>storageRoot</strong>|A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.|<br> |<strong>codeHash</strong>|The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.|</p>
+<p> |字段|含义|<br> |—-|—-|<br> |<strong>nonce</strong>|A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account. |<br> |<strong>balance</strong>|A scalar value equal to the number of Wei owned by this address.|<br> |<strong>storageRoot</strong>|A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.|<br> |<strong>codeHash</strong>|The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.|</p>
 <blockquote>
 <p>It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:</p>
 <ol>
@@ -2114,193 +2299,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/02/fabric-inpractice-concept/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/02/fabric-inpractice-concept/" class="post-title-link" itemprop="url">Fabric 1.4实战 - 从现象看概念</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-04-02 14:58:50" itemprop="dateCreated datePublished" datetime="2019-04-02T14:58:50+08:00">2019-04-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通过Fabric实战现象厘清和解析概念，本文只列举现象，未深入源码分析。</p>
-<h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><ol>
-<li><p><strong>【失败】</strong> 同一个节点peer重复install同一个chaincode<br>报错。<code>Error: Bad response: 500 - error installing chaincode code papercontract:0(chaincode /var/hyperledger/production/chaincodes/papercontract.0 exists)</code></p>
-</li>
-<li><p><strong>【失败】</strong> 同一个channle重复initiate同一个chaincode<br>报错。<code>Error: could not assemble transaction, err proposal response was not successful, error code 500, msg chaincode with name &#39;papercontract&#39; already exists</code></p>
-</li>
-<li><p><strong>【失败】</strong> 重复创建同一个channel<br>报错。<code>BAD_REQUEST -- error authorizing update: error validating ReadSet: readset expected key [Group]  /Channel/Application at version 0, but got version 1</code>。这是因为在之前的<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>指定的channel.tx的write_set里的version为1，而read_set的version为0。之前已经创建过，因此当前的version为1，<code>common/configtx/update.go#authorizeUpdate-&gt;common/configtx/update.go#verifyReadSet</code>校验不通过，报错。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2350,7 +2348,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
