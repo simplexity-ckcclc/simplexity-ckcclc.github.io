@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://simplexity.cn/2020/11/16/authorization-on-chain/</loc>
+    <loc>https://simplexity.cn/2020/11/17/did/</loc>
     
-    <lastmod>2020-11-16T03:01:12.161Z</lastmod>
+    <lastmod>2020-11-17T15:00:10.689Z</lastmod>
     
   </url>
   
@@ -79,27 +79,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/11/14/understanding-bitcoin/</loc>
-    
-    <lastmod>2020-10-28T01:59:15.298Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/07/01/thunderchain-cross-chain/</loc>
-    
-    <lastmod>2020-10-28T01:59:15.298Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/</loc>
-    
-    <lastmod>2020-10-28T01:59:15.298Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/2019/02/23/fabric-tutorial-learning/</loc>
     
     <lastmod>2020-10-28T01:59:15.298Z</lastmod>
@@ -114,14 +93,28 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/</loc>
+    <loc>https://simplexity.cn/2019/07/01/thunderchain-cross-chain/</loc>
     
-    <lastmod>2020-10-28T01:59:15.297Z</lastmod>
+    <lastmod>2020-10-28T01:59:15.298Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/</loc>
+    <loc>https://simplexity.cn/2019/11/14/understanding-bitcoin/</loc>
+    
+    <lastmod>2020-10-28T01:59:15.298Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/</loc>
+    
+    <lastmod>2020-10-28T01:59:15.298Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/</loc>
     
     <lastmod>2020-10-28T01:59:15.297Z</lastmod>
     
@@ -135,14 +128,21 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/</loc>
+    <loc>https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/</loc>
     
     <lastmod>2020-10-28T01:59:15.297Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/</loc>
+    <loc>https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/</loc>
+    
+    <lastmod>2020-10-28T01:59:15.297Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/</loc>
     
     <lastmod>2020-10-28T01:59:15.296Z</lastmod>
     
@@ -156,14 +156,14 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/</loc>
+    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/</loc>
     
     <lastmod>2020-10-28T01:59:15.296Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/</loc>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/</loc>
     
     <lastmod>2020-10-28T01:59:15.296Z</lastmod>
     
@@ -177,21 +177,7 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/</loc>
-    
-    <lastmod>2020-10-28T01:59:15.295Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
-    
-    <lastmod>2020-10-28T01:59:15.295Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/</loc>
     
     <lastmod>2020-10-28T01:59:15.295Z</lastmod>
     
@@ -205,21 +191,28 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
+    <loc>https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/</loc>
     
-    <lastmod>2020-10-28T01:59:15.294Z</lastmod>
+    <lastmod>2020-10-28T01:59:15.295Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/</loc>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/</loc>
     
-    <lastmod>2020-10-28T01:59:15.294Z</lastmod>
+    <lastmod>2020-10-28T01:59:15.295Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://simplexity.cn/2019/04/02/fabric-inpractice-concept/</loc>
+    
+    <lastmod>2020-10-28T01:59:15.294Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
     
     <lastmod>2020-10-28T01:59:15.294Z</lastmod>
     
@@ -233,14 +226,21 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/</loc>
+    <loc>https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/</loc>
+    
+    <lastmod>2020-10-28T01:59:15.294Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/06/12/ethereum-design-rationale/</loc>
     
     <lastmod>2020-10-28T01:59:15.293Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/06/12/ethereum-design-rationale/</loc>
+    <loc>https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/</loc>
     
     <lastmod>2020-10-28T01:59:15.293Z</lastmod>
     
@@ -254,13 +254,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/</loc>
-    
-    <lastmod>2020-10-28T01:59:15.293Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
     
     <lastmod>2020-10-28T01:59:15.293Z</lastmod>
@@ -268,9 +261,9 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/</loc>
+    <loc>https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/</loc>
     
-    <lastmod>2020-10-28T01:59:15.292Z</lastmod>
+    <lastmod>2020-10-28T01:59:15.293Z</lastmod>
     
   </url>
   
@@ -282,14 +275,21 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/03/28/consensus-pbft-paper/</loc>
+    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
     
     <lastmod>2020-10-28T01:59:15.292Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
+    <loc>https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/</loc>
+    
+    <lastmod>2020-10-28T01:59:15.292Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/03/28/consensus-pbft-paper/</loc>
     
     <lastmod>2020-10-28T01:59:15.292Z</lastmod>
     

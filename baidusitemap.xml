@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://simplexity.cn/2020/11/16/authorization-on-chain/</loc>
-    <lastmod>2020-11-16</lastmod>
+    <loc>https://simplexity.cn/2020/11/17/did/</loc>
+    <lastmod>2020-11-17</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2019/09/07/go-channel-demo/</loc>
     <lastmod>2020-11-16</lastmod>
@@ -61,16 +61,16 @@
     <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/</loc>
+    <loc>https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-endorsor/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-endorsor/</loc>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
+    <loc>https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/</loc>
@@ -94,19 +94,19 @@
     <loc>https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
+    <loc>https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/</loc>
+    <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
+    <loc>https://simplexity.cn/2019/07/08/consensus-pos/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
-    <loc>https://simplexity.cn/2019/07/08/consensus-pos/</loc>
+    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/</loc>

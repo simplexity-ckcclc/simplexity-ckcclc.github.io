@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[链上授权方案]]></title>
-    <url>%2F2020%2F11%2F16%2Fauthorization-on-chain%2F</url>
-    <content type="text"><![CDATA[TBD]]></content>
-      <categories>
-        <category>Blockchain</category>
-      </categories>
-      <tags>
-        <tag>Blockchain</tag>
-      </tags>
+    <title><![CDATA[DID分布式身份及账户体系]]></title>
+    <url>%2F2020%2F11%2F17%2Fdid%2F</url>
+    <content type="text"><![CDATA[DID(decentralized identifier)分布式身份的特点： 自主。实体可自主完成DID的注册、解析、更新或撤销操作（上链），⽆需中央注册机构实现全局唯⼀性。 身份互通。多个dapp应用可以共用一个DID，共用一套身份账户体系。 隐私。⼀个实体可以拥有多个身份，由实体自⼰进⾏管理、维护，不同的身份之间没有关联信息，避免身份信息被第三⽅归集。同时，未授权的第三方dapp应用无法得知DID对应的具体用户信息。 W3C标准大多数平台遵从W3C的规范，这样数据可以方便移植和共享，实现底层区块链平台的兼容。 1. 格式规范1Scheme:DID Method:DID Method Specific String Scheme : 通常固定为did，指明该串为DID标志 DID Method : 指定具体遵从的格式规范，通常为不同的服务运营商 DID Method Specific String ：具体的实体的标志。例如，微众的ID为 did:weid:101:0x0086eb1f712ebc6f1c276e12ec21, 具体参看Ref[2]。 2. DID文档（Document）JSON结构，自描述的文档，通常包含有DID本身，公钥信息等内容，可支持解析，更新，撤销等功能。可以存在区块链或者非区块链的分布式账本底层平台，或者存放在IPFS等分布式文件系统里。可以理解成DID与Document是K-V结构。具体参看Ref1。 3. 可验证声明（Verifiable Credential） 建立DID体系的价值所在。DID可以自管理，但是只有被相关方认证过的身份才会被信任，才有业务上的价值。 包含若⼲个“声明(claims) ”。声明信息是与身份关联的属性信息，如姓名，年龄、学历、职业等等。 凭证由发⾏者签名，可通过密码学证明是否由凭证中声称的实体签发且未被篡改，因此被称为可验证凭证。 VC也可以依赖于区块链实现流转，验证。 可以通过授权控制，只透露Document里的指定字段。结合零知识证明，可以只证明某些论断，而不透露具体的信息。 模型参看W3C Draft: Verifiable Credentials Data Model 1.0 Ref： W3C Draft: Decentralized Identifiers (DIDs) v1.0: W3C的规范介绍。 WeIdentity 规范： 微众的DID规范介绍，科普]]></content>
   </entry>
   <entry>
     <title><![CDATA[链上隐私数据]]></title>
@@ -19,8 +13,8 @@
         <category>Blockchain</category>
       </categories>
       <tags>
-        <tag>Blockchain</tag>
         <tag>Hyperledger Fabric</tag>
+        <tag>Blockchain</tag>
       </tags>
   </entry>
   <entry>
@@ -42,7 +36,7 @@
   <entry>
     <title><![CDATA[大数据与区块链]]></title>
     <url>%2F2020%2F07%2F25%2Fbigdata-and-blockchain%2F</url>
-    <content type="text"><![CDATA[Article is cheap, show me the password Incorrect Password! No content to display! U2FsdGVkX1+jy1iO1QvSMQpDo+bo9omarqmnD8l2Xjwj7Pk/1R57A8vkJNyjVuks7JC2ETyg4uzaxttOSPCf0DzXPk5UFX+yAwkzlSZZSvm3C2PZ2jXpHhkXUU3l1kQ3Xq5pf+SImQKJ0yFF3JRjhZAqy6MtWPuOr77VV09hQ4OMbqKpTtQmi6K4E0f1+Po26RY+Y9WY0QCCrqkyFd9INFRbdbVA8a7Y9KbdZ9H7HebnEiIg0a3PygwqQC6oY2ukjTO57OCzbiaWu4fPoCeTVEtwB19wkPJtDTRqP+EyNbpJ3LJEkggO/0hwUaNuPMk49uMPhbmcRODxfhhscgmLEMgShbB+71btwpVU2TP4KhULDW8Y97cYdynK3GEEH83U0roFBKOUrVZQp7cqFgLwutVC1GXZykxvhCVgkUmd43ITDh4bBGyDvebh1yWd2BNV]]></content>
+    <content type="text"><![CDATA[Article is cheap, show me the password Incorrect Password! No content to display! U2FsdGVkX1+sGAg1OlXg5c0uJ0Mzf64RzmC1G/d3gy+vY20N6Vhwrwxn51u2yrp/ql91+3eoeTT2QaWeekWI0heDDniQr0utLum+r071eNaRCozKIt7cDLWqpDT4Kn1PiXhZtVxeiutwC/DDUXrcnIKSJieKHATUFoF7Naye3taxvdyZWdWDALdPXz1S6uAFFAHTR5iTHd14nd7zMATMG5FCJNrn4VGqq8/rOwKDGHvW2VXuodSQUFkpU3bn7Ei2E6tb2C2ZXz6hA528m2Y1K9cJeaC3oXz1quOaBj1L1e1YVDwu//VLFrNmg3UgpGBiZiK/OS6GSW8j+rhS48UfGLgLlbjdN6yXsdaUNsEfkWsP1xUx1scaF4MFcF7VLNtrJISrr+mLTuIe/XBCs3getkc8ZbRe5nB1QAJeqa94G4aHq4oWAKf/U+wBjE4/6m1w]]></content>
   </entry>
   <entry>
     <title><![CDATA[Fabric 2.0新特性]]></title>
