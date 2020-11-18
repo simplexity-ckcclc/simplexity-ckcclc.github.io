@@ -92,25 +92,27 @@
 
 
 
-  <meta name="description" content="Building Your First Network例子中，命令为 1peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/ 客户端调用peer chaincode install命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命">
-<meta name="keywords" content="Hyperledger Fabric,源码分析">
+  <meta name="description" content="DID(decentralized identifier)分布式身份的特点： 自主。实体可自主完成DID的注册、解析、更新或撤销操作（上链），⽆需中央注册机构实现全局唯⼀性。 身份互通。多个dapp应用可以共用一个DID，共用一套身份账户体系。 隐私。⼀个实体可以拥有多个身份，由实体自⼰进⾏管理、维护，不同的身份之间没有关联信息，避免身份信息被第三⽅归集。同时，未授权的第三方dapp应用无法得知D">
+<meta name="keywords" content="DID">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Fabric 1.4源码分析 - chaincode install(1）peer端的install流程">
-<meta property="og:url" content="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/index.html">
+<meta property="og:title" content="DID分布式身份（1） - W3C规范">
+<meta property="og:url" content="https://simplexity.cn/2020/11/17/did-w3c/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="Building Your First Network例子中，命令为 1peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/ 客户端调用peer chaincode install命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命">
+<meta property="og:description" content="DID(decentralized identifier)分布式身份的特点： 自主。实体可自主完成DID的注册、解析、更新或撤销操作（上链），⽆需中央注册机构实现全局唯⼀性。 身份互通。多个dapp应用可以共用一个DID，共用一套身份账户体系。 隐私。⼀个实体可以拥有多个身份，由实体自⼰进⾏管理、维护，不同的身份之间没有关联信息，避免身份信息被第三⽅归集。同时，未授权的第三方dapp应用无法得知D">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.295Z">
+<meta property="og:image" content="https://simplexity.cn/images/did-verifiable-credential.jpg">
+<meta property="og:updated_time" content="2020-11-18T12:25:28.056Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fabric 1.4源码分析 - chaincode install(1）peer端的install流程">
-<meta name="twitter:description" content="Building Your First Network例子中，命令为 1peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/ 客户端调用peer chaincode install命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命">
+<meta name="twitter:title" content="DID分布式身份（1） - W3C规范">
+<meta name="twitter:description" content="DID(decentralized identifier)分布式身份的特点： 自主。实体可自主完成DID的注册、解析、更新或撤销操作（上链），⽆需中央注册机构实现全局唯⼀性。 身份互通。多个dapp应用可以共用一个DID，共用一套身份账户体系。 隐私。⼀个实体可以拥有多个身份，由实体自⼰进⾏管理、维护，不同的身份之间没有关联信息，避免身份信息被第三⽅归集。同时，未授权的第三方dapp应用无法得知D">
+<meta name="twitter:image" content="https://simplexity.cn/images/did-verifiable-credential.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/">
+  <link rel="canonical" href="https://simplexity.cn/2020/11/17/did-w3c/">
 
 
 
@@ -120,7 +122,7 @@
   };
 </script>
 
-  <title>Fabric 1.4源码分析 - chaincode install(1）peer端的install流程 | Simplexity</title>
+  <title>DID分布式身份（1） - W3C规范 | Simplexity</title>
   
 
 
@@ -365,7 +367,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/17/did-w3c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Travis Wong">
@@ -382,7 +384,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程
+          <h1 class="post-title" itemprop="name headline">DID分布式身份（1） - W3C规范
 
               
             
@@ -410,7 +412,7 @@
                 
               
 
-              <time title="Created: 2019-02-25 00:00:48" itemprop="dateCreated datePublished" datetime="2019-02-25T00:00:48+08:00">2019-02-25</time>
+              <time title="Created: 2020-11-17 19:42:06" itemprop="dateCreated datePublished" datetime="2020-11-17T19:42:06+08:00">2020-11-17</time>
             
 
             
@@ -427,29 +429,11 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2020-11-18 20:25:28" itemprop="dateModified" datetime="2020-11-18T20:25:28+08:00">2020-11-18</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -463,8 +447,8 @@
                 </span>
             
                 <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/02/25/fabric-source-chaincode-install-peer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/02/25/fabric-source-chaincode-install-peer/" itemprop="commentCount"></span>
+                <a href="/2020/11/17/did-w3c/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/11/17/did-w3c/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -499,20 +483,34 @@
       
 
       
-        <p><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>例子中，命令为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure>
-<p>客户端调用<code>peer chaincode install</code>命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命令关联的方法是<code>chaincodeInstall</code>。<em>[install的流程与前面介绍的instantiate大体相似，重复不再展开，只勾勒差别处]</em></p>
-<a id="more"></a>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// chaincodeInstall installs the chaincode. If remoteinstall, does it via a lscc call</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">chaincodeInstall</span><span class="params">(cmd *cobra.Command, ccpackfile <span class="keyword">string</span>, cf *ChaincodeCmdFactory)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> cf == <span class="literal">nil</span> &#123;</span><br><span class="line">        cf, err = InitCmdFactory(cmd.Name(), <span class="literal">true</span>, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ccpackmsg proto.Message</span><br><span class="line">    <span class="comment">// ccpackfile = args[0]</span></span><br><span class="line">    <span class="keyword">if</span> ccpackfile == <span class="string">""</span> &#123;</span><br><span class="line">        <span class="comment">// 检查提供的flag参数, 例如chaincodePath(-p), chaincodeVersion(-v), chaincodeName(-n)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//generate a raw ChaincodeDeploymentSpec</span></span><br><span class="line">        ccpackmsg, err = genChaincodeDeploymentSpec(cmd, chaincodeName, chaincodeVersion)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//read in a package generated by the "package" sub-command (and perhaps signed by multiple owners with the "signpackage" sub-command)</span></span><br><span class="line">        ccpackmsg, cds, err = getPackageFromFile(ccpackfile)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//get the chaincode details from cds and validate ChaincodeId.Name, ChaincodeId.Version if user provided</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    err = install(ccpackmsg, cf)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//install the depspec to "peer.address"</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">install</span><span class="params">(msg proto.Message, cf *ChaincodeCmdFactory)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    creator, err := cf.Signer.Serialize()</span><br><span class="line">    prop, _, err := utils.CreateInstallProposalFromCDS(msg, creator)</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// install is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="DID-decentralized-identifier-分布式身份的特点："><a href="#DID-decentralized-identifier-分布式身份的特点：" class="headerlink" title="DID(decentralized identifier)分布式身份的特点："></a>DID(decentralized identifier)分布式身份的特点：</h2><ul>
+<li><strong>自主</strong>。实体可自主完成DID的注册、解析、更新或撤销操作（上链），⽆需中央注册机构实现<strong>全局唯⼀性</strong>。</li>
+<li><strong>身份互通</strong>。多个dapp应用可以共用一个DID，共用一套身份账户体系。</li>
+<li><strong>隐私</strong>。⼀个实体可以拥有多个身份，由实体自⼰进⾏管理、维护，不同的身份之间没有关联信息，避免身份信息被第三⽅归集。同时，未授权的第三方dapp应用无法得知DID对应的具体用户信息。</li>
+</ul>
+<h2 id="W3C标准"><a href="#W3C标准" class="headerlink" title="W3C标准"></a>W3C标准</h2><p>认可度较高，是行业的主要标准，大多数平台遵从W3C的规范，这样数据可以方便移植和共享，实现底层区块链平台的兼容。</p>
+<h3 id="1-格式规范"><a href="#1-格式规范" class="headerlink" title="1. 格式规范"></a>1. 格式规范</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scheme:DID Method:DID Method Specific String</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Scheme : 通常固定为did，指明该串为DID标志</li>
+<li>DID Method : 指定具体遵从的格式规范，通常为不同的服务运营商</li>
+<li>DID Method Specific String ：具体的实体的标志，通常为URL或者URI标识符。<br>例如，微众的WeIdentity为 <code>did:weid:101:0x0086eb1f712ebc6f1c276e12ec21</code>, 具体参看Ref[2]。</li>
+</ul>
+<h3 id="2-DID文档（Document）"><a href="#2-DID文档（Document）" class="headerlink" title="2. DID文档（Document）"></a>2. DID文档（Document）</h3><p>JSON结构，自描述的文档，通常包含有DID本身，公钥信息等内容，可支持解析，更新，撤销等功能。可以存在区块链或者非区块链的分布式账本底层平台，或者存放在IPFS等分布式文件系统里。可以理解成DID与Document是K-V结构。具体字段格式内容参看Ref1。</p>
+<h3 id="3-可验证声明（Verifiable-Credential）"><a href="#3-可验证声明（Verifiable-Credential）" class="headerlink" title="3. 可验证声明（Verifiable Credential）"></a>3. 可验证声明（Verifiable Credential）</h3><ul>
+<li>建立DID体系的价值所在。DID可以自管理，但是只有被相关方认证过的身份才会被信任，才有业务上的价值。</li>
+<li>包含若⼲个“声明(claims) ”。声明信息是与身份关联的属性信息，如姓名，年龄、学历、职业等等。</li>
+<li>凭证由发⾏者签名，可通过密码学证明是否由凭证中声称的实体签发且未被篡改，因此被称为可验证凭证。</li>
+<li>VC也可以依赖于区块链实现流转，验证。</li>
+<li><strong>可以通过授权控制，只透露Document里的指定字段。结合零知识证明，可以只证明某些论断，而不透露具体的信息。</strong>  </li>
+<li>模型参看<a href="https://w3c.github.io/vc-data-model/#terminology" target="_blank" rel="noopener">W3C Draft: Verifiable Credentials Data Model 1.0</a><br><img src="/images/did-verifiable-credential.jpg" alt></li>
+</ul>
+<p>Ref：</p>
+<blockquote>
 <ol>
-<li>install与instantiate方法类似，首先<code>InitCmdFactory</code>初始化命令工厂辅助，参见instantiate（1）.</li>
-<li><p>获取chaincode的文件描述。这里分为两种方式，区别在于是否先使用<code>peer chaincode package</code>命令，得到的package作为<code>chaincode istall</code>参数，通常还经过多个参与者签名。具体可以参看<a href="https://hyperledger-fabric.readthedocs.io/en/latest/chaincode4noah.html" target="_blank" rel="noopener">chaincode lifecycle</a>。package命令以后再详述。Tutorial里的例子没有先经过package，参数<code>ccpackfile</code>为空，则进入<code>genChaincodeDeploymentSpec</code>第一种方式产生cds。</p>
-<p> <code>genChaincodeDeploymentSpec</code>过程与instantiate大致一致，可以参考instantiate（2），这里不同的是<code>peer/chaincode/common.go:getChaincodeDeploymentSpec</code>里会进入到<code>if</code>条件里，执行到<code>codePackageBytes, err = container.GetChaincodePackageBytes(spec)</code>。这个方法会区分不同的语言平台（这个语言选择是命令行里-l指定的）将代码gzip压缩，tar打包（以golang为例，为了精简包大小，去除golang标准库，fabric框架包等，加入第三方依赖包，META-INF信息等），返回[]byte。后面的流程与instantiate类似，可参考不再详述，可以认真对比下区别在于cis的Input和cds。</p>
-</li>
+<li><a href="https://w3c.github.io/did-core/" target="_blank" rel="noopener">W3C Draft: Decentralized Identifiers (DIDs) v1.0</a>: W3C的规范介绍。</li>
+<li><a href="https://weidentity.readthedocs.io/zh_CN/latest/docs/weidentity-spec.html" target="_blank" rel="noopener">WeIdentity 规范</a>： 微众的DID规范介绍，科普</li>
 </ol>
-<p>产生<code>ccpackmsg</code>(<code>pb.ChaincodeDeploymentSpec</code>结构)执行<code>install</code>。正如源码里的注释和前面instantiate（1）介绍的InitCmdFactory，install方法只能作用于唯一一个endorser（”peer.address”）。注意，这里与instantiate不同，在instantiate里还有第三步<code>cf.BroadcastClient.Send(env)</code>.这里说明，install命令不需要将message发往orderer去排序和产生区块。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// peer.ChaincodeInvokeSpec(cis)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"ChaincodeInvokeSpec"</span> : &#123;</span><br><span class="line">        "ChaincodeSpec" : &#123; // pb.ChaincodeSpec</span><br><span class="line">            "Type" : "ChaincodeSpec_GOLANG",</span><br><span class="line">            "ChaincodeId" : &#123;</span><br><span class="line">                "Name" : "lscc"</span><br><span class="line">            &#125;,</span><br><span class="line">            "Input" : &#123;</span><br><span class="line">                "Args" : ["install", "$&#123;chaincodDeploySpec&#125;"]</span><br><span class="line">            &#125;    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// pb.chaincodDeploySpec(cds)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"ChaincodeSpec"</span>: &#123;</span><br><span class="line">        <span class="attr">"Type"</span> : <span class="string">"ChaincodeSpec_GOLANG"</span>,</span><br><span class="line">        <span class="attr">"ChaincodeId"</span> : &#123;</span><br><span class="line">            <span class="attr">"Path"</span> : <span class="string">"$&#123;chaincodePath&#125;"</span>,</span><br><span class="line">            <span class="attr">"Name"</span> : <span class="string">"$&#123;chaincodeName&#125;"</span>,</span><br><span class="line">            <span class="attr">"Version"</span> : <span class="string">"$&#123;chaincodeVersion&#125;"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"Input"</span> : <span class="string">"nil"</span>   </span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"CodePackage"</span>: <span class="string">"#&#123;container.GetChaincodePackageBytes(spec)&#125;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>至此，peer端的install完成，该节点仅仅是作为执行install命令，需要本地拥有install的代码包，install并不是安装到该peer节点而是endorser节点。</p>
+</blockquote>
 
       
     </div>
@@ -546,9 +544,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
-          
-            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
+            <a href="/tags/DID/" rel="tag"><i class="fa fa-tag"></i> DID</a>
           
         </div>
       
@@ -561,8 +557,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/" rel="next" title="Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程">
-                <i class="fa fa-chevron-left"></i> Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程
+              <a href="/2020/11/04/privacy-on-chain/" rel="next" title="链上隐私数据">
+                <i class="fa fa-chevron-left"></i> 链上隐私数据
               </a>
             
           </div>
@@ -571,8 +567,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/25/fabric-source-chaincode-install-endorsor/" rel="prev" title="Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程">
-                Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/11/18/did-account-system/" rel="prev" title="DID分布式身份（2） - 账户体系架构">
+                DID分布式身份（2） - 账户体系架构 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -625,8 +621,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -752,6 +757,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DID-decentralized-identifier-分布式身份的特点："><span class="nav-number">1.</span> <span class="nav-text">DID(decentralized identifier)分布式身份的特点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#W3C标准"><span class="nav-number">2.</span> <span class="nav-text">W3C标准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式规范"><span class="nav-number">2.1.</span> <span class="nav-text">1. 格式规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-DID文档（Document）"><span class="nav-number">2.2.</span> <span class="nav-text">2. DID文档（Document）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-可验证声明（Verifiable-Credential）"><span class="nav-number">2.3.</span> <span class="nav-text">3. 可验证声明（Verifiable Credential）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -942,7 +964,7 @@
 <script>
   function renderGitment() {
     var gitment = new Gitmint({
-      id: '1551024048000',
+      id: '1605613326000',
       owner: 'simplexity-ckcclc',
       repo: 'gitment-comments',
       

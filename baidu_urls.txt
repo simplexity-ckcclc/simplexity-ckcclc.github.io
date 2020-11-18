@@ -1,4 +1,5 @@
-https://simplexity.cn/2020/11/17/did/
+https://simplexity.cn/2020/11/18/did-account-system/
+https://simplexity.cn/2020/11/17/did-w3c/
 https://simplexity.cn/2020/11/04/privacy-on-chain/
 https://simplexity.cn/2020/10/20/mpc-terminology/
 https://simplexity.cn/2020/08/12/zk-snark-paper/

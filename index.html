@@ -364,7 +364,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/17/did/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/18/did-account-system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Travis Wong">
@@ -384,7 +384,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2020/11/17/did/" class="post-title-link" itemprop="url">DID分布式身份及账户体系</a>
+                <a href="/2020/11/18/did-account-system/" class="post-title-link" itemprop="url">DID分布式身份（2） - 账户体系架构</a>
               
             
           </h1>
@@ -411,7 +411,7 @@
                 
               
 
-              <time title="Created: 2020-11-17 19:42:06 / Modified: 23:00:10" itemprop="dateCreated datePublished" datetime="2020-11-17T19:42:06+08:00">2020-11-17</time>
+              <time title="Created: 2020-11-18 20:21:44 / Modified: 23:23:00" itemprop="dateCreated datePublished" datetime="2020-11-18T20:21:44+08:00">2020-11-18</time>
             
 
             
@@ -451,19 +451,187 @@
 
       
         
-          <h2 id="DID-decentralized-identifier-分布式身份的特点："><a href="#DID-decentralized-identifier-分布式身份的特点：" class="headerlink" title="DID(decentralized identifier)分布式身份的特点："></a>DID(decentralized identifier)分布式身份的特点：</h2><ul>
+          基于分布式身份的账户体系架构设计。
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/11/18/did-account-system/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/17/did-w3c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/17/did-w3c/" class="post-title-link" itemprop="url">DID分布式身份（1） - W3C规范</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-11-17 19:42:06" itemprop="dateCreated datePublished" datetime="2020-11-17T19:42:06+08:00">2020-11-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-11-18 20:25:28" itemprop="dateModified" datetime="2020-11-18T20:25:28+08:00">2020-11-18</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="DID-decentralized-identifier-分布式身份的特点："><a href="#DID-decentralized-identifier-分布式身份的特点：" class="headerlink" title="DID(decentralized identifier)分布式身份的特点："></a>DID(decentralized identifier)分布式身份的特点：</h2><ul>
 <li><strong>自主</strong>。实体可自主完成DID的注册、解析、更新或撤销操作（上链），⽆需中央注册机构实现<strong>全局唯⼀性</strong>。</li>
 <li><strong>身份互通</strong>。多个dapp应用可以共用一个DID，共用一套身份账户体系。</li>
 <li><strong>隐私</strong>。⼀个实体可以拥有多个身份，由实体自⼰进⾏管理、维护，不同的身份之间没有关联信息，避免身份信息被第三⽅归集。同时，未授权的第三方dapp应用无法得知DID对应的具体用户信息。</li>
 </ul>
-<h2 id="W3C标准"><a href="#W3C标准" class="headerlink" title="W3C标准"></a>W3C标准</h2><p>大多数平台遵从W3C的规范，这样数据可以方便移植和共享，实现底层区块链平台的兼容。</p>
+<h2 id="W3C标准"><a href="#W3C标准" class="headerlink" title="W3C标准"></a>W3C标准</h2><p>认可度较高，是行业的主要标准，大多数平台遵从W3C的规范，这样数据可以方便移植和共享，实现底层区块链平台的兼容。</p>
 <h3 id="1-格式规范"><a href="#1-格式规范" class="headerlink" title="1. 格式规范"></a>1. 格式规范</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scheme:DID Method:DID Method Specific String</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Scheme : 通常固定为did，指明该串为DID标志</li>
 <li>DID Method : 指定具体遵从的格式规范，通常为不同的服务运营商</li>
-<li>DID Method Specific String ：具体的实体的标志。<br>例如，微众的ID为 <code>did:weid:101:0x0086eb1f712ebc6f1c276e12ec21</code>, 具体参看Ref[2]。</li>
+<li>DID Method Specific String ：具体的实体的标志，通常为URL或者URI标识符。<br>例如，微众的WeIdentity为 <code>did:weid:101:0x0086eb1f712ebc6f1c276e12ec21</code>, 具体参看Ref[2]。</li>
 </ul>
-<h3 id="2-DID文档（Document）"><a href="#2-DID文档（Document）" class="headerlink" title="2. DID文档（Document）"></a>2. DID文档（Document）</h3><p>JSON结构，自描述的文档，通常包含有DID本身，公钥信息等内容，可支持解析，更新，撤销等功能。可以存在区块链或者非区块链的分布式账本底层平台，或者存放在IPFS等分布式文件系统里。可以理解成DID与Document是K-V结构。具体参看Ref1。</p>
+<h3 id="2-DID文档（Document）"><a href="#2-DID文档（Document）" class="headerlink" title="2. DID文档（Document）"></a>2. DID文档（Document）</h3><p>JSON结构，自描述的文档，通常包含有DID本身，公钥信息等内容，可支持解析，更新，撤销等功能。可以存在区块链或者非区块链的分布式账本底层平台，或者存放在IPFS等分布式文件系统里。可以理解成DID与Document是K-V结构。具体字段格式内容参看Ref1。</p>
 <h3 id="3-可验证声明（Verifiable-Credential）"><a href="#3-可验证声明（Verifiable-Credential）" class="headerlink" title="3. 可验证声明（Verifiable Credential）"></a>3. 可验证声明（Verifiable Credential）</h3><ul>
 <li>建立DID体系的价值所在。DID可以自管理，但是只有被相关方认证过的身份才会被信任，才有业务上的价值。</li>
 <li>包含若⼲个“声明(claims) ”。声明信息是与身份关联的属性信息，如姓名，年龄、学历、职业等等。</li>
@@ -479,15 +647,8 @@
 <li><a href="https://weidentity.readthedocs.io/zh_CN/latest/docs/weidentity-spec.html" target="_blank" rel="noopener">WeIdentity 规范</a>： 微众的DID规范介绍，科普</li>
 </ol>
 </blockquote>
-          <!--noindex-->
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/11/17/did/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1171,7 +1332,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2020-11-18 20:20:08" itemprop="dateModified" datetime="2020-11-18T20:20:08+08:00">2020-11-18</time>
               
             
           </span>
@@ -2042,186 +2203,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/19/fabric-chaincode-lifecycle-uml/" class="post-title-link" itemprop="url">Fabric 1.4 chaincode lifecycle(install & instantiate)</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-10-19 11:32:02" itemprop="dateCreated datePublished" datetime="2019-10-19T11:32:02+08:00">2019-10-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>chaincode install &amp; instantiate的大致流程，其中install无需order流程。具体细节可参考之前的源码分析系列。</p>
-<p><img src="/images/chaincode-lifecycle-uml.png" alt></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2271,7 +2252,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2327,7 +2308,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

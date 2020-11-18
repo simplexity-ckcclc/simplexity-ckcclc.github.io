@@ -92,25 +92,25 @@
 
 
 
-  <meta name="description" content="Building Your First Network例子中，命令为 1peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/ 客户端调用peer chaincode install命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命">
-<meta name="keywords" content="Hyperledger Fabric,源码分析">
+  <meta name="description" content="基于分布式身份的账户体系架构设计。">
+<meta name="keywords" content="DID">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Fabric 1.4源码分析 - chaincode install(1）peer端的install流程">
-<meta property="og:url" content="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/index.html">
+<meta property="og:title" content="DID分布式身份（2） - 账户体系架构">
+<meta property="og:url" content="https://simplexity.cn/2020/11/18/did-account-system/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="Building Your First Network例子中，命令为 1peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/ 客户端调用peer chaincode install命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命">
+<meta property="og:description" content="基于分布式身份的账户体系架构设计。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.295Z">
+<meta property="og:updated_time" content="2020-11-18T15:23:00.838Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fabric 1.4源码分析 - chaincode install(1）peer端的install流程">
-<meta name="twitter:description" content="Building Your First Network例子中，命令为 1peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/ 客户端调用peer chaincode install命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命">
+<meta name="twitter:title" content="DID分布式身份（2） - 账户体系架构">
+<meta name="twitter:description" content="基于分布式身份的账户体系架构设计。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/">
+  <link rel="canonical" href="https://simplexity.cn/2020/11/18/did-account-system/">
 
 
 
@@ -120,7 +120,7 @@
   };
 </script>
 
-  <title>Fabric 1.4源码分析 - chaincode install(1）peer端的install流程 | Simplexity</title>
+  <title>DID分布式身份（2） - 账户体系架构 | Simplexity</title>
   
 
 
@@ -365,7 +365,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/18/did-account-system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Travis Wong">
@@ -382,7 +382,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程
+          <h1 class="post-title" itemprop="name headline">DID分布式身份（2） - 账户体系架构
 
               
             
@@ -410,46 +410,16 @@
                 
               
 
-              <time title="Created: 2019-02-25 00:00:48" itemprop="dateCreated datePublished" datetime="2019-02-25T00:00:48+08:00">2019-02-25</time>
+              <time title="Created: 2020-11-18 20:21:44 / Modified: 23:23:00" itemprop="dateCreated datePublished" datetime="2020-11-18T20:21:44+08:00">2020-11-18</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -463,8 +433,8 @@
                 </span>
             
                 <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/02/25/fabric-source-chaincode-install-peer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/02/25/fabric-source-chaincode-install-peer/" itemprop="commentCount"></span>
+                <a href="/2020/11/18/did-account-system/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/11/18/did-account-system/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -499,21 +469,20 @@
       
 
       
-        <p><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>例子中，命令为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure>
-<p>客户端调用<code>peer chaincode install</code>命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命令关联的方法是<code>chaincodeInstall</code>。<em>[install的流程与前面介绍的instantiate大体相似，重复不再展开，只勾勒差别处]</em></p>
-<a id="more"></a>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// chaincodeInstall installs the chaincode. If remoteinstall, does it via a lscc call</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">chaincodeInstall</span><span class="params">(cmd *cobra.Command, ccpackfile <span class="keyword">string</span>, cf *ChaincodeCmdFactory)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> cf == <span class="literal">nil</span> &#123;</span><br><span class="line">        cf, err = InitCmdFactory(cmd.Name(), <span class="literal">true</span>, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ccpackmsg proto.Message</span><br><span class="line">    <span class="comment">// ccpackfile = args[0]</span></span><br><span class="line">    <span class="keyword">if</span> ccpackfile == <span class="string">""</span> &#123;</span><br><span class="line">        <span class="comment">// 检查提供的flag参数, 例如chaincodePath(-p), chaincodeVersion(-v), chaincodeName(-n)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//generate a raw ChaincodeDeploymentSpec</span></span><br><span class="line">        ccpackmsg, err = genChaincodeDeploymentSpec(cmd, chaincodeName, chaincodeVersion)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//read in a package generated by the "package" sub-command (and perhaps signed by multiple owners with the "signpackage" sub-command)</span></span><br><span class="line">        ccpackmsg, cds, err = getPackageFromFile(ccpackfile)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//get the chaincode details from cds and validate ChaincodeId.Name, ChaincodeId.Version if user provided</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    err = install(ccpackmsg, cf)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//install the depspec to "peer.address"</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">install</span><span class="params">(msg proto.Message, cf *ChaincodeCmdFactory)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    creator, err := cf.Signer.Serialize()</span><br><span class="line">    prop, _, err := utils.CreateInstallProposalFromCDS(msg, creator)</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// install is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>install与instantiate方法类似，首先<code>InitCmdFactory</code>初始化命令工厂辅助，参见instantiate（1）.</li>
-<li><p>获取chaincode的文件描述。这里分为两种方式，区别在于是否先使用<code>peer chaincode package</code>命令，得到的package作为<code>chaincode istall</code>参数，通常还经过多个参与者签名。具体可以参看<a href="https://hyperledger-fabric.readthedocs.io/en/latest/chaincode4noah.html" target="_blank" rel="noopener">chaincode lifecycle</a>。package命令以后再详述。Tutorial里的例子没有先经过package，参数<code>ccpackfile</code>为空，则进入<code>genChaincodeDeploymentSpec</code>第一种方式产生cds。</p>
-<p> <code>genChaincodeDeploymentSpec</code>过程与instantiate大致一致，可以参考instantiate（2），这里不同的是<code>peer/chaincode/common.go:getChaincodeDeploymentSpec</code>里会进入到<code>if</code>条件里，执行到<code>codePackageBytes, err = container.GetChaincodePackageBytes(spec)</code>。这个方法会区分不同的语言平台（这个语言选择是命令行里-l指定的）将代码gzip压缩，tar打包（以golang为例，为了精简包大小，去除golang标准库，fabric框架包等，加入第三方依赖包，META-INF信息等），返回[]byte。后面的流程与instantiate类似，可参考不再详述，可以认真对比下区别在于cis的Input和cds。</p>
-</li>
-</ol>
-<p>产生<code>ccpackmsg</code>(<code>pb.ChaincodeDeploymentSpec</code>结构)执行<code>install</code>。正如源码里的注释和前面instantiate（1）介绍的InitCmdFactory，install方法只能作用于唯一一个endorser（”peer.address”）。注意，这里与instantiate不同，在instantiate里还有第三步<code>cf.BroadcastClient.Send(env)</code>.这里说明，install命令不需要将message发往orderer去排序和产生区块。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// peer.ChaincodeInvokeSpec(cis)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"ChaincodeInvokeSpec"</span> : &#123;</span><br><span class="line">        "ChaincodeSpec" : &#123; // pb.ChaincodeSpec</span><br><span class="line">            "Type" : "ChaincodeSpec_GOLANG",</span><br><span class="line">            "ChaincodeId" : &#123;</span><br><span class="line">                "Name" : "lscc"</span><br><span class="line">            &#125;,</span><br><span class="line">            "Input" : &#123;</span><br><span class="line">                "Args" : ["install", "$&#123;chaincodDeploySpec&#125;"]</span><br><span class="line">            &#125;    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// pb.chaincodDeploySpec(cds)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"ChaincodeSpec"</span>: &#123;</span><br><span class="line">        <span class="attr">"Type"</span> : <span class="string">"ChaincodeSpec_GOLANG"</span>,</span><br><span class="line">        <span class="attr">"ChaincodeId"</span> : &#123;</span><br><span class="line">            <span class="attr">"Path"</span> : <span class="string">"$&#123;chaincodePath&#125;"</span>,</span><br><span class="line">            <span class="attr">"Name"</span> : <span class="string">"$&#123;chaincodeName&#125;"</span>,</span><br><span class="line">            <span class="attr">"Version"</span> : <span class="string">"$&#123;chaincodeVersion&#125;"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"Input"</span> : <span class="string">"nil"</span>   </span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"CodePackage"</span>: <span class="string">"#&#123;container.GetChaincodePackageBytes(spec)&#125;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>至此，peer端的install完成，该节点仅仅是作为执行install命令，需要本地拥有install的代码包，install并不是安装到该peer节点而是endorser节点。</p>
-
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<div id="security">
+  <div class="input-container">
+  <input type="password" class="form-control" id="pass" placeholder="Post is cheap, show me the password">
+    <label for="pass">Post is cheap, show me the password</label>
+    <div class="bottom-line"></div>
+  </div>
+</div>
+<div id="decryptionError" style="display: none;">Incorrect Password!</div>
+<div id="noContentError" style="display: none;">No content to display!</div>
+<div id="encrypt-blog" style="display:none">
+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
+</div>
+<script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
       
     </div>
 
@@ -546,9 +515,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
-          
-            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
+            <a href="/tags/DID/" rel="tag"><i class="fa fa-tag"></i> DID</a>
           
         </div>
       
@@ -561,8 +528,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/" rel="next" title="Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程">
-                <i class="fa fa-chevron-left"></i> Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程
+              <a href="/2020/11/17/did-w3c/" rel="next" title="DID分布式身份（1） - W3C规范">
+                <i class="fa fa-chevron-left"></i> DID分布式身份（1） - W3C规范
               </a>
             
           </div>
@@ -570,10 +537,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/25/fabric-source-chaincode-install-endorsor/" rel="prev" title="Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程">
-                Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -942,7 +905,7 @@
 <script>
   function renderGitment() {
     var gitment = new Gitmint({
-      id: '1551024048000',
+      id: '1605702104000',
       owner: 'simplexity-ckcclc',
       repo: 'gitment-comments',
       
