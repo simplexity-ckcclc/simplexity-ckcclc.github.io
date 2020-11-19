@@ -92,25 +92,23 @@
 
 
 
-  <meta name="description" content="本节主要基于fabric-samples/basic-network分析。查看generate.sh这个脚本，里面主要执行了如下四个命令1234567891011// 生成msp模块需要的证书cryptogen generate --config=./crypto-config.yaml// 生成创世块configtxgen -profile OneOrgOrdererGenesis -outpu">
-<meta name="keywords" content="Hyperledger Fabric">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Fabric的configtxgen工具生成区块及配置文件分析">
-<meta property="og:url" content="https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/index.html">
+  <meta name="description" content="Simple is Complex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simplexity">
+<meta property="og:url" content="https://simplexity.cn/tags/Smart-Contract/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="本节主要基于fabric-samples/basic-network分析。查看generate.sh这个脚本，里面主要执行了如下四个命令1234567891011// 生成msp模块需要的证书cryptogen generate --config=./crypto-config.yaml// 生成创世块configtxgen -profile OneOrgOrdererGenesis -outpu">
+<meta property="og:description" content="Simple is Complex">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.293Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fabric的configtxgen工具生成区块及配置文件分析">
-<meta name="twitter:description" content="本节主要基于fabric-samples/basic-network分析。查看generate.sh这个脚本，里面主要执行了如下四个命令1234567891011// 生成msp模块需要的证书cryptogen generate --config=./crypto-config.yaml// 生成创世块configtxgen -profile OneOrgOrdererGenesis -outpu">
+<meta name="twitter:title" content="Simplexity">
+<meta name="twitter:description" content="Simple is Complex">
 
 
 
 
 
 
-  <link rel="canonical" href="https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/">
+  <link rel="canonical" href="https://simplexity.cn/tags/Smart-Contract/">
 
 
 
@@ -120,7 +118,7 @@
   };
 </script>
 
-  <title>Fabric的configtxgen工具生成区块及配置文件分析 | Simplexity</title>
+  <title>Tag: Smart Contract | Simplexity</title>
   
 
 
@@ -168,7 +166,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -240,7 +238,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags menu-item-active">
 
     
     
@@ -345,259 +343,82 @@
           
             
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
           
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>Smart Contract<small>Tag</small>
+        </h1>
+      </div>
 
-  
-  
-  
-
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+          <a class="post-title-link" href="/2020/11/19/authorization-in-smart-contract/" itemprop="url">
+            
+              <span itemprop="name">智能合约授权</span>
+            
+          </a>
         
-          <h1 class="post-title" itemprop="name headline">Fabric的configtxgen工具生成区块及配置文件分析
+      </h2>
 
-              
-            
-          </h1>
-        
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2020-11-19T19:16:43+08:00" content="2020-11-19">
+          11-19
+        </time>
+      </div>
 
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-14 18:41:06" itemprop="dateCreated datePublished" datetime="2019-05-14T18:41:06+08:00">2019-05-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/05/14/fabric-configtxgen-tool/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/14/fabric-configtxgen-tool/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>本节主要基于<a href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network" target="_blank" rel="noopener">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
-<p><code>cryptogen</code>和<code>configtxgen</code>分别用于加密和配置的工具，其代码路径为<code>hyperledger/fabric/common/tools/cryptogen</code>和<code>hyperledger/fabric/common/tools/configtxgen</code>。cryptogen产生了各级msp，在peer，orderer里皆有用到，包括后面介绍的configtxgen里包含msp信息这些也是由此产生。这里暂且不展开分析。</p>
-<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a href="https://www.chaindesk.cn/witbook/30/503" target="_blank" rel="noopener">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">"CONFIGTX"</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure></p>
-<p>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json" target="_blank" rel="noopener">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
-<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json" target="_blank" rel="noopener">JSON结构</a>。</p>
-<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>${CHANNEL_NAME}.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock ${CHANNEL_NAME}.block</code>这个命令查看其<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json" target="_blank" rel="noopener">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
-<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><blockquote>
-<p><a href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb" target="_blank" rel="noopener">Hyperledger Fabric权限进阶篇</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
-    
-</div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/04/29/fabric-cryptography-msp-summary/" rel="next" title="密码学基础知识汇总及Fabric的MSP体系">
-                <i class="fa fa-chevron-left"></i> 密码学基础知识汇总及Fabric的MSP体系
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/12/ethereum-design-rationale/" rel="prev" title="Ethereum设计理念Design Rationale学习心得">
-                Ethereum设计理念Design Rationale学习心得 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
+      
+    </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
 
         </div>
         
@@ -618,17 +439,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -756,23 +568,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref"><span class="nav-number">1.</span> <span class="nav-text">Ref</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
@@ -929,10 +724,6 @@
 
 
   
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
 
   
 
@@ -943,49 +734,6 @@
 
   
 
-
-  
-    <!-- LOCAL: You can save these files to your site and update links -->
-
-  
-  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<!-- END LOCAL -->
-
-<style>
-#gitment-container a {
-  border-bottom: none;
-}
-
-</style>
-
-<script>
-  function renderGitment() {
-    var gitment = new Gitmint({
-      id: '1557830466000',
-      owner: 'simplexity-ckcclc',
-      repo: 'gitment-comments',
-      
-        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-      
-      oauth: {
-      
-      
-        client_secret: 'ab2011234194ade1678b2b4d771b0aa55e768632',
-      
-        client_id: 'd91524ebfcf0e898c853'
-      }
-    });
-    gitment.render('gitment-container');
-  }
-
-  
-    renderGitment();
-  
-</script>
-
-  
 
 
   

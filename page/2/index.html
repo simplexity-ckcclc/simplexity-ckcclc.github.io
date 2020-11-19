@@ -364,6 +364,204 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/23/fabric-inpractice-commercialpaper-byfn/" class="post-title-link" itemprop="url">Fabric实战（1） - 基础篇，基于byfn的Commercial Paper案例</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-23 18:13:46" itemprop="dateCreated datePublished" datetime="2019-10-23T18:13:46+08:00">2019-10-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>之前分享过<a href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">Fabric官网Commercial Paper案例chaincode的golang实现</a>，现在基于官网<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>再次记录过程，同时添加部分新操作及分析，以此作为以后的进阶实战基础。</p>
+<ol>
+<li><p>使用命令<code>./byfn.sh up</code>启动网络</p>
+</li>
+<li><p>查看配置文件<code>/fabric-samples/first-network/docker-compose-cli.yaml</code>,可见cli的挂载volume设置  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cli:</span><br><span class="line">  volume:</span><br><span class="line">    - ./../chaincode/:/opt/gopath/src/github.com/chaincode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将编写的chaincode源文件放置在该挂载的路径<code>/chaincode/go</code>下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp commercial_paper.go /chaincode/go</span><br><span class="line">cp paper.go /chaincode/go</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>docker exec -it cli bash</code>登入容器cli</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- 执行peer chaincode install -n commercialpaper -v 0 -p github.com/chaincode/commercial_paper/go</span><br><span class="line">- 执行echo $CORE_PEER_MSPCONFIGPATH。可见当前角色为admin</span><br><span class="line">    ---</span><br><span class="line">    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line">- 执行peer chaincode list -C mychannel --installed</span><br><span class="line">    ---</span><br><span class="line">    Get installed chaincodes on peer:</span><br><span class="line">    Name: commercialpaper, Version: 0, Path: github.com/chaincode/commercial_paper/go, Id: f033307bf72f876fb5a95883d53ed5209e6639386e21361eed65f459d8a9f276</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/23/fabric-inpractice-commercialpaper-byfn/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2044,241 +2242,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/29/fabric-cryptography-msp-summary/" class="post-title-link" itemprop="url">密码学基础知识汇总及Fabric的MSP体系</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-04-29 14:12:08" itemprop="dateCreated datePublished" datetime="2019-04-29T14:12:08+08:00">2019-04-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这篇只是汇总在学习密码学和Fabric的MSP体系过程中的阅读，方便日后回头翻阅，可以迅速回忆。涉及内容较多主体较为分散，挂一漏万。仍有待深入研究学习。</p>
-<ol>
-<li><p>密码学的基础知识概述（Hash算法，对称加密算法，X.509证书）</p>
-<blockquote>
-<ul>
-<li><a href="https://blog.csdn.net/ckcclc/article/details/89361898" target="_blank" rel="noopener">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
-<li><a href="https://knowledge.digicert.com/solution/SO4583.html" target="_blank" rel="noopener">Structure of X509 Certificates</a> : X.509结构  </li>
-</ul>
-</blockquote>
-</li>
-<li><p>RSA</p>
-<blockquote>
-<ul>
-<li><a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html" target="_blank" rel="noopener">RSA算法原理(一)</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html" target="_blank" rel="noopener">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
-</ul>
-</blockquote>
-</li>
-<li><p>ECC（椭圆曲线）</p>
-<blockquote>
-<ul>
-<li><a href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/" target="_blank" rel="noopener">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
-<li><a href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/" target="_blank" rel="noopener">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
-</ul>
-</blockquote>
-<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys" target="_blank" rel="noopener">Fabric官网-Membership Service Providers (MSP)</a></p>
-<p>Ref: Bitcoin和Ethereum中的vrs（v：recovery id）</p>
-<blockquote>
-<ul>
-<li><a href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v" target="_blank" rel="noopener">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
-<li><a href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work" target="_blank" rel="noopener">How does recovering the public key from an ECDSA signature work?</a></li>
-</ul>
-</blockquote>
-</li>
-<li><p>零知识证明 Zero-Knowledge-Proof</p>
-<blockquote>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank" rel="noopener">Zero-Knowledge-Proof Wikipedia</a>  </li>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html" target="_blank" rel="noopener">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
-</ul>
-</blockquote>
-</li>
-<li><p>Fabric官网的MSP相关文档汇总</p>
-<blockquote>
-<ul>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html" target="_blank" rel="noopener">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html" target="_blank" rel="noopener">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys" target="_blank" rel="noopener">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
-</ul>
-</blockquote>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2323,7 +2291,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2381,7 +2349,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
