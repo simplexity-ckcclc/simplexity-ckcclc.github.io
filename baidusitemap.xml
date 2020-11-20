@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
+    <lastmod>2020-11-20</lastmod>
+  </url>  <url>
     <loc>https://simplexity.cn/2020/11/04/privacy-on-chain/</loc>
     <lastmod>2020-11-20</lastmod>
   </url>  <url>
@@ -26,9 +29,6 @@
     <lastmod>2020-11-04</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2020/10/20/mpc-terminology/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>  <url>
-    <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2019/02/23/fabric-tutorial-learning/</loc>
