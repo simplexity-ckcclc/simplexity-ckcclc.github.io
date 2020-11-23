@@ -364,6 +364,206 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/" class="post-title-link" itemprop="url">Fabric实战（2）- Commercial Paper的Fabric-Java-SDK客户端</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-11-02 18:13:46" itemprop="dateCreated datePublished" datetime="2019-11-02T18:13:46+08:00">2019-11-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>到目前为止都是通过在cli容器执行<code>peer chaincode</code>命令调用chaincode，实际上官方提供<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/fabric-sdks.html" target="_blank" rel="noopener">SDK</a>（当前只有Node.js和Java两种）。这里提供基于Fabric Java SDK的commercial paper客户端，设置使用TLS，详细项目代码在<a href="https://github.com/simplexity-ckcclc/fabric-learning/tree/master/java-sdk/commercial-paper" target="_blank" rel="noopener">github</a>。项目采用Springboot，swagger提供网页调用。注意，这里只是demo，不能作为生产环境使用。具体步骤大致拆解如下：</p>
+<ol>
+<li>构建HFClient<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> HFClient <span class="title">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// 使用Org1的admin用户身份。由于使用TSL，这里提供keyFile：admin的私钥和certFile：由ca.org1.example.com签发的证书</span></span><br><span class="line">    <span class="comment">// 也可以通过使用HFCAClient向ca发送enroll和register请求用于新增注册和登记身份证书。具体可以参看参考文档。</span></span><br><span class="line">    Enrollment enrollment = PaperUser.createEnrollmentFromPemFile(keyFile, certFile);</span><br><span class="line">    PaperUser admin = <span class="keyword">new</span> PaperUser(name, mspId, enrollment);</span><br><span class="line"></span><br><span class="line">    HFClient client = HFClient.createNewInstance();</span><br><span class="line">    client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());</span><br><span class="line">    client.setUserContext(admin);</span><br><span class="line">    initChannel();</span><br><span class="line">    <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> Enrollment <span class="title">createEnrollmentFromPemFile</span><span class="params">(String keyFile, String certFile)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] keyPem = Files.readAllBytes(Paths.get(keyFile));     <span class="comment">//载入私钥PEM文本</span></span><br><span class="line">    <span class="keyword">byte</span>[] certPem = Files.readAllBytes(Paths.get(certFile));   <span class="comment">//载入证书PEM文本</span></span><br><span class="line">    CryptoPrimitives suite = <span class="keyword">new</span> CryptoPrimitives();            <span class="comment">//载入密码学套件</span></span><br><span class="line">    PrivateKey privateKey = suite.bytesToPrivateKey(keyPem);    <span class="comment">//将PEM文本转换为私钥对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> X509Enrollment(privateKey,<span class="keyword">new</span> String(certPem));  <span class="comment">//创建并返回X509Enrollment对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用TSL，需要提供peerTLScaCertFile：tlsca.org1.example.com的证书和ordererTLScaCertFile：tlsca.example.com的证书</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Channel channel = client.newChannel(channelID);</span><br><span class="line">    Properties peerProps = <span class="keyword">new</span> Properties();</span><br><span class="line">    peerProps.put(<span class="string">"pemFile"</span>, peerTLScaCertFile);</span><br><span class="line">    peerProps.setProperty(<span class="string">"sslProvider"</span>, <span class="string">"openSSL"</span>);</span><br><span class="line">    peerProps.setProperty(<span class="string">"negotiationType"</span>, <span class="string">"TLS"</span>);</span><br><span class="line">    Peer peer = client.newPeer(peerName, peerURL, peerProps);</span><br><span class="line">    channel.addPeer(peer);</span><br><span class="line"></span><br><span class="line">    Properties ordererProps = <span class="keyword">new</span> Properties();</span><br><span class="line">    ordererProps.put(<span class="string">"pemFile"</span>, ordererTLScaCertFile);</span><br><span class="line">    ordererProps.setProperty(<span class="string">"sslProvider"</span>, <span class="string">"openSSL"</span>);</span><br><span class="line">    ordererProps.setProperty(<span class="string">"negotiationType"</span>, <span class="string">"TLS"</span>);</span><br><span class="line">    Orderer orderer = client.newOrderer(ordererName, ordererURL, ordererProps);</span><br><span class="line">    channel.addOrderer(orderer);</span><br><span class="line"></span><br><span class="line">    channel.initialize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><code>peerURL</code>设置为<code>grpcs://peer0.org1.example.com:7051</code>。首先，TLS需要设置使用<code>grpcs</code>。其次，只能使用<code>peer0.org1.example.com</code>（同时需要配置hosts文件），不能使用  <code>127.0.0.1</code>或者<code>localhost</code>(报错<code>Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching IP address 127.0.0.1/localhost found</code>) 。因为peer0返回的证书的CN是peer0.org1.example.com，java ssl会校验这个域名。</li>
+</ul>
+<ol>
+<li><p>chaincode - query</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">query</span><span class="params">(String issuer, String paperNumber)</span> </span>&#123;</span><br><span class="line">    QueryByChaincodeRequest req = client.newQueryProposalRequest();</span><br><span class="line">    ChaincodeID cid = ChaincodeID.newBuilder().setName(chaincodeName).build();</span><br><span class="line">    req.setChaincodeID(cid);</span><br><span class="line">    req.setFcn(QUERY_FUNC);</span><br><span class="line">    req.setArgs(issuer, paperNumber);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Channel对象已在上面构建</span></span><br><span class="line">    Channel channel = client.getChannel(channelID);</span><br><span class="line">    Collection&lt;ProposalResponse&gt; propResps = channel.queryByChaincode(req);</span><br><span class="line">    <span class="comment">// endorser返回的ProposalResponse需要保持一致</span></span><br><span class="line">    Collection&lt;Set&lt;ProposalResponse&gt;&gt; proposalConsistencySets = SDKUtils.getProposalConsistencySets(propResps);</span><br><span class="line">    <span class="keyword">if</span> (proposalConsistencySets.size() != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR)</span><br><span class="line">                .withErrorMsg(<span class="string">"Expected only one set of consistent proposal responses but got more"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    FabricProposalResponse.Response res = propResps.iterator().next().getProposalResponse().getResponse();</span><br><span class="line">    <span class="keyword">if</span> (res.getStatus() == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.success().withResponse(res.getPayload().toStringUtf8());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR).withErrorMsg(res.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>chaincode - invoke</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">issue</span><span class="params">(IssueRequest request)</span> </span>&#123;</span><br><span class="line">    TransactionProposalRequest proposalRequest = client.newTransactionProposalRequest();</span><br><span class="line">    ChaincodeID cid = ChaincodeID.newBuilder().setName(chaincodeName).build();</span><br><span class="line">    proposalRequest.setChaincodeID(cid);</span><br><span class="line">    proposalRequest.setFcn(ISSUE_FUNC);</span><br><span class="line">    proposalRequest.setArgs(request.getIssuer(), request.getPaperNumber(), issueDate, maturityDate,</span><br><span class="line">            String.valueOf(request.getFaceValue()));</span><br><span class="line"></span><br><span class="line">    Channel channel = client.getChannel(channelID);</span><br><span class="line">    <span class="comment">// Endorsing(simulate) phase</span></span><br><span class="line">    Collection&lt;ProposalResponse&gt; propResps = channel.sendTransactionProposal(proposalRequest);</span><br><span class="line">    <span class="comment">// endorser返回的ProposalResponse需要保持一致</span></span><br><span class="line">    Collection&lt;Set&lt;ProposalResponse&gt;&gt; proposalConsistencySets = SDKUtils.getProposalConsistencySets(propResps);</span><br><span class="line">    <span class="keyword">if</span> (proposalConsistencySets.size() != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR)</span><br><span class="line">                .withErrorMsg(<span class="string">"Expected only one set of consistent proposal responses but got more"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Orderer phase</span></span><br><span class="line">    <span class="comment">// 这里同步调用，需要等到提交orderer并且orderer排序后发送到各个peer，peer处理了block里的交易后才返回。</span></span><br><span class="line">    <span class="comment">// 或者同步返回txid。可以配置eventHub异步接收和执行block，通过txid来返回最终的执行结果</span></span><br><span class="line">    BlockEvent.TransactionEvent event = channel.sendTransaction(propResps).get();</span><br><span class="line">    <span class="keyword">if</span> (event.isValid()) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.success().withResponse(<span class="string">"txid : "</span> + event.getTransactionID());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="WIP"><a href="#WIP" class="headerlink" title="WIP:"></a>WIP:</h4><ol>
+<li>eventHub</li>
+</ol>
+<h4 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h4><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/63511862" target="_blank" rel="noopener">Fabric Java SDK最新教程【201904】</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1719,7 +1919,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-11-16 10:55:27" itemprop="dateModified" datetime="2020-11-16T10:55:27+08:00">2020-11-16</time>
+                <time title="Modified: 2020-11-23 20:31:15" itemprop="dateModified" datetime="2020-11-23T20:31:15+08:00">2020-11-23</time>
               
             
           </span>
@@ -1790,20 +1990,45 @@
 <p>摘自: <a href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/" target="_blank" rel="noopener">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
 </li>
 <li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt></p>
-<p> |字段|含义|<br> |—-|—-|<br> |<strong>nonce</strong>|A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account. |<br> |<strong>balance</strong>|A scalar value equal to the number of Wei owned by this address.|<br> |<strong>storageRoot</strong>|A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.|<br> |<strong>codeHash</strong>|The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.|</p>
-<blockquote>
-<p>It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:</p>
-<ol>
-<li>Runs the code in the contract’s constructor, setting storage values, etc.</li>
-<li>Copies the code for the rest of the contract into memory and returns it.  </li>
-</ol>
-</blockquote>
-<p> 新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom</p>
-<blockquote>
-<p><a href="https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/" target="_blank" rel="noopener">How Ethereum Transactions Work</a><br><a href="https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/" target="_blank" rel="noopener">How Smart Contract Deployment Works</a></p>
-</blockquote>
 </li>
 </ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>nonce</strong></td>
+<td>A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account.</td>
+</tr>
+<tr>
+<td><strong>balance</strong></td>
+<td>A scalar value equal to the number of Wei owned by this address.</td>
+</tr>
+<tr>
+<td><strong>storageRoot</strong></td>
+<td>A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.</td>
+</tr>
+<tr>
+<td><strong>codeHash</strong></td>
+<td>The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>&gt; It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:
+&gt; 1. Runs the code in the contract’s constructor, setting storage values, etc.
+&gt; 2. Copies the code for the rest of the contract into memory and returns it.  
+
+新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom
+
+&gt; [How Ethereum Transactions Work](https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/)  
+&gt; [How Smart Contract Deployment Works](https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/)
+</code></pre>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -2055,193 +2280,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/14/fabric-configtxgen-tool/" class="post-title-link" itemprop="url">Fabric的configtxgen工具生成区块及配置文件分析</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-14 18:41:06" itemprop="dateCreated datePublished" datetime="2019-05-14T18:41:06+08:00">2019-05-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本节主要基于<a href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network" target="_blank" rel="noopener">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
-<p><code>cryptogen</code>和<code>configtxgen</code>分别用于加密和配置的工具，其代码路径为<code>hyperledger/fabric/common/tools/cryptogen</code>和<code>hyperledger/fabric/common/tools/configtxgen</code>。cryptogen产生了各级msp，在peer，orderer里皆有用到，包括后面介绍的configtxgen里包含msp信息这些也是由此产生。这里暂且不展开分析。</p>
-<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a href="https://www.chaindesk.cn/witbook/30/503" target="_blank" rel="noopener">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">"CONFIGTX"</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure></p>
-<p>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json" target="_blank" rel="noopener">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
-<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json" target="_blank" rel="noopener">JSON结构</a>。</p>
-<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>${CHANNEL_NAME}.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock ${CHANNEL_NAME}.block</code>这个命令查看其<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json" target="_blank" rel="noopener">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
-<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><blockquote>
-<p><a href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb" target="_blank" rel="noopener">Hyperledger Fabric权限进阶篇</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2291,7 +2329,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2351,7 +2389,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
