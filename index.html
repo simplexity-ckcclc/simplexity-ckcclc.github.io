@@ -364,6 +364,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/12/30/2020-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/12/30/2020-summary/" class="post-title-link" itemprop="url">2020年终盘点</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-12-30 20:25:06 / Modified: 20:58:14" itemprop="dateCreated datePublished" datetime="2020-12-30T20:25:06+08:00">2020-12-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Private/" itemprop="url" rel="index"><span itemprop="name">Private</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          依然在路上。
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/12/30/2020-summary/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -428,7 +601,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-12-01 22:02:58" itemprop="dateModified" datetime="2020-12-01T22:02:58+08:00">2020-12-01</time>
+                <time title="Modified: 2020-12-30 20:23:18" itemprop="dateModified" datetime="2020-12-30T20:23:18+08:00">2020-12-30</time>
               
             
           </span>
@@ -463,7 +636,16 @@
 
       
         
-          微众的中间件是国内中间件领域内综合完整度，开源度，文档丰富度，设计和代码质量上相对比较优秀的，笔者在开发中间件时也抱着学习的心态从中借鉴了很多，此文是笔者对微众中间件的学习总结以及额外的一些思考。
+          <p>区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:</p>
+<ul>
+<li><strong>链数据管理</strong>： 相当于区块链浏览器，获取链的信息，例如块高，块信息等，以及管理各个节点的管理员admin功能（对应微众的<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Node-Manager/index.html" target="_blank" rel="noopener">WeBASE-Node-Manager</a>，下同）</li>
+<li><strong>交易</strong>： 交易上链，交易查询，交易回执查询，存证等（<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Transaction/index.html" target="_blank" rel="noopener">WeBASE-Transcation</a>）</li>
+<li><strong>合约编译部署</strong>： 编译合约，部署合约等(<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html" target="_blank" rel="noopener">WeBASE-Sign</a>)</li>
+<li><strong>合约事件监听</strong>： 订阅事件，事件推送等(在<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/index.html" target="_blank" rel="noopener">WeBASE-Front</a>里有基于MQ的方案，以及单独的基于区块链的分布式事件驱动架构<a href="https://fintech.webank.com/weevent" target="_blank" rel="noopener">WeEvent</a>)</li>
+<li><strong>私钥托管</strong>： 托管私钥，代用户签名上链(<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html" target="_blank" rel="noopener">WeBASE-Sign</a>)</li>
+<li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a href="https://fintech.webank.com/weidentity" target="_blank" rel="noopener">WeIdentity</a>）</li>
+</ul>
+<p>其他的还有<strong>跨链</strong><a href="https://fintech.webank.com/wecross" target="_blank" rel="noopener">WeCross</a>，<strong>链上数据导出</strong><a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html" target="_blank" rel="noopener">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1961,196 +2143,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/11/14/understanding-bitcoin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/14/understanding-bitcoin/" class="post-title-link" itemprop="url">Bitcoin概念理解</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-14 14:01:02" itemprop="dateCreated datePublished" datetime="2019-11-14T14:01:02+08:00">2019-11-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bitcoin/" itemprop="url" rel="index"><span itemprop="name">Bitcoin</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ol>
-<li>锁定脚本与解锁脚本<br>两者用于确定UTXO的所有权，其中，锁定脚本（sciptPubKey）存在于transaction的output，解锁脚本（scriptSig）存在于transaction的input。</li>
-</ol>
-<ul>
-<li>具体规则如下：<br><img src="/images/bitcoin-script.jpg" alt></li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/11/14/understanding-bitcoin/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2200,7 +2192,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2223,7 +2215,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2235,6 +2229,8 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
+                    
+                      
                     
                       
                     
