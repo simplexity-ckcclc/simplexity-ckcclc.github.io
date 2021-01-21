@@ -1,4 +1,4 @@
-https://simplexity.cn/2020/12/30/2020-summary/
+https://simplexity.cn/2021/01/21/sc-in-e-commerce/
 https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/
 https://simplexity.cn/2020/11/19/authorization-in-smart-contract/
 https://simplexity.cn/2020/11/18/did-account-system/
