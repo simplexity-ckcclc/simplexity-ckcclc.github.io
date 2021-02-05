@@ -102,7 +102,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://simplexity.cn/images/webank/webase-front-event.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/webank/weevent-stomp.jpg">
-<meta property="og:updated_time" content="2020-12-30T12:23:18.529Z">
+<meta property="og:updated_time" content="2021-02-05T09:31:04.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微众银行FISCO-BCOS中间件赏析">
 <meta name="twitter:description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
@@ -430,7 +430,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-12-30 20:23:18" itemprop="dateModified" datetime="2020-12-30T20:23:18+08:00">2020-12-30</time>
+                <time title="Modified: 2021-02-05 17:31:04" itemprop="dateModified" datetime="2021-02-05T17:31:04+08:00">2021-02-05</time>
               
             
           </span>
@@ -494,8 +494,12 @@
 <li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a href="https://fintech.webank.com/weidentity" target="_blank" rel="noopener">WeIdentity</a>）</li>
 </ul>
 <p>其他的还有<strong>跨链</strong><a href="https://fintech.webank.com/wecross" target="_blank" rel="noopener">WeCross</a>，<strong>链上数据导出</strong><a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html" target="_blank" rel="noopener">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
+<h2 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h2><ol>
+<li><a href="#event-listener">合约事件监听</a></li>
+<li><a href="#governance">WeBankBlockchain-Governance链治理通用组件</a></li>
+</ol>
 <a id="more"></a>
-<h3 id="1-合约事件监听"><a href="#1-合约事件监听" class="headerlink" title="1. 合约事件监听"></a>1. 合约事件监听</h3><p>合约里经常会包含有事件（event关键字），应用通过监听链上指定合约的指定事件，从而得到相应的数据触发相应的处理，也就是不同的系统不再需要链下的交互（例如api调用等），在这里，链扮演了类似<strong>持久化的消息队列</strong>的角色。在多数场景下，对于链上事件，应用方会有着 <strong>可以重复读，可以从指定块开始读，不能丢失事件</strong> 等等的需求，这些在设计中间件时都需要考虑在内。</p>
+<h2 id="1-合约事件监听"><a href="#1-合约事件监听" class="headerlink" title="1. 合约事件监听"></a><span id="event-listener">1. 合约事件监听</span></h2><p>合约里经常会包含有事件（event关键字），应用通过监听链上指定合约的指定事件，从而得到相应的数据触发相应的处理，也就是不同的系统不再需要链下的交互（例如api调用等），在这里，链扮演了类似<strong>持久化的消息队列</strong>的角色。在多数场景下，对于链上事件，应用方会有着 <strong>可以重复读，可以从指定块开始读，不能丢失事件</strong> 等等的需求，这些在设计中间件时都需要考虑在内。</p>
 <h3 id="1-1-基于MQ的通知方案"><a href="#1-1-基于MQ的通知方案" class="headerlink" title="1.1 基于MQ的通知方案"></a>1.1 基于MQ的通知方案</h3><p>该实现在<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/appendix.html#id8" target="_blank" rel="noopener">WeBASE-Front:支持链上事件订阅和通知</a>内，大致流程（摘录）：</p>
 <ol>
 <li>WeBASE-Front连接到MQ-Server(目前支持RabbitMQ-Server);</li>
@@ -595,6 +599,17 @@
 <li>消费<code>lastBlock</code>没有持久化，应用每次subscribe后都是按照从最新的block开始取，<strong>不支持</strong>指定(fromBlock, toBlock)消费历史数据。</li>
 <li><code>BrokerStomp</code>到应用这一段的推送<strong>不支持</strong>ACK及事务，因此这部分推送有可能丢失。</li>
 <li><code>weevent-processor</code>包里主要是链上的流事件处理。（这个与大数据流计算的对比有待后续分析）</li>
+</ol>
+<hr>
+<h2 id="2-WeBankBlockchain-Governance链治理通用组件"><a href="#2-WeBankBlockchain-Governance链治理通用组件" class="headerlink" title="2. WeBankBlockchain-Governance链治理通用组件"></a><span id="governance">2. <a href="https://github.com/WeBankBlockchain/Governance-Doc" target="_blank" rel="noopener">WeBankBlockchain-Governance链治理通用组件</a></span></h2><p>微众银行提出面向区块链的多方协作治理框架—— Multilateral Collaborative Governance Framework（MCGF）。具体见<a href="https://mp.weixin.qq.com/s?__biz=MzU0MDY4MDMzOA==&amp;mid=2247486381&amp;idx=1&amp;sn=caae41a2241e3b1c2cd58181ef73a1bc&amp;chksm=fb34c250cc434b46b2c1b72299c2eb71e1bd6b7597c341423c5d262f18a6e0af1628e0ba4037&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">白皮书</a></p>
+<h3 id="2-1-WeBankBlockchain-Governance-Key-私钥管理组件"><a href="#2-1-WeBankBlockchain-Governance-Key-私钥管理组件" class="headerlink" title="2.1 WeBankBlockchain-Governance-Key 私钥管理组件"></a>2.1 <a href="https://github.com/WeBankBlockchain/Governance-Doc#webankblockchain-governance-key--%E7%A7%81%E9%92%A5%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6" target="_blank" rel="noopener">WeBankBlockchain-Governance-Key 私钥管理组件</a></h3><ol>
+<li><p>助记词生成私钥<br>参考类<code>PkeyByMnemonicService.java</code>。通过助记词<code>mnemonic</code>与密码<code>passphrase</code>进行<code>PBKDF2WithHmacSha512</code>哈希算法生成确定性的公私钥对<code>keyPair</code>和用于安全派生子密钥的<code>chaincode</code>。</p>
+</li>
+<li><p>私钥托管<br>参考类<code>KeyHandler.java</code>。以数据库存储为例，私钥 <strong><em>加密</em></strong> 后存储，加密的方式例如<a href="https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition" target="_blank" rel="noopener">Ethereum wallet file</a>(适配Ethereum的模式), 或者p12的KeyStore（密码访问模式）等。按照加密口令是否同时托管也分为半托管（加密口令在用户手中，加密后的私钥存放在数据库中，需要使用私钥签名时候需要同时传入加密口令解密）和全托管。全托管方式下，加密口令和加密后的私钥分库存储，降低安全风险。</p>
+</li>
+<li><p>私钥派生</p>
+</li>
+<li>私钥分片</li>
 </ol>
 
       
@@ -857,7 +872,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-合约事件监听"><span class="nav-number">1.</span> <span class="nav-text">1. 合约事件监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基于MQ的通知方案"><span class="nav-number">2.</span> <span class="nav-text">1.1 基于MQ的通知方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观点："><span class="nav-number">2.1.</span> <span class="nav-text">观点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决思路："><span class="nav-number">2.2.</span> <span class="nav-text">解决思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-WeEvent框架"><span class="nav-number">3.</span> <span class="nav-text">1.2 WeEvent框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观点：-1"><span class="nav-number">3.1.</span> <span class="nav-text">观点：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录："><span class="nav-number">1.</span> <span class="nav-text">目录：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-合约事件监听"><span class="nav-number">2.</span> <span class="nav-text">1. 合约事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基于MQ的通知方案"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 基于MQ的通知方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观点："><span class="nav-number">2.1.1.</span> <span class="nav-text">观点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决思路："><span class="nav-number">2.1.2.</span> <span class="nav-text">解决思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-WeEvent框架"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 WeEvent框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观点：-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">观点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-WeBankBlockchain-Governance链治理通用组件"><span class="nav-number">3.</span> <span class="nav-text">2. WeBankBlockchain-Governance链治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-WeBankBlockchain-Governance-Key-私钥管理组件"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 WeBankBlockchain-Governance-Key 私钥管理组件</span></a></li></ol></li></ol></div>
             
 
           </div>
