@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2020/11/19/authorization-in-smart-contract/</loc>
+    <lastmod>2021-02-08</lastmod>
+  </url>  <url>
     <loc>https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/</loc>
     <lastmod>2021-02-08</lastmod>
   </url>  <url>
@@ -18,9 +21,6 @@
   </url>  <url>
     <loc>https://simplexity.cn/2020/11/04/privacy-on-chain/</loc>
     <lastmod>2020-11-20</lastmod>
-  </url>  <url>
-    <loc>https://simplexity.cn/2020/11/19/authorization-in-smart-contract/</loc>
-    <lastmod>2020-11-19</lastmod>
   </url>  <url>
     <loc>https://simplexity.cn/2020/11/18/did-account-system/</loc>
     <lastmod>2020-11-19</lastmod>
