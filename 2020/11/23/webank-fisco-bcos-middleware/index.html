@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://simplexity.cn/images/webank/weevent-stomp.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/webank/webank-governance-auth.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/webank/data-reconcile.jpg">
-<meta property="og:updated_time" content="2021-02-08T08:44:36.385Z">
+<meta property="og:updated_time" content="2021-02-09T03:13:58.149Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微众银行FISCO-BCOS中间件赏析">
 <meta name="twitter:description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
@@ -432,7 +432,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2021-02-08 16:44:36" itemprop="dateModified" datetime="2021-02-08T16:44:36+08:00">2021-02-08</time>
+                <time title="Modified: 2021-02-09 11:13:58" itemprop="dateModified" datetime="2021-02-09T11:13:58+08:00">2021-02-09</time>
               
             
           </span>
@@ -623,6 +623,7 @@
 <h2 id="3-WeBankBlockchain-Data数据治理通用组件"><a href="#3-WeBankBlockchain-Data数据治理通用组件" class="headerlink" title="3. WeBankBlockchain-Data数据治理通用组件"></a><span id="data">3. WeBankBlockchain-Data数据治理通用组件</span></h2><p>参考<a href="https://github.com/WeBankBlockchain/Data-Doc" target="_blank" rel="noopener">文档</a></p>
 <h3 id="3-1-WeBankBlockchain-Data-Reconcile对账服务"><a href="#3-1-WeBankBlockchain-Data-Reconcile对账服务" class="headerlink" title="3.1 WeBankBlockchain-Data-Reconcile对账服务"></a>3.1 WeBankBlockchain-Data-Reconcile对账服务</h3><p>金融机构特别是央行/商业银行间清结算，而且在当前区块链的性能限制条件下，批量定时的对账是常采用的方式。这个组件其实是比较完成的对账项目代码，饱含了基本流程。具体参考<a href="https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Reconcile/index.html" target="_blank" rel="noopener">文档</a>。流程如下图所示：<br><img src="/images/webank/data-reconcile.jpg" width="50%" height="50%"></p>
 <p>以正向定时任务为例，代码里主要采用了责任链的方式，具体配置在<code>ReconcileHandlerFactory.java</code>类中。具体的hanlder chain如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">| ReconcileTaskHandler(创建任务，记录在数据库) | -&gt; | ReconcileFileObtainHandler（从FTP/区块链上获取对账文件） |  </span><br><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br><span class="line">    -&gt; | ReconcileExecuteHandler（对账过程，具体每条数据以索引对齐） | -&gt; | ReconcileResultHandler（将对账结果上传到FTP）｜</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>实际过程中，需要考虑数据/文件的加密，特别是在多方对账的场景，需要在多个层面做好数据加密和隔离，这点在项目中没有体现。例如，上链方生成对称密钥，对每笔数据（例如涉及到金额的敏感字段等）使用对称密钥加密，并且在上链的数据中附带上该对称密钥的标志。上链方采用对账方的公钥对对称密钥进行加密，并且通过报文发送给对账方。对账方使用自己的私钥解密后，进而对链上数据进行对称解密。另外，上链方在FTP中存放的对账文件，也需要相应的进行加密写入，并且，不同的对账方也需要相互隔离，在FTP上使用不同的路径，并且配置可访问权限。</p>
 
       
     </div>
