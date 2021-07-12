@@ -364,6 +364,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(3）endorser的propocessProposal主过程</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-24 23:31:16" itemprop="dateCreated datePublished" datetime="2019-02-24T23:31:16+08:00">2019-02-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>由peer的grpc请求到<code>/protos.Endorser/ProcessProposal</code>，在endorser里对应着<code>protos/peer/peer.pb.go#_Endorser_ProcessProposal_Handler</code>，进入处理方法<code>core/endorser/endorser.go#ProcessProposal</code>。endorser的处理过程主要分为三个阶段，preProcess, simulate和endorse。其中，preProcess主要做校验工作，包括数据结构的完整性(header)，唯一性防止重放攻击，校验签名，对application chaincode（以后简称acc）检查ACL策略等等。这部分校验比较直观和简单，这里不做深入分析。需要注意的是，在这里还获取了TX模拟器<code>txsim, err = e.s.GetTxSimulator(chainID, txid);</code>和历史请求执行器<code>historyQueryExecutor, err = e.s.GetHistoryQueryExecutor(chainID);</code>。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetTxSimulator returns the transaction simulator for the specified ledger</span></span><br><span class="line"><span class="comment">// a client may obtain more than one such simulator; they are made unique</span></span><br><span class="line"><span class="comment">// by way of the supplied txid</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *SupportImpl)</span> <span class="title">GetTxSimulator</span><span class="params">(ledgername <span class="keyword">string</span>, txid <span class="keyword">string</span>)</span> <span class="params">(ledger.TxSimulator, error)</span></span> &#123;</span><br><span class="line">    lgr := s.Peer.GetLedger(ledgername)</span><br><span class="line">    <span class="keyword">return</span> lgr.NewTxSimulator(txid)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// NewTxSimulator implements method in interface `txmgmt.TxMgr`</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(txmgr *LockBasedTxMgr)</span> <span class="title">NewTxSimulator</span><span class="params">(txid <span class="keyword">string</span>)</span> <span class="params">(ledger.TxSimulator, error)</span></span> &#123;</span><br><span class="line">    s, err := newLockBasedTxSimulator(txmgr, txid)</span><br><span class="line">    txmgr.commitRWLock.RLock()</span><br><span class="line">    <span class="keyword">return</span> s, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个模拟器和执行器是对应于账本ledger的，也就是channel，入参ledgername就是channelId。chainless的proposals的ledger.TxSimulator和ledger.HistoryQueryExecutor都是nil。模拟器是基于锁的，在生成模拟器时，同时加上了读锁，在下一阶段simulate结束后就立即释放。同时，也生成了历史数据查询器。关于这个锁，代码里有下面一段解释。</p>
+<blockquote>
+<p>txsim acquires a shared lock on the stateDB. As this would impact the block commits (i.e., commit of valid write-sets to the stateDB), we must release the lock as early as possible. Hence, this txsim object is closed in simulateProposal() as soon as the tx is simulated and rwset is collected before gossip dissemination if required for privateData. </p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1144,7 +1333,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1208,7 +1397,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
