@@ -114,14 +114,14 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/categories/index.html</loc>
+    <loc>https://simplexity.cn/copyright/index.html</loc>
     
     <lastmod>2020-10-28</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/copyright/index.html</loc>
+    <loc>https://simplexity.cn/categories/index.html</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -368,14 +368,14 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/tags/Consensus/</loc>
+    <loc>https://simplexity.cn/tags/Blockchain/</loc>
     <lastmod>2021-10-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://simplexity.cn/tags/Blockchain/</loc>
+    <loc>https://simplexity.cn/tags/Consensus/</loc>
     <lastmod>2021-10-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
