@@ -1,124 +1,48 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="Service Properties 算法的适用范围 Our algorithm can be used to implement any deterministic replicated service with a state and some operations.     deterministic ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the e">
-<meta name="keywords" content="Consensus">
 <meta property="og:type" content="article">
 <meta property="og:title" content="共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记">
 <meta property="og:url" content="https://simplexity.cn/2019/03/28/consensus-pbft-paper/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="Service Properties 算法的适用范围 Our algorithm can be used to implement any deterministic replicated service with a state and some operations.     deterministic ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the e">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/pbft-normal-case-operation.png">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.292Z">
+<meta property="article:published_time" content="2019-03-28T12:11:29.000Z">
+<meta property="article:modified_time" content="2020-10-28T01:59:15.292Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="Consensus">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记">
-<meta name="twitter:description" content="Service Properties 算法的适用范围 Our algorithm can be used to implement any deterministic replicated service with a state and some operations.     deterministic ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the e">
 <meta name="twitter:image" content="https://simplexity.cn/images/pbft-normal-case-operation.png">
 
+<link rel="canonical" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
 
 
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -130,15 +54,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -147,9 +64,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -163,342 +79,172 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记
+        </h1>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-28 20:11:29" itemprop="dateCreated datePublished" datetime="2019-03-28T20:11:29+08:00">2019-03-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+            </span>
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+              </span>
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
                 </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/03/28/consensus-pbft-paper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/28/consensus-pbft-paper/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
-          
-
-          
 
           
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
@@ -525,7 +271,7 @@
 </blockquote>
 </li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="The-Algorithm"><a href="#The-Algorithm" class="headerlink" title="The Algorithm"></a>The Algorithm</h3><h4 id="0-术语"><a href="#0-术语" class="headerlink" title="0. 术语"></a>0. 术语</h4><ul>
 <li><em>view</em> ：类似raft的term，view number在变更时+1</li>
 <li><em>primary</em> ：在一个view中只有单独一个节点p成为primary，选择的方式为<code>p = v mod |R|</code>(p为节点的id，v是当前view number，|R| = 3f+1)</li>
@@ -546,11 +292,11 @@
 <p>The state of each replica includes <strong>the state of the service</strong>, a <strong>message log</strong> containing messages the replica has accepted, and an integer denoting the replica’s <strong>current view</strong>.</p>
 </blockquote>
 <p>整个流程分为三阶段，<em>pre-prepare</em>, <em>prepare</em>, <em>commit</em> (<em>pre-prepare</em>, <em>prepare</em>用于保持同一个view内request的有序性，<em>prepare</em>, <em>commit</em>用于保证跨view的reqeust的有序性）。</p>
-<p><img src="/images/pbft-normal-case-operation.png" alt></p>
+<p><img src="/images/pbft-normal-case-operation.png" alt=""></p>
 <ol>
 <li><p><em>pre-prepare</em> 阶段<br> primary广播<code>&lt;&lt;PRE-PREPARE,v,n,d&gt;$p, m&gt;</code>到所有的backup。<code>n</code>是primary分配给该消息的序号，全局递增，<code>m</code>是client的请求消息，<code>d</code>是消息的digest摘要。然后签名。</p>
 <p> 如果满足以下条件，则backup会接受该pre-prepare请求，并且进入prepare阶段(The last condition prevents a faulty primary from exhausting the space of sequence numbers by selecting a very large one.):</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* the signatures in the request and the pre-prepare message are correct and `d` is the digest for `m`;</span><br><span class="line">* it is in view `v`;</span><br><span class="line">* it has not accepted a pre-prepare message for view `v` and sequence number `n` containing a different digest; </span><br><span class="line">* the sequence number in the pre-prepare message is between a low water mark, `h`, and a high water mark, `H`.</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* the signatures in the request and the pre-prepare message are correct and `d` is the digest for `m`;</span><br><span class="line">* it is in view `v`;</span><br><span class="line">* it has not accepted a pre-prepare message for view `v` and sequence number `n` containing a different digest; </span><br><span class="line">* the sequence number in the pre-prepare message is between a low water mark, `h`, and a high water mark, `H`.</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><em>prepare</em> 阶段<br> backup广播<code>&lt;PREPARE,v,n,d,i&gt;$i</code>消息到所有replica（包含primary和backup），<code>i</code>为该节点id。并且将<code>&lt;PRE-PREPARE&gt;</code>和<code>PREPARE</code>消息保存到本地log。replica接收到prepare消息后，校验签名正确，<code>v</code>是当前view，<code>n</code>在水位<code>h</code>和<code>H</code>之间，摘要<code>d</code>和本地保存的<code>PRE-PREPARE</code>消息里的<code>d</code>相等。当replica i收到<code>2f</code>个这样的<code>PREPARE</code>消息后，就达到了<code>prepared(m,v,n,i)</code> 状态，进入commit阶段。</p>
 </li>
@@ -564,8 +310,7 @@
 <h4 id="3-Garbage-Collection"><a href="#3-Garbage-Collection" class="headerlink" title="3. Garbage Collection"></a>3. Garbage Collection</h4><p>replica周期性对其本地状态生成快照，称为checkpoint。当replica i生成checkpoint同时，广播<code>&lt;CHECKPOINT,n,d,i&gt;$i</code>消息到其他所有replica，其中，<code>n</code>是生成该状态执行的最后的请求消息的序号，<code>d</code>是该状态的摘要digest。replica接收checkpoint消息，并且记录到log里，当收到<code>2f+1</code>个相同的checkpoint消息（<code>n</code>,<code>d</code>）相同，则该checkpoint变成<strong>stable checkpoint</strong>。此时，小于等于<code>n</code>的消息（pre-prepare, prepare, commit）都会被丢弃，同时，之前的stable checkpoint也被丢弃。</p>
 <p>实际上，一个replica会同时持有这样几个状态副本：一个stable checkpoint，若干个未达到稳定状态的checkpoint（生成后暂未收集到2f+1个该状态的checkpoint消息），以及当前状态。stable checkpoint的最后的消息序号<code>n</code>就是低水位<code>h</code>,高水位<code>H = h + k</code>(where   is big enough so that replicas do not stall waiting for a checkpoint to become stable).</p>
 <h4 id="4-View-Changes"><a href="#4-View-Changes" class="headerlink" title="4. View Changes"></a>4. View Changes</h4><p>client在有效时间内没法收到f+1个有效结果，则广播request到所有的replica。backup收到后，若该请求从未执行，则转发给primary，并且启动timer，在timer到期前若没有收到primary发出的pre-prepare，则判断该primary异常，发出view-change消息。backup i,<code>&lt;VIEW-CHANGE,v+1,n,C,P,i&gt;$i</code>，<code>v+1</code>是新的view number，<code>n</code>是该backup的stable checkpoint <code>s</code>的最后消息序号，<code>C</code>是证明<code>s</code>的2f+1个checkpoint消息，<code>P</code>是<code>Pm</code>的集合，<code>Pm</code>是达到<code>prepared(m,v,n,i)</code> 状态的消息（包含pre-prepare消息和2f个来自其他replica的matching消息，其中消息<code>m</code>的序号大于<code>n</code>）。</p>
-<p><code>v+1</code>的primary（通过<code>p = （v+1）mod |R|</code>计算）收到2f个有效view-change消息后，广播<code>&lt;NEW-VIEW,v+1,V,O&gt;$p</code>，<code>V</code>是收到的和primary自身的view-change消息的集合，<code>O</code>是pre-prepare消息的集合。计算如下，比较复杂<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. The primary determines the sequence number `min-s` of the latest stable checkpoint in `V` and the highest sequence number `max-s` in a prepare message in `V`.</span><br><span class="line">2. The primary creates a new pre-prepare message for view `v+1` for each sequence number `n` between `min-s` and `max-s`.</span><br><span class="line"> There are two cases: (1) there is at least one set in the component of some view-change message in with sequence number `n`, or (2) there is no such set. </span><br><span class="line"> In the first case, the primary creates a new message `&lt;PRE-PREPARE,v+1,n,d&gt;$p` where `d` is the request digest in the pre-prepare message for sequence number `n` with the highest view number in `V`. </span><br><span class="line"> In the second case, it creates a new pre-prepare message `&lt;PRE-PREPARE,v+1,n,d(null)&gt;$p` where `d(null)` is the digest of a special null request; a null request goes through the protocol like other requests, but its execution is a no-op. (Paxos [18] used a similar technique to fill in gaps.)</span><br></pre></td></tr></table></figure></p>
-<p>也就是说，primary从latest stable checkpoint重放之后所有达到<code>prepared(m,v,n,i)</code>状态的消息（<code>min-s</code>&lt;<code>n</code>&lt;=<code>max-s</code>），重发pre-prepare。replica会对这些消息重走流程，prepare和commit阶段，但是不再重新执行请求，因为在上一个view内，对这些达到<code>prepared(m,v,n,i)</code>状态的消息已经执行过。</p>
+<p><code>v+1</code>的primary（通过<code>p = （v+1）mod |R|</code>计算）收到2f个有效view-change消息后，广播<code>&lt;NEW-VIEW,v+1,V,O&gt;$p</code>，<code>V</code>是收到的和primary自身的view-change消息的集合，<code>O</code>是pre-prepare消息的集合。计算如下，比较复杂<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. The primary determines the sequence number `min-s` of the latest stable checkpoint in `V` and the highest sequence number `max-s` in a prepare message in `V`.</span><br><span class="line">2. The primary creates a new pre-prepare message for view `v+1` for each sequence number `n` between `min-s` and `max-s`.</span><br><span class="line"> There are two cases: (1) there is at least one set in the component of some view-change message in with sequence number `n`, or (2) there is no such set. </span><br><span class="line"> In the first case, the primary creates a new message `&lt;PRE-PREPARE,v+1,n,d&gt;$p` where `d` is the request digest in the pre-prepare message for sequence number `n` with the highest view number in `V`. </span><br><span class="line"> In the second case, it creates a new pre-prepare message `&lt;PRE-PREPARE,v+1,n,d(null)&gt;$p` where `d(null)` is the digest of a special null request; a null request goes through the protocol like other requests, but its execution is a no-op. (Paxos [18] used a similar technique to fill in gaps.)</span><br></pre></td></tr></table></figure><br>也就是说，primary从latest stable checkpoint重放之后所有达到<code>prepared(m,v,n,i)</code>状态的消息（<code>min-s</code>&lt;<code>n</code>&lt;=<code>max-s</code>），重发pre-prepare。replica会对这些消息重走流程，prepare和commit阶段，但是不再重新执行请求，因为在上一个view内，对这些达到<code>prepared(m,v,n,i)</code>状态的消息已经执行过。</p>
 <p>同时，replica记录收到的所有replica的view-change里最新的（<code>n</code>最大）stable checkpoint记录到log里，并且对缺失的消息m和最新的stable checkpoint（自身的stable checkpoint不是全局最新的stable checkpoint情况下）从其他的replica同步。</p>
 <h4 id="5-Correctness（重点）"><a href="#5-Correctness（重点）" class="headerlink" title="5. Correctness（重点）"></a>5. Correctness（重点）</h4><ol>
 <li>Safety<blockquote>
@@ -612,352 +357,171 @@
 </ol>
 <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>所有的replica间需要全联接并且多次交互通信，系统中这些消息随着节点数指数增长。单次请求的最少消息数为<code>1 + 3f + 3f(3f-f) + (3f-f+1)(3f+1) + 3f-1</code>.</p>
 <blockquote>
-<p><a href="https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae" target="_blank" rel="noopener">pBFT— Understanding the Consensus Algorithm</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae">pBFT— Understanding the Consensus Algorithm</a></p>
 </blockquote>
 <h3 id="私货"><a href="#私货" class="headerlink" title="私货"></a>私货</h3><ol>
 <li>为什么需要至少3f+1个节点？<br>首先最后达成共识的正常节点数需要大于f，否则这f个异常节点就可以达成错误的共识。即至少需要f+1个正常节点达成共识。而达成共识时，有可能给最后共识投票的包含这f个异常节点，所以需要至少2f+1个节点投票达成共识，这样可以保证其中至少含有f+1个正常节点。（例如P为异常节点向不同的正常节点提议不同的值，这也是造成上文提到3f+1个节点最后达成共识时只能保证多于f+1个）。而最后的共识只能有一个，即达成共识的正常节点应该超过所有正常节点数的过半，否则f个异常节点可以重复投票导致最后正常节点分裂成两组以上各自达成共识。因此，实际上最后的阈值<code>T&gt;=lower((R-f)/2)+1+f</code>，这样就保证了correctness正确性。接下来考虑liveness可用性。因为异常节点有可能不参与投票（P为正常节点），需要保证正常节点总数应该大于阈值，即<code>R-f&gt;=T</code>。</li>
 </ol>
 <p><strong>References</strong></p>
 <blockquote>
-<p>[1] M. Castro and B. Liskov.   <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf" target="_blank" rel="noopener">Practical Byzantine Fault Tolerance</a>.  <em>Proceedings of the Third Symposium on Operating Systems Design and Implementation, New Orleans, USA, February 1999</em></p>
-<p>[2] <a href="https://zhuanlan.zhihu.com/p/40684348" target="_blank" rel="noopener">区块链PBFT共识算法节点主动恢复设计与实现</a><br>[3] <a href="https://www.8btc.com/article/70370" target="_blank" rel="noopener">拜占庭将军问题深入探讨</a></p>
+<p>[1] M. Castro and B. Liskov.   <a target="_blank" rel="noopener" href="http://pmg.csail.mit.edu/papers/osdi99.pdf">Practical Byzantine Fault Tolerance</a>.  <em>Proceedings of the Third Symposium on Operating Systems Design and Implementation, New Orleans, USA, February 1999</em></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/40684348">区块链PBFT共识算法节点主动恢复设计与实现</a><br>[3] <a target="_blank" rel="noopener" href="https://www.8btc.com/article/70370">拜占庭将军问题深入探讨</a></p>
 </blockquote>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
-    
-</div>
-      
-    </div>
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Consensus/" rel="tag"><i class="fa fa-tag"></i> Consensus</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/03/20/fabric-source-deliver-peer-to-order/" rel="next" title="Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互">
-                <i class="fa fa-chevron-left"></i> Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Consensus/" rel="tag"># Consensus</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/02/fabric-inpractice-concept/" rel="prev" title="Fabric 1.4实战 - 从现象看概念">
-                Fabric 1.4实战 - 从现象看概念 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
-
-        </div>
         
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/20/fabric-source-deliver-peer-to-order/" rel="prev" title="Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互">
+      <i class="fa fa-chevron-left"></i> Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/02/fabric-inpractice-concept/" rel="next" title="Fabric 1.4实战 - 从现象看概念">
+      Fabric 1.4实战 - 从现象看概念 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-Properties"><span class="nav-number">1.</span> <span class="nav-text">Service Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Algorithm"><span class="nav-number">2.</span> <span class="nav-text">The Algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-%E6%9C%AF%E8%AF%AD"><span class="nav-number">2.1.</span> <span class="nav-text">0. 术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-The-Client"><span class="nav-number">2.2.</span> <span class="nav-text">1. The Client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Normal-Case-Operation"><span class="nav-number">2.3.</span> <span class="nav-text">2. Normal-Case Operation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Garbage-Collection"><span class="nav-number">2.4.</span> <span class="nav-text">3. Garbage Collection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-View-Changes"><span class="nav-number">2.5.</span> <span class="nav-text">4. View Changes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Correctness%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">5. Correctness（重点）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimization"><span class="nav-number">3.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Reducing-Communication"><span class="nav-number">3.1.</span> <span class="nav-text">1. Reducing Communication</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E5%A4%96%E8%AF%9D"><span class="nav-number">4.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E8%B4%A7"><span class="nav-number">5.</span> <span class="nav-text">私货</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
 
-            
-            
-            
-            
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-Properties"><span class="nav-number">1.</span> <span class="nav-text">Service Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Algorithm"><span class="nav-number">2.</span> <span class="nav-text">The Algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-术语"><span class="nav-number">2.1.</span> <span class="nav-text">0. 术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-The-Client"><span class="nav-number">2.2.</span> <span class="nav-text">1. The Client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Normal-Case-Operation"><span class="nav-number">2.3.</span> <span class="nav-text">2. Normal-Case Operation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Garbage-Collection"><span class="nav-number">2.4.</span> <span class="nav-text">3. Garbage Collection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-View-Changes"><span class="nav-number">2.5.</span> <span class="nav-text">4. View Changes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Correctness（重点）"><span class="nav-number">2.6.</span> <span class="nav-text">5. Correctness（重点）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimization"><span class="nav-number">3.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Reducing-Communication"><span class="nav-number">3.1.</span> <span class="nav-text">1. Reducing Communication</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题外话"><span class="nav-number">4.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#私货"><span class="nav-number">5.</span> <span class="nav-text">私货</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
 
 
 
@@ -966,513 +530,72 @@
 
 
 
-
-        
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
+<script src="/js/next-boot.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  
-    <!-- LOCAL: You can save these files to your site and update links -->
-
-  
-  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<!-- END LOCAL -->
-
-<style>
-#gitment-container a {
-  border-bottom: none;
-}
-
-  a.gitment-editor-footer-tip, .gitment-container.gitment-footer-container {
-    display: none;
-  }
-
-</style>
-
-<script>
-  function renderGitment() {
-    var gitment = new Gitmint({
-      id: '1553775089000',
-      owner: 'simplexity-ckcclc',
-      repo: 'gitment-comments',
-      
-        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-      
-      oauth: {
-      
-      
-        client_secret: '09b3a91649010e98bb45af1c7bba1b490d42f458',
-      
-        client_id: '12eedb094a3054014378'
-      }
-    });
-    gitment.render('gitment-container');
-  }
-
-  
-    renderGitment();
-  
-</script>
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 

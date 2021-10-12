@@ -1,96 +1,22 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="Simple is Complex">
 <meta property="og:type" content="website">
@@ -98,23 +24,20 @@
 <meta property="og:url" content="https://simplexity.cn/page/4/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="Simple is Complex">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
+<meta property="article:author" content="Travis Wong">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simplexity">
-<meta name="twitter:description" content="Simple is Complex">
+
+<link rel="canonical" href="https://simplexity.cn/page/4/">
 
 
-
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/page/4/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -126,15 +49,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -143,9 +59,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -159,317 +74,167 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
-            
 
-          
-          <div id="content" class="content">
+          <div class="content index posts-expand">
             
-  <section id="posts" class="posts-expand">
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/11/fabric-orderer-kafka-design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/11/fabric-orderer-kafka-design/" class="post-title-link" itemprop="url">A Kafka-based Ordering Service for Fabric （orderer的应用kafka设计思想）学习笔记</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/11/fabric-orderer-kafka-design/" class="post-title-link" itemprop="url">A Kafka-based Ordering Service for Fabric （orderer的应用kafka设计思想）学习笔记</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-11 18:13:46" itemprop="dateCreated datePublished" datetime="2019-03-11T18:13:46+08:00">2019-03-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -477,11 +242,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p><a href="https://docs.google.com/document/d/19JihmW-8blTzN99lAubOfseLUZqdrB6sBR0HsRgCAnY/edit" target="_blank" rel="noopener">A Kafka-based Ordering Service for Fabric</a>这篇文章是orderer的kafka设计文档，详细介绍orderer应用kafka的设计思想演进过程，从基本点逐步深入，由问题到解决方案，值得阅读。这里列举学习过程中的笔记。</p>
+          <p><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/19JihmW-8blTzN99lAubOfseLUZqdrB6sBR0HsRgCAnY/edit">A Kafka-based Ordering Service for Fabric</a>这篇文章是orderer的kafka设计文档，详细介绍orderer应用kafka的设计思想演进过程，从基本点逐步深入，由问题到解决方案，值得阅读。这里列举学习过程中的笔记。</p>
 <ul>
 <li><em>Solution 0（S0）</em> ： 单个tx（transaction）构成block。  </li>
 <li><em>Problem 1（P1）</em> ： 单个block的size很小，当网络有大量tx时会产生大量的block。而OSN（ordering service node）需要对block进行打包，签名，client需要解包，验证签名。overhead太大，效率太低。  </li>
@@ -491,180 +252,80 @@
 <li><em>P3</em> ： 各个OSN时钟不同步，可能导致block间切分的位置差异。</li>
 <li><em>S3</em> ： OSN加入TTC-X（Time to Cut block-X），时钟到时发送该message到kafka，各个OSN收到改消息后切分block。</li>
 </ul>
-<h2 id><a href="#" class="headerlink" title></a>
+<h2 id=""><a href="#" class="headerlink" title=""></a>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/03/11/fabric-orderer-kafka-design/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
-      
-    </h2></div>
-
-    
-
-    
-    
-    
-
-    <div>
       
     </div>
 
     
-
-    
-      
     
     
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/07/fabric-source-orderer-kafka/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的kafka实现</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/07/fabric-source-orderer-kafka/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的kafka实现</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-07 15:17:56" itemprop="dateCreated datePublished" datetime="2019-03-07T15:17:56+08:00">2019-03-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -672,185 +333,81 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p>在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在<code>orderer/consensus/kafka/chain.go</code>里，与solo一样实现了<code>orderer/common/broadcast/broadcast.go#Consenter</code>这个接口。在orderer的处理消息时<code>orderer/common/broadcast/broadcast.go#Handle</code>，调用了其<code>Order</code>方法。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">Order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> chain.order(env, configSeq, <span class="keyword">int64</span>(<span class="number">0</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>, originalOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    marshaledEnv, err := utils.Marshal(env)</span><br><span class="line">    <span class="keyword">if</span> !chain.enqueue(newNormalMessage(marshaledEnv, configSeq, originalOffset)) &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"cannot enqueue"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue accepts a message and returns true on acceptance, or false otheriwse.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">enqueue</span><span class="params">(kafkaMsg *ab.KafkaMessage)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">// The post path</span></span><br><span class="line">            payload, err := utils.Marshal(kafkaMsg)</span><br><span class="line"></span><br><span class="line">            message := newProducerMessage(chain.channel, payload)</span><br><span class="line">            <span class="keyword">if</span> _, _, err = chain.producer.SendMessage(message); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>: <span class="comment">// Not ready yet</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProducerMessage</span><span class="params">(channel channel, pld []<span class="keyword">byte</span>)</span> *<span class="title">sarama</span>.<span class="title">ProducerMessage</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;sarama.ProducerMessage&#123;</span><br><span class="line">        Topic: channel.topic(),</span><br><span class="line">        Key:   sarama.StringEncoder(strconv.Itoa(<span class="keyword">int</span>(channel.partition()))), </span><br><span class="line">        Value: sarama.ByteEncoder(pld),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a href="https://github.com/Shopify/sarama" target="_blank" rel="noopener">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
+          <p>在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在<code>orderer/consensus/kafka/chain.go</code>里，与solo一样实现了<code>orderer/common/broadcast/broadcast.go#Consenter</code>这个接口。在orderer的处理消息时<code>orderer/common/broadcast/broadcast.go#Handle</code>，调用了其<code>Order</code>方法。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">Order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> chain.order(env, configSeq, <span class="keyword">int64</span>(<span class="number">0</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>, originalOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    marshaledEnv, err := utils.Marshal(env)</span><br><span class="line">    <span class="keyword">if</span> !chain.enqueue(newNormalMessage(marshaledEnv, configSeq, originalOffset)) &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">&quot;cannot enqueue&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue accepts a message and returns true on acceptance, or false otheriwse.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">enqueue</span><span class="params">(kafkaMsg *ab.KafkaMessage)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">// The post path</span></span><br><span class="line">            payload, err := utils.Marshal(kafkaMsg)</span><br><span class="line"></span><br><span class="line">            message := newProducerMessage(chain.channel, payload)</span><br><span class="line">            <span class="keyword">if</span> _, _, err = chain.producer.SendMessage(message); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>: <span class="comment">// Not ready yet</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProducerMessage</span><span class="params">(channel channel, pld []<span class="keyword">byte</span>)</span> *<span class="title">sarama</span>.<span class="title">ProducerMessage</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;sarama.ProducerMessage&#123;</span><br><span class="line">        Topic: channel.topic(),</span><br><span class="line">        Key:   sarama.StringEncoder(strconv.Itoa(<span class="keyword">int</span>(channel.partition()))), </span><br><span class="line">        Value: sarama.ByteEncoder(pld),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a target="_blank" rel="noopener" href="https://github.com/Shopify/sarama">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/03/07/fabric-source-orderer-kafka/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/06/consensus-paxos-raft/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/06/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/06/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-06 19:49:27" itemprop="dateCreated datePublished" datetime="2019-03-06T19:49:27+08:00">2019-03-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -858,20 +415,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          
-            <ol>
+          <ol>
 <li><p>Paxos  </p>
 <p> 算法的介绍在wikipedia里解释很清楚，可以结合example里的例子加深理解。概括来说，paxos分为prepare和accept两个阶段，将角色分为proposer，acceptor和learner，最基本的标准是majority quorum。每次proposer以（sequence number n, value v）的形式向acceptor提议（n为每个proposer节点自行管理的单增值，注意，这里会有多个proposer在并行的提议）。如果将prepare request到最终accept视作一轮，那么最终accept的提议是来自n最高的proposer，但是v是在prepare阶段最早得到quorum accept的，因为acceptor收到prepare request作出这样的promise（即承诺不再accept比该proposal的n更小或相等的值），并且返回收到并回复的prepare request的值。</p>
 </li>
 </ol>
 <blockquote>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29" target="_blank" rel="noopener">Paxos (computer science) - wiki</a></li>
-<li><a href="https://angus.nyc/2012/paxos-by-example/" target="_blank" rel="noopener">Paxos By Example</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos (computer science) - wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://angus.nyc/2012/paxos-by-example/">Paxos By Example</a></li>
 </ul>
 </blockquote>
 <ol>
@@ -881,10 +433,10 @@
 </ol>
 <blockquote>
 <ul>
-<li><a href="https://raft.github.io/" target="_blank" rel="noopener">The Raft Consensus Algorithm</a> : Raft的github page</li>
-<li><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="noopener">Raft example</a> : 国外的动画，非常形象</li>
-<li><a href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d" target="_blank" rel="noopener">Understanding the Raft consensus algorithm: an academic article summary</a></li>
-<li><a href="https://infoq.cn/article/coreos-analyse-etcd" target="_blank" rel="noopener">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
+<li><a target="_blank" rel="noopener" href="https://raft.github.io/">The Raft Consensus Algorithm</a> : Raft的github page</li>
+<li><a target="_blank" rel="noopener" href="http://thesecretlivesofdata.com/raft/">Raft example</a> : 国外的动画，非常形象</li>
+<li><a target="_blank" rel="noopener" href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d">Understanding the Raft consensus algorithm: an academic article summary</a></li>
+<li><a target="_blank" rel="noopener" href="https://infoq.cn/article/coreos-analyse-etcd">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
 </ul>
 </blockquote>
 <ol>
@@ -894,176 +446,76 @@
 </ol>
 <blockquote>
 <ul>
-<li><a href="https://zhuanlan.zhihu.com/p/52617675" target="_blank" rel="noopener">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
-<li><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos" target="_blank" rel="noopener">Zab vs. Paxos</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52617675">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
+<li><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos">Zab vs. Paxos</a></li>
 </ul>
 </blockquote>
 
-          
-        
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-endorsor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/25/fabric-source-chaincode-install-endorsor/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/25/fabric-source-chaincode-install-endorsor/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-25 00:10:31" itemprop="dateCreated datePublished" datetime="2019-02-25T00:10:31+08:00">2019-02-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1071,184 +523,80 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>endorsor端流程也一致，入口都是<code>core/endorser/endorser.go#ProcessProposal</code>,具体不再重复展开，可以参看instantiate(3)。主要的区别在于<code>core/endorser/endorser.go#callChaincode</code>里，(“lscc”, “deploy”)的<code>if</code>条件不再满足，不需要进入（回顾一下，这里主要是launch用户application chaincode的容器，执行application chaincode的Init方法等，在install阶段当然不需要）。真正的区别在于<code>lscc.go#Invoke</code>的<code>select-case</code>里，进入的是<code>INSTALL</code>分支（部署chaincode时进入的是<code>DEPLOY</code>分支）。INSTALL首先执行<code>lscc.policyChecker.CheckPolicyNoChannel(mgmt.Admins, sp)</code>检查策略，这部分以后详述。从名字也印证出install是不指定channel的。然后执行lscc的<code>executeInstall</code>方法.</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/25/fabric-source-chaincode-install-endorsor/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/25/fabric-source-chaincode-install-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/25/fabric-source-chaincode-install-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-25 00:00:48" itemprop="dateCreated datePublished" datetime="2019-02-25T00:00:48+08:00">2019-02-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1256,186 +604,82 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>例子中，命令为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure>
+          <p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure>
 <p>客户端调用<code>peer chaincode install</code>命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命令关联的方法是<code>chaincodeInstall</code>。<em>[install的流程与前面介绍的instantiate大体相似，重复不再展开，只勾勒差别处]</em></p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/25/fabric-source-chaincode-install-peer/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-24 23:57:54" itemprop="dateCreated datePublished" datetime="2019-02-24T23:57:54+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1443,185 +687,81 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>在instantiate(1)里提到，peer收集完endorsements后创建common.Envelope, 通过grpc发送到<code>/orderer.AtomicBroadcast/Broadcast</code>. common.Envelope的数据结构如下</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// common.Envelope</span><br><span class="line">&#123;</span><br><span class="line">  "Payload": $&#123;common.Payload&#125;.byte,</span><br><span class="line">  "Signature": #signer.Sign($&#123;common.Payload&#125;.byte)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// common.Payload</span><br><span class="line">&#123;</span><br><span class="line">  "Header": $&#123;proposal.Header&#125;,   // proposal参考instantiate（2）</span><br><span class="line">  "Data": $&#123;peer.Transaction&#125;.byte</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// peer.Transaction</span><br><span class="line">&#123;</span><br><span class="line">  "Actions":  taas := make([]*peer.TransactionAction, 1), taas[0] = $&#123;peer.TransactionAction&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// peer.TransactionAction</span><br><span class="line">&#123;</span><br><span class="line">  "Header": $&#123;proposal.Header.SignatureHeader&#125;, </span><br><span class="line">  "Payload": $&#123;peer.ChaincodeActionPayload&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// peer.ChaincodeActionPayload</span><br><span class="line">&#123;</span><br><span class="line">  "ChaincodeProposalPayload": $&#123;peer.ChaincodeProposalPayload&#125;.byte, </span><br><span class="line">  "Action": $&#123;peer.ChaincodeEndorsedAction&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> // peer.ChaincodeProposalPayload</span><br><span class="line"> &#123;</span><br><span class="line">   "Input": $&#123;proposal.Payload.Input&#125;, </span><br><span class="line">   "TransientMap": nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// peer.ChaincodeEndorsedAction， response结构参考instantiate（7）</span><br><span class="line">&#123;</span><br><span class="line">  "ProposalResponsePayload": $&#123;resps[0].Payload&#125;,  // 所有response的payload都应该是一致的，在前面已经校验过 </span><br><span class="line">  "Endorsements": #endorsements := make([]*peer.Endorsement, len(resps)) // 所有的endorsement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// common.Envelope</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Payload&quot;</span>: $&#123;common.Payload&#125;.byte,</span><br><span class="line">  <span class="attr">&quot;Signature&quot;</span>: #signer.Sign($&#123;common.Payload&#125;.byte)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// common.Payload</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Header&quot;</span>: $&#123;proposal.Header&#125;,   <span class="comment">// proposal参考instantiate（2）</span></span><br><span class="line">  <span class="attr">&quot;Data&quot;</span>: $&#123;peer.Transaction&#125;.byte</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.Transaction</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Actions&quot;</span>:  taas := make([]*peer.TransactionAction, 1), taas[0] = $&#123;peer.TransactionAction&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.TransactionAction</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Header&quot;</span>: $&#123;proposal.Header.SignatureHeader&#125;, </span><br><span class="line">  <span class="attr">&quot;Payload&quot;</span>: $&#123;peer.ChaincodeActionPayload&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeActionPayload</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;ChaincodeProposalPayload&quot;</span>: $&#123;peer.ChaincodeProposalPayload&#125;.byte, </span><br><span class="line">  <span class="attr">&quot;Action&quot;</span>: $&#123;peer.ChaincodeEndorsedAction&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// peer.ChaincodeProposalPayload</span></span><br><span class="line"> &#123;</span><br><span class="line">   <span class="attr">&quot;Input&quot;</span>: $&#123;proposal.Payload.Input&#125;, </span><br><span class="line">   <span class="attr">&quot;TransientMap&quot;</span>: nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeEndorsedAction， response结构参考instantiate（7）</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;ProposalResponsePayload&quot;</span>: $&#123;resps[0].Payload&#125;,  <span class="comment">// 所有response的payload都应该是一致的，在前面已经校验过 </span></span><br><span class="line">  <span class="attr">&quot;Endorsements&quot;</span>: #endorsements := make([]*peer.Endorsement, len(resps)) <span class="comment">// 所有的endorsement</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-24 23:51:58" itemprop="dateCreated datePublished" datetime="2019-02-24T23:51:58+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1629,186 +769,82 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p>回顾到<code>endorser.go#SimulateProposal</code>,执行完<code>callChaincode</code>后，回顾前面，在这里有两次调用chaincode，分别是lscc的Inovke和acc的Init，<code>callChaincode</code>这里返回的是第一次调用的lscc的response。调用acc Init的结果只判断调用是否正常完成返回<code>pb.ChaincodeMessage_COMPLETED</code>。这是因为在<code>handleInit</code>里对初始化失败，即<code>pb.Response.status</code>不等于200的统一返回<code>pb.ChaincodeMessage_ERROR</code>，这点与Invoke的处理方式是不一样的。Invoke允许<code>pb.ChaincodeMessage.Type</code>=<code>pb.ChaincodeMessage_COMPLETED</code>,但是内层的<code>pb.Response.status</code>不等于200. 若返回<code>pb.ChaincodeMessage_ERROR</code>，则向上层返回error，最终返回<code>&amp;pb.ProposalResponse{Response: &amp;pb.Response{Status: 500, Message: err.Error()}}</code>到<code>peer chainncode instantiate...</code>这个命令的执行节点peer。</p>
-<p>紧接着调用<code>txsim.GetTxSimulationResults()</code>获取上节提到的<code>lockbased_tx_simulator</code>的读写集合。先看下这个<code>txsim</code>是如何传递的。首先初始化后在<code>callChaincode</code>加入context<code>ctxt = context.WithValue(ctxt, chaincode.TXSimulatorKey, txsim)</code>。之后在<code>chaincode/handler</code>里构建<code>TransactionContext</code>实体对象时将txsim从context取出，包裹进这个新建的TransactionContext对象内。这个对象前面有提及，是关联于<code>chainID, txID</code>这两个存放于<code>chaincode/handler.TXContexts.map[string]*TransactionContext</code>里。后面在<code>chaincode/handler.go#handlerTranction</code>里调用<code>txContext, err = h.isValidTxSim(msg.ChannelId, msg.Txid)}</code>也是以此取出该txsim，将读写结果放进读写集readwriteSet。</p>
+          <p>回顾到<code>endorser.go#SimulateProposal</code>,执行完<code>callChaincode</code>后，回顾前面，在这里有两次调用chaincode，分别是lscc的Inovke和acc的Init，<code>callChaincode</code>这里返回的是第一次调用的lscc的response。调用acc Init的结果只判断调用是否正常完成返回<code>pb.ChaincodeMessage_COMPLETED</code>。这是因为在<code>handleInit</code>里对初始化失败，即<code>pb.Response.status</code>不等于200的统一返回<code>pb.ChaincodeMessage_ERROR</code>，这点与Invoke的处理方式是不一样的。Invoke允许<code>pb.ChaincodeMessage.Type</code>=<code>pb.ChaincodeMessage_COMPLETED</code>,但是内层的<code>pb.Response.status</code>不等于200. 若返回<code>pb.ChaincodeMessage_ERROR</code>，则向上层返回error，最终返回<code>&amp;pb.ProposalResponse&#123;Response: &amp;pb.Response&#123;Status: 500, Message: err.Error()&#125;&#125;</code>到<code>peer chainncode instantiate...</code>这个命令的执行节点peer。</p>
+<p>紧接着调用<code>txsim.GetTxSimulationResults()</code>获取上节提到的<code>lockbased_tx_simulator</code>的读写集合。先看下这个<code>txsim</code>是如何传递的。首先初始化后在<code>callChaincode</code>加入context<code>ctxt = context.WithValue(ctxt, chaincode.TXSimulatorKey, txsim)</code>。之后在<code>chaincode/handler</code>里构建<code>TransactionContext</code>实体对象时将txsim从context取出，包裹进这个新建的TransactionContext对象内。这个对象前面有提及，是关联于<code>chainID, txID</code>这两个存放于<code>chaincode/handler.TXContexts.map[string]*TransactionContext</code>里。后面在<code>chaincode/handler.go#handlerTranction</code>里调用<code>txContext, err = h.isValidTxSim(msg.ChannelId, msg.Txid)&#125;</code>也是以此取出该txsim，将读写结果放进读写集readwriteSet。</p>
 <p><code>txsim.GetTxSimulationResults()</code>这里在返回前，先对读写集合按照key排序。这里包含pub和pri两部分数据，先关注pub部分。rwset这部分以后展开专题介绍。然后调用<code>txsim.Done()</code>，签名初始化txsim时候提到获取了ledger的读锁，因此这里需要释放<code>h.txmgr.commitRWLock.RUnlock()</code>。返回共有数据的读写集到<code>endorser#ProcessProposal</code>。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-24 23:47:30" itemprop="dateCreated datePublished" datetime="2019-02-24T23:47:30+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1816,185 +852,81 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>接着继续分析acc的初始化过程，在instantiate(3)里提到<code>endorser.callChaincode</code>有两次的<code>ChaincodeSupport#Execute</code>调用,由代码分析两次不同的<code>ChaincodeMessage</code>的<code>MessageType</code>分别为<code>MessageType_TRANSACTION</code>（对应cis）和<code>MessageType_INIT</code>（对应cds），相应调用lscc的Invoke和acc的Init。具体过程可以参考上节分析。</p>
 <p>先看lscc的<code>Invoke</code>.参考上节提及的<code>execute</code>在两端<code>chaincode/handler.go</code>（peer端）和<code>shim/handler.go</code>（chaincode容器端）的流程，lscc相当于chaincode容器（尽管是inproccontainer），使用<code>shim/handler.go#handleReady</code>里<code>select-case</code>，lscc的<code>ChaincodeMessage_TRANSACTION</code>进入<code>handleTransaction</code>方法。这里的主要流程与上节介绍的<code>handleInit</code>一致，不同的是这里调用的是lscc的<code>Invoke</code>方法。这里需要强调一点，在<code>handleTransaction</code>,<code>handleInit</code>这些<code>handleXXX</code>方法里，进入就是启动goroutinne来运行所有的逻辑，这样可以立刻返回并行来处理下一个请求。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-24 23:41:52" itemprop="dateCreated datePublished" datetime="2019-02-24T23:41:52+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -2002,185 +934,81 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>接下来分析lscc的执行过程，在这之前，先看下其初始化注册过程。在<code>peer/node/start.go#Serve</code>里<code>registerChaincodeSupport(ccSrv, ccEndpoint, ca, aclProvider)</code>。进入方法，主要是<code>scc.CreateSysCCs(ccp, sccp, aclProvider)</code>，就是引入了<code>scc/importsysccs.go#builtInSystemChaincodes</code>里定义的SCC,即<code>cscc</code>,<code>lscc</code>和<code>gscc</code>（包含chaincode的Name，Path代码地址，Chaincode对象，acl，policy等）。然后逐个执行<code>sccp.RegisterSysCC(cc)</code>注册SCC,实际上就是加入<code>SystemChaincodeProvider.Registrar.typeRegistry</code>（map[string]*inprocContainer）里，key是chaincode的Name，这个后面初始化时候会使用到。</p>
-<p>这里完成注册后，在<code>serve()</code>里稍后的位置执行<code>sccp.DeploySysCCs(&quot;&quot;, ccp)</code>进行部署。第一个参数是channelId为“”，说明这些scc是chainless的，可以供所有的channel使用。进入方法，首先构造cds<code>&amp;pb.ChaincodeDeploymentSpec{ExecEnv: pb.ChaincodeDeploymentSpec_SYSTEM, ChaincodeSpec: spec}</code>.这里注意到，部署类型是ChaincodeDeploymentSpec_SYSTEM，回顾上节acc类型是ChaincodeDeploymentSpec_DOCKER，说明SCC是部署在peer内的，而acc是部署在另外新的chaincode docker容器里。然后执行<code>ccprov.Execute(ctxt, cccid, chaincodeDeploymentSpec)</code>,最终实际上又回到前面介绍过的<code>ChaincodeSupport.Execute</code>方法上。后面的执行与acc是一致的，所区别的在于launch。区别于acc使用的是<code>dockercontroller/DockerVM#start</code>,scc使用的是<code>inproccontroller.InprocVM#start</code>.首先<code>vm.registry.typeRegistry[path]</code>,这个在前面已经注册了可以获取出来。然后开始真正的launch。</p>
+<p>这里完成注册后，在<code>serve()</code>里稍后的位置执行<code>sccp.DeploySysCCs(&quot;&quot;, ccp)</code>进行部署。第一个参数是channelId为“”，说明这些scc是chainless的，可以供所有的channel使用。进入方法，首先构造cds<code>&amp;pb.ChaincodeDeploymentSpec&#123;ExecEnv: pb.ChaincodeDeploymentSpec_SYSTEM, ChaincodeSpec: spec&#125;</code>.这里注意到，部署类型是ChaincodeDeploymentSpec_SYSTEM，回顾上节acc类型是ChaincodeDeploymentSpec_DOCKER，说明SCC是部署在peer内的，而acc是部署在另外新的chaincode docker容器里。然后执行<code>ccprov.Execute(ctxt, cccid, chaincodeDeploymentSpec)</code>,最终实际上又回到前面介绍过的<code>ChaincodeSupport.Execute</code>方法上。后面的执行与acc是一致的，所区别的在于launch。区别于acc使用的是<code>dockercontroller/DockerVM#start</code>,scc使用的是<code>inproccontroller.InprocVM#start</code>.首先<code>vm.registry.typeRegistry[path]</code>,这个在前面已经注册了可以获取出来。然后开始真正的launch。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(4）chaincode容器启动及注册</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(4）chaincode容器启动及注册</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-24 23:37:19" itemprop="dateCreated datePublished" datetime="2019-02-24T23:37:19+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -2188,71 +1016,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string{&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address=%s&quot;, c.PeerAddress)}</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
-<pre><code class="lang-go">util.DockerBuildOptions{
+          <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string&#123;&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address=%s&quot;, c.PeerAddress)&#125;</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
+<pre><code class="lang-go">util.DockerBuildOptions&#123;
   Cmd:          fmt.Sprintf(&quot;GOPATH=/chaincode/input:$GOPATH go build -tags \&quot;%s\&quot; %s -o /chaincode/output/chaincode %s&quot;, gotags, ldflagsOpt, pkgname),
   InputStream:  codepackage,
   OutputStream: binpackage,
-}
+&#125;
 </code></pre>
-<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>${CC_SRC_PATH}</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH=&quot;github.com/chaincode/chaincode_example02/go/&quot;</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
+<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>$&#123;CC_SRC_PATH&#125;</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH=&quot;github.com/chaincode/chaincode_example02/go/&quot;</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
-  </section>
 
   
   <nav class="pagination">
@@ -2264,260 +1057,122 @@
           </div>
           
 
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </div>
-
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
-</div>
-
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
-  </div>
-
-  
-
 <script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
 
 
 
@@ -2526,427 +1181,72 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+<script src="/js/utils.js"></script>
 
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/motion.js"></script>
 
 
-  
+<script src="/js/schemes/pisces.js"></script>
 
 
-  <script src="/js/src/utils.js?v=7.0.0"></script>
+<script src="/js/next-boot.js"></script>
 
-  <script src="/js/src/motion.js?v=7.0.0"></script>
 
 
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 

@@ -1,127 +1,51 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
-<meta name="keywords" content="BlockChain">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微众银行FISCO-BCOS中间件赏析">
 <meta property="og:url" content="https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/webank/webase-front-event.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/webank/weevent-stomp.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/webank/webank-governance-auth.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/webank/data-reconcile.jpg">
-<meta property="og:updated_time" content="2021-02-09T03:13:58.149Z">
+<meta property="article:published_time" content="2020-11-23T08:43:09.000Z">
+<meta property="article:modified_time" content="2021-02-09T03:13:58.149Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="BlockChain">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微众银行FISCO-BCOS中间件赏析">
-<meta name="twitter:description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
 <meta name="twitter:image" content="https://simplexity.cn/images/webank/webase-front-event.jpg">
 
+<link rel="canonical" href="https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/">
 
 
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -133,15 +57,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -150,9 +67,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -166,316 +82,158 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">微众银行FISCO-BCOS中间件赏析
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          微众银行FISCO-BCOS中间件赏析
+        </h1>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2020-11-23 16:43:09" itemprop="dateCreated datePublished" datetime="2020-11-23T16:43:09+08:00">2020-11-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2021-02-09 11:13:58" itemprop="dateModified" datetime="2021-02-09T11:13:58+08:00">2021-02-09</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/2020/11/23/webank-fisco-bcos-middleware/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/11/23/webank-fisco-bcos-middleware/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-02-09 11:13:58" itemprop="dateModified" datetime="2021-02-09T11:13:58+08:00">2021-02-09</time>
+              </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -483,33 +241,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <p>区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:</p>
 <ul>
-<li><strong>链数据管理</strong>： 相当于区块链浏览器，获取链的信息，例如块高，块信息等，以及管理各个节点的管理员admin功能（对应微众的<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Node-Manager/index.html" target="_blank" rel="noopener">WeBASE-Node-Manager</a>，下同）</li>
-<li><strong>交易</strong>： 交易上链，交易查询，交易回执查询，存证等（<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Transaction/index.html" target="_blank" rel="noopener">WeBASE-Transcation</a>）</li>
-<li><strong>合约编译部署</strong>： 编译合约，部署合约等(<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html" target="_blank" rel="noopener">WeBASE-Sign</a>)</li>
-<li><strong>合约事件监听</strong>： 订阅事件，事件推送等(在<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/index.html" target="_blank" rel="noopener">WeBASE-Front</a>里有基于MQ的方案，以及单独的基于区块链的分布式事件驱动架构<a href="https://fintech.webank.com/weevent" target="_blank" rel="noopener">WeEvent</a>)</li>
-<li><strong>私钥托管</strong>： 托管私钥，代用户签名上链(<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html" target="_blank" rel="noopener">WeBASE-Sign</a>)</li>
-<li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a href="https://fintech.webank.com/weidentity" target="_blank" rel="noopener">WeIdentity</a>）</li>
+<li><strong>链数据管理</strong>： 相当于区块链浏览器，获取链的信息，例如块高，块信息等，以及管理各个节点的管理员admin功能（对应微众的<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Node-Manager/index.html">WeBASE-Node-Manager</a>，下同）</li>
+<li><strong>交易</strong>： 交易上链，交易查询，交易回执查询，存证等（<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Transaction/index.html">WeBASE-Transcation</a>）</li>
+<li><strong>合约编译部署</strong>： 编译合约，部署合约等(<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
+<li><strong>合约事件监听</strong>： 订阅事件，事件推送等(在<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/index.html">WeBASE-Front</a>里有基于MQ的方案，以及单独的基于区块链的分布式事件驱动架构<a target="_blank" rel="noopener" href="https://fintech.webank.com/weevent">WeEvent</a>)</li>
+<li><strong>私钥托管</strong>： 托管私钥，代用户签名上链(<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
+<li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a target="_blank" rel="noopener" href="https://fintech.webank.com/weidentity">WeIdentity</a>）</li>
 </ul>
-<p>其他的还有<strong>跨链</strong><a href="https://fintech.webank.com/wecross" target="_blank" rel="noopener">WeCross</a>，<strong>链上数据导出</strong><a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html" target="_blank" rel="noopener">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
+<p>其他的还有<strong>跨链</strong><a target="_blank" rel="noopener" href="https://fintech.webank.com/wecross">WeCross</a>，<strong>链上数据导出</strong><a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
 <h1 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h1><ol>
 <li><a href="#event-listener">合约事件监听</a></li>
 <li><a href="#governance">WeBankBlockchain-Governance链治理通用组件</a></li>
 <li><a href="#data">WeBankBlockchain-Data数据治理通用组件</a></li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="1-合约事件监听"><a href="#1-合约事件监听" class="headerlink" title="1. 合约事件监听"></a><span id="event-listener">1. 合约事件监听</span></h2><p>合约里经常会包含有事件（event关键字），应用通过监听链上指定合约的指定事件，从而得到相应的数据触发相应的处理，也就是不同的系统不再需要链下的交互（例如api调用等），在这里，链扮演了类似<strong>持久化的消息队列</strong>的角色。在多数场景下，对于链上事件，应用方会有着 <strong>可以重复读，可以从指定块开始读，不能丢失事件</strong> 等等的需求，这些在设计中间件时都需要考虑在内。</p>
-<h3 id="1-1-基于MQ的通知方案"><a href="#1-1-基于MQ的通知方案" class="headerlink" title="1.1 基于MQ的通知方案"></a>1.1 基于MQ的通知方案</h3><p>该实现在<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/appendix.html#id8" target="_blank" rel="noopener">WeBASE-Front:支持链上事件订阅和通知</a>内，大致流程（摘录）：</p>
+<h3 id="1-1-基于MQ的通知方案"><a href="#1-1-基于MQ的通知方案" class="headerlink" title="1.1 基于MQ的通知方案"></a>1.1 基于MQ的通知方案</h3><p>该实现在<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/appendix.html#id8">WeBASE-Front:支持链上事件订阅和通知</a>内，大致流程（摘录）：</p>
 <ol>
 <li>WeBASE-Front连接到MQ-Server(目前支持RabbitMQ-Server);</li>
 <li>WeBASE-Front接收节点的事件Push后，如出块通知，WeBASE-Front将出块消息发送到消息队列中；</li>
 <li>区块链应用连接MQ-Server，获取消息队列中待消费的消息，即可获得事件通知；  </li>
 </ol>
-<p>接口文档在<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/interface.html#id491" target="_blank" rel="noopener">订阅合约event事件通知</a>(基于版本v1.4.1，下同)。其中主要参数有（部分）</p>
+<p>接口文档在<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/interface.html#id491">订阅合约event事件通知</a>(基于版本v1.4.1，下同)。其中主要参数有（部分）</p>
 <div class="table-container">
 <table>
 <thead>
@@ -555,8 +310,8 @@
 </div>
 <p>大致流程如下：<br><img src="/images/webank/webase-front-event.jpg" width="50%" height="50%"></p>
 <ol>
-<li>应用通过API请求<a href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/interface.html#id491" target="_blank" rel="noopener">订阅合约event事件通知</a>接口</li>
-<li><code>EventService</code>类构造了<code>ContractEventCallback</code>用于后续收到异步推送的回掉实现，同时生成UUID作为filterID，然后将（filterID-callback）这键值对记录到<code>eventLogFilterManager</code>(本地map结构）内。然后向FISCO BCOS节点同步发送<code>ChannelMessageType.CLIENT_REGISTER_EVENT_LOG</code>类型的注册请求。（客户端与节点的交互基于<a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#channelmessage-v2" target="_blank" rel="noopener">Channel</a>协议。交互分为三个阶段：注册请求，节点回复，Event Log数据推送。）实际实现是基于netty通信框架，这里的webase-front中间件与链节点间维持着长链接。参考<a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/event_sub.html" target="_blank" rel="noopener">Fisco Bcos的合约事件推送</a>。然后同步注册成功/失败后将结果返回给API调用方。</li>
+<li>应用通过API请求<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/interface.html#id491">订阅合约event事件通知</a>接口</li>
+<li><code>EventService</code>类构造了<code>ContractEventCallback</code>用于后续收到异步推送的回掉实现，同时生成UUID作为filterID，然后将（filterID-callback）这键值对记录到<code>eventLogFilterManager</code>(本地map结构）内。然后向FISCO BCOS节点同步发送<code>ChannelMessageType.CLIENT_REGISTER_EVENT_LOG</code>类型的注册请求。（客户端与节点的交互基于<a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#channelmessage-v2">Channel</a>协议。交互分为三个阶段：注册请求，节点回复，Event Log数据推送。）实际实现是基于netty通信框架，这里的webase-front中间件与链节点间维持着长链接。参考<a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/event_sub.html">Fisco Bcos的合约事件推送</a>。然后同步注册成功/失败后将结果返回给API调用方。</li>
 <li>中间件收到链节点推送的<code>ChannelMessageType.EVENT_LOG_PUSH</code>类型消息，根据消息体里携带的filterID从<code>eventLogFilterManager</code>里取出相应的callback，然后调用<code>ContractEventCallback#onPushMessageLog</code>。</li>
 <li>在callback里调用<code>ContractEventCallback#pushMeessage2MQ</code>，将监听到的log推送到MQ。在此之前，应用已经订阅了MQ的指定主题，后续的管理交由MQ。</li>
 </ol>
@@ -572,16 +327,16 @@
 <li>多个front节点只需要一个实例来PULL链上的event log，而且需要有且仅有唯一。可以使用zk来做分布式锁，解决多实例的加入退出下的动态选主。</li>
 <li>由于在front中间件有持久化监听信息，因此即使在多个应用实例同时注册时，也可以通过判断同一个监听是否已被注册而且在运行中等状态（这里需要适当的锁），从而避免多实例重复注册的问题。</li>
 </ol>
-<h3 id="1-2-WeEvent框架"><a href="#1-2-WeEvent框架" class="headerlink" title="1.2 WeEvent框架"></a>1.2 <a href="https://fintech.webank.com/weevent" target="_blank" rel="noopener">WeEvent</a>框架</h3><p>基于WeEvent v1.4.0版本。概念及模型参考<a href="https://weeventdoc.readthedocs.io/zh_CN/latest/introduction/core.html" target="_blank" rel="noopener">核心概念</a>。consumer的实现逻辑如下图：<br><img src="/images/webank/weevent-stomp.jpg" width="80%" height="80%"></p>
+<h3 id="1-2-WeEvent框架"><a href="#1-2-WeEvent框架" class="headerlink" title="1.2 WeEvent框架"></a>1.2 <a target="_blank" rel="noopener" href="https://fintech.webank.com/weevent">WeEvent</a>框架</h3><p>基于WeEvent v1.4.0版本。概念及模型参考<a target="_blank" rel="noopener" href="https://weeventdoc.readthedocs.io/zh_CN/latest/introduction/core.html">核心概念</a>。consumer的实现逻辑如下图：<br><img src="/images/webank/weevent-stomp.jpg" width="80%" height="80%"></p>
 <ul>
 <li><strong>应用订阅主题</strong>：</li>
 </ul>
 <ol>
-<li>通过stomp协议订阅topic，这个是websocket的使用比较广泛的报文格式。这个在weevent-broker包里。里面有mqtt（用于IoT）和stomp协议用于consumer，另外有jsonrpc和rest用于producer。参看<a href="https://weeventdoc.readthedocs.io/zh_CN/latest/introduction/core.html" target="_blank" rel="noopener">接入说明</a>，其中，<strong><code>暂时不支持消息确认ACK和事务Transaction语义。</code>(</strong><a href="https://weeventdoc.readthedocs.io/zh_CN/latest/protocol/stomp.html" target="_blank" rel="noopener">摘录</a>)</li>
+<li>通过stomp协议订阅topic，这个是websocket的使用比较广泛的报文格式。这个在weevent-broker包里。里面有mqtt（用于IoT）和stomp协议用于consumer，另外有jsonrpc和rest用于producer。参看<a target="_blank" rel="noopener" href="https://weeventdoc.readthedocs.io/zh_CN/latest/introduction/core.html">接入说明</a>，其中，<strong><code>暂时不支持消息确认ACK和事务Transaction语义。</code>(</strong><a target="_blank" rel="noopener" href="https://weeventdoc.readthedocs.io/zh_CN/latest/protocol/stomp.html">摘录</a>)</li>
 <li>针对每个订阅，新建notifyTask并且注册。（weevent-core包）</li>
 </ol>
 <ul>
-<li><strong><a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/amop_protocol.html" target="_blank" rel="noopener">AMOP</a>（Advanced Messages Onchain Protocol）协议</strong><br>链上信使协议AMOP（Advanced Messages Onchain Protocol）系统旨在为Fisco Bcos联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯（摘）。这个实际上是构建在链的单播/广播消息通信协议，支持私有话题加密通信，发送文本和文件（以后有机会再深入研究），此处可以实现链节点和链外系统的通信。此处也有Topic的概念，需要区分该Topic和event topic不是同一个概念。</li>
+<li><strong><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/amop_protocol.html">AMOP</a>（Advanced Messages Onchain Protocol）协议</strong><br>链上信使协议AMOP（Advanced Messages Onchain Protocol）系统旨在为Fisco Bcos联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯（摘）。这个实际上是构建在链的单播/广播消息通信协议，支持私有话题加密通信，发送文本和文件（以后有机会再深入研究），此处可以实现链节点和链外系统的通信。此处也有Topic的概念，需要区分该Topic和event topic不是同一个概念。</li>
 </ul>
 <ol>
 <li>链节点在出块时通过AMOP协议向<code>Consummer</code>推送<code>BLOCK_NOTIFY</code>消息。（该话题是consumer初始化时订阅的）</li>
@@ -604,362 +359,180 @@
 <li><code>weevent-processor</code>包里主要是链上的流事件处理。（这个与大数据流计算的对比有待后续分析）</li>
 </ol>
 <hr>
-<h2 id="2-WeBankBlockchain-Governance链治理通用组件"><a href="#2-WeBankBlockchain-Governance链治理通用组件" class="headerlink" title="2. WeBankBlockchain-Governance链治理通用组件"></a><span id="governance">2. <a href="https://github.com/WeBankBlockchain/Governance-Doc" target="_blank" rel="noopener">WeBankBlockchain-Governance链治理通用组件</a></span></h2><p>微众银行提出面向区块链的多方协作治理框架—— Multilateral Collaborative Governance Framework（MCGF）。具体见<a href="https://mp.weixin.qq.com/s?__biz=MzU0MDY4MDMzOA==&amp;mid=2247486381&amp;idx=1&amp;sn=caae41a2241e3b1c2cd58181ef73a1bc&amp;chksm=fb34c250cc434b46b2c1b72299c2eb71e1bd6b7597c341423c5d262f18a6e0af1628e0ba4037&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">白皮书</a></p>
+<h2 id="2-WeBankBlockchain-Governance链治理通用组件"><a href="#2-WeBankBlockchain-Governance链治理通用组件" class="headerlink" title="2. WeBankBlockchain-Governance链治理通用组件"></a><span id="governance">2. <a target="_blank" rel="noopener" href="https://github.com/WeBankBlockchain/Governance-Doc">WeBankBlockchain-Governance链治理通用组件</a></span></h2><p>微众银行提出面向区块链的多方协作治理框架—— Multilateral Collaborative Governance Framework（MCGF）。具体见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU0MDY4MDMzOA==&amp;mid=2247486381&amp;idx=1&amp;sn=caae41a2241e3b1c2cd58181ef73a1bc&amp;chksm=fb34c250cc434b46b2c1b72299c2eb71e1bd6b7597c341423c5d262f18a6e0af1628e0ba4037&amp;scene=21#wechat_redirect">白皮书</a></p>
 <h3 id="2-1-WeBankBlockchain-Governance-Key-私钥管理组件"><a href="#2-1-WeBankBlockchain-Governance-Key-私钥管理组件" class="headerlink" title="2.1 WeBankBlockchain-Governance-Key 私钥管理组件"></a>2.1 WeBankBlockchain-Governance-Key 私钥管理组件</h3><ol>
 <li><p>助记词生成私钥<br>参考类<code>PkeyByMnemonicService.java</code>。通过助记词<code>mnemonic</code>与密码<code>passphrase</code>进行<code>PBKDF2WithHmacSha512</code>哈希算法生成确定性的公私钥对<code>keyPair</code>和用于安全派生子密钥的<code>chaincode</code>。</p>
 </li>
-<li><p>私钥托管<br>参考类<code>KeyHandler.java</code>。以数据库存储为例，私钥 <strong><em>加密</em></strong> 后存储，加密的方式例如<a href="https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition" target="_blank" rel="noopener">Ethereum wallet file</a>(适配Ethereum的模式), 或者p12的KeyStore（密码访问模式）等。按照加密口令根据是否同时托管也分为半托管（加密口令在用户手中，加密后的私钥存放在数据库中，需要使用私钥签名时候需要同时传入加密口令解密）和全托管。全托管方式下，加密口令和加密后的私钥分库存储，降低安全风险。</p>
+<li><p>私钥托管<br>参考类<code>KeyHandler.java</code>。以数据库存储为例，私钥 <strong><em>加密</em></strong> 后存储，加密的方式例如<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition">Ethereum wallet file</a>(适配Ethereum的模式), 或者p12的KeyStore（密码访问模式）等。按照加密口令根据是否同时托管也分为半托管（加密口令在用户手中，加密后的私钥存放在数据库中，需要使用私钥签名时候需要同时传入加密口令解密）和全托管。全托管方式下，加密口令和加密后的私钥分库存储，降低安全风险。</p>
 </li>
 <li><p>私钥派生</p>
 </li>
 <li>私钥分片</li>
 </ol>
-<h3 id="2-2-WeBankBlockchain-Governance-Account-账户治理组件"><a href="#2-2-WeBankBlockchain-Governance-Account-账户治理组件" class="headerlink" title="2.2 WeBankBlockchain-Governance-Account 账户治理组件"></a>2.2 WeBankBlockchain-Governance-Account 账户治理组件</h3><p>增加<code>普通账户（Normal Account）</code>的概念，与外部账户一对一绑定，在链上的身份用的是普通账户的地址。即<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------      --------       --------</span><br><span class="line">| 外部账户(用户手持的公私钥) | -&gt; | 普通账户 | -&gt; | 应用合约 |</span><br><span class="line"> ------------------------      --------       --------</span><br></pre></td></tr></table></figure></p>
-<p>因此，管理员可以添加，替换，冻结，解冻普通账户（也可以由用户自身提出），例如用户遗失/泄露私钥的场景下，只需要更新&lt;外部, 普通&gt;账户对应关系，而链上的应用合约对应的普通账户不变。应用合约需要引入<code>AccountManager.sol</code>，使用<code>_accountManager</code>里记录的普通用户地址来代替<code>msg.sender</code>来判断身份权限。</p>
+<h3 id="2-2-WeBankBlockchain-Governance-Account-账户治理组件"><a href="#2-2-WeBankBlockchain-Governance-Account-账户治理组件" class="headerlink" title="2.2 WeBankBlockchain-Governance-Account 账户治理组件"></a>2.2 WeBankBlockchain-Governance-Account 账户治理组件</h3><p>增加<code>普通账户（Normal Account）</code>的概念，与外部账户一对一绑定，在链上的身份用的是普通账户的地址。即<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------      --------       --------</span><br><span class="line">| 外部账户(用户手持的公私钥) | -&gt; | 普通账户 | -&gt; | 应用合约 |</span><br><span class="line"> ------------------------      --------       --------</span><br></pre></td></tr></table></figure><br>因此，管理员可以添加，替换，冻结，解冻普通账户（也可以由用户自身提出），例如用户遗失/泄露私钥的场景下，只需要更新&lt;外部, 普通&gt;账户对应关系，而链上的应用合约对应的普通账户不变。应用合约需要引入<code>AccountManager.sol</code>，使用<code>_accountManager</code>里记录的普通用户地址来代替<code>msg.sender</code>来判断身份权限。</p>
 <p>管理员的角色可以分类两类，一类是超级管理员（唯一），一类是管员委员会（投票决策）。部署的合约分别是<code>AdminGovernBuilder.sol</code>和<code>（Weight）VoteGovernBuilder.sol</code>。以<code>AdminGovernBuilder.sol</code>为例。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AdminGovernBuilder.sol</span></span><br><span class="line"><span class="comment">// 部署合约，目的是为了实例化以下的合约。</span></span><br><span class="line">contract AdminGovernBuilder &#123;</span><br><span class="line">  address public _governance;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>() public &#123;</span><br><span class="line">    WEGovernance governance = <span class="keyword">new</span> WEGovernance(<span class="number">0</span>);</span><br><span class="line">    governance.setOwner(msg.sender);</span><br><span class="line">    _governance = address(governance);</span><br><span class="line">    address _accountManager = governance.getAccountManager();</span><br><span class="line">    AccountManager accountManager = AccountManager(_accountManager);</span><br><span class="line">    accountManager.newAccount(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getGovernance</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getAccountManager</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// WEGovernance.sol</span></span><br><span class="line"><span class="comment">// 该合约是管理规则，例如在管理委员会方式下，发起投票requestVote和各个委员vote的汇总计算逻辑都是在此合约里。</span></span><br><span class="line">contract WEGovernance is WEBoardVoteGuard &#123;</span><br><span class="line">  address _accountManager;</span><br><span class="line">  <span class="comment">// 0: admin-mode; 1: vote-mode.</span></span><br><span class="line">  uint8 public _mode = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(uint8 mode) public &#123;</span><br><span class="line">    _mode = mode;</span><br><span class="line">    AccountManager accountManager = <span class="keyword">new</span> AccountManager();</span><br><span class="line">    _accountManager = address(accountManager);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 发起投票，登记该投票信息</span></span><br><span class="line">  <span class="comment">// return id : 唯一标志提案，与vote方法的入参相对应</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">register</span>(<span class="params">uint8 txType, ...</span>) <span class="title">external</span> <span class="title">validVoter</span> <span class="title">returns</span> (<span class="params">bool b, uint256 id</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 投票</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">vote</span>(<span class="params">uint256 id, bool flag</span>) <span class="title">external</span> <span class="title">validVoter</span> <span class="title">returns</span> (<span class="params">bool b</span>)</span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// AccountManager.sol</span></span><br><span class="line"><span class="comment">// &lt;外部, 普通&gt;账户对应关系的存放</span></span><br><span class="line">contract AccountManager is WEBasicAuth &#123;</span><br><span class="line">  <span class="comment">// 外部账户 -&gt; 普通账户</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> address) _externalAccountMapping;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 普通账户 -&gt; 外部账户</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> address) _userAccountMapping;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// EvidenceDemo.sol</span></span><br><span class="line"><span class="comment">// 应用合约示例。引入AccountManager即可</span></span><br><span class="line">contract EvidenceDemo &#123;</span><br><span class="line">  address public _owner;</span><br><span class="line">  AccountManager _accountManager;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(address accountManager) public &#123;</span><br><span class="line">    _accountManager = AccountManager(accountManager);</span><br><span class="line">    _owner = _accountManager.getUserAccount(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用_accountManager里记录的普通用户地址来代替 msg.sender</span></span><br><span class="line">  modifier onlyOwner() &#123;</span><br><span class="line">    address userAccountAddress = _accountManager.getUserAccount(msg.sender);</span><br><span class="line">    <span class="built_in">require</span>(userAccountAddress == _owner, <span class="string">"Not admin"</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AdminGovernBuilder.sol</span></span><br><span class="line"><span class="comment">// 部署合约，目的是为了实例化以下的合约。</span></span><br><span class="line">contract AdminGovernBuilder &#123;</span><br><span class="line">  address public _governance;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> &#123;</span><br><span class="line">    WEGovernance governance = <span class="keyword">new</span> WEGovernance(<span class="number">0</span>);</span><br><span class="line">    governance.setOwner(msg.sender);</span><br><span class="line">    _governance = address(governance);</span><br><span class="line">    address _accountManager = governance.getAccountManager();</span><br><span class="line">    AccountManager accountManager = AccountManager(_accountManager);</span><br><span class="line">    accountManager.newAccount(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getGovernance</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getAccountManager</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// WEGovernance.sol</span></span><br><span class="line"><span class="comment">// 该合约是管理规则，例如在管理委员会方式下，发起投票requestVote和各个委员vote的汇总计算逻辑都是在此合约里。</span></span><br><span class="line">contract WEGovernance is WEBoardVoteGuard &#123;</span><br><span class="line">  address _accountManager;</span><br><span class="line">  <span class="comment">// 0: admin-mode; 1: vote-mode.</span></span><br><span class="line">  uint8 public _mode = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params">uint8 mode</span>) <span class="title">public</span> &#123;</span><br><span class="line">    _mode = mode;</span><br><span class="line">    AccountManager accountManager = <span class="keyword">new</span> AccountManager();</span><br><span class="line">    _accountManager = address(accountManager);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 发起投票，登记该投票信息</span></span><br><span class="line">  <span class="comment">// return id : 唯一标志提案，与vote方法的入参相对应</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">register</span>(<span class="params">uint8 txType, ...</span>) <span class="title">external</span> <span class="title">validVoter</span> <span class="title">returns</span> (<span class="params">bool b, uint256 id</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 投票</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">vote</span>(<span class="params">uint256 id, bool flag</span>) <span class="title">external</span> <span class="title">validVoter</span> <span class="title">returns</span> (<span class="params">bool b</span>)</span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// AccountManager.sol</span></span><br><span class="line"><span class="comment">// &lt;外部, 普通&gt;账户对应关系的存放</span></span><br><span class="line">contract AccountManager is WEBasicAuth &#123;</span><br><span class="line">  <span class="comment">// 外部账户 -&gt; 普通账户</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> address) _externalAccountMapping;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 普通账户 -&gt; 外部账户</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> address) _userAccountMapping;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// EvidenceDemo.sol</span></span><br><span class="line"><span class="comment">// 应用合约示例。引入AccountManager即可</span></span><br><span class="line">contract EvidenceDemo &#123;</span><br><span class="line">  address public _owner;</span><br><span class="line">  AccountManager _accountManager;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params">address accountManager</span>) <span class="title">public</span> &#123;</span><br><span class="line">    _accountManager = AccountManager(accountManager);</span><br><span class="line">    _owner = _accountManager.getUserAccount(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用_accountManager里记录的普通用户地址来代替 msg.sender</span></span><br><span class="line">  modifier <span class="function"><span class="title">onlyOwner</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    address userAccountAddress = _accountManager.getUserAccount(msg.sender);</span><br><span class="line">    <span class="built_in">require</span>(userAccountAddress == _owner, <span class="string">&quot;Not admin&quot;</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="2-3-WeBankBlockchain-Governance-Auth-权限治理组件"><a href="#2-3-WeBankBlockchain-Governance-Auth-权限治理组件" class="headerlink" title="2.3 WeBankBlockchain-Governance-Auth 权限治理组件"></a>2.3 WeBankBlockchain-Governance-Auth 权限治理组件</h3><p>与账户治理组件非常类似，也是引入了权限管理合约，由超级管理员或者管理员委员会进行管理。在应用合约里访问权限管理合约，调用<code>canCallFunction</code>来判断是否可以访问指定的合约方法。架构图如下：<br><img src="/images/webank/webank-governance-auth.jpg" width="50%" height="50%"></p>
 <hr>
-<h2 id="3-WeBankBlockchain-Data数据治理通用组件"><a href="#3-WeBankBlockchain-Data数据治理通用组件" class="headerlink" title="3. WeBankBlockchain-Data数据治理通用组件"></a><span id="data">3. WeBankBlockchain-Data数据治理通用组件</span></h2><p>参考<a href="https://github.com/WeBankBlockchain/Data-Doc" target="_blank" rel="noopener">文档</a></p>
-<h3 id="3-1-WeBankBlockchain-Data-Reconcile对账服务"><a href="#3-1-WeBankBlockchain-Data-Reconcile对账服务" class="headerlink" title="3.1 WeBankBlockchain-Data-Reconcile对账服务"></a>3.1 WeBankBlockchain-Data-Reconcile对账服务</h3><p>金融机构特别是央行/商业银行间清结算，而且在当前区块链的性能限制条件下，批量定时的对账是常采用的方式。这个组件其实是比较完成的对账项目代码，饱含了基本流程。具体参考<a href="https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Reconcile/index.html" target="_blank" rel="noopener">文档</a>。流程如下图所示：<br><img src="/images/webank/data-reconcile.jpg" width="50%" height="50%"></p>
-<p>以正向定时任务为例，代码里主要采用了责任链的方式，具体配置在<code>ReconcileHandlerFactory.java</code>类中。具体的hanlder chain如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">| ReconcileTaskHandler(创建任务，记录在数据库) | -&gt; | ReconcileFileObtainHandler（从FTP/区块链上获取对账文件） |  </span><br><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br><span class="line">    -&gt; | ReconcileExecuteHandler（对账过程，具体每条数据以索引对齐） | -&gt; | ReconcileResultHandler（将对账结果上传到FTP）｜</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-WeBankBlockchain-Data数据治理通用组件"><a href="#3-WeBankBlockchain-Data数据治理通用组件" class="headerlink" title="3. WeBankBlockchain-Data数据治理通用组件"></a><span id="data">3. WeBankBlockchain-Data数据治理通用组件</span></h2><p>参考<a target="_blank" rel="noopener" href="https://github.com/WeBankBlockchain/Data-Doc">文档</a></p>
+<h3 id="3-1-WeBankBlockchain-Data-Reconcile对账服务"><a href="#3-1-WeBankBlockchain-Data-Reconcile对账服务" class="headerlink" title="3.1 WeBankBlockchain-Data-Reconcile对账服务"></a>3.1 WeBankBlockchain-Data-Reconcile对账服务</h3><p>金融机构特别是央行/商业银行间清结算，而且在当前区块链的性能限制条件下，批量定时的对账是常采用的方式。这个组件其实是比较完成的对账项目代码，饱含了基本流程。具体参考<a target="_blank" rel="noopener" href="https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Reconcile/index.html">文档</a>。流程如下图所示：<br><img src="/images/webank/data-reconcile.jpg" width="50%" height="50%"></p>
+<p>以正向定时任务为例，代码里主要采用了责任链的方式，具体配置在<code>ReconcileHandlerFactory.java</code>类中。具体的hanlder chain如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">| ReconcileTaskHandler(创建任务，记录在数据库) | -&gt; | ReconcileFileObtainHandler（从FTP/区块链上获取对账文件） |  </span><br><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br><span class="line">    -&gt; | ReconcileExecuteHandler（对账过程，具体每条数据以索引对齐） | -&gt; | ReconcileResultHandler（将对账结果上传到FTP）｜</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br></pre></td></tr></table></figure></p>
 <p>实际过程中，需要考虑数据/文件的加密，特别是在多方对账的场景，需要在多个层面做好数据加密和隔离，这点在项目中没有体现。例如，上链方生成对称密钥，对每笔数据（例如涉及到金额的敏感字段等）使用对称密钥加密，并且在上链的数据中附带上该对称密钥的标志。上链方采用对账方的公钥对对称密钥进行加密，并且通过报文发送给对账方。对账方使用自己的私钥解密后，进而对链上数据进行对称解密。另外，上链方在FTP中存放的对账文件，也需要相应的进行加密写入，并且，不同的对账方也需要相互隔离，在FTP上使用不同的路径，并且配置可访问权限。</p>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
-    
-</div>
-      
-    </div>
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/BlockChain/" rel="tag"><i class="fa fa-tag"></i> BlockChain</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/11/19/authorization-in-smart-contract/" rel="next" title="智能合约授权">
-                <i class="fa fa-chevron-left"></i> 智能合约授权
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockChain/" rel="tag"># BlockChain</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/01/21/sc-in-e-commerce/" rel="prev" title="智能合约在电商支付领域的应用畅想">
-                智能合约在电商支付领域的应用畅想 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
-
-        </div>
         
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/19/authorization-in-smart-contract/" rel="prev" title="智能合约授权">
+      <i class="fa fa-chevron-left"></i> 智能合约授权
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/21/sc-in-e-commerce/" rel="next" title="智能合约在电商支付领域的应用畅想">
+      智能合约在电商支付领域的应用畅想 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">目录：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%90%88%E7%BA%A6%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">1.1.</span> <span class="nav-text">1. 合约事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%9F%BA%E4%BA%8EMQ%E7%9A%84%E9%80%9A%E7%9F%A5%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基于MQ的通知方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E7%82%B9%EF%BC%9A"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">观点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">解决思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-WeEvent%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 WeEvent框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E7%82%B9%EF%BC%9A-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">观点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-WeBankBlockchain-Governance%E9%93%BE%E6%B2%BB%E7%90%86%E9%80%9A%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2. WeBankBlockchain-Governance链治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-WeBankBlockchain-Governance-Key-%E7%A7%81%E9%92%A5%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 WeBankBlockchain-Governance-Key 私钥管理组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-WeBankBlockchain-Governance-Account-%E8%B4%A6%E6%88%B7%E6%B2%BB%E7%90%86%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 WeBankBlockchain-Governance-Account 账户治理组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-WeBankBlockchain-Governance-Auth-%E6%9D%83%E9%99%90%E6%B2%BB%E7%90%86%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 WeBankBlockchain-Governance-Auth 权限治理组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-WeBankBlockchain-Data%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E9%80%9A%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3. WeBankBlockchain-Data数据治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-WeBankBlockchain-Data-Reconcile%E5%AF%B9%E8%B4%A6%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 WeBankBlockchain-Data-Reconcile对账服务</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
 
-            
-            
-            
-            
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录："><span class="nav-number">1.</span> <span class="nav-text">目录：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-合约事件监听"><span class="nav-number">1.1.</span> <span class="nav-text">1. 合约事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基于MQ的通知方案"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基于MQ的通知方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观点："><span class="nav-number">1.1.1.1.</span> <span class="nav-text">观点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决思路："><span class="nav-number">1.1.1.2.</span> <span class="nav-text">解决思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-WeEvent框架"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 WeEvent框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观点：-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">观点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-WeBankBlockchain-Governance链治理通用组件"><span class="nav-number">1.2.</span> <span class="nav-text">2. WeBankBlockchain-Governance链治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-WeBankBlockchain-Governance-Key-私钥管理组件"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 WeBankBlockchain-Governance-Key 私钥管理组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-WeBankBlockchain-Governance-Account-账户治理组件"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 WeBankBlockchain-Governance-Account 账户治理组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-WeBankBlockchain-Governance-Auth-权限治理组件"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 WeBankBlockchain-Governance-Auth 权限治理组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-WeBankBlockchain-Data数据治理通用组件"><span class="nav-number">1.3.</span> <span class="nav-text">3. WeBankBlockchain-Data数据治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-WeBankBlockchain-Data-Reconcile对账服务"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 WeBankBlockchain-Data-Reconcile对账服务</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
 
 
 
@@ -968,513 +541,72 @@
 
 
 
-
-        
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
+<script src="/js/next-boot.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  
-    <!-- LOCAL: You can save these files to your site and update links -->
-
-  
-  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<!-- END LOCAL -->
-
-<style>
-#gitment-container a {
-  border-bottom: none;
-}
-
-  a.gitment-editor-footer-tip, .gitment-container.gitment-footer-container {
-    display: none;
-  }
-
-</style>
-
-<script>
-  function renderGitment() {
-    var gitment = new Gitmint({
-      id: '1606120989000',
-      owner: 'simplexity-ckcclc',
-      repo: 'gitment-comments',
-      
-        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-      
-      oauth: {
-      
-      
-        client_secret: '09b3a91649010e98bb45af1c7bba1b490d42f458',
-      
-        client_id: '12eedb094a3054014378'
-      }
-    });
-    gitment.render('gitment-container');
-  }
-
-  
-    renderGitment();
-  
-</script>
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 

@@ -1,96 +1,22 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="Simple is Complex">
 <meta property="og:type" content="website">
@@ -98,23 +24,20 @@
 <meta property="og:url" content="https://simplexity.cn/page/3/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="Simple is Complex">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
+<meta property="article:author" content="Travis Wong">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simplexity">
-<meta name="twitter:description" content="Simple is Complex">
+
+<link rel="canonical" href="https://simplexity.cn/page/3/">
 
 
-
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/page/3/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -126,15 +49,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -143,9 +59,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -159,299 +74,158 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
-            
 
-          
-          <div id="content" class="content">
+          <div class="content index posts-expand">
             
-  <section id="posts" class="posts-expand">
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/01/thunderchain-cross-chain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/01/thunderchain-cross-chain/" class="post-title-link" itemprop="url">技术沙龙（1）- 迅雷链同构跨链</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/01/thunderchain-cross-chain/" class="post-title-link" itemprop="url">技术沙龙（1）- 迅雷链同构跨链</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-07-01 10:32:44" itemprop="dateCreated datePublished" datetime="2019-07-01T10:32:44+08:00">2019-07-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+            </span>
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -459,13 +233,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          
-            <p>目前公链关键性问题：1. TPS低，确认时间长；2.安全性。<br>迅雷链（同构多链）主要两个特性：1. 各链相互独立平等，独立运行共识机制；2. 保证链间安全。具体可以参看迅雷链官网查看其性能及特性，这里列举沙龙上交流获得的信息。</p>
-<p><img src="/images/thunderchain-cross-chain.jpeg" alt></p>
+          <p>目前公链关键性问题：1. TPS低，确认时间长；2.安全性。<br>迅雷链（同构多链）主要两个特性：1. 各链相互独立平等，独立运行共识机制；2. 保证链间安全。具体可以参看迅雷链官网查看其性能及特性，这里列举沙龙上交流获得的信息。</p>
+<p><img src="/images/thunderchain-cross-chain.jpeg" alt=""></p>
 <ol>
 <li><strong>同构多链</strong>。各链平等独立，相当于将单链分片（zone）。每个链负责部分账号，当链性能不足时动态扩链增加新链（目前还是中心化人工扩展），将账号归属重新分配，同时下发新的路由配置到接入层和各链PBFT共识节点。  </li>
 <li><strong>共识算法PBFT+DPOA</strong>。DPOA(ability)作用为单个链周期性（当前为一天，也可能为若干轮出块，可配置）的选举出部分节点（这个是由中心化根据检测到各个节点和其上报的性能计算出比重分值而选择，指标包含网络带宽，计算能力，网络情况，历史名声等）作为候选节点。然后在这些候选节点中选出PBFT节点（避免同一网络，区域等，根绝PBFT节点超过20多个后性能下降的特性，目前是21个）。此处利用的是PBFT的确定性共识。这些PBFT节点负责在该周期内出块。然后由中心将这些配置（包含这些PBFT节点的ip端口，公钥等）下发到该链（同时也会下发到其他链的PBFT节点用作跨链交易）。  </li>
@@ -485,171 +254,71 @@
 <li>5G+区块链。改变对设备对控制权方式（拥有设备对私钥）</li>
 </ol>
 
-          
-        
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/06/25/understanding-ethereum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/25/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/06/25/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-06-25 17:02:44" itemprop="dateCreated datePublished" datetime="2019-06-25T17:02:44+08:00">2019-06-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-11-23 20:31:15" itemprop="dateModified" datetime="2020-11-23T20:31:15+08:00">2020-11-23</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Ethereum/" itemprop="url" rel="index"><span itemprop="name">Ethereum</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-23 20:31:15" itemprop="dateModified" datetime="2020-11-23T20:31:15+08:00">2020-11-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ethereum/" itemprop="url" rel="index"><span itemprop="name">Ethereum</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -657,28 +326,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <blockquote>
 <p>必读：</p>
 <ul>
-<li><strong><a href="https://github.com/ethereum/wiki/wiki/White-Paper" target="_blank" rel="noopener">Ethereum White Paper</a></strong></li>
-<li><strong><a href="https://ethereum.github.io/yellowpaper/paper.pdf" target="_blank" rel="noopener">Ethereum Yellow Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
 </ul>
 </blockquote>
 <ol>
-<li><p><strong>Block, transaction, account state objects and Ethereum tries</strong><br><img src="/images/ethereum-all-structure.jpg" alt></p>
+<li><p><strong>Block, transaction, account state objects and Ethereum tries</strong><br><img src="/images/ethereum-all-structure.jpg" alt=""></p>
 <ul>
 <li><strong>The world state trie contains the mapping between addresses and account states.</strong> The hash of the root node of the world state trie is included in a block (in the stateRoot field) to represent the current state when that block was created. <strong>We only have one world state trie.</strong></li>
 <li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the sccount state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
 <li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
 <li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
 </ul>
-<p>摘自: <a href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/" target="_blank" rel="noopener">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
+<p>摘自: <a target="_blank" rel="noopener" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
 </li>
-<li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt></p>
+<li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt=""></p>
 </li>
 </ol>
 <div class="table-container">
@@ -719,178 +384,78 @@
 &gt; [How Smart Contract Deployment Works](https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/)
 </code></pre>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/06/25/understanding-ethereum/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/06/12/ethereum-design-rationale/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/12/ethereum-design-rationale/" class="post-title-link" itemprop="url">Ethereum设计理念Design Rationale学习心得</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/06/12/ethereum-design-rationale/" class="post-title-link" itemprop="url">Ethereum设计理念Design Rationale学习心得</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-06-12 16:21:55" itemprop="dateCreated datePublished" datetime="2019-06-12T16:21:55+08:00">2019-06-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Ethereum/" itemprop="url" rel="index"><span itemprop="name">Ethereum</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ethereum/" itemprop="url" rel="index"><span itemprop="name">Ethereum</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -898,11 +463,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p>本文为Ethereum设计理念官方文档<a href="https://github.com/ethereum/wiki/wiki/Design-Rationale" target="_blank" rel="noopener">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a href="https://ethfans.org/posts/510" target="_blank" rel="noopener">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
+          <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
 <h3 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h3><ol>
 <li><strong>三文治式的复杂度模型</strong>  </li>
 </ol>
@@ -918,178 +479,78 @@
 </li>
 </ol>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/06/12/ethereum-design-rationale/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/14/fabric-configtxgen-tool/" class="post-title-link" itemprop="url">Fabric的configtxgen工具生成区块及配置文件分析</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/05/14/fabric-configtxgen-tool/" class="post-title-link" itemprop="url">Fabric的configtxgen工具生成区块及配置文件分析</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-05-14 18:41:06" itemprop="dateCreated datePublished" datetime="2019-05-14T18:41:06+08:00">2019-05-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1097,186 +558,80 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          
-            <p>本节主要基于<a href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network" target="_blank" rel="noopener">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
+          <p>本节主要基于<a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
 <p><code>cryptogen</code>和<code>configtxgen</code>分别用于加密和配置的工具，其代码路径为<code>hyperledger/fabric/common/tools/cryptogen</code>和<code>hyperledger/fabric/common/tools/configtxgen</code>。cryptogen产生了各级msp，在peer，orderer里皆有用到，包括后面介绍的configtxgen里包含msp信息这些也是由此产生。这里暂且不展开分析。</p>
-<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a href="https://www.chaindesk.cn/witbook/30/503" target="_blank" rel="noopener">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">"CONFIGTX"</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure></p>
-<p>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json" target="_blank" rel="noopener">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
-<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json" target="_blank" rel="noopener">JSON结构</a>。</p>
-<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>${CHANNEL_NAME}.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock ${CHANNEL_NAME}.block</code>这个命令查看其<a href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json" target="_blank" rel="noopener">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
+<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a target="_blank" rel="noopener" href="https://www.chaindesk.cn/witbook/30/503">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">&quot;CONFIGTX&quot;</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure><br>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
+<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json">JSON结构</a>。</p>
+<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>$&#123;CHANNEL_NAME&#125;.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock $&#123;CHANNEL_NAME&#125;.block</code>这个命令查看其<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
 <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><blockquote>
-<p><a href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb" target="_blank" rel="noopener">Hyperledger Fabric权限进阶篇</a></p>
+<p><a target="_blank" rel="noopener" href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb">Hyperledger Fabric权限进阶篇</a></p>
 </blockquote>
 
-          
-        
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/29/fabric-cryptography-msp-summary/" class="post-title-link" itemprop="url">密码学基础知识汇总及Fabric的MSP体系</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/29/fabric-cryptography-msp-summary/" class="post-title-link" itemprop="url">密码学基础知识汇总及Fabric的MSP体系</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-04-29 14:12:08" itemprop="dateCreated datePublished" datetime="2019-04-29T14:12:08+08:00">2019-04-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1284,229 +639,124 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          
-            <p>这篇只是汇总在学习密码学和Fabric的MSP体系过程中的阅读，方便日后回头翻阅，可以迅速回忆。涉及内容较多主体较为分散，挂一漏万。仍有待深入研究学习。</p>
+          <p>这篇只是汇总在学习密码学和Fabric的MSP体系过程中的阅读，方便日后回头翻阅，可以迅速回忆。涉及内容较多主体较为分散，挂一漏万。仍有待深入研究学习。</p>
 <ol>
 <li><p>密码学的基础知识概述（Hash算法，对称加密算法，X.509证书）</p>
 <blockquote>
 <ul>
-<li><a href="https://blog.csdn.net/ckcclc/article/details/89361898" target="_blank" rel="noopener">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
-<li><a href="https://knowledge.digicert.com/solution/SO4583.html" target="_blank" rel="noopener">Structure of X509 Certificates</a> : X.509结构  </li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ckcclc/article/details/89361898">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
+<li><a target="_blank" rel="noopener" href="https://knowledge.digicert.com/solution/SO4583.html">Structure of X509 Certificates</a> : X.509结构  </li>
 </ul>
 </blockquote>
 </li>
 <li><p>RSA</p>
 <blockquote>
 <ul>
-<li><a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html" target="_blank" rel="noopener">RSA算法原理(一)</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html" target="_blank" rel="noopener">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
 </ul>
 </blockquote>
 </li>
 <li><p>ECC（椭圆曲线）</p>
 <blockquote>
 <ul>
-<li><a href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/" target="_blank" rel="noopener">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
-<li><a href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/" target="_blank" rel="noopener">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
+<li><a target="_blank" rel="noopener" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
+<li><a target="_blank" rel="noopener" href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
 </ul>
 </blockquote>
-<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys" target="_blank" rel="noopener">Fabric官网-Membership Service Providers (MSP)</a></p>
+<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Fabric官网-Membership Service Providers (MSP)</a></p>
 <p>Ref: Bitcoin和Ethereum中的vrs（v：recovery id）</p>
 <blockquote>
 <ul>
-<li><a href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v" target="_blank" rel="noopener">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
-<li><a href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work" target="_blank" rel="noopener">How does recovering the public key from an ECDSA signature work?</a></li>
+<li><a target="_blank" rel="noopener" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
+<li><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work">How does recovering the public key from an ECDSA signature work?</a></li>
 </ul>
 </blockquote>
 </li>
 <li><p>零知识证明 Zero-Knowledge-Proof</p>
 <blockquote>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank" rel="noopener">Zero-Knowledge-Proof Wikipedia</a>  </li>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html" target="_blank" rel="noopener">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">Zero-Knowledge-Proof Wikipedia</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
 </ul>
 </blockquote>
 </li>
 <li><p>Fabric官网的MSP相关文档汇总</p>
 <blockquote>
 <ul>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html" target="_blank" rel="noopener">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html" target="_blank" rel="noopener">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
-<li><a href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys" target="_blank" rel="noopener">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
 </ul>
 </blockquote>
 </li>
 </ol>
 
-          
-        
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/19/fabric-commercial-paper-go/" class="post-title-link" itemprop="url">Fabric官网Commercial Paper案例chaincode的golang实现</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/19/fabric-commercial-paper-go/" class="post-title-link" itemprop="url">Fabric官网Commercial Paper案例chaincode的golang实现</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-04-19 16:20:28" itemprop="dateCreated datePublished" datetime="2019-04-19T16:20:28+08:00">2019-04-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1514,204 +764,100 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          <p>官网上描述了<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/developapps/developing_applications.html" target="_blank" rel="noopener">Commercial Paper</a>这个应用场景，并且提供了<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/tutorial/commercial_paper.html#" target="_blank" rel="noopener">nodejs实现</a>。这里补充chaincode的golang实现，保持逻辑一致，以及记录实际操作中的一些步骤和要点。实现的源码已上传<a href="https://github.com/simplexity-ckcclc/gofabric/tree/master/chaincode/commercial-paper/go" target="_blank" rel="noopener">github</a>。</p>
+          <p>官网上描述了<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/developapps/developing_applications.html">Commercial Paper</a>这个应用场景，并且提供了<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/tutorial/commercial_paper.html#">nodejs实现</a>。这里补充chaincode的golang实现，保持逻辑一致，以及记录实际操作中的一些步骤和要点。实现的源码已上传<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/tree/master/chaincode/commercial-paper/go">github</a>。</p>
 <ol>
 <li><p>按照官网Commercial Paper nodejs实现里的步骤，启动<code>net_basic</code>网络，并且启动了<code>peer0.org1.example.com</code>, <code>couchdb</code>, <code>ca.example.com</code>, <code>orderer.example.com</code>, <code>cliDigiBank</code>, <code>cliMagnetoCorp</code>这些容器（按照步骤里执行下来，docker ps能看到这些容器）。</p>
 </li>
 <li><p>install chaincode。执行<code>docker inspect cliMagnetoCorp</code>，能看到<code>/Users/ckcclc/github/fabric-samples/commercial-paper/organization/magnetocorp:/opt/gopath/src/github.com</code>这个路径绑定。在<code>/Users/ckcclc/github/fabric-samples/commercial-paper/organization/magnetocorp</code>创建目录<code>gocontract</code>，将golang实现放在这个目录里。这时候登录到<code>cliMagnetoCorp</code>容器，可以看到容器内<code>/opt/gopath/src/github.com/application</code>下有<code>gocontract</code>这个目录，并且go实现在内。</p>
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n gopapercontract -v 0 -p github.com/gocontract</span><br></pre></td></tr></table></figure>
-<p> 同时，<code>docker inspect cliMagnetoCorp</code>(或者<code>cliMagnetoCorp</code>容器执行<code>env</code>查看），<code>GOPATH=/opt/gopath, CORE_PEER_ADDRESS=peer0.org1.example.com:7051</code>。<code>install</code>会到<code>${GOPATH}/src</code>下寻找source code。然后install chaincode到<code>${CORE_PEER_ADDRESS}</code>。</p>
+<p> 同时，<code>docker inspect cliMagnetoCorp</code>(或者<code>cliMagnetoCorp</code>容器执行<code>env</code>查看），<code>GOPATH=/opt/gopath, CORE_PEER_ADDRESS=peer0.org1.example.com:7051</code>。<code>install</code>会到<code>$&#123;GOPATH&#125;/src</code>下寻找source code。然后install chaincode到<code>$&#123;CORE_PEER_ADDRESS&#125;</code>。</p>
 <p> 登录<code>peer0.org1.example.com</code>容器。<code>env</code>出来<code>FABRIC_CFG_PATH=/etc/hyperledger/fabric</code>，查看改路径下的<code>core.yaml</code>配置文件，其中<code>peer.fileSystemPath : /var/hyperledger/production</code>。查看<code>/var/hyperledger/production/chaincodes</code>目录，存在文件<code>gopapercontract.0</code>(即${chaincodeName}.${chaincodeVersion}).</p>
 </li>
 <li><p>instantiate chaincode。登录<code>cliMagnetoCorp</code>容器，执行</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -n gopapercontract -v 0 -c <span class="string">'&#123;"Args":[]&#125;'</span> -C mychannel -P <span class="string">"AND ('Org1MSP.member')"</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -n gopapercontract -v 0 -c <span class="string">&#x27;&#123;&quot;Args&quot;:[]&#125;&#x27;</span> -C mychannel -P <span class="string">&quot;AND (&#x27;Org1MSP.member&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
 <p> 此时，<code>docker ps</code>可以看到dev-peer0.org1.example.com-gopapercontract-0这个容器。可以在<code>cliMagnetoCorp</code>容器执行。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode invoke -c <span class="string">'&#123;"Args":["issue","MagnetoCorp", "00001", "2020-05-31", "2020-11-30", "5000000"]&#125;'</span> -C mychannel -n gopapercontract</span><br><span class="line">peer chaincode query -c <span class="string">'&#123;"Args":["query","MagnetoCorp", "00001"]&#125;'</span> -C mychannel -n gopapercontract</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode invoke -c <span class="string">&#x27;&#123;&quot;Args&quot;:[&quot;issue&quot;,&quot;MagnetoCorp&quot;, &quot;00001&quot;, &quot;2020-05-31&quot;, &quot;2020-11-30&quot;, &quot;5000000&quot;]&#125;&#x27;</span> -C mychannel -n gopapercontract</span><br><span class="line">peer chaincode query -c <span class="string">&#x27;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;MagnetoCorp&quot;, &quot;00001&quot;]&#125;&#x27;</span> -C mychannel -n gopapercontract</span><br></pre></td></tr></table></figure>
 <p> 如果后续更新chaincode，假设更新版本为1，则执行</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode upgrade -n gopapercontract -v 1 -c <span class="string">'&#123;"Args":[]&#125;'</span> -C mychannel -P <span class="string">"AND ('Org1MSP.member')"</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode upgrade -n gopapercontract -v 1 -c <span class="string">&#x27;&#123;&quot;Args&quot;:[]&#125;&#x27;</span> -C mychannel -P <span class="string">&quot;AND (&#x27;Org1MSP.member&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>修改<code>fabric-samples/commercial-paper/organization/magnetocorp/application/issue.js</code>这个文件</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 63行 const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');</span></span><br><span class="line">    <span class="keyword">const</span> contract = <span class="keyword">await</span> network.getContract(<span class="string">'gopapercontract'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 73行 let paper = CommercialPaper.fromBuffer(issueResponse);</span></span><br><span class="line">    <span class="keyword">let</span> paper = <span class="built_in">JSON</span>.parse(issueResponse);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 63行 const contract = await network.getContract(&#x27;papercontract&#x27;, &#x27;org.papernet.commercialpaper&#x27;);</span></span><br><span class="line">    <span class="keyword">const</span> contract = <span class="keyword">await</span> network.getContract(<span class="string">&#x27;gopapercontract&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 73行 let paper = CommercialPaper.fromBuffer(issueResponse);</span></span><br><span class="line">    <span class="keyword">let</span> paper = <span class="built_in">JSON</span>.parse(issueResponse);</span><br></pre></td></tr></table></figure>
 <p> 然后，就可以正常调用<code>node issue.js</code>访问刚启动的golang commercial paper容器了。在整个流程中，可以执行<code>./monitordocker.sh net_basic</code>查看chaincode的日志。</p>
 </li>
 </ol>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/04/19/fabric-commercial-paper-go/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/02/fabric-inpractice-concept/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/02/fabric-inpractice-concept/" class="post-title-link" itemprop="url">Fabric 1.4实战 - 从现象看概念</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/02/fabric-inpractice-concept/" class="post-title-link" itemprop="url">Fabric 1.4实战 - 从现象看概念</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-04-02 14:58:50" itemprop="dateCreated datePublished" datetime="2019-04-02T14:58:50+08:00">2019-04-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1719,12 +865,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
-          
-            <p>通过Fabric实战现象厘清和解析概念，本文只列举现象，未深入源码分析。</p>
+          <p>通过Fabric实战现象厘清和解析概念，本文只列举现象，未深入源码分析。</p>
 <h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><ol>
 <li><p><strong>【失败】</strong> 同一个节点peer重复install同一个chaincode<br>报错。<code>Error: Bad response: 500 - error installing chaincode code papercontract:0(chaincode /var/hyperledger/production/chaincodes/papercontract.0 exists)</code></p>
 </li>
@@ -1734,171 +875,71 @@
 </li>
 </ol>
 
-          
-        
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/28/consensus-pbft-paper/" class="post-title-link" itemprop="url">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/28/consensus-pbft-paper/" class="post-title-link" itemprop="url">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-28 20:11:29" itemprop="dateCreated datePublished" datetime="2019-03-28T20:11:29+08:00">2019-03-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -1906,10 +947,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
 <li>算法的适用范围<blockquote>
 <p>Our algorithm can be used to implement any deterministic replicated service with a state and some operations.</p>
@@ -1935,178 +972,78 @@
 </li>
 </ol>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/03/28/consensus-pbft-paper/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/20/fabric-source-deliver-peer-to-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/20/fabric-source-deliver-peer-to-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-20 16:11:09" itemprop="dateCreated datePublished" datetime="2019-03-20T16:11:09+08:00">2019-03-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -2114,185 +1051,81 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>peer端的gossip和deliver是紧密结合的。在fabric的结构中，存在leader peer节点，负责与orderer交互，通过deliver服务从orderer得到block。然后通过gossip服务扩散到其他的普通peer，从而达到全网同步。这里先介绍deliver服务。</p>
-<p>从前文<a href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">orderer的deliver过程</a>可知，deliver的grpc服务是”/orderer.AtomicBroadcast/Deliver”,在源码中搜索并且一路回溯到方法<code>peer/node/start.go#serve</code>，这个方法是执行命令<code>peer node start</code>时的执行。（这里先介绍的当前peer重启的情况，新建立channel的情况后面介绍）。然后执行到<code>core/peer/peer.go:Initialize</code>，这里面执行<code>ledgermgmt.Initialize(ConfigTxProcessors)</code>恢复历史账本。然后从这些历史账本信息可以获取到ledgerId（即channelId）。然后对每个channel加载账本，并且从账本中获取最新的ConfigBlock，然后调用<code>createChain</code>重新构造channel信息。在<code>core/peer/peer.go:createChain</code>这个方法里，也是从ledger里获取到配置信息，从而得到orderer地址<code>ordererAddresses :=  bundle.ChannelConfig().OrdererAddresses()</code>,然后调用<code>service.GetGossipService().InitializeChannel</code>。在<code>gossip/service/gossip_service.go:InitializeChannel</code>里，启动deliver服务需要经过判断是否节点是leader peer，即<code>peer.gossip.useLeaderElection</code>（通过选举的方式动态决定leader peer）和<code>peer.gossip.orgLeader</code>（静态指定当前peer为leader peer），这两种方式是互斥的。前面提到过，只有leader才与orderer进行交互，如果不是，则返回，无需继续往下启动deliver服务。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Parameters:</span></span><br><span class="line"><span class="comment">//      - peer.gossip.useLeaderElection</span></span><br><span class="line"><span class="comment">//      - peer.gossip.orgLeader</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// are mutual exclusive, setting both to true is not defined, hence peer will panic and terminate</span></span><br><span class="line">leaderElection := viper.GetBool(<span class="string">"peer.gossip.useLeaderElection"</span>)</span><br><span class="line">isStaticOrgLeader := viper.GetBool(<span class="string">"peer.gossip.orgLeader"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &amp;&amp; isStaticOrgLeader &#123;</span><br><span class="line">    logger.Panic(<span class="string">"Setting both orgLeader and useLeaderElection to true isn't supported, aborting execution"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &#123;</span><br><span class="line">    logger.Debug(<span class="string">"Delivery uses dynamic leader election mechanism, channel"</span>, chainID)</span><br><span class="line">    g.leaderElection[chainID] = g.newLeaderElectionComponent(chainID, g.onStatusChangeFactory(chainID, support.Committer))</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> isStaticOrgLeader &#123;</span><br><span class="line">    logger.Debug(<span class="string">"This peer is configured to connect to ordering service for blocks delivery, channel"</span>, chainID)</span><br><span class="line">    g.deliveryService[chainID].StartDeliverForChannel(chainID, support.Committer, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;&#125;)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    logger.Debug(<span class="string">"This peer is not configured to connect to ordering service for blocks delivery, channel"</span>, chainID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从前文<a href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">orderer的deliver过程</a>可知，deliver的grpc服务是”/orderer.AtomicBroadcast/Deliver”,在源码中搜索并且一路回溯到方法<code>peer/node/start.go#serve</code>，这个方法是执行命令<code>peer node start</code>时的执行。（这里先介绍的当前peer重启的情况，新建立channel的情况后面介绍）。然后执行到<code>core/peer/peer.go:Initialize</code>，这里面执行<code>ledgermgmt.Initialize(ConfigTxProcessors)</code>恢复历史账本。然后从这些历史账本信息可以获取到ledgerId（即channelId）。然后对每个channel加载账本，并且从账本中获取最新的ConfigBlock，然后调用<code>createChain</code>重新构造channel信息。在<code>core/peer/peer.go:createChain</code>这个方法里，也是从ledger里获取到配置信息，从而得到orderer地址<code>ordererAddresses :=  bundle.ChannelConfig().OrdererAddresses()</code>,然后调用<code>service.GetGossipService().InitializeChannel</code>。在<code>gossip/service/gossip_service.go:InitializeChannel</code>里，启动deliver服务需要经过判断是否节点是leader peer，即<code>peer.gossip.useLeaderElection</code>（通过选举的方式动态决定leader peer）和<code>peer.gossip.orgLeader</code>（静态指定当前peer为leader peer），这两种方式是互斥的。前面提到过，只有leader才与orderer进行交互，如果不是，则返回，无需继续往下启动deliver服务。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Parameters:</span></span><br><span class="line"><span class="comment">//      - peer.gossip.useLeaderElection</span></span><br><span class="line"><span class="comment">//      - peer.gossip.orgLeader</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// are mutual exclusive, setting both to true is not defined, hence peer will panic and terminate</span></span><br><span class="line">leaderElection := viper.GetBool(<span class="string">&quot;peer.gossip.useLeaderElection&quot;</span>)</span><br><span class="line">isStaticOrgLeader := viper.GetBool(<span class="string">&quot;peer.gossip.orgLeader&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &amp;&amp; isStaticOrgLeader &#123;</span><br><span class="line">    logger.Panic(<span class="string">&quot;Setting both orgLeader and useLeaderElection to true isn&#x27;t supported, aborting execution&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &#123;</span><br><span class="line">    logger.Debug(<span class="string">&quot;Delivery uses dynamic leader election mechanism, channel&quot;</span>, chainID)</span><br><span class="line">    g.leaderElection[chainID] = g.newLeaderElectionComponent(chainID, g.onStatusChangeFactory(chainID, support.Committer))</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> isStaticOrgLeader &#123;</span><br><span class="line">    logger.Debug(<span class="string">&quot;This peer is configured to connect to ordering service for blocks delivery, channel&quot;</span>, chainID)</span><br><span class="line">    g.deliveryService[chainID].StartDeliverForChannel(chainID, support.Committer, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;&#125;)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    logger.Debug(<span class="string">&quot;This peer is not configured to connect to ordering service for blocks delivery, channel&quot;</span>, chainID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/03/20/fabric-source-deliver-peer-to-order/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
       
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/12/fabric-source-orderer-deliver/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的deliver过程</a>
-              
-            
-          </h1>
-        
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/12/fabric-source-orderer-deliver/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的deliver过程</a>
+        </h2>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-03-12 15:23:18" itemprop="dateCreated datePublished" datetime="2019-03-12T15:23:18+08:00">2019-03-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -2300,65 +1133,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>在orderer端，deliver和broadcast是对等的，最初回溯到<code>protos/orderer/ab.pb.go</code>里的grpc定义，对应的grpc方法是<code>/orderer.AtomicBroadcast/Deliver</code>。对应源码<code>orderer/common/server/server.go#Deliver</code> -&gt; <code>common/deliver/deliver.go#Handle</code> -&gt; <code>deliver.go#deliverBlocks</code>。在<code>deliverBlocks</code>这个方法里，先反序列化cb.Envelope，获取并且校验Header，然后校验access control，判断client的identity证书是否过期，以及策略校验是否拥有读权限（policies.ChannelReaders，代码为<code>orderer/common/server/server.go#Deliver : sf := msgprocessor.NewSigFilter(policies.ChannelReaders, chain)</code>）。校验通过后，将envelope反序列化为<code>ab.SeekInfo</code>结构。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SeekInfo specifies the range of requested blocks to return</span></span><br><span class="line"><span class="comment">// If the start position is not found, an error is immediately returned</span></span><br><span class="line"><span class="comment">// Otherwise, blocks are returned until a missing block is encountered, then behavior is dictated by the SeekBehavior specified.  </span></span><br><span class="line"><span class="comment">// If BLOCK_UNTIL_READY is specified, the reply will block until the requested blocks are available</span></span><br><span class="line"><span class="comment">// if FAIL_IF_NOT_READY is specified, the reply will return an error indicating that the block is not found.  </span></span><br><span class="line"><span class="comment">// To request that all blocks be returned indefinitely as they are created, behavior should be set to BLOCK_UNTIL_READY and the stop should be set to specified with a number of MAX_UINT64</span></span><br><span class="line"><span class="keyword">type</span> SeekInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">    Start    *SeekPosition </span><br><span class="line">    Stop     *SeekPosition </span><br><span class="line">    Behavior SeekInfo_SeekBehavior </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *Handler)</span> <span class="title">deliverBlocks</span><span class="params">(ctx context.Context, srv *Server, envelope *cb.Envelope)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... 校验，略</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据seekInfo.Stop计算range的终止block number</span></span><br><span class="line">    cursor, number := chain.Reader().Iterator(seekInfo.Start)</span><br><span class="line">    <span class="keyword">defer</span> cursor.Close()</span><br><span class="line">    <span class="keyword">switch</span> stop := seekInfo.Stop.Type.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Oldest:</span><br><span class="line">        stopNum = number</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Newest:</span><br><span class="line">        stopNum = chain.Reader().Height() - <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Specified:</span><br><span class="line">        stopNum = stop.Specified.Number</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="comment">// 如果range超越当前到chain高度，fail fast</span></span><br><span class="line">        <span class="keyword">if</span> seekInfo.Behavior == ab.SeekInfo_FAIL_IF_NOT_READY &#123;</span><br><span class="line">            <span class="keyword">if</span> number &gt; chain.Reader().Height()<span class="number">-1</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_NOT_FOUND)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        iterCh := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">            <span class="comment">// 读取下一个block</span></span><br><span class="line">            block, status = cursor.Next()</span><br><span class="line">            <span class="built_in">close</span>(iterCh)</span><br><span class="line">        &#125;()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-ctx.Done(): <span class="comment">// "context finished before block retrieved"</span></span><br><span class="line">            <span class="keyword">return</span> errors.Wrapf(ctx.Err(), <span class="string">"context finished before block retrieved"</span>)</span><br><span class="line">        <span class="keyword">case</span> &lt;-erroredChan: <span class="comment">// "Aborting deliver for request because of background error"</span></span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_SERVICE_UNAVAILABLE)</span><br><span class="line">        <span class="keyword">case</span> &lt;-iterCh:</span><br><span class="line">            <span class="comment">// Iterator has set the block and status vars，完成读取</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// increment block number to support FAIL_IF_NOT_READY deliver behavior</span></span><br><span class="line">        number++</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 再次通过权限校验 access control</span></span><br><span class="line">        <span class="keyword">if</span> err := accessControl.Evaluate(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_FORBIDDEN)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 逐个block发送</span></span><br><span class="line">        <span class="keyword">if</span> err := srv.SendBlockResponse(block); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stopNum == block.Header.Number &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 全部block发送完成后，再回复当前deliver rpc请求</span></span><br><span class="line">    <span class="keyword">if</span> err := srv.SendStatusResponse(cb.Status_SUCCESS); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SeekInfo specifies the range of requested blocks to return</span></span><br><span class="line"><span class="comment">// If the start position is not found, an error is immediately returned</span></span><br><span class="line"><span class="comment">// Otherwise, blocks are returned until a missing block is encountered, then behavior is dictated by the SeekBehavior specified.  </span></span><br><span class="line"><span class="comment">// If BLOCK_UNTIL_READY is specified, the reply will block until the requested blocks are available</span></span><br><span class="line"><span class="comment">// if FAIL_IF_NOT_READY is specified, the reply will return an error indicating that the block is not found.  </span></span><br><span class="line"><span class="comment">// To request that all blocks be returned indefinitely as they are created, behavior should be set to BLOCK_UNTIL_READY and the stop should be set to specified with a number of MAX_UINT64</span></span><br><span class="line"><span class="keyword">type</span> SeekInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">    Start    *SeekPosition </span><br><span class="line">    Stop     *SeekPosition </span><br><span class="line">    Behavior SeekInfo_SeekBehavior </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *Handler)</span> <span class="title">deliverBlocks</span><span class="params">(ctx context.Context, srv *Server, envelope *cb.Envelope)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... 校验，略</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据seekInfo.Stop计算range的终止block number</span></span><br><span class="line">    cursor, number := chain.Reader().Iterator(seekInfo.Start)</span><br><span class="line">    <span class="keyword">defer</span> cursor.Close()</span><br><span class="line">    <span class="keyword">switch</span> stop := seekInfo.Stop.Type.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Oldest:</span><br><span class="line">        stopNum = number</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Newest:</span><br><span class="line">        stopNum = chain.Reader().Height() - <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Specified:</span><br><span class="line">        stopNum = stop.Specified.Number</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="comment">// 如果range超越当前到chain高度，fail fast</span></span><br><span class="line">        <span class="keyword">if</span> seekInfo.Behavior == ab.SeekInfo_FAIL_IF_NOT_READY &#123;</span><br><span class="line">            <span class="keyword">if</span> number &gt; chain.Reader().Height()<span class="number">-1</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_NOT_FOUND)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        iterCh := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">            <span class="comment">// 读取下一个block</span></span><br><span class="line">            block, status = cursor.Next()</span><br><span class="line">            <span class="built_in">close</span>(iterCh)</span><br><span class="line">        &#125;()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-ctx.Done(): <span class="comment">// &quot;context finished before block retrieved&quot;</span></span><br><span class="line">            <span class="keyword">return</span> errors.Wrapf(ctx.Err(), <span class="string">&quot;context finished before block retrieved&quot;</span>)</span><br><span class="line">        <span class="keyword">case</span> &lt;-erroredChan: <span class="comment">// &quot;Aborting deliver for request because of background error&quot;</span></span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_SERVICE_UNAVAILABLE)</span><br><span class="line">        <span class="keyword">case</span> &lt;-iterCh:</span><br><span class="line">            <span class="comment">// Iterator has set the block and status vars，完成读取</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// increment block number to support FAIL_IF_NOT_READY deliver behavior</span></span><br><span class="line">        number++</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 再次通过权限校验 access control</span></span><br><span class="line">        <span class="keyword">if</span> err := accessControl.Evaluate(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_FORBIDDEN)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 逐个block发送</span></span><br><span class="line">        <span class="keyword">if</span> err := srv.SendBlockResponse(block); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stopNum == block.Header.Number &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 全部block发送完成后，再回复当前deliver rpc请求</span></span><br><span class="line">    <span class="keyword">if</span> err := srv.SendStatusResponse(cb.Status_SUCCESS); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/03/12/fabric-source-orderer-deliver/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
+      <footer class="post-footer">
         <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      </footer>
   </article>
+  
+  
+  
 
-
-    
-  </section>
 
   
   <nav class="pagination">
@@ -2370,260 +1168,122 @@
           </div>
           
 
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </div>
-
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
-</div>
-
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
-  </div>
-
-  
-
 <script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
 
 
 
@@ -2632,427 +1292,72 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+<script src="/js/utils.js"></script>
 
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/motion.js"></script>
 
 
-  
+<script src="/js/schemes/pisces.js"></script>
 
 
-  <script src="/js/src/utils.js?v=7.0.0"></script>
+<script src="/js/next-boot.js"></script>
 
-  <script src="/js/src/motion.js?v=7.0.0"></script>
 
 
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 

@@ -1,127 +1,51 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
-
-  <meta name="description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程 1234• Verifier chooses a random value for x and evaluates">
+  <meta name="description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程1234• Verifier chooses a random value for x and evaluates h">
 <meta property="og:type" content="article">
 <meta property="og:title" content="零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习">
 <meta property="og:url" content="https://simplexity.cn/2020/08/12/zk-snark-paper/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程 1234• Verifier chooses a random value for x and evaluates">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程1234• Verifier chooses a random value for x and evaluates h">
+<meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snarks-encrypted-polynomial.jpeg">
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snarks-encrypted-polynomial-derivation.jpeg">
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snarks-restricting-polynomial-derivation.jpeg">
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snark-non-interactivity.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snark-example.jpg">
-<meta property="og:updated_time" content="2020-11-20T16:31:40.527Z">
+<meta property="article:published_time" content="2020-08-12T13:26:30.000Z">
+<meta property="article:modified_time" content="2020-11-20T16:31:40.527Z">
+<meta property="article:author" content="Travis Wong">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习">
-<meta name="twitter:description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程 1234• Verifier chooses a random value for x and evaluates">
 <meta name="twitter:image" content="https://simplexity.cn/images/zk-snarks/zk-snarks-encrypted-polynomial.jpeg">
 
+<link rel="canonical" href="https://simplexity.cn/2020/08/12/zk-snark-paper/">
 
 
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/2020/08/12/zk-snark-paper/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -133,15 +57,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -150,9 +67,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -166,334 +82,167 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/08/12/zk-snark-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习
+        </h1>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2020-08-12 21:26:30" itemprop="dateCreated datePublished" datetime="2020-08-12T21:26:30+08:00">2020-08-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+            </span>
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-11-21 00:31:40" itemprop="dateModified" datetime="2020-11-21T00:31:40+08:00">2020-11-21</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+              </span>
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
                 </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/2020/08/12/zk-snark-paper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/08/12/zk-snark-paper/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
-          
-
-          
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -501,28 +250,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        <p>本文为<a href="https://arxiv.org/abs/1906.07221" target="_blank" rel="noopener">Why and How zk-SNARK Works: Definitive Explanation</a>论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。</p>
+        <p>本文为<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.07221">Why and How zk-SNARK Works: Definitive Explanation</a>论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。</p>
 <h3 id="2-The-Medium-of-a-Proof"><a href="#2-The-Medium-of-a-Proof" class="headerlink" title="2. The Medium of a Proof"></a>2. The Medium of a Proof</h3><ul>
 <li><strong>多项式是zk-snark的核心</strong></li>
 </ul>
 <ol>
-<li><p>基本流程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>存在问题</p>
-<ul>
+<li>基本流程<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></table></figure></li>
+<li>存在问题<ul>
 <li>prover可以通过其他方式得到多项式结果，没有方法确保该结果是经过多项式计算得来</li>
 <li>多项式的阶数需要足够高</li>
 </ul>
 </li>
 </ol>
-<h2 id><a href="#" class="headerlink" title></a><a id="more"></a></h2><h3 id="3-Non-Interactive-Zero-Knowledge-of-a-Polynomial"><a href="#3-Non-Interactive-Zero-Knowledge-of-a-Polynomial" class="headerlink" title="3 Non-Interactive Zero-Knowledge of a Polynomial"></a>3 Non-Interactive Zero-Knowledge of a Polynomial</h3><p>这一章是zk-snark的理论基础。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><span id="more"></span></h2><h3 id="3-Non-Interactive-Zero-Knowledge-of-a-Polynomial"><a href="#3-Non-Interactive-Zero-Knowledge-of-a-Polynomial" class="headerlink" title="3 Non-Interactive Zero-Knowledge of a Polynomial"></a>3 Non-Interactive Zero-Knowledge of a Polynomial</h3><p>这一章是zk-snark的理论基础。</p>
 <h3 id="3-1-Proving-Knowledge-of-a-Polynomial"><a href="#3-1-Proving-Knowledge-of-a-Polynomial" class="headerlink" title="3.1 Proving Knowledge of a Polynomial"></a>3.1 Proving Knowledge of a Polynomial</h3><ol>
 <li><p>流程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">• Verifier samples a random value r, calculates t = t(r) (i.e., evaluates) and gives r to the prover</span><br><span class="line">• Prover calculates h(x) = p(x) and evaluates p(r) and h(r); the resulting values p,h are t(x) provided to the verifier</span><br><span class="line">• Verifier then checks that p = t · h, if so those polynomials are equal, meaning that p(x) has t(x) as a cofactor.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">• Verifier samples a random value r, calculates t = t(r) (i.e., evaluates) and gives r to the prover</span><br><span class="line">• Prover calculates h(x) = p(x) and evaluates p(r) and h(r); the resulting values p,h are t(x) provided to the verifier</span><br><span class="line">• Verifier then checks that p = t · h, if so those polynomials are equal, meaning that p(x) has t(x) as a cofactor.</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>Q1： 为什么prover不直接传递t ?<br>A1： 需要证明的是 prover知道t，即其中的两个根。下文有说明，prover可能通过别的方式恰好知道t(s)的值，协议不安全。而zk-snark里是将要证明的表达成多项式，然后由verifier构造基础多项式，让prover来赋值输入/输出，通过证明t的根是verifier的目标多项式的根，从而证明其输出的正确性。</p>
 </li>
@@ -537,15 +280,15 @@
 </ul>
 </li>
 </ol>
-<h3 id="3-3-Obscure-Evaluation"><a href="#3-3-Obscure-Evaluation" class="headerlink" title="3.3 Obscure Evaluation"></a>3.3 Obscure Evaluation</h3><h3 id="3-3-1-Homomorphic-Encryption（同态加密）"><a href="#3-3-1-Homomorphic-Encryption（同态加密）" class="headerlink" title="3.3.1 Homomorphic Encryption（同态加密）"></a>3.3.1 Homomorphic Encryption（同态加密）</h3><p>The general idea is that we choose a base natural number g (say 5) and to encrypt a value we exponentiate g to the power of that value.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5^3 = 125, Where 125 is the encryption of 3.</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-Obscure-Evaluation"><a href="#3-3-Obscure-Evaluation" class="headerlink" title="3.3 Obscure Evaluation"></a>3.3 Obscure Evaluation</h3><h3 id="3-3-1-Homomorphic-Encryption（同态加密）"><a href="#3-3-1-Homomorphic-Encryption（同态加密）" class="headerlink" title="3.3.1 Homomorphic Encryption（同态加密）"></a>3.3.1 Homomorphic Encryption（同态加密）</h3><p>The general idea is that we choose a base natural number g (say 5) and to encrypt a value we exponentiate g to the power of that value.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5^3 = 125, Where 125 is the encryption of 3.</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li>存在问题<br>将125持续的除以5，直到结果为1，此时的step就是加密的3</li>
 </ol>
-<h3 id="3-3-3-Strong-Homomorphic-Encryption"><a href="#3-3-3-Strong-Homomorphic-Encryption" class="headerlink" title="3.3.3 Strong Homomorphic Encryption"></a>3.3.3 Strong Homomorphic Encryption</h3><p>模运算。基本流程如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">encryption :  5^3 = 6 (mod 7)</span><br><span class="line">multiplication :  6^2 = (5^3)^2 = 5^6 = 1 (mod 7)</span><br><span class="line">addition:   5^3·5^2 =5^5 =3 (mod7)</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-3-Strong-Homomorphic-Encryption"><a href="#3-3-3-Strong-Homomorphic-Encryption" class="headerlink" title="3.3.3 Strong Homomorphic Encryption"></a>3.3.3 Strong Homomorphic Encryption</h3><p>模运算。基本流程如下：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">encryption :  5^3 = 6 (mod 7)</span><br><span class="line">multiplication :  6^2 = (5^3)^2 = 5^6 = 1 (mod 7)</span><br><span class="line">addition:   5^3·5^2 =5^5 =3 (mod7)</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li>局限性<br>while we can multiply an encrypted value by an unencrypted value, we cannot multiply (and divide) two encrypted values, as well as we cannot exponentiate an encrypted value.<br>两个加密结果间无法直接进行乘法运算。（下文引入pairing配对函数，解决乘法运算）</li>
 </ol>
-<h3 id="3-3-4-Encrypted-Polynomial"><a href="#3-3-4-Encrypted-Polynomial" class="headerlink" title="3.3.4 Encrypted Polynomial"></a>3.3.4 Encrypted Polynomial</h3><p><img src="/images/zk-snarks/zk-snarks-encrypted-polynomial.jpeg" alt><br><img src="/images/zk-snarks/zk-snarks-encrypted-polynomial-derivation.jpeg" alt></p>
+<h3 id="3-3-4-Encrypted-Polynomial"><a href="#3-3-4-Encrypted-Polynomial" class="headerlink" title="3.3.4 Encrypted Polynomial"></a>3.3.4 Encrypted Polynomial</h3><p><img src="/images/zk-snarks/zk-snarks-encrypted-polynomial.jpeg" alt=""><br><img src="/images/zk-snarks/zk-snarks-encrypted-polynomial-derivation.jpeg" alt=""></p>
 <ul>
 <li><em>(说明：图中r即论文中的s)</em></li>
 </ul>
@@ -553,28 +296,28 @@
 <li>能解决<code>prover恰好知道x=s的值t(s)，可以构造任何的多项式</code>这个问题，因为已经prover已经无法得知<code>s</code>以及<code>t(s)</code>。</li>
 <li><strong><em>不能</em></strong> 解决<code>prover计算得到t后，可以随意选择h，计算p=h*t，verifier无法验证prover是否知道p</code>，例如，可以随意选择r的值，构造 z<sub>h</sub> = g<sup>r</sup> 和 z<sub>p</sub> = (g<sup>t(s)</sup>)<sup>r</sup></li>
 </ol>
-<h3 id="3-4-Restricting-a-Polynomial"><a href="#3-4-Restricting-a-Polynomial" class="headerlink" title="3.4 Restricting a Polynomial"></a>3.4 Restricting a Polynomial</h3><p><img src="/images/zk-snarks/zk-snarks-restricting-polynomial-derivation.jpeg" alt></p>
+<h3 id="3-4-Restricting-a-Polynomial"><a href="#3-4-Restricting-a-Polynomial" class="headerlink" title="3.4 Restricting a Polynomial"></a>3.4 Restricting a Polynomial</h3><p><img src="/images/zk-snarks/zk-snarks-restricting-polynomial-derivation.jpeg" alt=""></p>
 <ul>
 <li><em>(说明：图中r即论文中的s)</em></li>
 </ul>
 <ol>
-<li>结论：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">– Bob has applied the same exponent (i.e., c) to both values of the tuple</span><br><span class="line">– Bob could only use the original Alice’s tuple to maintain the α relationship</span><br><span class="line">– Bob knows the applied exponent c, because the only way to produce valid (b,b′) is to use the same exponent</span><br><span class="line">– Alice has not learned c for the same reason Bob cannot learn α</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<li><p>结论：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">– Bob has applied the same exponent (i.e., c) to both values of the tuple</span><br><span class="line">– Bob could only use the original Alice’s tuple to maintain the α relationship</span><br><span class="line">– Bob knows the applied exponent c, because the only way to produce valid (b,b′) is to use the same exponent</span><br><span class="line">– Alice has not learned c for the same reason Bob cannot learn α</span><br></pre></td></tr></table></figure>
 <p>即Prover必须使用verifier提供的基于s<sup>i</sup>计算出来的值进行计算，verifier可以通过验证(g<sup>p</sup>, g<sup>p’</sup>)间仍然保持 α 的指数偏移量关系。同时verifier无法得知prover使用的参数c的值。</p>
-<ol>
-<li>存在问题：</li>
+</li>
+<li><p>存在问题：</p>
+</li>
 </ol>
 <ul>
 <li>Q1: 如果原始的<code>p=(x+1)*(x+2)</code>，其中<code>t=x+1</code>,<code>h=x+2</code>。但是prover捏造<code>h&#39;=x+3</code>，即<code>p&#39;=(x+1)*(x+3)</code>，verifier是否无法验证？<br>A1: 在zk-snark实际应用中看4.8小节</li>
 </ul>
 <h3 id="3-5-Zero-Knowledge"><a href="#3-5-Zero-Knowledge" class="headerlink" title="3.5 Zero-Knowledge"></a>3.5 Zero-Knowledge</h3><p>verifier可以从E（p）知道关于p的多项式的具体参数。例如上面的例子对E（p）因式分解？<br>解决方案：类似verifier引入 α 保证prover使用其提供的值进行运算，相应的prover也映入 δ 指数偏移量。例如验证 g<sup>δ·p</sup> = g<sup>δ·t(s)h</sup></p>
-<h3 id="3-6-Non-Interactivity"><a href="#3-6-Non-Interactivity" class="headerlink" title="3.6 Non-Interactivity"></a>3.6 Non-Interactivity</h3><p>非交互式。多方各自验证，防止verifier和prover联合作假或者泄漏，proof可以重用提高效率，并且prover无需时刻在线响应。核心是Cryptographic pairings(配对函数)，即找到算法可以支持加密后数值的<strong>同态乘法</strong>运算，即e(g<sup>a</sup>, g<sup>b</sup>) = e(g, g)<sup>ab</sup>（小节3.3.3中不支持）。这样在setup阶段可以构造composite CRS（common reference string）（小节3.6.3）<br><img src="/images/zk-snarks/zk-snark-non-interactivity.jpg" alt></p>
+<h3 id="3-6-Non-Interactivity"><a href="#3-6-Non-Interactivity" class="headerlink" title="3.6 Non-Interactivity"></a>3.6 Non-Interactivity</h3><p>非交互式。多方各自验证，防止verifier和prover联合作假或者泄漏，proof可以重用提高效率，并且prover无需时刻在线响应。核心是Cryptographic pairings(配对函数)，即找到算法可以支持加密后数值的<strong>同态乘法</strong>运算，即e(g<sup>a</sup>, g<sup>b</sup>) = e(g, g)<sup>ab</sup>（小节3.3.3中不支持）。这样在setup阶段可以构造composite CRS（common reference string）（小节3.6.3）<br><img src="/images/zk-snarks/zk-snark-non-interactivity.jpg" alt=""></p>
 <p>小节3.6.2中，由于引入了<strong>配对函数</strong>，验证加密方法是 e(g<sup>p</sup>, g<sup>1</sup>)=e(g<sup>t</sup>, g<sup>h</sup>)，而3.3.4同态加法加密小节里，则是验证g<sup>p</sup>=g<sup>t(s)·h</sup>。</p>
 <h3 id="3-7-Succinct-Non-Interactive-Argument-of-Knowledge-of-Polynomial"><a href="#3-7-Succinct-Non-Interactive-Argument-of-Knowledge-of-Polynomial" class="headerlink" title="3.7 Succinct Non-Interactive Argument of Knowledge of Polynomial"></a>3.7 Succinct Non-Interactive Argument of Knowledge of Polynomial</h3><p>重要，基础。<strong>Setup-Proving-Verification</strong> 三步骤，详见文章。</p>
 <ul>
 <li><strong>Setup</strong>  <ul>
-<li>proving key: { g<sup>s<sup>i</sup>&lt;/sup&gt; } <sub> i∈[d] </sub> , { g<sup>αs<sup>i</sup>&lt;/sup&gt; }<sub> i∈[d] </sub>   (提供给prover)</sup></sup></li>
+<li>proving key: { g<sup>s<sup>i</sup>&lt;/sup&gt; } <sub> i∈[d] </sub> , { g<sup>αs<sup>i</sup>&lt;/sup&gt; }<sub> i∈[d] </sub>   (提供给prover)</li>
 <li>verification key: g<sup>α</sup>, g<sup>t(s)</sup> （自留，后续在Verification阶段使用）</li>
 </ul>
 </li>
@@ -629,13 +372,13 @@
 <li><p>Q1: 这里证明3X2=6,如果构造时候输入为4X3=12，verifier验证的等式同样成立。如何校验输入的正确性？</p>
 <p>A1: 这里verifier可以检查 g<sup>L(s)</sup> = g<sup>al<sub>a</sub>(s)</sup> · g<sup>dl<sub>d</sub>(s)</sup> = g<sup>al<sub>a</sub>(s) + dl<sub>d</sub>(s)</sup>，即可判断输入参数是否相符。<strong><em>verifie是否知道a,d的取值？</em></strong></p>
 </li>
-<li>Q2: 提供的是l(x)的阶数为多阶的，verifier提供是以{ g<sup>s<sup>i</sup>&lt;/sup&gt; }i∈[d]的方式提供的，在Proving阶段prover赋值时，如何保证对于每一阶都赋予相同的值？<br>A2: </sup></li>
+<li>Q2: 提供的是l(x)的阶数为多阶的，verifier提供是以{ g<sup>s<sup>i</sup>&lt;/sup&gt; }i∈[d]的方式提供的，在Proving阶段prover赋值时，如何保证对于每一阶都赋予相同的值？<br>A2: </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">As a consequence the prover:</span><br><span class="line">• is not able to modify provided variable polynomials by changing their coefficients, except “assigning” values, because prover is presented only with encrypted evaluations of these polynomials, and because necessary encrypted powers of s are unavailable separately with their α-shifts</span><br><span class="line">• is not able to add another polynomial to the provided ones because the α-ratio will be broken</span><br><span class="line">• is not able to modify operand polynomials through multiplication by some other polyno- mial u(x), which could disproportionately modify the values because encrypted multipli- cation is not possible in pre-pairings space</span><br></pre></td></tr></table></figure>
-<h3 id="4-7-Construction-Properties"><a href="#4-7-Construction-Properties" class="headerlink" title="4.7 Construction Properties"></a>4.7 Construction Properties</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note the operation’s construction is also called “constraint” because the operation represented by polynomial construction does not compute results per se, but rather checks that the prover already knows variables (including result), and they are valid for the operation, i.e., the prover is constrained to provide consistent values no matter what they are.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">As a consequence the prover:</span><br><span class="line">• is not able to modify provided variable polynomials by changing their coefficients, except “assigning” values, because prover is presented only with encrypted evaluations of these polynomials, and because necessary encrypted powers of s are unavailable separately with their α-shifts</span><br><span class="line">• is not able to add another polynomial to the provided ones because the α-ratio will be broken</span><br><span class="line">• is not able to modify operand polynomials through multiplication by some other polyno- mial u(x), which could disproportionately modify the values because encrypted multipli- cation is not possible in pre-pairings space</span><br></pre></td></tr></table></figure>
+<h3 id="4-7-Construction-Properties"><a href="#4-7-Construction-Properties" class="headerlink" title="4.7 Construction Properties"></a>4.7 Construction Properties</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note the operation’s construction is also called “constraint” because the operation represented by polynomial construction does not compute results per se, but rather checks that the prover already knows variables (including result), and they are valid for the operation, i.e., the prover is constrained to provide consistent values no matter what they are.</span><br></pre></td></tr></table></figure>
 <p>也就是说，验证的是输入/输出计算结果，即代入上面构造的L(x),R(x),O(x)，需要证明其中的根，即t(x)。通过验证约束的方式取代直接提供输出结果的方式。</p>
 <h3 id="4-8-Example-Computation"><a href="#4-8-Example-Computation" class="headerlink" title="4.8 Example Computation"></a>4.8 Example Computation</h3><p>l(x),r(x),o(x)系列子函数的这些都是已知的，也是verifier加密后传递到prover。prover使用输入w=1,a=3,b=2,计算出结果v=6，并且代入计算得到L(x),R(x),O(x),然后即传统的p(x)=L(x)·R(x)-O(x)，其中t(x)已知，因为这个是verifier用来计算l(x),r(x),o(x)的根。也就是，<strong>需要证明的是v=6</strong>。这个是通过将v=6代入不等式证明的。</p>
-<p><img src="/images/zk-snarks/zk-snark-example.jpg" alt><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m=a·b</span><br><span class="line">w·(m-a-b)=v-a-b</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/zk-snarks/zk-snark-example.jpg" alt=""><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m=a·b</span><br><span class="line">w·(m-a-b)=v-a-b</span><br></pre></td></tr></table></figure></p>
 <p>即图中在x=1,2,3三个点处都满足<code>L(x)·R(x)-O(x)=0</code>，如果改变v的值使其不等于6，则<code>L(x)·R(x)-O(x)</code>该等式在x=2处<code>w·（m-a-b）!= v-a-b</code>，即x=2不是其中一个根，verifier验证失败。</p>
 <h3 id="4-9-Verifiable-Computation-Protocol"><a href="#4-9-Verifiable-Computation-Protocol" class="headerlink" title="4.9 Verifiable Computation Protocol"></a>4.9 Verifiable Computation Protocol</h3><h4 id="4-9-1-限定L-x-只由-li-x-构成，并且证明的等式必须是L-x-·-R（x）-O-x-。-防止左操作数，右操作数，输出在证明中混用。"><a href="#4-9-1-限定L-x-只由-li-x-构成，并且证明的等式必须是L-x-·-R（x）-O-x-。-防止左操作数，右操作数，输出在证明中混用。" class="headerlink" title="4.9.1 - 限定L(x)只由 li(x) 构成，并且证明的等式必须是L(x) · R（x）= O(x)。 防止左操作数，右操作数，输出在证明中混用。"></a>4.9.1 - 限定<code>L(x)</code>只由 l<sub>i</sub>(x) 构成，并且证明的等式必须是<code>L(x) · R（x）= O(x)</code>。 防止左操作数，右操作数，输出在证明中混用。</h4><p><strong>Solution</strong>: <code>l(x),r(x),o(x)</code>分别使用不同的α<sub>l</sub>, α<sub>r</sub>, α<sub>o</sub>。</p>
 <h4 id="4-9-2-限定在L-x-R-x-O-x-使用的参数vi-即4-8例子中的a-b-w等）是一致的。"><a href="#4-9-2-限定在L-x-R-x-O-x-使用的参数vi-即4-8例子中的a-b-w等）是一致的。" class="headerlink" title="4.9.2 - 限定在L(x),R(x),O(x)使用的参数vi(即4.8例子中的a,b,w等）是一致的。"></a>4.9.2 - 限定在<code>L(x),R(x),O(x)</code>使用的参数v<sub>i</sub>(即4.8例子中的a,b,w等）是一致的。</h4><p><strong>Solution</strong>:  为校验校验 v<sub>l,i</sub> = v<sub>r,i</sub> = v<sub>o,i</sub> = v<sub>β,i</sub>，关键是通过以下等式<br>e(g<sup>v<sub>l,i</sub> ·l<sub>i</sub>(s)</sup> · g<sup>v<sub>r,i</sub> ·r<sub>i</sub>(s)</sup> · g<sup>v<sub>o,i</sub> ·o<sub>i</sub>(s)</sup>, g<sup>β</sup>) = e(g<sup>v<sub>β,i</sub> ·β·(l<sub>i</sub>(s)+r<sub>i</sub>(s)+o<sub>i</sub>(s))</sup>, g)。 进一步为防止如<code>l(x) = r(x)</code>的情况，选择各自不等的β<sub>l</sub>, β<sub>r</sub>, β<sub>o</sub></p>
@@ -655,7 +398,7 @@
 </li>
 </ul>
 <h4 id="4-9-3-Non-malleability-of-Variable-and-Variable-Consistency-Polynomials"><a href="#4-9-3-Non-malleability-of-Variable-and-Variable-Consistency-Polynomials" class="headerlink" title="4.9.3 Non-malleability of Variable and Variable Consistency Polynomials"></a>4.9.3 Non-malleability of Variable and Variable Consistency Polynomials</h4><p><strong>Q1</strong>:（Malleability of Variable Polynomials） g<sup>α<sub>l</sub></sup> 和 g<sup>β<sub>l</sub></sup>是在verification key里的，为什么prover能拿得到？<br><strong>Q2</strong>：（Non-Malleability） 作为verification key，这里的g<sup>γ</sup>是否就是类似与Q1里的g ? 这样的区别在哪里？</p>
-<h4 id="4-10-Constraints"><a href="#4-10-Constraints" class="headerlink" title="4.10 Constraints"></a>4.10 Constraints</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">However, the protocol is not actually “computing” but rather is checking that the output value is the correct result of an operation for the operand’s values. That is why it is called a constraint, i.e., a verifier is constraining a prover to provide valid values for the predefined “program” no matter what are they.</span><br></pre></td></tr></table></figure>
+<h4 id="4-10-Constraints"><a href="#4-10-Constraints" class="headerlink" title="4.10 Constraints"></a>4.10 Constraints</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">However, the protocol is not actually “computing” but rather is checking that the output value is the correct result of an operation for the operand’s values. That is why it is called a constraint, i.e., a verifier is constraining a prover to provide valid values for the predefined “program” no matter what are they. </span><br></pre></td></tr></table></figure>
 <h3 id="4-11-Public-Inputs-and-One-限定常量的值。"><a href="#4-11-Public-Inputs-and-One-限定常量的值。" class="headerlink" title="4.11 Public Inputs and One 限定常量的值。"></a>4.11 Public Inputs and One 限定常量的值。</h3><p><strong>Solution</strong>:<br>L(x)=L<sub>v</sub>(x)+L<sub>p</sub>(x)，其中verifier提供L<sub>v</sub>(x) = l<sub>0</sub>(x) + l<sub>1</sub>(x) + . . . + l<sub>m</sub>(x)。限定了0阶（即常量）的值v<sub>one</sub></p>
 <ul>
 <li><strong>Setup</strong>  <ul>
@@ -667,344 +410,166 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Effectively this is taking some variables from the prover into the hands of verifier while still preserving the balance of the equation. Therefore the valid operations check should still hold, but only if the prover has used the same values that the verifier used for his input.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Effectively this is taking some variables from the prover into the hands of verifier while still preserving the balance of the equation. Therefore the valid operations check should still hold, but only if the prover has used the same values that the verifier used for his input.</span><br></pre></td></tr></table></figure>
 <h3 id="4-12-Zero-Knowledge-Proof-of-Computation"><a href="#4-12-Zero-Knowledge-Proof-of-Computation" class="headerlink" title="4.12 Zero-Knowledge Proof of Computation"></a>4.12 Zero-Knowledge Proof of Computation</h3><p>零知识证明，各自加上变换值。 δ<sub>l</sub>, δ<sub>r</sub>,  δ<sub>o</sub>。通过加法实现同态加密。<br>L(s) + δ<sub>l</sub>t(s)) · (R(s) + δ<sub>r</sub>t(s)) − (O(s) + δ<sub>o</sub>t(s)) = t(s) · (∆ + h(s))<br>∆ = δ<sub>r</sub>L(s) + δ<sub>l</sub>R(s) + δ<sub>l</sub>δ<sub>r</sub>t(s) − δ<sub>o</sub></p>
 <p>只要满足以上关系，可以推导，在verification阶段可以就可以验证<br>L · R − O + t · ∆  = t(s)h + t(s) · ∆ </p>
 <hr>
 <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref:"></a>Ref:</h3><ol>
-<li><a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIxNjkwODE5NQ==&amp;action=getalbum&amp;album_id=1432629901374636033&amp;subscene=159&amp;subscene=158&amp;scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzIxNjkwODE5NQ%3D%3D%26mid%3D2247484357%26idx%3D1%26sn%3Dc07ab2eab9fc81122f4788418eba2af1%26chksm%3D9780ab09a0f7221f0eb5049da5056bdbe9702a6fc03e3d053ad18ea60e9d75c2037ad545e1a0%26scene%3D158%23rd#wechat_redirect" target="_blank" rel="noopener">从零开始学习 zk-SNARK</a> : 来自 安比实验室，翻译原文，并且加入理解和拓展，推荐</li>
-<li><a href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-resource-list.md" target="_blank" rel="noopener">零知识证明学习资源汇总</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIxNjkwODE5NQ==&amp;action=getalbum&amp;album_id=1432629901374636033&amp;subscene=159&amp;subscene=158&amp;scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzIxNjkwODE5NQ%3D%3D%26mid%3D2247484357%26idx%3D1%26sn%3Dc07ab2eab9fc81122f4788418eba2af1%26chksm%3D9780ab09a0f7221f0eb5049da5056bdbe9702a6fc03e3d053ad18ea60e9d75c2037ad545e1a0%26scene%3D158%23rd#wechat_redirect">从零开始学习 zk-SNARK</a> : 来自 安比实验室，翻译原文，并且加入理解和拓展，推荐</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sec-bit/learning-zkp/blob/master/zkp-resource-list.md">零知识证明学习资源汇总</a></li>
 </ol>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
-    
-</div>
-      
-    </div>
-
-    
-
-    
-      
     
     
 
-    
+      <footer class="post-footer">
 
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/07/25/bigdata-and-blockchain/" rel="next" title="大数据与区块链">
-                <i class="fa fa-chevron-left"></i> 大数据与区块链
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/20/mpc-terminology/" rel="prev" title="多方安全计算MPC的若干个概念">
-                多方安全计算MPC的若干个概念 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
-
-        </div>
         
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/25/bigdata-and-blockchain/" rel="prev" title="大数据与区块链">
+      <i class="fa fa-chevron-left"></i> 大数据与区块链
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/20/mpc-terminology/" rel="next" title="多方安全计算MPC的若干个概念">
+      多方安全计算MPC的若干个概念 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-The-Medium-of-a-Proof"><span class="nav-number">1.</span> <span class="nav-text">2. The Medium of a Proof</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Non-Interactive-Zero-Knowledge-of-a-Polynomial"><span class="nav-number">1.</span> <span class="nav-text">3 Non-Interactive Zero-Knowledge of a Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Proving-Knowledge-of-a-Polynomial"><span class="nav-number">2.</span> <span class="nav-text">3.1 Proving Knowledge of a Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Obscure-Evaluation"><span class="nav-number">3.</span> <span class="nav-text">3.3 Obscure Evaluation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-Homomorphic-Encryption%EF%BC%88%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">3.3.1 Homomorphic Encryption（同态加密）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-Strong-Homomorphic-Encryption"><span class="nav-number">5.</span> <span class="nav-text">3.3.3 Strong Homomorphic Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-4-Encrypted-Polynomial"><span class="nav-number">6.</span> <span class="nav-text">3.3.4 Encrypted Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Restricting-a-Polynomial"><span class="nav-number">7.</span> <span class="nav-text">3.4 Restricting a Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Zero-Knowledge"><span class="nav-number">8.</span> <span class="nav-text">3.5 Zero-Knowledge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Non-Interactivity"><span class="nav-number">9.</span> <span class="nav-text">3.6 Non-Interactivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Succinct-Non-Interactive-Argument-of-Knowledge-of-Polynomial"><span class="nav-number">10.</span> <span class="nav-text">3.7 Succinct Non-Interactive Argument of Knowledge of Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-General-Purpose-Zero-Knowledge-Proofs"><span class="nav-number">11.</span> <span class="nav-text">4 General-Purpose Zero-Knowledge Proofs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Computation"><span class="nav-number">12.</span> <span class="nav-text">4.1 Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Enforcing-Operation"><span class="nav-number">13.</span> <span class="nav-text">4.3 Enforcing Operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Proof-of-Operation"><span class="nav-number">14.</span> <span class="nav-text">4.4 Proof of Operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-Variable-Polynomials"><span class="nav-number">15.</span> <span class="nav-text">4.6 Variable Polynomials</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-Construction-Properties"><span class="nav-number">16.</span> <span class="nav-text">4.7 Construction Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-Example-Computation"><span class="nav-number">17.</span> <span class="nav-text">4.8 Example Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-9-Verifiable-Computation-Protocol"><span class="nav-number">18.</span> <span class="nav-text">4.9 Verifiable Computation Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-1-%E9%99%90%E5%AE%9AL-x-%E5%8F%AA%E7%94%B1-li-x-%E6%9E%84%E6%88%90%EF%BC%8C%E5%B9%B6%E4%B8%94%E8%AF%81%E6%98%8E%E7%9A%84%E7%AD%89%E5%BC%8F%E5%BF%85%E9%A1%BB%E6%98%AFL-x-%C2%B7-R%EF%BC%88x%EF%BC%89-O-x-%E3%80%82-%E9%98%B2%E6%AD%A2%E5%B7%A6%E6%93%8D%E4%BD%9C%E6%95%B0%EF%BC%8C%E5%8F%B3%E6%93%8D%E4%BD%9C%E6%95%B0%EF%BC%8C%E8%BE%93%E5%87%BA%E5%9C%A8%E8%AF%81%E6%98%8E%E4%B8%AD%E6%B7%B7%E7%94%A8%E3%80%82"><span class="nav-number">18.1.</span> <span class="nav-text">4.9.1 - 限定L(x)只由 li(x) 构成，并且证明的等式必须是L(x) · R（x）&#x3D; O(x)。 防止左操作数，右操作数，输出在证明中混用。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-2-%E9%99%90%E5%AE%9A%E5%9C%A8L-x-R-x-O-x-%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0vi-%E5%8D%B34-8%E4%BE%8B%E5%AD%90%E4%B8%AD%E7%9A%84a-b-w%E7%AD%89%EF%BC%89%E6%98%AF%E4%B8%80%E8%87%B4%E7%9A%84%E3%80%82"><span class="nav-number">18.2.</span> <span class="nav-text">4.9.2 - 限定在L(x),R(x),O(x)使用的参数vi(即4.8例子中的a,b,w等）是一致的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-3-Non-malleability-of-Variable-and-Variable-Consistency-Polynomials"><span class="nav-number">18.3.</span> <span class="nav-text">4.9.3 Non-malleability of Variable and Variable Consistency Polynomials</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-Constraints"><span class="nav-number">18.4.</span> <span class="nav-text">4.10 Constraints</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-11-Public-Inputs-and-One-%E9%99%90%E5%AE%9A%E5%B8%B8%E9%87%8F%E7%9A%84%E5%80%BC%E3%80%82"><span class="nav-number">19.</span> <span class="nav-text">4.11 Public Inputs and One 限定常量的值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-12-Zero-Knowledge-Proof-of-Computation"><span class="nav-number">20.</span> <span class="nav-text">4.12 Zero-Knowledge Proof of Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref"><span class="nav-number">21.</span> <span class="nav-text">Ref:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
 
-            
-            
-            
-            
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-The-Medium-of-a-Proof"><span class="nav-number">1.</span> <span class="nav-text">2. The Medium of a Proof</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Non-Interactive-Zero-Knowledge-of-a-Polynomial"><span class="nav-number">1.</span> <span class="nav-text">3 Non-Interactive Zero-Knowledge of a Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Proving-Knowledge-of-a-Polynomial"><span class="nav-number">2.</span> <span class="nav-text">3.1 Proving Knowledge of a Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Obscure-Evaluation"><span class="nav-number">3.</span> <span class="nav-text">3.3 Obscure Evaluation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-Homomorphic-Encryption（同态加密）"><span class="nav-number">4.</span> <span class="nav-text">3.3.1 Homomorphic Encryption（同态加密）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-Strong-Homomorphic-Encryption"><span class="nav-number">5.</span> <span class="nav-text">3.3.3 Strong Homomorphic Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-4-Encrypted-Polynomial"><span class="nav-number">6.</span> <span class="nav-text">3.3.4 Encrypted Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Restricting-a-Polynomial"><span class="nav-number">7.</span> <span class="nav-text">3.4 Restricting a Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Zero-Knowledge"><span class="nav-number">8.</span> <span class="nav-text">3.5 Zero-Knowledge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Non-Interactivity"><span class="nav-number">9.</span> <span class="nav-text">3.6 Non-Interactivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Succinct-Non-Interactive-Argument-of-Knowledge-of-Polynomial"><span class="nav-number">10.</span> <span class="nav-text">3.7 Succinct Non-Interactive Argument of Knowledge of Polynomial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-General-Purpose-Zero-Knowledge-Proofs"><span class="nav-number">11.</span> <span class="nav-text">4 General-Purpose Zero-Knowledge Proofs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Computation"><span class="nav-number">12.</span> <span class="nav-text">4.1 Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Enforcing-Operation"><span class="nav-number">13.</span> <span class="nav-text">4.3 Enforcing Operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Proof-of-Operation"><span class="nav-number">14.</span> <span class="nav-text">4.4 Proof of Operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-Variable-Polynomials"><span class="nav-number">15.</span> <span class="nav-text">4.6 Variable Polynomials</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-Construction-Properties"><span class="nav-number">16.</span> <span class="nav-text">4.7 Construction Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-Example-Computation"><span class="nav-number">17.</span> <span class="nav-text">4.8 Example Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-9-Verifiable-Computation-Protocol"><span class="nav-number">18.</span> <span class="nav-text">4.9 Verifiable Computation Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-1-限定L-x-只由-li-x-构成，并且证明的等式必须是L-x-·-R（x）-O-x-。-防止左操作数，右操作数，输出在证明中混用。"><span class="nav-number">18.1.</span> <span class="nav-text">4.9.1 - 限定L(x)只由 li(x) 构成，并且证明的等式必须是L(x) · R（x）= O(x)。 防止左操作数，右操作数，输出在证明中混用。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-2-限定在L-x-R-x-O-x-使用的参数vi-即4-8例子中的a-b-w等）是一致的。"><span class="nav-number">18.2.</span> <span class="nav-text">4.9.2 - 限定在L(x),R(x),O(x)使用的参数vi(即4.8例子中的a,b,w等）是一致的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-3-Non-malleability-of-Variable-and-Variable-Consistency-Polynomials"><span class="nav-number">18.3.</span> <span class="nav-text">4.9.3 Non-malleability of Variable and Variable Consistency Polynomials</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-Constraints"><span class="nav-number">18.4.</span> <span class="nav-text">4.10 Constraints</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-11-Public-Inputs-and-One-限定常量的值。"><span class="nav-number">19.</span> <span class="nav-text">4.11 Public Inputs and One 限定常量的值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-12-Zero-Knowledge-Proof-of-Computation"><span class="nav-number">20.</span> <span class="nav-text">4.12 Zero-Knowledge Proof of Computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref"><span class="nav-number">21.</span> <span class="nav-text">Ref:</span></a></li></ol></li></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
 
 
 
@@ -1013,513 +578,72 @@
 
 
 
-
-        
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
+<script src="/js/next-boot.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  
-    <!-- LOCAL: You can save these files to your site and update links -->
-
-  
-  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<!-- END LOCAL -->
-
-<style>
-#gitment-container a {
-  border-bottom: none;
-}
-
-  a.gitment-editor-footer-tip, .gitment-container.gitment-footer-container {
-    display: none;
-  }
-
-</style>
-
-<script>
-  function renderGitment() {
-    var gitment = new Gitmint({
-      id: '1597238790000',
-      owner: 'simplexity-ckcclc',
-      repo: 'gitment-comments',
-      
-        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-      
-      oauth: {
-      
-      
-        client_secret: '09b3a91649010e98bb45af1c7bba1b490d42f458',
-      
-        client_id: '12eedb094a3054014378'
-      }
-    });
-    gitment.render('gitment-container');
-  }
-
-  
-    renderGitment();
-  
-</script>
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 

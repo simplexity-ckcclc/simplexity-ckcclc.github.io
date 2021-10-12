@@ -1,122 +1,47 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="接着继续分析acc的初始化过程，在instantiate(3)里提到endorser.callChaincode有两次的ChaincodeSupport#Execute调用,由代码分析两次不同的ChaincodeMessage的MessageType分别为MessageType_TRANSACTION（对应cis）和MessageType_INIT（对应cds），相应调用lscc的Invoke和a">
-<meta name="keywords" content="Hyperledger Fabric,源码分析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化">
 <meta property="og:url" content="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="接着继续分析acc的初始化过程，在instantiate(3)里提到endorser.callChaincode有两次的ChaincodeSupport#Execute调用,由代码分析两次不同的ChaincodeMessage的MessageType分别为MessageType_TRANSACTION（对应cis）和MessageType_INIT（对应cds），相应调用lscc的Invoke和a">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.295Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-02-24T15:47:30.000Z">
+<meta property="article:modified_time" content="2020-10-28T01:59:15.295Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="Hyperledger Fabric">
+<meta property="article:tag" content="源码分析">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化">
-<meta name="twitter:description" content="接着继续分析acc的初始化过程，在instantiate(3)里提到endorser.callChaincode有两次的ChaincodeSupport#Execute调用,由代码分析两次不同的ChaincodeMessage的MessageType分别为MessageType_TRANSACTION（对应cis）和MessageType_INIT（对应cds），相应调用lscc的Invoke和a">
+
+<link rel="canonical" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
 
 
-
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -128,15 +53,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -145,9 +63,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -161,334 +78,167 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化
+        </h1>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-02-24 23:47:30" itemprop="dateCreated datePublished" datetime="2019-02-24T23:47:30+08:00">2019-02-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+            </span>
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+              </span>
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
                 </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
-          
-
-          
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -496,341 +246,181 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <p>接着继续分析acc的初始化过程，在instantiate(3)里提到<code>endorser.callChaincode</code>有两次的<code>ChaincodeSupport#Execute</code>调用,由代码分析两次不同的<code>ChaincodeMessage</code>的<code>MessageType</code>分别为<code>MessageType_TRANSACTION</code>（对应cis）和<code>MessageType_INIT</code>（对应cds），相应调用lscc的Invoke和acc的Init。具体过程可以参考上节分析。</p>
 <p>先看lscc的<code>Invoke</code>.参考上节提及的<code>execute</code>在两端<code>chaincode/handler.go</code>（peer端）和<code>shim/handler.go</code>（chaincode容器端）的流程，lscc相当于chaincode容器（尽管是inproccontainer），使用<code>shim/handler.go#handleReady</code>里<code>select-case</code>，lscc的<code>ChaincodeMessage_TRANSACTION</code>进入<code>handleTransaction</code>方法。这里的主要流程与上节介绍的<code>handleInit</code>一致，不同的是这里调用的是lscc的<code>Invoke</code>方法。这里需要强调一点，在<code>handleTransaction</code>,<code>handleInit</code>这些<code>handleXXX</code>方法里，进入就是启动goroutinne来运行所有的逻辑，这样可以立刻返回并行来处理下一个请求。</p>
-<a id="more"></a>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Invoke implements lifecycle functions "deploy", "start", "stop", "upgrade".</span></span><br><span class="line"><span class="comment">// Deploy's arguments -  &#123;[]byte("deploy"), []byte(&lt;chainname&gt;), &lt;unmarshalled pb.ChaincodeDeploymentSpec&gt;&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Invoke also implements some query-like functions</span></span><br><span class="line"><span class="comment">// Get chaincode arguments -  &#123;[]byte("getid"), []byte(&lt;chainname&gt;), []byte(&lt;chaincodename&gt;)&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lscc *lifeCycleSysCC)</span> <span class="title">Invoke</span><span class="params">(stub shim.ChaincodeStubInterface)</span> <span class="title">pb</span>.<span class="title">Response</span></span> &#123; </span><br><span class="line"></span><br><span class="line">  function := <span class="keyword">string</span>(args[<span class="number">0</span>])</span><br><span class="line">  <span class="keyword">switch</span> function &#123;</span><br><span class="line">  <span class="keyword">case</span> DEPLOY, UPGRADE:</span><br><span class="line">      channel := <span class="keyword">string</span>(args[<span class="number">1</span>])</span><br><span class="line">      <span class="comment">// 获取channel的设置，这个在create channel时传入配置</span></span><br><span class="line">      ac, exists := lscc.sccprovider.GetApplicationConfig(channel)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// the maximum number of arguments depends on the capability of the channel</span></span><br><span class="line">      <span class="comment">// 校验当前传入参数与channel配置（ac）是否冲突，这里校验主要是ac.Capabilities().PrivateChannelData()</span></span><br><span class="line"></span><br><span class="line">      depSpec := args[<span class="number">2</span>]</span><br><span class="line">      cds, err := utils.GetChaincodeDeploymentSpec(depSpec)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// optional arguments here (they can each be nil and may or may not be present)</span></span><br><span class="line">      <span class="comment">// args[3] is a marshalled SignaturePolicyEnvelope representing the endorsement policy</span></span><br><span class="line">      <span class="comment">// args[4] is the name of escc, default "escc"(系统自带)</span></span><br><span class="line">      <span class="comment">// args[5] is the name of vscc, default "vscc"(系统自带）</span></span><br><span class="line">      <span class="comment">// args[6] is a marshalled CollectionConfigPackage struct</span></span><br><span class="line">      <span class="keyword">var</span> EP []<span class="keyword">byte</span></span><br><span class="line">      p := cauthdsl.SignedByAnyMember(peer.GetMSPIDs(channel))</span><br><span class="line">      EP, err = utils.Marshal(p)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> collectionsConfig []<span class="keyword">byte</span></span><br><span class="line">      <span class="comment">// we proceed with a non-nil collection configuration only if we support the PrivateChannelData capability</span></span><br><span class="line">      <span class="comment">// PrivateChannelData， channel内的私有数据</span></span><br><span class="line">      <span class="keyword">if</span> ac.Capabilities().PrivateChannelData() &amp;&amp; <span class="built_in">len</span>(args) &gt; <span class="number">6</span> &#123;</span><br><span class="line">        collectionsConfig = args[<span class="number">6</span>]</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      cd, err := lscc.executeDeployOrUpgrade(stub, channel, cds, EP, escc, vscc, collectionsConfig, function)</span><br><span class="line">      cdbytes, err := proto.Marshal(cd)</span><br><span class="line">      <span class="keyword">return</span> shim.Success(cdbytes)</span><br><span class="line">  &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>进入lscc的<code>Invoke</code>方法。回顾instantiate(2)里cis的数据结构<code>&quot;Args&quot; : [&quot;deploy&quot;, &quot;${channelId}&quot;, &quot;${chaincodDeploySpec}&quot;]</code>,这里的<code>select-case</code>进入<code>DEPLOY,UPGRADE</code>分支。分支里主要是校验以及处理传入参数，包括指定的scc和private data相关，重要的方法是<code>lscc.executeDeployOrUpgrade</code>，传参就是刚获取和校验过的参数。</p>
+<span id="more"></span>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Invoke implements lifecycle functions &quot;deploy&quot;, &quot;start&quot;, &quot;stop&quot;, &quot;upgrade&quot;.</span></span><br><span class="line"><span class="comment">// Deploy&#x27;s arguments -  &#123;[]byte(&quot;deploy&quot;), []byte(&lt;chainname&gt;), &lt;unmarshalled pb.ChaincodeDeploymentSpec&gt;&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Invoke also implements some query-like functions</span></span><br><span class="line"><span class="comment">// Get chaincode arguments -  &#123;[]byte(&quot;getid&quot;), []byte(&lt;chainname&gt;), []byte(&lt;chaincodename&gt;)&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lscc *lifeCycleSysCC)</span> <span class="title">Invoke</span><span class="params">(stub shim.ChaincodeStubInterface)</span> <span class="title">pb</span>.<span class="title">Response</span></span> &#123; </span><br><span class="line"></span><br><span class="line">  function := <span class="keyword">string</span>(args[<span class="number">0</span>])</span><br><span class="line">  <span class="keyword">switch</span> function &#123;</span><br><span class="line">  <span class="keyword">case</span> DEPLOY, UPGRADE:</span><br><span class="line">      channel := <span class="keyword">string</span>(args[<span class="number">1</span>])</span><br><span class="line">      <span class="comment">// 获取channel的设置，这个在create channel时传入配置</span></span><br><span class="line">      ac, exists := lscc.sccprovider.GetApplicationConfig(channel)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// the maximum number of arguments depends on the capability of the channel</span></span><br><span class="line">      <span class="comment">// 校验当前传入参数与channel配置（ac）是否冲突，这里校验主要是ac.Capabilities().PrivateChannelData()</span></span><br><span class="line"></span><br><span class="line">      depSpec := args[<span class="number">2</span>]</span><br><span class="line">      cds, err := utils.GetChaincodeDeploymentSpec(depSpec)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// optional arguments here (they can each be nil and may or may not be present)</span></span><br><span class="line">      <span class="comment">// args[3] is a marshalled SignaturePolicyEnvelope representing the endorsement policy</span></span><br><span class="line">      <span class="comment">// args[4] is the name of escc, default &quot;escc&quot;(系统自带)</span></span><br><span class="line">      <span class="comment">// args[5] is the name of vscc, default &quot;vscc&quot;(系统自带）</span></span><br><span class="line">      <span class="comment">// args[6] is a marshalled CollectionConfigPackage struct</span></span><br><span class="line">      <span class="keyword">var</span> EP []<span class="keyword">byte</span></span><br><span class="line">      p := cauthdsl.SignedByAnyMember(peer.GetMSPIDs(channel))</span><br><span class="line">      EP, err = utils.Marshal(p)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> collectionsConfig []<span class="keyword">byte</span></span><br><span class="line">      <span class="comment">// we proceed with a non-nil collection configuration only if we support the PrivateChannelData capability</span></span><br><span class="line">      <span class="comment">// PrivateChannelData， channel内的私有数据</span></span><br><span class="line">      <span class="keyword">if</span> ac.Capabilities().PrivateChannelData() &amp;&amp; <span class="built_in">len</span>(args) &gt; <span class="number">6</span> &#123;</span><br><span class="line">        collectionsConfig = args[<span class="number">6</span>]</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      cd, err := lscc.executeDeployOrUpgrade(stub, channel, cds, EP, escc, vscc, collectionsConfig, function)</span><br><span class="line">      cdbytes, err := proto.Marshal(cd)</span><br><span class="line">      <span class="keyword">return</span> shim.Success(cdbytes)</span><br><span class="line">  &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进入lscc的<code>Invoke</code>方法。回顾instantiate(2)里cis的数据结构<code>&quot;Args&quot; : [&quot;deploy&quot;, &quot;$&#123;channelId&#125;&quot;, &quot;$&#123;chaincodDeploySpec&#125;&quot;]</code>,这里的<code>select-case</code>进入<code>DEPLOY,UPGRADE</code>分支。分支里主要是校验以及处理传入参数，包括指定的scc和private data相关，重要的方法是<code>lscc.executeDeployOrUpgrade</code>，传参就是刚获取和校验过的参数。</p>
 <p>进入<code>executeDeployOrUpgrade</code>。首先执行<code>lscc.support.GetChaincodeFromLocalStorage(chaincodeName, chaincodeVersion)</code>，获取<code>ccprovider.CCPackage</code>,这是安装阶段执行<code>peer chaincode install</code>命令时打包并且上传到该节点的chaincode定义，放在peer节点本地目录的（这个在install里具体分析其结构）。然后执行<code>lscc.executeDeploy</code>。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// executeDeploy implements the "instantiate" Invoke transaction</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lscc *lifeCycleSysCC)</span> <span class="title">executeDeploy</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	stub shim.ChaincodeStubInterface,</span></span></span><br><span class="line"><span class="function"><span class="params">	chainname <span class="keyword">string</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">	cds *pb.ChaincodeDeploymentSpec,</span></span></span><br><span class="line"><span class="function"><span class="params">	policy []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">	escc []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">	vscc []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">	cdfs *ccprovider.ChaincodeData,</span></span></span><br><span class="line"><span class="function"><span class="params">	ccpackfs ccprovider.CCPackage,</span></span></span><br><span class="line"><span class="function"><span class="params">	collectionConfigBytes []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> <span class="params">(*ccprovider.ChaincodeData, error)</span></span> &#123;</span><br><span class="line">  <span class="comment">//just test for existence of the chaincode in the LSCC</span></span><br><span class="line">  chaincodeName := cds.ChaincodeSpec.ChaincodeId.Name</span><br><span class="line">  _, err := lscc.getCCInstance(stub, chaincodeName)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//retain chaincode specific data and fill channel specific ones</span></span><br><span class="line">  cdfs.Escc = <span class="keyword">string</span>(escc)</span><br><span class="line">  cdfs.Vscc = <span class="keyword">string</span>(vscc)</span><br><span class="line">  cdfs.Policy = policy</span><br><span class="line"></span><br><span class="line">  <span class="comment">// retrieve and evaluate instantiation policy</span></span><br><span class="line">  cdfs.InstantiationPolicy, err = lscc.support.GetInstantiationPolicy(chainname, ccpackfs)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// get the signed instantiation proposal</span></span><br><span class="line">  signedProp, err := stub.GetSignedProposal()</span><br><span class="line">  err = lscc.support.CheckInstantiationPolicy(signedProp, chainname, cdfs.InstantiationPolicy)</span><br><span class="line"></span><br><span class="line">  err = lscc.putChaincodeData(stub, cdfs)</span><br><span class="line"></span><br><span class="line">  err = lscc.putChaincodeCollectionData(stub, cdfs, collectionConfigBytes)</span><br><span class="line">  <span class="keyword">return</span> cdfs, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里先检查该chaincode是否已经部署过<code>lscc.getCCInstance(stub, chaincodeName)</code>，实际上是调用<code>stub.GetState(ccname)</code>,构建<code>&amp;pb.ChaincodeMessage{Type: pb.ChaincodeMessage_PUT_STATE, Payload: payloadBytes, Txid: txid, ChannelId: channelId}</code>发送到对端<code>chaincode/handler</code>。这里会执行到<code>handler.callPeerWithChaincodeMsg</code>方法。其实里面就是hanlder本身维护着一个名叫responseChannel的<code>map[string]chan pb.ChaincodeMessage</code>, 先创建一个channel放入map中，key是由channelID和txid构造而成，即关联当前请求，在退出方法时使用defer从map中删除这个channle。而在这个过程中，在<code>handler.sendReceive</code>里使用<code>handler.serialSendAsync</code>发送ChaincodeMessage，然后<code>select-case</code>一直等待从channel里读取消息。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// executeDeploy implements the &quot;instantiate&quot; Invoke transaction</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lscc *lifeCycleSysCC)</span> <span class="title">executeDeploy</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">	stub shim.ChaincodeStubInterface,</span></span></span><br><span class="line"><span class="params"><span class="function">	chainname <span class="keyword">string</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">	cds *pb.ChaincodeDeploymentSpec,</span></span></span><br><span class="line"><span class="params"><span class="function">	policy []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">	escc []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">	vscc []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">	cdfs *ccprovider.ChaincodeData,</span></span></span><br><span class="line"><span class="params"><span class="function">	ccpackfs ccprovider.CCPackage,</span></span></span><br><span class="line"><span class="params"><span class="function">	collectionConfigBytes []<span class="keyword">byte</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">)</span> <span class="params">(*ccprovider.ChaincodeData, error)</span></span> &#123;</span><br><span class="line">  <span class="comment">//just test for existence of the chaincode in the LSCC</span></span><br><span class="line">  chaincodeName := cds.ChaincodeSpec.ChaincodeId.Name</span><br><span class="line">  _, err := lscc.getCCInstance(stub, chaincodeName)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//retain chaincode specific data and fill channel specific ones</span></span><br><span class="line">  cdfs.Escc = <span class="keyword">string</span>(escc)</span><br><span class="line">  cdfs.Vscc = <span class="keyword">string</span>(vscc)</span><br><span class="line">  cdfs.Policy = policy</span><br><span class="line"></span><br><span class="line">  <span class="comment">// retrieve and evaluate instantiation policy</span></span><br><span class="line">  cdfs.InstantiationPolicy, err = lscc.support.GetInstantiationPolicy(chainname, ccpackfs)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// get the signed instantiation proposal</span></span><br><span class="line">  signedProp, err := stub.GetSignedProposal()</span><br><span class="line">  err = lscc.support.CheckInstantiationPolicy(signedProp, chainname, cdfs.InstantiationPolicy)</span><br><span class="line"></span><br><span class="line">  err = lscc.putChaincodeData(stub, cdfs)</span><br><span class="line"></span><br><span class="line">  err = lscc.putChaincodeCollectionData(stub, cdfs, collectionConfigBytes)</span><br><span class="line">  <span class="keyword">return</span> cdfs, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里先检查该chaincode是否已经部署过<code>lscc.getCCInstance(stub, chaincodeName)</code>，实际上是调用<code>stub.GetState(ccname)</code>,构建<code>&amp;pb.ChaincodeMessage&#123;Type: pb.ChaincodeMessage_PUT_STATE, Payload: payloadBytes, Txid: txid, ChannelId: channelId&#125;</code>发送到对端<code>chaincode/handler</code>。这里会执行到<code>handler.callPeerWithChaincodeMsg</code>方法。其实里面就是hanlder本身维护着一个名叫responseChannel的<code>map[string]chan pb.ChaincodeMessage</code>, 先创建一个channel放入map中，key是由channelID和txid构造而成，即关联当前请求，在退出方法时使用defer从map中删除这个channle。而在这个过程中，在<code>handler.sendReceive</code>里使用<code>handler.serialSendAsync</code>发送ChaincodeMessage，然后<code>select-case</code>一直等待从channel里读取消息。</p>
 <p>相应的，当对端回复消息<code>pb.ChaincodeMessage_RESPONSE</code>，<code>shim/handler</code>会进入<code>fabric/core/chaincode/shim/handler.go:handleReady</code>-&gt;<code>handler.sendChannel(msg)</code>,这里从responseChannel这个map里拿出相应的channel，放入消息。实际上，通过这个实现了异步通信，结合上面提到的每次进入<code>handlerXXX</code>方法都使用goroutine处理而立刻返回，实现了其并发通信。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// callPeerWithChaincodeMsg sends a chaincode message (for e.g., GetState along with the key) to the peer for a given txid and receives the response.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(handler *Handler)</span> <span class="title">callPeerWithChaincodeMsg</span><span class="params">(msg *pb.ChaincodeMessage, channelID, txid <span class="keyword">string</span>)</span> <span class="params">(pb.ChaincodeMessage, error)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Create the channel on which to communicate the response from the peer</span></span><br><span class="line">    <span class="keyword">var</span> respChan <span class="keyword">chan</span> pb.ChaincodeMessage</span><br><span class="line">    <span class="keyword">var</span> err error</span><br><span class="line">    <span class="keyword">if</span> respChan, err = handler.createChannel(channelID, txid); err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pb.ChaincodeMessage&#123;&#125;, err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> handler.deleteChannel(channelID, txid)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> handler.sendReceive(msg, respChan)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//sends a message and selects</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(handler *Handler)</span> <span class="title">sendReceive</span><span class="params">(msg *pb.ChaincodeMessage, c <span class="keyword">chan</span> pb.ChaincodeMessage)</span> <span class="params">(pb.ChaincodeMessage, error)</span></span> &#123;</span><br><span class="line">    errc := <span class="built_in">make</span>(<span class="keyword">chan</span> error, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">      <span class="keyword">select</span> &#123;</span><br><span class="line">      <span class="keyword">case</span> outmsg, val := &lt;-c:</span><br><span class="line">        <span class="keyword">return</span> outmsg, <span class="literal">nil</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(handler *Handler)</span> <span class="title">sendChannel</span><span class="params">(msg *pb.ChaincodeMessage)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    handler.Lock()</span><br><span class="line">    <span class="keyword">defer</span> handler.Unlock()</span><br><span class="line">    txCtxID := handler.getTxCtxId(msg.ChannelId, msg.Txid)</span><br><span class="line">    handler.responseChannel[txCtxID] &lt;- *msg</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>chaincode/handler</code>对该类型请求在<code>hanldeMessage</code>里<code>HandleGetState</code>一路判断最后执行<code>res, err = txContext.TXSimulator.GetState(chaincodeName, getState.Key)</code>,从本地账本db获取namespace为lscc，key为${chaincodeName}的数据（最终执行<code>queryHelper.txmgr.db.GetState(ns, key</code>）。在<code>executeDeploy</code>稍后可以看到，执行<code>lscc.putChaincodeData(stub, cdfs)</code>操作时执行相对应的put state操作，即deploy之后会把该chaincode写入peer本地db的lscc的namespace里。因此，通过校验get回来的数据为空来判断该chaincode没有deploy过。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core/ledger/kvledger/txmgmt/txmgr/lockbasedtxmgr/helper.go:40</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *queryHelper)</span> <span class="title">getState</span><span class="params">(ns <span class="keyword">string</span>, key <span class="keyword">string</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> err := h.checkDone(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    versionedValue, err := h.txmgr.db.GetState(ns, key)</span><br><span class="line">    val, ver := decomposeVersionedValue(versionedValue)</span><br><span class="line">    <span class="keyword">if</span> h.rwsetBuilder != <span class="literal">nil</span> &#123;</span><br><span class="line">      h.rwsetBuilder.AddToReadSet(ns, key, ver)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> val, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// core/ledger/kvledger/txmgmt/txmgr/lockbasedtxmgr/helper.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">decomposeVersionedValue</span><span class="params">(versionedValue *statedb.VersionedValue)</span> <span class="params">([]<span class="keyword">byte</span>, *version.Height)</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> value []<span class="keyword">byte</span></span><br><span class="line">    <span class="keyword">var</span> ver *version.Height</span><br><span class="line">    <span class="keyword">if</span> versionedValue != <span class="literal">nil</span> &#123;</span><br><span class="line">      value = versionedValue.Value</span><br><span class="line">      ver = versionedValue.Version</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value, ver</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// core/ledger/kvledger/txmgmt/rwsetutil/rwset_builder.go</span></span><br><span class="line"><span class="comment">// AddToReadSet adds a key and corresponding version to the read-set</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *RWSetBuilder)</span> <span class="title">AddToReadSet</span><span class="params">(ns <span class="keyword">string</span>, key <span class="keyword">string</span>, version *version.Height)</span></span> &#123;</span><br><span class="line">    nsPubRwBuilder := b.getOrCreateNsPubRwBuilder(ns)</span><br><span class="line">    nsPubRwBuilder.readMap[key] = NewKVRead(key, version)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从上面看出，账本的value是<code>statedb.VersionedValue</code>结构，包含value和version(结构为<code>*version.Height{BlockNum uint64, TxNum uint64}</code>)。获取的结果加入<code>readSet</code>,其中参数（namesapce：lscc，key：${chaincodeName}, ver: 版本）</p>
+<p>从上面看出，账本的value是<code>statedb.VersionedValue</code>结构，包含value和version(结构为<code>*version.Height&#123;BlockNum uint64, TxNum uint64&#125;</code>)。获取的结果加入<code>readSet</code>,其中参数（namesapce：lscc，key：${chaincodeName}, ver: 版本）</p>
 <p>然后获取并检查部署策略<code>lscc.support.CheckInstantiationPolicy</code>。然后执行<code>lscc.putChaincodeData(stub, cdfs)</code>，调用的是<code>stub.PutState(cd.Name, cdbytes)</code>。入参是chaincode.Name和<code>ccprovider.ChaincodeData</code>序列化字节，这个是通过从本地存储的codepackage和刚刚传入的escc，vscc等参数构建成的。向对端<code>chaincode/handler</code>发送<code>pb.ChaincodeMessage_PUT_STATE</code>。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-------- ChaincodeData is stored on the LSCC -------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ChaincodeData defines the datastructure for chaincodes to be serialized by proto</span></span><br><span class="line"><span class="comment">// Type provides an additional check by directing to use a specific package after instantiation</span></span><br><span class="line"><span class="comment">// Data is Type specifc (see CDSPackage and SignedCDSPackage)</span></span><br><span class="line"><span class="keyword">type</span> ChaincodeData <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// Name of the chaincode</span></span><br><span class="line">    Name <span class="keyword">string</span> <span class="string">`protobuf:"bytes,1,opt,name=name"`</span></span><br><span class="line">    Version <span class="keyword">string</span> <span class="string">`protobuf:"bytes,2,opt,name=version"`</span></span><br><span class="line">    Escc <span class="keyword">string</span> <span class="string">`protobuf:"bytes,3,opt,name=escc"`</span></span><br><span class="line">    Vscc <span class="keyword">string</span> <span class="string">`protobuf:"bytes,4,opt,name=vscc"`</span></span><br><span class="line">    <span class="comment">// Policy endorsement policy for the chaincode instance</span></span><br><span class="line">    Policy []<span class="keyword">byte</span> <span class="string">`protobuf:"bytes,5,opt,name=policy,proto3"`</span></span><br><span class="line">    <span class="comment">// Data data specific to the package</span></span><br><span class="line">    Data []<span class="keyword">byte</span> <span class="string">`protobuf:"bytes,6,opt,name=data,proto3"`</span></span><br><span class="line">    <span class="comment">// Id of the chaincode that's the unique fingerprint for the CC This is not currently used anywhere but serves as a good eyecatcher </span></span><br><span class="line">    Id []<span class="keyword">byte</span> <span class="string">`protobuf:"bytes,7,opt,name=id,proto3"`</span></span><br><span class="line">    <span class="comment">// InstantiationPolicy for the chaincode</span></span><br><span class="line">    InstantiationPolicy []<span class="keyword">byte</span> <span class="string">`protobuf:"bytes,8,opt,name=instantiation_policy,proto3"`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>数据分为普通channle公开信息和private消息，这里只讨论前者。相应的，对端<code>chaincode/handler</code>在<code>hanldeMessage</code>里<code>HandlePutState</code>一路判断最后执行<code>res, err = txContext.TXSimulator.SetState(chaincodeName, putState.Key, putState.Value)</code>.跟上面区别的是，这里在<code>ockbased_tx_simulator.go</code>文件里，清楚指明这是模拟交易。同时，只把(namespace:lscc, key:${chaincode.Name}, value:${ChaincodeData}序列化字节）的组合加入到writeSet内，然后就返回结果<code>ChaincodeMessage_RESPONSE</code>或者错误消息    <code>ChaincodeMessage_ERROR</code>，并没有真正作用于账本db。同时，没有指定version，这个是在orderer排序打包时添加的。关于这里的read-write set，可以参考官网概念<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/readwrite.html" target="_blank" rel="noopener">Read-Write set semantics</a>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-------- ChaincodeData is stored on the LSCC -------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ChaincodeData defines the datastructure for chaincodes to be serialized by proto</span></span><br><span class="line"><span class="comment">// Type provides an additional check by directing to use a specific package after instantiation</span></span><br><span class="line"><span class="comment">// Data is Type specifc (see CDSPackage and SignedCDSPackage)</span></span><br><span class="line"><span class="keyword">type</span> ChaincodeData <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// Name of the chaincode</span></span><br><span class="line">    Name <span class="keyword">string</span> <span class="string">`protobuf:&quot;bytes,1,opt,name=name&quot;`</span></span><br><span class="line">    Version <span class="keyword">string</span> <span class="string">`protobuf:&quot;bytes,2,opt,name=version&quot;`</span></span><br><span class="line">    Escc <span class="keyword">string</span> <span class="string">`protobuf:&quot;bytes,3,opt,name=escc&quot;`</span></span><br><span class="line">    Vscc <span class="keyword">string</span> <span class="string">`protobuf:&quot;bytes,4,opt,name=vscc&quot;`</span></span><br><span class="line">    <span class="comment">// Policy endorsement policy for the chaincode instance</span></span><br><span class="line">    Policy []<span class="keyword">byte</span> <span class="string">`protobuf:&quot;bytes,5,opt,name=policy,proto3&quot;`</span></span><br><span class="line">    <span class="comment">// Data data specific to the package</span></span><br><span class="line">    Data []<span class="keyword">byte</span> <span class="string">`protobuf:&quot;bytes,6,opt,name=data,proto3&quot;`</span></span><br><span class="line">    <span class="comment">// Id of the chaincode that&#x27;s the unique fingerprint for the CC This is not currently used anywhere but serves as a good eyecatcher </span></span><br><span class="line">    Id []<span class="keyword">byte</span> <span class="string">`protobuf:&quot;bytes,7,opt,name=id,proto3&quot;`</span></span><br><span class="line">    <span class="comment">// InstantiationPolicy for the chaincode</span></span><br><span class="line">    InstantiationPolicy []<span class="keyword">byte</span> <span class="string">`protobuf:&quot;bytes,8,opt,name=instantiation_policy,proto3&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据分为普通channle公开信息和private消息，这里只讨论前者。相应的，对端<code>chaincode/handler</code>在<code>hanldeMessage</code>里<code>HandlePutState</code>一路判断最后执行<code>res, err = txContext.TXSimulator.SetState(chaincodeName, putState.Key, putState.Value)</code>.跟上面区别的是，这里在<code>ockbased_tx_simulator.go</code>文件里，清楚指明这是模拟交易。同时，只把(namespace:lscc, key:${chaincode.Name}, value:${ChaincodeData}序列化字节）的组合加入到writeSet内，然后就返回结果<code>ChaincodeMessage_RESPONSE</code>或者错误消息    <code>ChaincodeMessage_ERROR</code>，并没有真正作用于账本db。同时，没有指定version，这个是在orderer排序打包时添加的。关于这里的read-write set，可以参考官网概念<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/readwrite.html">Read-Write set semantics</a>。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core/ledger/kvledger/txmgmt/txmgr/lockbasedtxmgr/lockbased_tx_simulator.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *lockBasedTxSimulator)</span> <span class="title">SetState</span><span class="params">(ns <span class="keyword">string</span>, key <span class="keyword">string</span>, value []<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">  err := s.helper.checkDone()</span><br><span class="line">  err := s.checkBeforeWrite()</span><br><span class="line">  err := s.helper.txmgr.db.ValidateKeyValue(key, value)</span><br><span class="line">  s.rwsetBuilder.AddToWriteSet(ns, key, value)</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后列举下Invoke lscc后从<code>shim/handler</code>返回到<code>chaincode/handler</code>的数据结构<code>pb.ChaincodeMessage</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// pb.ChaincodeMessage</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"Type"</span>: pb.ChaincodeMessage_COMPLETED, </span><br><span class="line">  "Payload": $&#123;pb.Response&#125;.byte[], </span><br><span class="line">  "Txid": $&#123;msg.Txid&#125;, </span><br><span class="line">  "ChaincodeEvent": $&#123;pb.chaincodeEvent&#125;, // nil </span><br><span class="line">  "ChannelId": $&#123;stub.ChannelId&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// pb.Response </span><br><span class="line">&#123;</span><br><span class="line">  "Status":  200, // ok</span><br><span class="line">  "Payload": $&#123;ChaincodeData&#125;.byte[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// pb.ChaincodeData </span><br><span class="line">&#123;</span><br><span class="line">  "Name": $&#123;application chaincode.name&#125;, // CDSPackage.depSpec.ChaincodeSpec.ChaincodeId.Name, 同“Data”</span><br><span class="line">  "Version": &#123;application chaincode.version&#125;, // CDSPackage.depSpec.ChaincodeSpec.ChaincodeId.Version, 同“Data”</span><br><span class="line">  "Escc": "escc",</span><br><span class="line">  "Vscc": "vscc",</span><br><span class="line">  "Policy": $&#123;cb.SignaturePolicyEnvelope&#125;.byte[], // endorsement policy, 来源于lscc.go#Invoke, cauthdsl.SignedByAnyMember(peer.GetMSPIDs(channel))</span><br><span class="line">  "Data": ,  // CDSPackage.datab, 执行lscc.support.GetChaincodeFromLocalStorage(chaincodeName, chaincodeVersion).GetChaincodeData()，来源于install chaincode打包构建的fabric/core/common/ccprovider/ccprovider.go:GetCCPackage</span><br><span class="line">  "Id": , // CDSPackage.id, 同“Data”</span><br><span class="line">  "InstantiationPolicy": $&#123;InstantiationPolicy&#125;.byte[] // 来源于lscc.go#executeDeploy, lscc.support.GetInstantiationPolicy(chainname, ccpackfs)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后列举下Invoke lscc后从<code>shim/handler</code>返回到<code>chaincode/handler</code>的数据结构<code>pb.ChaincodeMessage</code><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pb.ChaincodeMessage</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Type&quot;</span>: pb.ChaincodeMessage_COMPLETED, </span><br><span class="line">  <span class="attr">&quot;Payload&quot;</span>: $&#123;pb.Response&#125;.byte[], </span><br><span class="line">  <span class="attr">&quot;Txid&quot;</span>: $&#123;msg.Txid&#125;, </span><br><span class="line">  <span class="attr">&quot;ChaincodeEvent&quot;</span>: $&#123;pb.chaincodeEvent&#125;, <span class="comment">// nil </span></span><br><span class="line">  <span class="attr">&quot;ChannelId&quot;</span>: $&#123;stub.ChannelId&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// pb.Response </span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Status&quot;</span>:  <span class="number">200</span>, <span class="comment">// ok</span></span><br><span class="line">  <span class="attr">&quot;Payload&quot;</span>: $&#123;ChaincodeData&#125;.byte[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pb.ChaincodeData </span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Name&quot;</span>: $&#123;application chaincode.name&#125;, <span class="comment">// CDSPackage.depSpec.ChaincodeSpec.ChaincodeId.Name, 同“Data”</span></span><br><span class="line">  <span class="attr">&quot;Version&quot;</span>: &#123;application chaincode.version&#125;, <span class="comment">// CDSPackage.depSpec.ChaincodeSpec.ChaincodeId.Version, 同“Data”</span></span><br><span class="line">  <span class="attr">&quot;Escc&quot;</span>: <span class="string">&quot;escc&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;Vscc&quot;</span>: <span class="string">&quot;vscc&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;Policy&quot;</span>: $&#123;cb.SignaturePolicyEnvelope&#125;.byte[], <span class="comment">// endorsement policy, 来源于lscc.go#Invoke, cauthdsl.SignedByAnyMember(peer.GetMSPIDs(channel))</span></span><br><span class="line">  <span class="attr">&quot;Data&quot;</span>: ,  <span class="comment">// CDSPackage.datab, 执行lscc.support.GetChaincodeFromLocalStorage(chaincodeName, chaincodeVersion).GetChaincodeData()，来源于install chaincode打包构建的fabric/core/common/ccprovider/ccprovider.go:GetCCPackage</span></span><br><span class="line">  <span class="attr">&quot;Id&quot;</span>: , <span class="comment">// CDSPackage.id, 同“Data”</span></span><br><span class="line">  <span class="attr">&quot;InstantiationPolicy&quot;</span>: $&#123;InstantiationPolicy&#125;.byte[] <span class="comment">// 来源于lscc.go#executeDeploy, lscc.support.GetInstantiationPolicy(chainname, ccpackfs)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
 <p>这里继续直接看acc的<code>Init</code>，之前的步骤与lscc完全一致，可以参考上节。Tutorial里的例子的chaincode代码在<code>github.com/hyperledger/fabric/examples/chaincode/go/example02/chaincode.go</code>,里面的Init方法主要是读入参数，然后调用<code>stub.PutState</code>后返回success。细节如上，不再复述。</p>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
-    
-</div>
-      
-    </div>
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Hyperledger-Fabric/" rel="tag"><i class="fa fa-tag"></i> Hyperledger Fabric</a>
-          
-            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/" rel="next" title="Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化">
-                <i class="fa fa-chevron-left"></i> Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hyperledger-Fabric/" rel="tag"># Hyperledger Fabric</a>
+              <a href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" rel="tag"># 源码分析</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" rel="prev" title="Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程">
-                Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
-
-        </div>
         
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/" rel="prev" title="Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化">
+      <i class="fa fa-chevron-left"></i> Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" rel="next" title="Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程">
+      Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
       </div>
+      <!--/noindex-->
 
-      
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
-      
+
+
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
 
 
 
@@ -839,513 +429,72 @@
 
 
 
-
-        
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
+<script src="/js/next-boot.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  
-    <!-- LOCAL: You can save these files to your site and update links -->
-
-  
-  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<!-- END LOCAL -->
-
-<style>
-#gitment-container a {
-  border-bottom: none;
-}
-
-  a.gitment-editor-footer-tip, .gitment-container.gitment-footer-container {
-    display: none;
-  }
-
-</style>
-
-<script>
-  function renderGitment() {
-    var gitment = new Gitmint({
-      id: '1551023250000',
-      owner: 'simplexity-ckcclc',
-      repo: 'gitment-comments',
-      
-        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-      
-      oauth: {
-      
-      
-        client_secret: '09b3a91649010e98bb45af1c7bba1b490d42f458',
-      
-        client_id: '12eedb094a3054014378'
-      }
-    });
-    gitment.render('gitment-container');
-  }
-
-  
-    renderGitment();
-  
-</script>
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 

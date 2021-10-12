@@ -1,126 +1,50 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
-
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="区块大小扩容(Block size)比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。 Pros 提高TPS 更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）  Cons 节点性能要求增高准入门槛提高，导致网络全节点数量减少">
-<meta name="keywords" content="Blockchain">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Blockchain性能扩容（1）- (Size, Segwit, Sidechain)">
 <meta property="og:url" content="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="区块大小扩容(Block size)比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。 Pros 提高TPS 更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）  Cons 节点性能要求增高准入门槛提高，导致网络全节点数量减少">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/bitcoin-segwit.png">
 <meta property="og:image" content="https://simplexity.cn/images/side-chain-two-way-peg.png">
 <meta property="og:image" content="https://simplexity.cn/images/lightning-network.png">
-<meta property="og:updated_time" content="2020-10-28T01:59:15.292Z">
+<meta property="article:published_time" content="2019-07-14T08:59:39.000Z">
+<meta property="article:modified_time" content="2020-10-28T01:59:15.292Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="Blockchain">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blockchain性能扩容（1）- (Size, Segwit, Sidechain)">
-<meta name="twitter:description" content="区块大小扩容(Block size)比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。 Pros 提高TPS 更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）  Cons 节点性能要求增高准入门槛提高，导致网络全节点数量减少">
 <meta name="twitter:image" content="https://simplexity.cn/images/bitcoin-segwit.png">
 
+<link rel="canonical" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
 
 
-
-
-
-  <link rel="canonical" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
   };
 </script>
 
@@ -132,15 +56,8 @@
 
 
 
-
-
-
-
-
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -149,9 +66,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -165,324 +81,163 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Simplexity</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fas fa-home fa-fw"></i>Home</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
+        <li class="menu-item menu-item-about">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fas fa-user fa-fw"></i>About</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
       <meta itemprop="name" content="Travis Wong">
       <meta itemprop="description" content="Simple is Complex">
-      <meta itemprop="image" content="/images/avatar.jpeg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Simplexity">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Blockchain性能扩容（1）- (Size, Segwit, Sidechain)
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          Blockchain性能扩容（1）- (Size, Segwit, Sidechain)
+        </h1>
 
         <div class="post-meta">
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2019-07-14 16:59:39" itemprop="dateCreated datePublished" datetime="2019-07-14T16:59:39+08:00">2019-07-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/07/14/blockchain-performance-scaleup-concern/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/07/14/blockchain-performance-scaleup-concern/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
-          
-
-          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
 
           
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <h3 id="区块大小扩容-Block-size"><a href="#区块大小扩容-Block-size" class="headerlink" title="区块大小扩容(Block size)"></a>区块大小扩容(Block size)</h3><p>比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。</p>
@@ -496,8 +251,8 @@
 <li>区块全网同步时间增加，上一个区块的矿工周围节点比网络边缘节点（相对的）更早同步更早开始挖矿，中心化趋势。同时出块时间保持不变的前提下（同步时间占区块时间比重上升），会增加分叉，孤块（stale block）的可能性，以及增加交易回滚，双花等风险。类似的，减小区块时间提高出块速度也面临这个问题。</li>
 <li>存在其他的性能提升替代方案，如隔离见证，侧链等</li>
 </ol>
-<a id="more"></a>
-<h3 id="隔离见证（SegWit）"><a href="#隔离见证（SegWit）" class="headerlink" title="隔离见证（SegWit）"></a>隔离见证（SegWit）</h3><p>这个是针对比特币的改进，提出主要是要解决Transaction Malleability（交易延展性）这个问题。（因为早期的transactionId是由utxo的来源，目的以及签名计算得到的。根据密码学的特性，可以从签名通过计算得到新的的签名，并且也是密码学意义上有效的（比如椭圆曲线数字签名算法（ECDSA），这种算法下签名（r，s）和签名（r，-s （mod n））都是有效的）。因此恶意节点可以从正常交易复制出新交易，签名有效，从而生成新的transactionId。当撤回前一个交易再换utxo输入重发时，后一个交易仍然是有效的，可能会导致重复转账的欺诈行为）。此外，第三方增加Push data到验证信息的起始位置，改变交易ID(txid)同时验证结果也通过。因此，将签名信息（见证）从交易抽离出来放到交易的后面（锁定脚本，这部分是不包含在1MB块大小的计算限制里），即Hash出来的transactionId是不包括签名的，这时就无法通过改变签名计算生成新的交易。<br><img src="/images/bitcoin-segwit.png" alt></p>
+<span id="more"></span>
+<h3 id="隔离见证（SegWit）"><a href="#隔离见证（SegWit）" class="headerlink" title="隔离见证（SegWit）"></a>隔离见证（SegWit）</h3><p>这个是针对比特币的改进，提出主要是要解决Transaction Malleability（交易延展性）这个问题。（因为早期的transactionId是由utxo的来源，目的以及签名计算得到的。根据密码学的特性，可以从签名通过计算得到新的的签名，并且也是密码学意义上有效的（比如椭圆曲线数字签名算法（ECDSA），这种算法下签名（r，s）和签名（r，-s （mod n））都是有效的）。因此恶意节点可以从正常交易复制出新交易，签名有效，从而生成新的transactionId。当撤回前一个交易再换utxo输入重发时，后一个交易仍然是有效的，可能会导致重复转账的欺诈行为）。此外，第三方增加Push data到验证信息的起始位置，改变交易ID(txid)同时验证结果也通过。因此，将签名信息（见证）从交易抽离出来放到交易的后面（锁定脚本，这部分是不包含在1MB块大小的计算限制里），即Hash出来的transactionId是不包括签名的，这时就无法通过改变签名计算生成新的交易。<br><img src="/images/bitcoin-segwit.png" alt=""></p>
 <h4 id="Pros-1"><a href="#Pros-1" class="headerlink" title="Pros"></a>Pros</h4><ol>
 <li>解决Transaction Malleability这个问题</li>
 <li>闪电网络的技术基础</li>
@@ -507,7 +262,7 @@
 <li>每笔交易平均250字节，见证部分的数据约为150字节。这样相当于实际上增大了区块大小，隔离见证的整个区块大小为2.5到3MB左右。增加区块实际大小带来的风险依然存在（当然，也有通过将见证信息放在侧链上，交易主链通过引用的方式）。</li>
 </ol>
 <blockquote>
-<p><a href="https://github.com/bitcoin/bips/blob/master/bip-0062.mediawiki" target="_blank" rel="noopener">bips/bip-0062.mediawiki</a> ：Transaction Malleability的官方文档<br><a href="https://www.bitdegree.org/tutorials/what-is-segwit/" target="_blank" rel="noopener">What is SegWit and How it Works Explained</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/bitcoin/bips/blob/master/bip-0062.mediawiki">bips/bip-0062.mediawiki</a> ：Transaction Malleability的官方文档<br><a target="_blank" rel="noopener" href="https://www.bitdegree.org/tutorials/what-is-segwit/">What is SegWit and How it Works Explained</a></p>
 </blockquote>
 <h3 id="侧链（Sidechain）"><a href="#侧链（Sidechain）" class="headerlink" title="侧链（Sidechain）"></a>侧链（Sidechain）</h3><p>侧链只需符合侧链协议，能够与主链进行安全的资产/数据转移的都可以成为侧链，可以作为二层网络分担主链上的压力（例如比特币闪电网络进行结算），或者实现更复杂的逻辑功能，将主链作为最后的清算链，另外也可以实现异构链间的资产转移。实现的技术基础是双向锚定（Two-way Peg），通过双向锚定技术，可以实现暂时的将数字资产在主链中锁定，同时将等价的数字资产在侧链中释放，同样当等价的数字资产在侧链中被锁定的时候，主链的数字资产也可以被释放。具体有多种实现方式，常见的是SPV（Simplified Payment Verification）。SPV主要涉及到两个东西, 第一个是Merkle Tree，另一个是布隆过滤器（Bloom Filter）。譬如说转账后watch event，如果不在乎隐私的话, 可以直接告诉全节点所关注的地址就可以；但是如果不想暴露隐私, 那就把关注的信息映射到BF上, 然后全节点返回所有命中BF的event。</p>
 <p>双向锚定分为以下几个阶段：</p>
@@ -515,352 +270,171 @@
 <li>用户在主链上将数字资产发送到主链的一个特殊的地址，把数字资产锁定在主链上。</li>
 <li>该锁定会等待一个确认期，确认期的作用是等待锁定交易被更多区块确认，可防止假冒锁定交易和拒绝服务攻击。</li>
 <li>确认期结束后，用户在侧链上创建一个对应的带有SPV证明的交易，同时验证主链上的数字资产已经被锁住，然后就可以在侧链上打开具有相同价值的另一种数字资产。该交易称为赎回交易，SPV工作量证明是指赎回交易所在区块的工作量证明。</li>
-<li>当这种数字资产返回到主链上时，该过程会进行重复。它们被发送到侧链上锁定的输出中，锁定一个竞争期，竞争期的作用是防止双花。然后就可以创建一个SPV证明，来将其发送回主区块链上，以解锁主链上的数字资产。<br><img src="/images/side-chain-two-way-peg.png" alt></li>
+<li>当这种数字资产返回到主链上时，该过程会进行重复。它们被发送到侧链上锁定的输出中，锁定一个竞争期，竞争期的作用是防止双花。然后就可以创建一个SPV证明，来将其发送回主区块链上，以解锁主链上的数字资产。<br><img src="/images/side-chain-two-way-peg.png" alt=""></li>
 </ol>
 <blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/42769604" target="_blank" rel="noopener">全面理解区块链侧链技术</a> ： 提及多种侧链实现方式</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42769604">全面理解区块链侧链技术</a> ： 提及多种侧链实现方式</p>
 </blockquote>
-<h4 id="闪电网络（Bitcoin-lightning-network）"><a href="#闪电网络（Bitcoin-lightning-network）" class="headerlink" title="闪电网络（Bitcoin lightning network）"></a>闪电网络（Bitcoin lightning network）</h4><p>在侧链建立点对点通道channel，进行小额和持续多次的资产往来，然后等达成共识后关闭通道，将资产合约发主链上完成结算。核心思想是提高欺诈成本，进行惩罚。<br><img src="/images/lightning-network.png" alt></p>
-<p>参考 <a href="https://www.zhihu.com/question/46515457" target="_blank" rel="noopener">什么是比特币的闪电网络？</a>一文中的例子，在双方达成C2a共识后(C1a和C2a始终由Alice持有，达成c2a时Alice需要将Alice2秘钥给到Bob。这里C1a只有Alice持有，因此Bob即使拥有Alcie2秘钥也无法签发经过双方原始秘钥Alice和Bob签名的合同)，若然Alice广播C1a并且关闭通道（主动关闭通道方需要等待指定seq数量的块后才能执行RD1a），此时Bob监控到Alice广播旧的分配合约(这需要Bob节点在线，或者事先构建好BR1a交付给信任的第三方或者机器人在Alice欺诈时自动触发)，可以使用Alice2秘钥对BR1a签名并广播，这个是无需等待即时结算的，所以原本属于Alice的都分配给Bob。这就是欺诈作恶成本。</p>
+<h4 id="闪电网络（Bitcoin-lightning-network）"><a href="#闪电网络（Bitcoin-lightning-network）" class="headerlink" title="闪电网络（Bitcoin lightning network）"></a>闪电网络（Bitcoin lightning network）</h4><p>在侧链建立点对点通道channel，进行小额和持续多次的资产往来，然后等达成共识后关闭通道，将资产合约发主链上完成结算。核心思想是提高欺诈成本，进行惩罚。<br><img src="/images/lightning-network.png" alt=""></p>
+<p>参考 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/46515457">什么是比特币的闪电网络？</a>一文中的例子，在双方达成C2a共识后(C1a和C2a始终由Alice持有，达成c2a时Alice需要将Alice2秘钥给到Bob。这里C1a只有Alice持有，因此Bob即使拥有Alcie2秘钥也无法签发经过双方原始秘钥Alice和Bob签名的合同)，若然Alice广播C1a并且关闭通道（主动关闭通道方需要等待指定seq数量的块后才能执行RD1a），此时Bob监控到Alice广播旧的分配合约(这需要Bob节点在线，或者事先构建好BR1a交付给信任的第三方或者机器人在Alice欺诈时自动触发)，可以使用Alice2秘钥对BR1a签名并广播，这个是无需等待即时结算的，所以原本属于Alice的都分配给Bob。这就是欺诈作恶成本。</p>
 <p>之所以说Segwit隔离见证是闪电网络的基础，是因为Funding Tx只有在第一个Commitment Tx完成签名并交换之后，才会继续签名和广播（否则，广播Funding Tx后若Bob拒绝提供第一个Commitment的签名，这笔资金将被永久锁定，无法消费。拥有Commitment Tx后可以广播赎回）。此时第一个Commitment Tx消费的Funding Tx未曾广播入链，因此需要保证该Funding Tx未被篡改，即txid的固定性。</p>
-<p>而对于多方中转交易，在上文中描述有误。根据<a href="https://www.youtube.com/watch?v=SUfBq2nwPek" target="_blank" rel="noopener">Bitcoin Lightning Network Payment Channels Explained - Thaddeus Dryja</a>（Youtube视频，需要梯子），在上文的例子中，Alice和Bob之间没有建立直接支付通道，需要经过第三方Charlie中转（与Alice和Bob各自建立支付通道，非可信第三方），同时Alice与Bob之间需要建立正常的TCP/IP等通信通道。若Alice需要向Bob转账，Bob选择随机数R，并且生成哈希H，将H通过通信信道发给Alice。Alice与Charlie之间达成合约，即Charlie能在指定时间内展示出正确的R值，Alice即支付指定金额，否则撤回该合约。同理Charlie与Bob间也是如此。</p>
+<p>而对于多方中转交易，在上文中描述有误。根据<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=SUfBq2nwPek">Bitcoin Lightning Network Payment Channels Explained - Thaddeus Dryja</a>（Youtube视频，需要梯子），在上文的例子中，Alice和Bob之间没有建立直接支付通道，需要经过第三方Charlie中转（与Alice和Bob各自建立支付通道，非可信第三方），同时Alice与Bob之间需要建立正常的TCP/IP等通信通道。若Alice需要向Bob转账，Bob选择随机数R，并且生成哈希H，将H通过通信信道发给Alice。Alice与Charlie之间达成合约，即Charlie能在指定时间内展示出正确的R值，Alice即支付指定金额，否则撤回该合约。同理Charlie与Bob间也是如此。</p>
 <p>实际上，这样的Charlie相当于目前金融系统里的支付宝角色，一个持久而且大多数节点建立支付通道的节点（或者节点群，类似与Alice与Bob间经过多个节点，这些节点群之间建立支付通道，因此Alice与Bob之间能比较容易找到路由）。同时，对于频繁支付或者大额支付的节点（假设Bob是商家），则Bob与Charlie间的通道容量需要足够大，也就是双方在主链上锚定的资产价值足够高，否则需要经常的关闭（主动方提现需要等一定区块时间）和建立多个通道。这样的并非极端意义的分布式去中心化，但已经利用了区块链的无需信任属性。</p>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:right;color:#C0C0C0;font-size:12px;"><a href="https://simplexity.cn/copyright/">@原创版权所有，转载请注明出处</a></div>
-    
-</div>
-      
-    </div>
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Blockchain/" rel="tag"><i class="fa fa-tag"></i> Blockchain</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/07/08/consensus-pos/" rel="next" title="共识算法(3) - PoS">
-                <i class="fa fa-chevron-left"></i> 共识算法(3) - PoS
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/07/go-channel-demo/" rel="prev" title="Go语言穷人版渠道匹配demo">
-                Go语言穷人版渠道匹配demo <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
-
-        </div>
         
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/08/consensus-pos/" rel="prev" title="共识算法(3) - PoS">
+      <i class="fa fa-chevron-left"></i> 共识算法(3) - PoS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/07/go-channel-demo/" rel="next" title="Go语言穷人版渠道匹配demo">
+      Go语言穷人版渠道匹配demo <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9D%97%E5%A4%A7%E5%B0%8F%E6%89%A9%E5%AE%B9-Block-size"><span class="nav-number">1.</span> <span class="nav-text">区块大小扩容(Block size)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pros"><span class="nav-number">1.1.</span> <span class="nav-text">Pros</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cons"><span class="nav-number">1.2.</span> <span class="nav-text">Cons</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81%EF%BC%88SegWit%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">隔离见证（SegWit）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pros-1"><span class="nav-number">2.1.</span> <span class="nav-text">Pros</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cons-1"><span class="nav-number">2.2.</span> <span class="nav-text">Cons</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%A7%E9%93%BE%EF%BC%88Sidechain%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">侧链（Sidechain）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AA%E7%94%B5%E7%BD%91%E7%BB%9C%EF%BC%88Bitcoin-lightning-network%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">闪电网络（Bitcoin lightning network）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Travis Wong">
-            
-              <p class="site-author-name" itemprop="name">Travis Wong</p>
-              <p class="site-description motion-element" itemprop="description">Simple is Complex</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">45</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/simplexity-ckcclc" title="GitHub &rarr; https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://blog.csdn.net/ckcclc" title="CSDN &rarr; https://blog.csdn.net/ckcclc" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
 
-            
-            
-            
-            
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#区块大小扩容-Block-size"><span class="nav-number">1.</span> <span class="nav-text">区块大小扩容(Block size)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pros"><span class="nav-number">1.1.</span> <span class="nav-text">Pros</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cons"><span class="nav-number">1.2.</span> <span class="nav-text">Cons</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离见证（SegWit）"><span class="nav-number">2.</span> <span class="nav-text">隔离见证（SegWit）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pros-1"><span class="nav-number">2.1.</span> <span class="nav-text">Pros</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cons-1"><span class="nav-number">2.2.</span> <span class="nav-text">Cons</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#侧链（Sidechain）"><span class="nav-number">3.</span> <span class="nav-text">侧链（Sidechain）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#闪电网络（Bitcoin-lightning-network）"><span class="nav-number">3.1.</span> <span class="nav-text">闪电网络（Bitcoin lightning network）</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-anchor"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Travis Wong</span>
-
-  
-
-  
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
-
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="Total Visitors">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="Total Views">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
 
 
 
@@ -869,513 +443,72 @@
 
 
 
-
-        
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
+<script src="/js/next-boot.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  
-    <!-- LOCAL: You can save these files to your site and update links -->
-
-  
-  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<!-- END LOCAL -->
-
-<style>
-#gitment-container a {
-  border-bottom: none;
-}
-
-  a.gitment-editor-footer-tip, .gitment-container.gitment-footer-container {
-    display: none;
-  }
-
-</style>
-
-<script>
-  function renderGitment() {
-    var gitment = new Gitmint({
-      id: '1563094779000',
-      owner: 'simplexity-ckcclc',
-      repo: 'gitment-comments',
-      
-        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-      
-      oauth: {
-      
-      
-        client_secret: '09b3a91649010e98bb45af1c7bba1b490d42f458',
-      
-        client_id: '12eedb094a3054014378'
-      }
-    });
-    gitment.render('gitment-container');
-  }
-
-  
-    renderGitment();
-  
-</script>
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
 
   
   <script>
     (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
-      }
-      else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
   </script>
 
 
-  
+
 
   
+<script src="/js/local-search.js"></script>
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
 
   
 
