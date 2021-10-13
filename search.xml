@@ -393,8 +393,8 @@
     <content><![CDATA[<p>多方安全计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。</p>
 <h3 id="1-不经意传输（OT，Oblivious-Transfer）"><a href="#1-不经意传输（OT，Oblivious-Transfer）" class="headerlink" title="1. 不经意传输（OT，Oblivious Transfer）"></a>1. 不经意传输（OT，Oblivious Transfer）</h3><p><strong>目标如下</strong>：</p>
 <ol>
-<li>Sender提供可选参数，但是不知道Receiver具体选择哪个</li>
-<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值<br><img src="/images/mpc-ot.jpg" alt=""></li>
+<li>Sender提供可选参数(m0, m1)，但是不知道Receiver具体选择哪个。</li>
+<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值。例如，选择m0后，无法得知m1的值。<br><img src="/images/mpc-ot.jpg" alt=""></li>
 </ol>
 <div style='display: none'>
 1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
@@ -407,15 +407,15 @@
 
 <p>参考资料：</p>
 <blockquote>
-<p><a href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/126396795">混淆电路介绍（一）不经意传输</a><br><a href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
 </blockquote>
 <span id="more"></span>
 <h3 id="2-混淆电路（GC，Garbled-Circuit）"><a href="#2-混淆电路（GC，Garbled-Circuit）" class="headerlink" title="2. 混淆电路（GC，Garbled Circuit）"></a>2. 混淆电路（GC，Garbled Circuit）</h3><p>将计算逻辑转换成门电路，以与门为例，流程如下  </p>
 <ol>
-<li>A生成x为0，1对应的密钥kx0,kx1, y为0，1时对应的密钥ky0,ky1，并且计算如下真值表</li>
-<li>假设A输入x=0，A将真值表打乱顺序，将对应的kx0和真值表发送给B。因为顺序乱，所以B不知道收到A的k是kx0还是kx1，即<strong><em>B无法得知A的输入</em></strong>。</li>
-<li>假设B选择y=1,通过OT协议获取ky1，此时<strong><em>A也无法得知B的输入</em></strong>。</li>
-<li>B通过对真值表里的z进行解密，只有一个可以解出有意义的数值，也就是最终结果。</li>
+<li>A生成x为0，1对应的密钥kx0,kx1, y为0，1时对应的密钥ky0,ky1，并且计算如下真值表(z为两次对称加密值)</li>
+<li>A将真值表打乱行顺序。假设A输入x=0，将对应的kx0和真值表发送给B。因为顺序乱，所以这样B无法从行排列中推测出kx0对应的A的输入是x=0还是x=1，即<strong><em>B无法得知A的输入</em></strong>。</li>
+<li>假设B选择y=1,通过OT协议获取ky1（无法得知ky0），此时<strong><em>A也无法得知B的输入</em></strong>。</li>
+<li>B通过对真值表里的z进行解密（此时B只有kx0和ky1），选择对E<sub>kx0</sub>(E<sub>ky1</sub>(0))进行解密，也就是最终结果0，即x=0，y=1时的结果。</li>
 </ol>
 <div class="table-container">
 <table>

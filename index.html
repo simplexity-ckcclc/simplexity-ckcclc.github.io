@@ -876,7 +876,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-13 15:12:03" itemprop="dateModified" datetime="2021-10-13T15:12:03+08:00">2021-10-13</time>
+                <time title="Modified: 2021-10-13 17:49:15" itemprop="dateModified" datetime="2021-10-13T17:49:15+08:00">2021-10-13</time>
               </span>
 
           
@@ -893,8 +893,8 @@
           <p>多方安全计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。</p>
 <h3 id="1-不经意传输（OT，Oblivious-Transfer）"><a href="#1-不经意传输（OT，Oblivious-Transfer）" class="headerlink" title="1. 不经意传输（OT，Oblivious Transfer）"></a>1. 不经意传输（OT，Oblivious Transfer）</h3><p><strong>目标如下</strong>：</p>
 <ol>
-<li>Sender提供可选参数，但是不知道Receiver具体选择哪个</li>
-<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值<br><img src="/images/mpc-ot.jpg" alt=""></li>
+<li>Sender提供可选参数(m0, m1)，但是不知道Receiver具体选择哪个。</li>
+<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值。例如，选择m0后，无法得知m1的值。<br><img src="/images/mpc-ot.jpg" alt=""></li>
 </ol>
 <div style='display: none'>
 1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
@@ -907,7 +907,7 @@
 
 <p>参考资料：</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/126396795">混淆电路介绍（一）不经意传输</a><br><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
