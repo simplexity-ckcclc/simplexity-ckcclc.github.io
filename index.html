@@ -876,7 +876,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 17:32:55" itemprop="dateModified" datetime="2020-10-28T17:32:55+08:00">2020-10-28</time>
+                <time title="Modified: 2021-10-13 15:12:03" itemprop="dateModified" datetime="2021-10-13T15:12:03+08:00">2021-10-13</time>
               </span>
 
           
@@ -896,14 +896,15 @@
 <li>Sender提供可选参数，但是不知道Receiver具体选择哪个</li>
 <li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值<br><img src="/images/mpc-ot.jpg" alt=""></li>
 </ol>
-<p>1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：</p>
-<ol>
-<li>Sender拥有两个消息，分别为m0, m1,并且生成两对密钥对（pub0, pri0）和（pub1, pri1）</li>
-<li>Receiver随机生成对称密钥k，以Receiver选择消息m0为例，用公钥pub0加密k，得到k0和k1，返回给Sender。</li>
-<li>Sender使用私钥（pri0，pri1）分别解密（k0，k1），得到（k0’, k1’）。此时，Sender无法得知具体选择了哪个，满足条件（1）。对Receiver而言，其中k0’=k，k1’则是一串不明字符串。</li>
-<li>Sender使用对称密钥k0’和k1’分别对m0, m1加密，得到m0’， m1’，并回传给Receiver。</li>
-<li>Receiver可以用k对m0’解密，得到m0。另外，m1’则是不可解，满足条件（2）。</li>
-</ol>
+<div style='display: none'>
+1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
+1. Sender拥有两个消息，分别为m0, m1,并且生成两对密钥对（pub0, pri0）和（pub1, pri1）
+2. Receiver随机生成对称密钥k，以Receiver选择消息m0为例，用公钥pub0加密k，得到k0和k1，返回给Sender。
+3. Sender使用私钥（pri0，pri1）分别解密（k0，k1），得到（k0', k1'）。此时，Sender无法得知具体选择了哪个，满足条件（1）。对Receiver而言，其中k0'=k，k1'则是一串不明字符串。
+4. Sender使用对称密钥k0'和k1'分别对m0, m1加密，得到m0'， m1'，并回传给Receiver。
+5. Receiver可以用k对m0'解密，得到m0。另外，m1'则是不可解，满足条件（2）。
+</div>
+
 <p>参考资料：</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
