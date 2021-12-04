@@ -121,17 +121,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">15</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,102 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/08/consensus-pos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/consensus-pos/" class="post-title-link" itemprop="url">共识算法(3) - PoS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-08 17:51:14" itemprop="dateCreated datePublished" datetime="2019-07-08T17:51:14+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="PoS-Proof-of-Stake权益证明-相对于PoW的优点："><a href="#PoS-Proof-of-Stake权益证明-相对于PoW的优点：" class="headerlink" title="PoS(Proof of Stake权益证明)相对于PoW的优点："></a>PoS(Proof of Stake权益证明)相对于PoW的优点：</h3><ol>
+<li>不需要消耗大量电力成本</li>
+<li>发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全）<blockquote>
+<p><a target="_blank" rel="noopener" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="PoS运行过程"><a href="#PoS运行过程" class="headerlink" title="PoS运行过程"></a>PoS运行过程</h3><ol>
+<li>质押stake，声明为验证节点（区别于全节点拥有出块的权利，会有一定的门槛，如持有stake量，占有比例，或者top n等条件，意在控制验证节点数量，缩小选举的范围以及达成bft共识的节点数）</li>
+<li>选举 （周期性选举，以之前已出块的值作为随机种子，选取下一周期的出块节点和顺序，选举算法包含Follow-the-Satoshi选择随机stake的持有节点和RR-BFT轮询算法）</li>
+<li>打包交易 （该论的出块节点从交易缓存池选择，通常为交易手续费高，时间早等，验证，包括签名，账户余额等。如果该论的出块节点没有出块，则跳过该论，并且惩罚）</li>
+<li>广播交易，确认（PoS分为基于链的PoS和BFT风格的PoS。在<strong>基于链的PoS</strong>中，最长链原则，随机算法选出验证者创建新区块，但是验证者要确保该块指向最长链，通常也需要一定数量的验证节点背书签名后上链。在<strong>BFT风格的PoS</strong>中，分配给验证者相对的权力，以RR的方式提出块并且给被提出的块投票，从而决定哪个块是新块，并在每一轮选出一个新块加入区块链。在每一轮中，每一个验证者都为某一特定的块进行投票，最后所有在线和诚实的验证者都将商量被给定的块是否可以添加到区块链中，并且意见不能改变）</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/consensus-pos/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -303,7 +399,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-23 20:31:15" itemprop="dateModified" datetime="2020-11-23T20:31:15+08:00">2020-11-23</time>
+                <time title="Modified: 2021-12-04 19:23:03" itemprop="dateModified" datetime="2021-12-04T19:23:03+08:00">2021-12-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,7 +407,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ethereum/" itemprop="url" rel="index"><span itemprop="name">Ethereum</span></a>
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
                 </span>
             </span>
 
@@ -440,7 +536,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2021-12-04 19:22:50" itemprop="dateModified" datetime="2021-12-04T19:22:50+08:00">2021-12-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -448,7 +544,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ethereum/" itemprop="url" rel="index"><span itemprop="name">Ethereum</span></a>
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
                 </span>
             </span>
 
@@ -1075,88 +1171,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/12/fabric-source-orderer-deliver/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的deliver过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-12 15:23:18" itemprop="dateCreated datePublished" datetime="2019-03-12T15:23:18+08:00">2019-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在orderer端，deliver和broadcast是对等的，最初回溯到<code>protos/orderer/ab.pb.go</code>里的grpc定义，对应的grpc方法是<code>/orderer.AtomicBroadcast/Deliver</code>。对应源码<code>orderer/common/server/server.go#Deliver</code> -&gt; <code>common/deliver/deliver.go#Handle</code> -&gt; <code>deliver.go#deliverBlocks</code>。在<code>deliverBlocks</code>这个方法里，先反序列化cb.Envelope，获取并且校验Header，然后校验access control，判断client的identity证书是否过期，以及策略校验是否拥有读权限（policies.ChannelReaders，代码为<code>orderer/common/server/server.go#Deliver : sf := msgprocessor.NewSigFilter(policies.ChannelReaders, chain)</code>）。校验通过后，将envelope反序列化为<code>ab.SeekInfo</code>结构。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SeekInfo specifies the range of requested blocks to return</span></span><br><span class="line"><span class="comment">// If the start position is not found, an error is immediately returned</span></span><br><span class="line"><span class="comment">// Otherwise, blocks are returned until a missing block is encountered, then behavior is dictated by the SeekBehavior specified.  </span></span><br><span class="line"><span class="comment">// If BLOCK_UNTIL_READY is specified, the reply will block until the requested blocks are available</span></span><br><span class="line"><span class="comment">// if FAIL_IF_NOT_READY is specified, the reply will return an error indicating that the block is not found.  </span></span><br><span class="line"><span class="comment">// To request that all blocks be returned indefinitely as they are created, behavior should be set to BLOCK_UNTIL_READY and the stop should be set to specified with a number of MAX_UINT64</span></span><br><span class="line"><span class="keyword">type</span> SeekInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">    Start    *SeekPosition </span><br><span class="line">    Stop     *SeekPosition </span><br><span class="line">    Behavior SeekInfo_SeekBehavior </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *Handler)</span> <span class="title">deliverBlocks</span><span class="params">(ctx context.Context, srv *Server, envelope *cb.Envelope)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... 校验，略</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据seekInfo.Stop计算range的终止block number</span></span><br><span class="line">    cursor, number := chain.Reader().Iterator(seekInfo.Start)</span><br><span class="line">    <span class="keyword">defer</span> cursor.Close()</span><br><span class="line">    <span class="keyword">switch</span> stop := seekInfo.Stop.Type.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Oldest:</span><br><span class="line">        stopNum = number</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Newest:</span><br><span class="line">        stopNum = chain.Reader().Height() - <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Specified:</span><br><span class="line">        stopNum = stop.Specified.Number</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="comment">// 如果range超越当前到chain高度，fail fast</span></span><br><span class="line">        <span class="keyword">if</span> seekInfo.Behavior == ab.SeekInfo_FAIL_IF_NOT_READY &#123;</span><br><span class="line">            <span class="keyword">if</span> number &gt; chain.Reader().Height()<span class="number">-1</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_NOT_FOUND)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        iterCh := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">            <span class="comment">// 读取下一个block</span></span><br><span class="line">            block, status = cursor.Next()</span><br><span class="line">            <span class="built_in">close</span>(iterCh)</span><br><span class="line">        &#125;()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-ctx.Done(): <span class="comment">// &quot;context finished before block retrieved&quot;</span></span><br><span class="line">            <span class="keyword">return</span> errors.Wrapf(ctx.Err(), <span class="string">&quot;context finished before block retrieved&quot;</span>)</span><br><span class="line">        <span class="keyword">case</span> &lt;-erroredChan: <span class="comment">// &quot;Aborting deliver for request because of background error&quot;</span></span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_SERVICE_UNAVAILABLE)</span><br><span class="line">        <span class="keyword">case</span> &lt;-iterCh:</span><br><span class="line">            <span class="comment">// Iterator has set the block and status vars，完成读取</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// increment block number to support FAIL_IF_NOT_READY deliver behavior</span></span><br><span class="line">        number++</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 再次通过权限校验 access control</span></span><br><span class="line">        <span class="keyword">if</span> err := accessControl.Evaluate(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_FORBIDDEN)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 逐个block发送</span></span><br><span class="line">        <span class="keyword">if</span> err := srv.SendBlockResponse(block); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stopNum == block.Header.Number &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 全部block发送完成后，再回复当前deliver rpc请求</span></span><br><span class="line">    <span class="keyword">if</span> err := srv.SendStatusResponse(cb.Status_SUCCESS); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/12/fabric-source-orderer-deliver/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1228,20 +1242,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

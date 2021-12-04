@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://simplexity.cn/2019/06/25/understanding-ethereum/</loc>
+    
+    <lastmod>2021-12-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/06/12/ethereum-design-rationale/</loc>
+    
+    <lastmod>2021-12-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/11/14/understanding-bitcoin/</loc>
+    
+    <lastmod>2021-12-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2021/12/04/suptech-data-collection/</loc>
+    
+    <lastmod>2021-12-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2021/06/29/bigdata-data-governance/</loc>
+    
+    <lastmod>2021-12-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/2020/10/20/mpc-terminology/</loc>
     
     <lastmod>2021-10-13</lastmod>
@@ -30,13 +65,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2021/06/29/bigdata-data-governance/</loc>
-    
-    <lastmod>2021-07-28</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/</loc>
     
     <lastmod>2021-02-09</lastmod>
@@ -47,13 +75,6 @@
     <loc>https://simplexity.cn/2020/11/19/authorization-in-smart-contract/</loc>
     
     <lastmod>2021-02-08</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/06/25/understanding-ethereum/</loc>
-    
-    <lastmod>2020-11-23</lastmod>
     
   </url>
   
@@ -128,6 +149,20 @@
   </url>
   
   <url>
+    <loc>https://simplexity.cn/2019/07/01/thunderchain-cross-chain/</loc>
+    
+    <lastmod>2020-10-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/</loc>
+    
+    <lastmod>2020-10-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/2019/02/23/fabric-tutorial-learning/</loc>
     
     <lastmod>2020-10-28</lastmod>
@@ -142,28 +177,7 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/07/01/thunderchain-cross-chain/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/11/14/understanding-bitcoin/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/</loc>
+    <loc>https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -184,21 +198,7 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/</loc>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -212,7 +212,21 @@
   </url>
   
   <url>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/</loc>
+    
+    <lastmod>2020-10-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/</loc>
+    
+    <lastmod>2020-10-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -233,6 +247,13 @@
   </url>
   
   <url>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
+    
+    <lastmod>2020-10-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/</loc>
     
     <lastmod>2020-10-28</lastmod>
@@ -247,14 +268,14 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
+    <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
+    <loc>https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -275,28 +296,7 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/06/12/ethereum-design-rationale/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -317,6 +317,13 @@
   </url>
   
   <url>
+    <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
+    
+    <lastmod>2020-10-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/</loc>
     
     <lastmod>2020-10-28</lastmod>
@@ -324,7 +331,7 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
+    <loc>https://simplexity.cn/2019/07/08/consensus-pos/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -338,7 +345,7 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2019/07/08/consensus-pos/</loc>
+    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
@@ -347,7 +354,7 @@
 
   <url>
     <loc>https://simplexity.cn/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -355,98 +362,105 @@
   
   <url>
     <loc>https://simplexity.cn/tags/Smart-Contract/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Data-Governance/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Blockchain/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Consensus/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/DID/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Ethereum/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Hyperledger-Fabric/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Chaincode/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Cryptography/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Go/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/MPC/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/Bitcoin/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/tags/BlockChain/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/tags/Suptech/</loc>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -455,42 +469,35 @@
   
   <url>
     <loc>https://simplexity.cn/categories/Big-Data/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/categories/Consensus-Cryptography/</loc>
-    <lastmod>2021-12-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/categories/Ethereum/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/categories/Hyperledger-Fabric/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://simplexity.cn/categories/Blockchain/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://simplexity.cn/categories/Bitcoin/</loc>
-    <lastmod>2021-12-03</lastmod>
+    <loc>https://simplexity.cn/categories/Suptech/</loc>
+    <lastmod>2021-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

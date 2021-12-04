@@ -121,17 +121,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">15</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,94 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(4）chaincode容器启动及注册</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-24 23:37:19" itemprop="dateCreated datePublished" datetime="2019-02-24T23:37:19+08:00">2019-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string&#123;&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address=%s&quot;, c.PeerAddress)&#125;</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
+<pre><code class="lang-go">util.DockerBuildOptions&#123;
+  Cmd:          fmt.Sprintf(&quot;GOPATH=/chaincode/input:$GOPATH go build -tags \&quot;%s\&quot; %s -o /chaincode/output/chaincode %s&quot;, gotags, ldflagsOpt, pkgname),
+  InputStream:  codepackage,
+  OutputStream: binpackage,
+&#125;
+</code></pre>
+<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>$&#123;CC_SRC_PATH&#125;</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH=&quot;github.com/chaincode/chaincode_example02/go/&quot;</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -677,20 +765,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
