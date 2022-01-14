@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2020/10/20/mpc-terminology/</loc>
+    <lastmod>2022-01-14</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2021/12/04/suptech-data-collection/</loc>
     <lastmod>2021-12-15</lastmod>
   </url>
@@ -19,10 +23,6 @@
   <url>
     <loc>https://simplexity.cn/2021/06/29/bigdata-data-governance/</loc>
     <lastmod>2021-12-04</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2020/10/20/mpc-terminology/</loc>
-    <lastmod>2021-10-13</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn/2021/07/12/bigdata-metadata-governance/</loc>
