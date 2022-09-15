@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,100 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/10/20/mpc-terminology/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/20/mpc-terminology/" class="post-title-link" itemprop="url">安全多方计算MPC的若干个概念</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-20 15:20:52" itemprop="dateCreated datePublished" datetime="2020-10-20T15:20:52+08:00">2020-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-14 10:21:58" itemprop="dateModified" datetime="2022-01-14T10:21:58+08:00">2022-01-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>安全多方计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。</p>
+<p>参考资料：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://securecomputation.org/">A Pragmatic Introduction to Secure Multi-Party Computation</a></p>
+</blockquote>
+<h3 id="1-不经意传输（OT，Oblivious-Transfer）"><a href="#1-不经意传输（OT，Oblivious-Transfer）" class="headerlink" title="1. 不经意传输（OT，Oblivious Transfer）"></a>1. 不经意传输（OT，Oblivious Transfer）</h3><p><strong>目标如下</strong>：</p>
+<ol>
+<li>Sender提供可选参数(m0, m1)，但是不知道Receiver具体选择哪个。</li>
+<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值。例如，选择m0后，无法得知m1的值。<br><img src="/images/mpc-ot.jpg" alt=""></li>
+</ol>
+<div style='display: none'>
+1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
+1. Sender拥有两个消息，分别为m0, m1,并且生成两对密钥对（pub0, pri0）和（pub1, pri1）
+2. Receiver随机生成对称密钥k，以Receiver选择消息m0为例，用公钥pub0加密k，得到k0和k1，返回给Sender。
+3. Sender使用私钥（pri0，pri1）分别解密（k0，k1），得到（k0', k1'）。此时，Sender无法得知具体选择了哪个，满足条件（1）。对Receiver而言，其中k0'=k，k1'则是一串不明字符串。
+4. Sender使用对称密钥k0'和k1'分别对m0, m1加密，得到m0'， m1'，并回传给Receiver。
+5. Receiver可以用k对m0'解密，得到m0。另外，m1'则是不可解，满足条件（2）。
+</div>
+
+<p>参考资料：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/126396795">混淆电路介绍（一）不经意传输</a><br><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/20/mpc-terminology/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -943,88 +1037,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/14/blockchain-performance-scaleup-concern/" class="post-title-link" itemprop="url">Blockchain性能扩容（1）- (Size, Segwit, Sidechain)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-14 16:59:39" itemprop="dateCreated datePublished" datetime="2019-07-14T16:59:39+08:00">2019-07-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="区块大小扩容-Block-size"><a href="#区块大小扩容-Block-size" class="headerlink" title="区块大小扩容(Block size)"></a>区块大小扩容(Block size)</h3><p>比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。</p>
-<h4 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h4><ol>
-<li>提高TPS</li>
-<li>更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）</li>
-</ol>
-<h4 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h4><ol>
-<li>节点性能要求增高准入门槛提高，导致网络全节点数量减少，挖矿中心化趋势</li>
-<li>升级配置带来的硬分叉风险</li>
-<li>区块全网同步时间增加，上一个区块的矿工周围节点比网络边缘节点（相对的）更早同步更早开始挖矿，中心化趋势。同时出块时间保持不变的前提下（同步时间占区块时间比重上升），会增加分叉，孤块（stale block）的可能性，以及增加交易回滚，双花等风险。类似的，减小区块时间提高出块速度也面临这个问题。</li>
-<li>存在其他的性能提升替代方案，如隔离见证，侧链等</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/14/blockchain-performance-scaleup-concern/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1096,7 +1108,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

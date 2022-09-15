@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,88 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(5）system chaincode的初始化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-24 23:41:52" itemprop="dateCreated datePublished" datetime="2019-02-24T23:41:52+08:00">2019-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>接下来分析lscc的执行过程，在这之前，先看下其初始化注册过程。在<code>peer/node/start.go#Serve</code>里<code>registerChaincodeSupport(ccSrv, ccEndpoint, ca, aclProvider)</code>。进入方法，主要是<code>scc.CreateSysCCs(ccp, sccp, aclProvider)</code>，就是引入了<code>scc/importsysccs.go#builtInSystemChaincodes</code>里定义的SCC,即<code>cscc</code>,<code>lscc</code>和<code>gscc</code>（包含chaincode的Name，Path代码地址，Chaincode对象，acl，policy等）。然后逐个执行<code>sccp.RegisterSysCC(cc)</code>注册SCC,实际上就是加入<code>SystemChaincodeProvider.Registrar.typeRegistry</code>（map[string]*inprocContainer）里，key是chaincode的Name，这个后面初始化时候会使用到。</p>
+<p>这里完成注册后，在<code>serve()</code>里稍后的位置执行<code>sccp.DeploySysCCs(&quot;&quot;, ccp)</code>进行部署。第一个参数是channelId为“”，说明这些scc是chainless的，可以供所有的channel使用。进入方法，首先构造cds<code>&amp;pb.ChaincodeDeploymentSpec&#123;ExecEnv: pb.ChaincodeDeploymentSpec_SYSTEM, ChaincodeSpec: spec&#125;</code>.这里注意到，部署类型是ChaincodeDeploymentSpec_SYSTEM，回顾上节acc类型是ChaincodeDeploymentSpec_DOCKER，说明SCC是部署在peer内的，而acc是部署在另外新的chaincode docker容器里。然后执行<code>ccprov.Execute(ctxt, cccid, chaincodeDeploymentSpec)</code>,最终实际上又回到前面介绍过的<code>ChaincodeSupport.Execute</code>方法上。后面的执行与acc是一致的，所区别的在于launch。区别于acc使用的是<code>dockercontroller/DockerVM#start</code>,scc使用的是<code>inproccontroller.InprocVM#start</code>.首先<code>vm.registry.typeRegistry[path]</code>,这个在前面已经注册了可以获取出来。然后开始真正的launch。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -765,7 +847,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

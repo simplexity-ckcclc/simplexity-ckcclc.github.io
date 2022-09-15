@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,88 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2022/09/15/whats-new-in-wasm-2-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/15/whats-new-in-wasm-2-0/" class="post-title-link" itemprop="url">WebAssembly 2.0新特性</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-09-15 16:20:13 / Modified: 18:08:17" itemprop="dateCreated datePublished" datetime="2022-09-15T16:20:13+08:00">2022-09-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官网： <a target="_blank" rel="noopener" href="https://webassembly.github.io/spec/core/appendix/changes.html#change-history">Change History</a></p>
+<ol>
+<li><p>Multiple values</p>
+<ul>
+<li><em>Function types allow more than one result</em><br>  适配go语言等函数多返回值的特性。</li>
+<li><em>Block types can be arbitrary function types</em><br>  控制块带参数，适配C语言等内联函数的展开。Wasm1.0里调用内联函数使用的是<code>call</code>指令。</li>
+</ul>
+</li>
+<li><p>Reference types</p>
+<ul>
+<li><em>Added <code>funcref</code> and <code>externref</code> as new value types and respective</em>： 表元素增加新类型<blockquote>
+<p><code>externref</code> allows modules to hold references to objects provided by the host environment; in other words, you can pass a JavaScript object to your .wasm module. The .wasm module can’t really do much with the object via the type. What’s more important is that the module is holding a reference to a garbage collected object on the JavaScript heap. 持有外部引用，为将来wasm引入GC准备。 参看<a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/what-is-webassembly/9781492076902/ch04.html">Upcoming Features and Proposals</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Bulk memory </p>
+<ul>
+<li><em>New memory instructions: memory.fill, memory.init, memory.copy, data.drop</em><br>对应C里的memcpy, memmove等，目的提高处理大块内存的性能。Wasm1.0里使用<code>load</code>,<code>store</code>指令操作内存，只能处理基本类型的数值。</li>
+</ul>
+</li>
+<li><p>Multiple table<br><em>TBD</em></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -478,7 +560,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-28 09:14:25" itemprop="dateModified" datetime="2021-07-28T09:14:25+08:00">2021-07-28</time>
+                <time title="Modified: 2022-09-15 16:44:53" itemprop="dateModified" datetime="2022-09-15T16:44:53+08:00">2022-09-15</time>
               </span>
 
           
@@ -492,15 +574,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          胡思乱想，天马行空。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/21/sc-in-e-commerce/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1.    背景"></a>1.    背景</h2><p>当前，电商平台成为大众消费的重要平台，每年的销售额都稳步上升，在社会经济方面占据了举足轻重的作用。一方面，电商给大众提供了消费便利；另一方面，正是由于其涉及人数广，资金总量高，因此，规范电商的合理合法运营关乎国泰民安。然而，尽管电商发展了十余年，其暴露出来的问题依然存在，例如假冒伪劣产品，电商平台欺诈消费，大数据杀熟等，一直是悬在电商头顶的达摩克利斯之剑。</p>
+<h2 id="2-方案设计"><a href="#2-方案设计" class="headerlink" title="2.    方案设计"></a>2.    方案设计</h2><h3 id="2-1-电商7天无理由退款"><a href="#2-1-电商7天无理由退款" class="headerlink" title="2.1    电商7天无理由退款"></a>2.1    电商7天无理由退款</h3><p>7天无理由退款，付款后该笔支付款托管在指定的有资质的金融机构，例如银行进行托管。对于这些托管资金的监控，避免被挪作它用，一直也是监管部门的重要课题。使用智能合约，则此部分支付款可以直接被锁定，7天后才正式到账。</p>
+<h3 id="2-2-保价"><a href="#2-2-保价" class="headerlink" title="2.2    保价"></a>2.2    保价</h3><h4 id="2-2-1-背景及痛点"><a href="#2-2-1-背景及痛点" class="headerlink" title="2.2.1 背景及痛点"></a>2.2.1 背景及痛点</h4><p>电商平台每年的双十一由于商家让利打折，销售额逐年上涨。但是，尽管商家和电商平台作出出双十一保价的承诺，来自消费者的关于双十一前先涨价后降价，双十一后肆意/变相降价的投诉层出不穷。然而，此类投诉由于维权流程复杂，维权成本高，并且需要用户主动查看才能发现价格差异，导致大量用户放弃/无法维权，实际上是变相欺诈和损失。</p>
+<h4 id="2-2-2-保价方案"><a href="#2-2-2-保价方案" class="headerlink" title="2.2.2 保价方案"></a>2.2.2 保价方案</h4><ol>
+<li>商家签署具有法律效力的合同，作出保价承诺，例如，承诺双十一是前后一个月内的最低价。</li>
+<li>采用智能合约，记录每个参加双十一保价商品（以商品条形码号等标识）前后一个月（10/11-12/11）的最低价。当买家支付商品，如果该售出价格是最新的最低价，则自动更新到智能合约里。</li>
+<li>双十一保价当天买家付款，记录每个买家的付款金额和付款钱包地址。</li>
+<li>如果双十一当天的付款比前一个月的高，则买家付款时自动以前一个之内的最低价转账到商家钱包。</li>
+<li>如果后续一个月内在更新智能合约最低价时检测到付款最低价比双十一保价当天低，则执行智能合约里的锁定退差价逻辑。例如，双十一当天，买家购买商品，从钱包Wal_Buyer里转出100元到商户的Wal_Seller。但是二十天后，商户以更低的价格例如80元售出同样的商品给另一位买家，则智能合约自动触发一笔转账交易，从Wal_Seller转账20元到Wal_Buyer。此笔转账会锁定7天后执行，在7天内商户可以对这笔低价交易作出解释。此处可以有两种方案。</li>
+</ol>
+<ul>
+<li>方案一：中心化。向平台解释申诉，需要电商平台审核，例如该件商品是残次品降价出售，如果平台判断降价原因合理则审核通过，这笔转账取消。</li>
+<li>方案二：去中心化。需要向双十一当前购买的各买家解释申诉，例如通过电商APP推送，买家决定是否接受解释，如果5天内买家没有审核则默认接受。如果超过1/3买家拒绝接受，则审核不通过。如果7天之内无法审核通过，则之前锁定的退款自动执行。买家无需关注实时价格和操作。</li>
+</ul>
+<ol>
+<li>如果从Wal_Seller到Wal_Buyer的退款时，Wal_Seller没有足够的资金，则商家需要在指定期限内对其进行充值完成退款行为，否则智能合约禁止该商家通过该平台上接受购买商品的转账，即后续的用户购买转账行为失败，也就意味着无法在该电商平台继续营业。并且，电商平台可以联动下调该商家的信用分。</li>
+<li>对于上述残次品打折等合理理由，可以在降价前向平台申请审核，平台通过后，允许以更低的价格出售，智能合约能作出判断不会触发退款。平台需要在该商品页明确标明该商品的降价理由等。</li>
+</ol>
+<h3 id="2-3-缺货商品到货自动购买"><a href="#2-3-缺货商品到货自动购买" class="headerlink" title="2.3    缺货商品到货自动购买"></a>2.3    缺货商品到货自动购买</h3><h4 id="2-3-1-背景"><a href="#2-3-1-背景" class="headerlink" title="2.3.1 背景"></a>2.3.1 背景</h4><p>对于无差别商品，例如疫情刚爆发期间各电商的口罩断供，电商平台上显示商品缺货，提供了到货通知功能。但是该功能仍然需要用户进行二次操作。对于必须商品，可以考虑使用智能合约自动完成购买。</p>
+<h4 id="2-3-2-方案"><a href="#2-3-2-方案" class="headerlink" title="2.3.2 方案"></a>2.3.2 方案</h4><ol>
+<li>买家对该缺货商品直接付款购买,购买后智能合约会锁定该笔资金。实际交易成交前买家可以随时取消，对该笔资金解锁。</li>
+<li>商品到货后，自动触发智能合约，完成上述锁定资金从买家账户转移到商家账户（对于目前的7天无理由退换则相应延长锁定/转账到账时间），然后商家发货。</li>
+<li>如果由于成本或者供需关系变化等原因，造成在下单预付款与最终商品到货后的价格有差异，则按照多退少补的原则处理。如果实际价格上涨，则需要买家在指定时间内补全差价；如果下跌，则实际转账金额相对锁定金额降低，多余部分解锁后仍然属于买家。</li>
+</ol>
+<h3 id="2-4-交易撮合"><a href="#2-4-交易撮合" class="headerlink" title="2.4    交易撮合"></a>2.4    交易撮合</h3><h4 id="2-4-1-背景"><a href="#2-4-1-背景" class="headerlink" title="2.4.1 背景"></a>2.4.1 背景</h4><p>对于季节性商品，例如品牌潮流服装等，商家在季末有打折清仓的需求。对于价格敏感而对时间要求不敏感的买家，有以相对低价买到高品质的商品的需求。</p>
+<h4 id="2-4-2-方案"><a href="#2-4-2-方案" class="headerlink" title="2.4.2 方案"></a>2.4.2 方案</h4><ol>
+<li>在季末前，买家预计商家会进行打折清仓，以低于当前的价格去预定商品。例如，该商品当前为1000元，买家A以900元的价格预定，买家B以850元预定。智能合约会记录用户提交的价格。</li>
+<li>商家打折清仓，将商品降价出售，例如将商品的最低价设置为800元，提交给智能合约。合约以合以价格优先，时间优先的原则撮合交易，在这个例子里以900元的价格与买家A达成交易。</li>
+<li>买家A仍然拥有短暂的响应期，如果买家A决定放弃购买商品，那仍然可以取消订单，当前商品继续按照原则进行下一个交易撮合。</li>
+<li>买家预付款锁定资金，相当于承担这部分的资金占用成本损失，特别是对于买家B，因为出价低最后没有达成交易。这里需要假设买家都是理性的，在下单前充分比较过预期收益和损失。为进一步缩短锁定期，电商平台可以组织类似于双十一的“换季清仓节”，提前预告，组织商户。买家提前一天预付款锁定价格，商家在当天公布价格。这样将资金锁定期尽可能的缩短。</li>
+<li>为了防止商家和平台联合作弊，事先得知用户出价然后相应的设定售价，或者买家事先知道其他买家的出价而相应的设定自身的出价。可以借助零知识证明，智能合约里隐藏买家实际出价，各参与方无法得知他人出价。智能合约里只需要进行价格的数值大小相互比价即可按照原则成功选择合适的买家。</li>
+</ol>
+
       
     </div>
 
@@ -922,100 +1028,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/10/20/mpc-terminology/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/20/mpc-terminology/" class="post-title-link" itemprop="url">安全多方计算MPC的若干个概念</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-10-20 15:20:52" itemprop="dateCreated datePublished" datetime="2020-10-20T15:20:52+08:00">2020-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-14 10:21:58" itemprop="dateModified" datetime="2022-01-14T10:21:58+08:00">2022-01-14</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>安全多方计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。</p>
-<p>参考资料：</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://securecomputation.org/">A Pragmatic Introduction to Secure Multi-Party Computation</a></p>
-</blockquote>
-<h3 id="1-不经意传输（OT，Oblivious-Transfer）"><a href="#1-不经意传输（OT，Oblivious-Transfer）" class="headerlink" title="1. 不经意传输（OT，Oblivious Transfer）"></a>1. 不经意传输（OT，Oblivious Transfer）</h3><p><strong>目标如下</strong>：</p>
-<ol>
-<li>Sender提供可选参数(m0, m1)，但是不知道Receiver具体选择哪个。</li>
-<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值。例如，选择m0后，无法得知m1的值。<br><img src="/images/mpc-ot.jpg" alt=""></li>
-</ol>
-<div style='display: none'>
-1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
-1. Sender拥有两个消息，分别为m0, m1,并且生成两对密钥对（pub0, pri0）和（pub1, pri1）
-2. Receiver随机生成对称密钥k，以Receiver选择消息m0为例，用公钥pub0加密k，得到k0和k1，返回给Sender。
-3. Sender使用私钥（pri0，pri1）分别解密（k0，k1），得到（k0', k1'）。此时，Sender无法得知具体选择了哪个，满足条件（1）。对Receiver而言，其中k0'=k，k1'则是一串不明字符串。
-4. Sender使用对称密钥k0'和k1'分别对m0, m1加密，得到m0'， m1'，并回传给Receiver。
-5. Receiver可以用k对m0'解密，得到m0。另外，m1'则是不可解，满足条件（2）。
-</div>
-
-<p>参考资料：</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/126396795">混淆电路介绍（一）不经意传输</a><br><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/20/mpc-terminology/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1087,7 +1099,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

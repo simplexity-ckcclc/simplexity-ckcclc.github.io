@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,88 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/14/blockchain-performance-scaleup-concern/" class="post-title-link" itemprop="url">Blockchain性能扩容（1）- (Size, Segwit, Sidechain)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-14 16:59:39" itemprop="dateCreated datePublished" datetime="2019-07-14T16:59:39+08:00">2019-07-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="区块大小扩容-Block-size"><a href="#区块大小扩容-Block-size" class="headerlink" title="区块大小扩容(Block size)"></a>区块大小扩容(Block size)</h3><p>比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。</p>
+<h4 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h4><ol>
+<li>提高TPS</li>
+<li>更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）</li>
+</ol>
+<h4 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h4><ol>
+<li>节点性能要求增高准入门槛提高，导致网络全节点数量减少，挖矿中心化趋势</li>
+<li>升级配置带来的硬分叉风险</li>
+<li>区块全网同步时间增加，上一个区块的矿工周围节点比网络边缘节点（相对的）更早同步更早开始挖矿，中心化趋势。同时出块时间保持不变的前提下（同步时间占区块时间比重上升），会增加分叉，孤块（stale block）的可能性，以及增加交易回滚，双花等风险。类似的，减小区块时间提高出块速度也面临这个问题。</li>
+<li>存在其他的性能提升替代方案，如隔离见证，侧链等</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/14/blockchain-performance-scaleup-concern/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1089,88 +1171,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/20/fabric-source-deliver-peer-to-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-20 16:11:09" itemprop="dateCreated datePublished" datetime="2019-03-20T16:11:09+08:00">2019-03-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>peer端的gossip和deliver是紧密结合的。在fabric的结构中，存在leader peer节点，负责与orderer交互，通过deliver服务从orderer得到block。然后通过gossip服务扩散到其他的普通peer，从而达到全网同步。这里先介绍deliver服务。</p>
-<p>从前文<a href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">orderer的deliver过程</a>可知，deliver的grpc服务是”/orderer.AtomicBroadcast/Deliver”,在源码中搜索并且一路回溯到方法<code>peer/node/start.go#serve</code>，这个方法是执行命令<code>peer node start</code>时的执行。（这里先介绍的当前peer重启的情况，新建立channel的情况后面介绍）。然后执行到<code>core/peer/peer.go:Initialize</code>，这里面执行<code>ledgermgmt.Initialize(ConfigTxProcessors)</code>恢复历史账本。然后从这些历史账本信息可以获取到ledgerId（即channelId）。然后对每个channel加载账本，并且从账本中获取最新的ConfigBlock，然后调用<code>createChain</code>重新构造channel信息。在<code>core/peer/peer.go:createChain</code>这个方法里，也是从ledger里获取到配置信息，从而得到orderer地址<code>ordererAddresses :=  bundle.ChannelConfig().OrdererAddresses()</code>,然后调用<code>service.GetGossipService().InitializeChannel</code>。在<code>gossip/service/gossip_service.go:InitializeChannel</code>里，启动deliver服务需要经过判断是否节点是leader peer，即<code>peer.gossip.useLeaderElection</code>（通过选举的方式动态决定leader peer）和<code>peer.gossip.orgLeader</code>（静态指定当前peer为leader peer），这两种方式是互斥的。前面提到过，只有leader才与orderer进行交互，如果不是，则返回，无需继续往下启动deliver服务。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Parameters:</span></span><br><span class="line"><span class="comment">//      - peer.gossip.useLeaderElection</span></span><br><span class="line"><span class="comment">//      - peer.gossip.orgLeader</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// are mutual exclusive, setting both to true is not defined, hence peer will panic and terminate</span></span><br><span class="line">leaderElection := viper.GetBool(<span class="string">&quot;peer.gossip.useLeaderElection&quot;</span>)</span><br><span class="line">isStaticOrgLeader := viper.GetBool(<span class="string">&quot;peer.gossip.orgLeader&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &amp;&amp; isStaticOrgLeader &#123;</span><br><span class="line">    logger.Panic(<span class="string">&quot;Setting both orgLeader and useLeaderElection to true isn&#x27;t supported, aborting execution&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &#123;</span><br><span class="line">    logger.Debug(<span class="string">&quot;Delivery uses dynamic leader election mechanism, channel&quot;</span>, chainID)</span><br><span class="line">    g.leaderElection[chainID] = g.newLeaderElectionComponent(chainID, g.onStatusChangeFactory(chainID, support.Committer))</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> isStaticOrgLeader &#123;</span><br><span class="line">    logger.Debug(<span class="string">&quot;This peer is configured to connect to ordering service for blocks delivery, channel&quot;</span>, chainID)</span><br><span class="line">    g.deliveryService[chainID].StartDeliverForChannel(chainID, support.Committer, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;&#125;)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    logger.Debug(<span class="string">&quot;This peer is not configured to connect to ordering service for blocks delivery, channel&quot;</span>, chainID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/20/fabric-source-deliver-peer-to-order/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1242,7 +1242,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
