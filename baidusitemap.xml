@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2023/02/06/open-cbdc/</loc>
+    <lastmod>2023-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
+    <lastmod>2023-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/</loc>
+    <lastmod>2023-02-08</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2022/09/15/whats-new-in-wasm-2-0/</loc>
     <lastmod>2022-09-15</lastmod>
   </url>
@@ -39,10 +51,6 @@
   <url>
     <loc>https://simplexity.cn/2021/07/12/bigdata-metadata-governance/</loc>
     <lastmod>2021-09-02</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/</loc>
-    <lastmod>2021-02-09</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn/2020/11/19/authorization-in-smart-contract/</loc>
@@ -158,10 +166,6 @@
   </url>
   <url>
     <loc>https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>

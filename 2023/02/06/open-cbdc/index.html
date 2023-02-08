@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="基于OpenCBDC项目（Boston Fed &amp; MIT联合项目，也叫Hamilton项目的）的公开资料：  论文 : A High Performance Payment Processing System Designed for Central Bank Digital Currenciesgithub仓库 : OpenCBDC    设计目标当前阶段1属于研究性质，更多是在于探索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCBDC浅析">
+<meta property="og:url" content="https://simplexity.cn/2023/02/06/open-cbdc/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="基于OpenCBDC项目（Boston Fed &amp; MIT联合项目，也叫Hamilton项目的）的公开资料：  论文 : A High Performance Payment Processing System Designed for Central Bank Digital Currenciesgithub仓库 : OpenCBDC    设计目标当前阶段1属于研究性质，更多是在于探索">
+<meta property="og:locale">
+<meta property="og:image" content="https://simplexity.cn/images/opencbdc/tx-format.jpeg">
+<meta property="og:image" content="https://simplexity.cn/images/opencbdc/compact-tx.jpeg">
+<meta property="article:published_time" content="2023-02-06T08:06:24.000Z">
+<meta property="article:modified_time" content="2023-02-08T10:30:25.423Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="CBDC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://simplexity.cn/images/opencbdc/tx-format.jpeg">
+
+<link rel="canonical" href="https://simplexity.cn/2023/02/06/open-cbdc/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>OpenCBDC浅析 | Simplexity</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2023/02/06/open-cbdc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenCBDC浅析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-06 16:06:24" itemprop="dateCreated datePublished" datetime="2023-02-06T16:06:24+08:00">2023-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-08 18:30:25" itemprop="dateModified" datetime="2023-02-08T18:30:25+08:00">2023-02-08</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>基于OpenCBDC项目（Boston Fed &amp; MIT联合项目，也叫Hamilton项目的）的公开资料：</p>
+<blockquote>
+<p>论文 : <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>github仓库 : <a target="_blank" rel="noopener" href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a>  </p>
+</blockquote>
+<h3 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h3><p>当前阶段1属于研究性质，更多是在于探索技术上的可能性，并不是一个即插即用的成熟方案。设计目标着眼于性能以及容错，同时保留足够的灵活性（不限定发行的方式，支持中央银行直接零售发行，也支持类似于数字人民币的批发-零售双层运营模式）。同时，对于其他的课题，例如隐私保护，风控，合规，监管，商业化等也没有深入讨论。（对于隐私保护，论文里提到最安全方式就是从交易源头开始尽可能的少收集数据，这个也在阶段1的设计考虑中。<em>当然，隐私保护与监管风控的目标在一定程度上是对立的。</em>）这些问题会在阶段2里阐述。</p>
+<h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><ol>
+<li>UTXO模型。用户持有数字钱包，使用私钥签名的方式来消费。</li>
+<li>分层解耦。将交易的合法性验证和资金的存在性验证分离，只有合法性验证才需要交易的细节信息，最小化交易处理核心层的存储（不涉及用户个人信息等）。核心层简单的只做纯粹的资金交易（UTXO的生成和销毁），保证稳定性和性能。货币的扩展功能做在外层。</li>
+<li>基于UHS(Unspent funds Hash Set)和类似比特币交易的数据结构。兼容未来譬如类似地添加锁定脚本等，而无需修改UHS交易核心层的前提下实现扩展功能。</li>
+</ol>
+<span id="more"></span>
+<h3 id="账户模型-VS-UTXO模型"><a href="#账户模型-VS-UTXO模型" class="headerlink" title="账户模型 VS. UTXO模型"></a>账户模型 VS. UTXO模型</h3><ol>
+<li>UTXO有更好的执行并行度，账户模型需要锁定账户。OpenCBDC选择UTXO模型。</li>
+<li>账户模型更具易编程性。</li>
+<li><code>Account banlances are more fungible, which is an important property for money.</code></li>
+<li><code>It might be useful to consider an account balance data model which minimizes the amount of data stored in the transaction processor in the future.</code> 未来可能尝试对比账户模型</li>
+<li>两种模型都支持账户模型式的用户界面UI。</li>
+</ol>
+<h3 id="UTXO数据结构"><a href="#UTXO数据结构" class="headerlink" title="UTXO数据结构"></a>UTXO数据结构</h3><p><code>utxo := (v,P,sn)</code>    </p>
+<ol>
+<li><code>v</code>: value，金额。</li>
+<li><code>P(tx, wit)</code>: predicate. <code>tx</code>: 消费此UTXO的交易，<code>wit</code>: witness，见证。在支持数字签名的方案里<code>P</code>硬编码pk，并且<code>P</code>校验<code>w</code>包含该pk的签名。在只支持数字签名的方案里，<code>P</code>可以近似等同于<code>pk</code>。</li>
+<li><code>sn</code>: serial number，全局唯一的序列号，用于保证UTXO的唯一性，防止重放双花。<code>our system assigns each UTXO a serial number by deterministically hashing all the corresponding transaction’s inputs, as well as the output UTXO’s encumbrance, value, and its index among all outputs.</code> 铸币的<code>sn</code>选择为均匀分布随机数或者全局单调递增数。</li>
+<li>交易不具有延展性（non-malleable），可参考比特币，防双花。<code>we require signatures to cover all fields of uniquely-encoded transaction and derive UTXO serial numbers from the same fields (plus, output indexes).</code></li>
+</ol>
+<h3 id="交易系统的双层设计"><a href="#交易系统的双层设计" class="headerlink" title="交易系统的双层设计"></a>交易系统的双层设计</h3><ol>
+<li><code>transaction-local validation</code>交易合法性验证。主要校验数据结构，输入输出金额相等，签名等。无状态，计算密集型。生成UHS，即cryptographic commitments <code>h := H(v, P, sn)</code>。使用hash值代替交易本身，利用hash碰撞极低概率的特性。</li>
+<li><code>existence validation</code>交易引擎。存储UHS，执行实际的swap操作（UHS的增删，即对应着UTXO的生成销毁）。存储密集型。  </li>
+</ol>
+<p><em>设计关键思考：</em></p>
+<ul>
+<li>按需弹性横向扩容。</li>
+<li>节省存储空间。交易引擎只存储32字节的hash值。</li>
+<li>弹性设计。交易引擎的UHS结构也可以用于账户模型。<code>The UHS makes no assumptions about what hashes represent, and this data structure is not limited to UTXOs; it could be applied to a digital currency with balances or some other application that requires atomi- cally swapping hashes.</code> <em>账户模型下具体如何对应UHS的增删仍然有待观察，一种方式是账户模型下记账关联UTXO，由合法性验证sentinel来拆分合并UTXO</em></li>
+<li>隐私保护及监管审计。交易引擎功能单一，UHS没有包含交易细节。这部分功能放到sentinel等外围系统，或者是使用隐私计算。</li>
+<li>编程性。并发处理下，UTXO相对账户模型具有一定的优势，账户模式需要锁定账户，UTXO锁定的粒度更小。但是，UTXO要实现复杂的智能合约难度更大，需要在后续智能合约触发使用UTXO时知道状态转移链，以及每个状态的UTXO才能构造交易。而账户模型仅仅需要账户标志。</li>
+<li>UTXO的获取。UTXO记录在用户本地，交易完成需要通知收发双发。用户丢失UTXO，或者更换设备UTXO转移失败，都需要恢复。但是当前设计下整个系统没有记录UTXO，需要第三方系统协助。</li>
+</ul>
+<h3 id="交易的数据模型"><a href="#交易的数据模型" class="headerlink" title="交易的数据模型"></a>交易的数据模型</h3><ul>
+<li><p>交易模型。<code>sn := (txid, idx). The first component, txid is the unique trans- action identifier: the cryptographic hash of the Mint or Transfer transaction that created this UTXO. This hash covers all input UTXOs, output encumbrances and values. The second component, idx, is the particular output index, i.e., first, second, etc, output of the transaction.</code></p>
+<div align="center" style="width:50%;margin:auto">
+  <img src="/images/opencbdc/tx-format.jpeg"></img>
+</div>
+</li>
+<li><p>交易引擎的存储及原子性处理<br><img src="/images/opencbdc/compact-tx.jpeg" alt=""></p>
+</li>
+</ul>
+<h3 id="使用及交互场景"><a href="#使用及交互场景" class="headerlink" title="使用及交互场景"></a>使用及交互场景</h3><ol>
+<li>交互场景收发双方需要协商，发送方需要得到接收方的pk。接收者需要收到output utxo，并且确认这笔transfer交易成功，否则这笔资金有可能无法被使用。<code>The recipient should not consider a payment “com- plete” until they have received both a confirmation from the transaction processor and the full preimage data for their new outputs.</code></li>
+<li>非交互的交易场景，例如扫描静态二维码慈善捐款场景，交易系统先存储这些output，接收方后续查询。需要系统存储pk和utxo的对应关系，交易间的关系容易被追踪，有隐私泄露的隐患。  </li>
+</ol>
+<p><em>交易系统确认方式</em></p>
+<ul>
+<li>交易执行成功后，交易系统对结果签名，返回发送方。发送方直接中继给接收方确认。</li>
+<li>构造交易时，交易结构增加<code>callback endpoint</code>。交易系统执行成功后，回调此endpoint通知接收方。此方案依赖于callback endpoint的可用性，暂时不可用时需要支持降级查询功能，增加了系统的存储需求，也就记录交易主体和交易本身的关联关系。<em>本方案里很关注隐私保护的考虑，也就是尽可能的减少交易可被追踪的可能性。此确认方式有所冲突</em>。</li>
+</ul>
+<p><em>交易方式局限性</em><br>当前 <strong>无法</strong> 支持由收款方主动发起，因为构造交易需要指定input utxo并且签名，在缺少发送方知识的情况下，难以构造合法交易。<em>账户模式比较容易实现。</em></p>
+<h3 id="交易系统设计"><a href="#交易系统设计" class="headerlink" title="交易系统设计"></a>交易系统设计</h3><h4 id="1-全局有序方案"><a href="#1-全局有序方案" class="headerlink" title="1. 全局有序方案"></a>1. 全局有序方案</h4><p><strong><em>TBD</em></strong></p>
+<h4 id="2-两阶段提交方案"><a href="#2-两阶段提交方案" class="headerlink" title="2. 两阶段提交方案"></a>2. 两阶段提交方案</h4><p><strong><em>TBD</em></strong></p>
+<h3 id="未来的工作"><a href="#未来的工作" class="headerlink" title="未来的工作"></a>未来的工作</h3><ol>
+<li>隐私保护，费用，风控，合规</li>
+<li>中间机构（例如商业银行）的作用</li>
+<li>离线支付</li>
+<li>防止DoS攻击</li>
+<li>丰富使用场景，提升用户体验。收发双方确保交易完成和隐私保护间的平衡</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CBDC/" rel="tag"># CBDC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/15/whats-new-in-wasm-2-0/" rel="prev" title="WebAssembly 2.0新特性">
+      <i class="fa fa-chevron-left"></i> WebAssembly 2.0新特性
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text">设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A6%E6%88%B7%E6%A8%A1%E5%9E%8B-VS-UTXO%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">账户模型 VS. UTXO模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTXO%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">UTXO数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%8C%E5%B1%82%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">交易系统的双层设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">交易的数据模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF"><span class="nav-number">7.</span> <span class="nav-text">使用及交互场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.</span> <span class="nav-text">交易系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%A8%E5%B1%80%E6%9C%89%E5%BA%8F%E6%96%B9%E6%A1%88"><span class="nav-number">8.1.</span> <span class="nav-text">1. 全局有序方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%96%B9%E6%A1%88"><span class="nav-number">8.2.</span> <span class="nav-text">2. 两阶段提交方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">未来的工作</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-anchor"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '12eedb094a3054014378',
+      clientSecret: '09b3a91649010e98bb45af1c7bba1b490d42f458',
+      repo        : 'simplexity-gitalk',
+      owner       : 'simplexity-ckcclc',
+      admin       : ['simplexity-ckcclc'],
+      id          : '6fc6c48e1ff523ad2f9cff6d7cda7517',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
