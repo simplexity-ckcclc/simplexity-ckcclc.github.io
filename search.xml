@@ -36,22 +36,21 @@
 <ul>
 <li>按需弹性横向扩容。</li>
 <li>节省存储空间。交易引擎只存储32字节的hash值。</li>
-<li>弹性设计。交易引擎的UHS结构也可以用于账户模型。<code>The UHS makes no assumptions about what hashes represent, and this data structure is not limited to UTXOs; it could be applied to a digital currency with balances or some other application that requires atomi- cally swapping hashes.</code> <em>账户模型下具体如何对应UHS的增删仍然有待观察，一种方式是账户模型下记账关联UTXO，由合法性验证sentinel来拆分合并UTXO</em></li>
+<li>弹性设计。交易引擎的UHS结构也可以用于账户模型。<code>The UHS makes no assumptions about what hashes represent, and this data structure is not limited to UTXOs; it could be applied to a digital currency with balances or some other application that requires atomically swapping hashes.</code> <em>账户模型下具体如何对应UHS的增删仍然有待观察，一种方式是账户模型下记账关联UTXO，由合法性验证sentinel来拆分合并UTXO</em></li>
 <li>隐私保护及监管审计。交易引擎功能单一，UHS没有包含交易细节。这部分功能放到sentinel等外围系统，或者是使用隐私计算。</li>
 <li>编程性。并发处理下，UTXO相对账户模型具有一定的优势，账户模式需要锁定账户，UTXO锁定的粒度更小。但是，UTXO要实现复杂的智能合约难度更大，需要在后续智能合约触发使用UTXO时知道状态转移链，以及每个状态的UTXO才能构造交易。而账户模型仅仅需要账户标志。</li>
 <li>UTXO的获取。UTXO记录在用户本地，交易完成需要通知收发双发。用户丢失UTXO，或者更换设备UTXO转移失败，都需要恢复。但是当前设计下整个系统没有记录UTXO，需要第三方系统协助。</li>
 </ul>
-<h3 id="交易的数据模型"><a href="#交易的数据模型" class="headerlink" title="交易的数据模型"></a>交易的数据模型</h3><ul>
-<li><p>交易模型。<code>sn := (txid, idx). The first component, txid is the unique trans- action identifier: the cryptographic hash of the Mint or Transfer transaction that created this UTXO. This hash covers all input UTXOs, output encumbrances and values. The second component, idx, is the particular output index, i.e., first, second, etc, output of the transaction.</code></p>
-<div align="center" style="width:50%;margin:auto">
+<h3 id="交易模型"><a href="#交易模型" class="headerlink" title="交易模型"></a>交易模型</h3><ul>
+<li><p>交易数据结构<br><div align="center" style="width:50%;margin:auto">
   <img src="/images/opencbdc/tx-format.jpeg"></img>
-</div>
+</div><br>  UTXO的序列号<code>sn := (txid, idx). The first component, txid is the unique transaction identifier: the cryptographic hash of the Mint or Transfer transaction that created this UTXO. This hash covers all input UTXOs, output encumbrances and values. The second component, idx, is the particular output index, i.e., first, second, etc, output of the transaction.</code></p>
 </li>
-<li><p>交易引擎的存储及原子性处理<br><img src="/images/opencbdc/compact-tx.jpeg" alt=""></p>
+<li><p>交易引擎的存储及原子性swap处理<br><img src="/images/opencbdc/compact-tx.jpeg" alt=""></p>
 </li>
 </ul>
 <h3 id="使用及交互场景"><a href="#使用及交互场景" class="headerlink" title="使用及交互场景"></a>使用及交互场景</h3><ol>
-<li>交互场景收发双方需要协商，发送方需要得到接收方的pk。接收者需要收到output utxo，并且确认这笔transfer交易成功，否则这笔资金有可能无法被使用。<code>The recipient should not consider a payment “com- plete” until they have received both a confirmation from the transaction processor and the full preimage data for their new outputs.</code></li>
+<li>交互场景收发双方需要协商，发送方需要得到接收方的pk。接收者需要收到output utxo，并且确认这笔transfer交易成功，否则这笔资金有可能无法被使用。<code>The recipient should not consider a payment “complete” until they have received both a confirmation from the transaction processor and the full preimage data for their new outputs.</code></li>
 <li>非交互的交易场景，例如扫描静态二维码慈善捐款场景，交易系统先存储这些output，接收方后续查询。需要系统存储pk和utxo的对应关系，交易间的关系容易被追踪，有隐私泄露的隐患。  </li>
 </ol>
 <p><em>交易系统确认方式</em></p>
@@ -59,7 +58,7 @@
 <li>交易执行成功后，交易系统对结果签名，返回发送方。发送方直接中继给接收方确认。</li>
 <li>构造交易时，交易结构增加<code>callback endpoint</code>。交易系统执行成功后，回调此endpoint通知接收方。此方案依赖于callback endpoint的可用性，暂时不可用时需要支持降级查询功能，增加了系统的存储需求，也就记录交易主体和交易本身的关联关系。<em>本方案里很关注隐私保护的考虑，也就是尽可能的减少交易可被追踪的可能性。此确认方式有所冲突</em>。</li>
 </ul>
-<p><em>交易方式局限性</em><br>当前 <strong>无法</strong> 支持由收款方主动发起，因为构造交易需要指定input utxo并且签名，在缺少发送方知识的情况下，难以构造合法交易。<em>账户模式比较容易实现。</em></p>
+<p><em>交易方式局限性</em><br>当前 <strong>无法</strong> 支持由收款方主动发起，因为构造交易需要指定input utxo并且发送方签名，在缺少发送方的知识和私钥的情况下，难以构造合法交易。<em>账户模式以记账模式比较容易实现。</em></p>
 <h3 id="交易系统设计"><a href="#交易系统设计" class="headerlink" title="交易系统设计"></a>交易系统设计</h3><h4 id="1-全局有序方案"><a href="#1-全局有序方案" class="headerlink" title="1. 全局有序方案"></a>1. 全局有序方案</h4><p><strong><em>TBD</em></strong></p>
 <h4 id="2-两阶段提交方案"><a href="#2-两阶段提交方案" class="headerlink" title="2. 两阶段提交方案"></a>2. 两阶段提交方案</h4><p><strong><em>TBD</em></strong></p>
 <h3 id="未来的工作"><a href="#未来的工作" class="headerlink" title="未来的工作"></a>未来的工作</h3><ol>
