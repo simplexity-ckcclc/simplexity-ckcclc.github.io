@@ -27,10 +27,10 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/opencbdc/tx-format.jpeg">
 <meta property="og:image" content="https://simplexity.cn/images/opencbdc/compact-tx.jpeg">
-<meta property="og:image" content="https://simplexity.cn/images/opencbdc/2pc-architecture.jpeg">
+<meta property="og:image" content="https://simplexity.cn/images/opencbdc/2PC-architecture.jpeg">
 <meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8">
 <meta property="article:published_time" content="2023-02-06T08:06:24.000Z">
-<meta property="article:modified_time" content="2023-02-09T11:24:02.987Z">
+<meta property="article:modified_time" content="2023-02-09T11:29:47.044Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="CBDC">
 <meta name="twitter:card" content="summary">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-09 19:24:02" itemprop="dateModified" datetime="2023-02-09T19:24:02+08:00">2023-02-09</time>
+                <time title="Modified: 2023-02-09 19:29:47" itemprop="dateModified" datetime="2023-02-09T19:29:47+08:00">2023-02-09</time>
               </span>
 
           
@@ -306,7 +306,7 @@
 </ul>
 <p><em>交易方式局限性</em><br>当前 <strong>无法</strong> 支持由收款方主动发起（例如代发工资，划扣生活缴费等场景），因为构造交易需要指定input utxo并且发送方签名，在缺少发送方的知识和私钥的情况下，难以构造合法交易。<em>账户模式以记账模式比较容易实现。</em></p>
 <h3 id="交易系统架构设计"><a href="#交易系统架构设计" class="headerlink" title="交易系统架构设计"></a>交易系统架构设计</h3><h4 id="1-全局有序方案"><a href="#1-全局有序方案" class="headerlink" title="1. 全局有序方案"></a>1. 全局有序方案</h4><p><strong><em>TBD</em></strong></p>
-<h4 id="2-两阶段提交方案"><a href="#2-两阶段提交方案" class="headerlink" title="2. 两阶段提交方案"></a>2. 两阶段提交方案</h4><p><img src="/images/opencbdc/2pc-architecture.jpeg" alt=""></p>
+<h4 id="2-两阶段提交方案"><a href="#2-两阶段提交方案" class="headerlink" title="2. 两阶段提交方案"></a>2. 两阶段提交方案</h4><p><img src="/images/opencbdc/2PC-architecture.jpeg" alt=""></p>
 <ul>
 <li>批量执行。两阶段执行结果是具备确定性的，批量内的交易可能会因为相互冲突导致部分失败。</li>
 <li><p>集群容错。每个组件都使用Raft协议保证数据一致性。</p>
