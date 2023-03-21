@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>OpenCBDC浅析</title>
+    <title>CBDC系列（2） - 数字欧元研究报告（分层架构）浅析</title>
+    <url>/2023/03/21/digital-euro-tiered-model/</url>
+    <content><![CDATA[<p>基于欧央行ECB于2021年7月公开研究报告<a href="https://www.banque-france.fr/sites/default/files/media/2021/08/02/821220_digital_euro_en.pdf">Digital Euro experiment Combined feasibility – Tiered model</a></p>
+<p>欧央行探索数字欧元技术实现可能性，关注记账账本，隐私与反洗钱，流通的限制，终端接入4个方面。从中心化向分布式渐变的方向，总共分为以下4个思路：</p>
+<ol>
+<li><em>scale the existing</em> : 基于当前TIPS（TARGET Instant Payment Settlement，零售快速支付系统），中心化管理</li>
+<li><em>combined feasibility</em> : 中心化系统结合分布式平台（例如分布式账本DLT）</li>
+<li><em>a new solutiion</em> : 基于区块链，固定面额的token价值模型</li>
+<li><em>bearer instrument</em> : 硬件支付设备，支持离线支付</li>
+</ol>
+<p>本方案是思路二 <em>combined feasility</em> 提出的分层架构，第一层是欧元系统运行的中心化账本，由欧央行通过欧元清算系统发行给直参；第二层则是由运营机构分发给直参，间参和个人或者公司等终端用户。这个方案带有试验性质，目的就是为后续的讨论和政策制定提供参考。</p>
+<blockquote>
+<p>TARGET2 :  第二代泛欧实时全额自动清算系统（Trans-European Automated Real-time Gross settlement Express Transfer system）</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
+<li>数字欧元（DC）是欧央行的直接负债。</li>
+<li>二层系统满足互操作性，受监管中介机构（supervised intermediaries, 例如银行）负责面客，在该层为客户开户（基于账户体系）开钱包（基于价值体系）。统一应用编程接口（common API）方便外部接入，保留足够的弹性给将来的业务创新和解决方案。</li>
+</ol>
+<p><img src="/images/digital-euro-tiered-model/two-tiered-model.jpg" alt=""></p>
+<p><img src="/images/digital-euro-tiered-model/composition-of-each-tier.jpg" alt=""></p>
+<h3 id="发行过程"><a href="#发行过程" class="headerlink" title="发行过程"></a>发行过程</h3><ol>
+<li>TIPS在试验方案中临时充当一层系统。中介机构通过在TARGET2/CLM的清算账户向TIPS的清算账户转账。</li>
+<li>TIPS一层系统在相应的中介机构的DC账户生成对应数量的DC（3）。</li>
+<li>中介机构通过报文等通信手段，请求一层系统将其DC账户里的DC转移到二层运营系统的中转账户。（3-&gt;4a）</li>
+<li>二层运营系统与一层系统连通，DC从一层系统里的中转账户转移到二层系统里的发行账户。（4a-&gt;4b）</li>
+<li>二层系统的发行账户转移到二层系统里的中介机构账户。（4b-&gt;5）</li>
+<li>中介机构账户转移到客户账户。（5-&gt;6）</li>
+</ol>
+<h3 id="赎回过程"><a href="#赎回过程" class="headerlink" title="赎回过程"></a>赎回过程</h3><p>与发行镜像。</p>
+<h3 id="交易过程"><a href="#交易过程" class="headerlink" title="交易过程"></a>交易过程</h3><ol>
+<li>两个账户属于同一个运营系统的，则通过二层里的收付双方各自的中介机构的二层账户结算。</li>
+<li>跨运营系统的交易，付款人的DC账户先借记，其中介机构的二层账户贷记。然后该中介机构将DC转移到该二层运营系统的发行账户。然后此中转账户在一层内转移到收款方所在运营系统的中转账户，后续类似于发行过程。（评：引入中介机构账户的转发，从方案描述看，运营系统的发行账户不直接与客户账户发生联系，而必须通过中介机构账户。即使该运营系统的实体同时也是中介机构，也需要通过自身的中介机构账户。此举保证了账户的划分职能的单一性，值得学习）</li>
+</ol>
+<ul>
+<li>总的来看，二层<strong>运营系统</strong>与<strong>中介机构</strong>有一定的区别和独立性，运营系统偏向于技术，中介机构则更多关注业务。</li>
+</ul>
+<h2 id="主要结论"><a href="#主要结论" class="headerlink" title="主要结论"></a>主要结论</h2><h3 id="1-账本选择"><a href="#1-账本选择" class="headerlink" title="1. 账本选择"></a>1. 账本选择</h3><ol>
+<li>欧央行负责发行，从而可以控制发行量和流通量，同时与数字欧元是欧央行的直接负债相符。</li>
+<li>数字欧元通过二层中介机构可以很容易与传统银行账户，商业票据等互换，涉及到中介机构在TARGET2的清算账户和一层DC账户。交易可以满足即时结算，如果是同运营系统则是本地结算，如果是跨系统，则是通过一层账户。</li>
+<li>二层运营系统不预设技术路线，足够弹性，二层可以发展各自的特色业务创新应用，已经采用不同的技术架构以及创新。可以是中心化账本，也可以是联盟链，私有链等分布式账本。</li>
+<li>全局的容错避免单点故障。一层的故障，不影响二层运营系统内的DC继续交易；单个二层运营系统的故障，也只限定在当前系统。</li>
+</ol>
+<h3 id="2-中介机构的角色"><a href="#2-中介机构的角色" class="headerlink" title="2. 中介机构的角色"></a>2. 中介机构的角色</h3><ol>
+<li>二层中介机构负责数字欧元的流通，用户的合规管理（KYC，AML，CFT）。技术上可以将合规规范编程到账户/钱包粒度。</li>
+<li>允许第三方提供账户/钱包增值服务。例如用户授权管理聚合多个账户/钱包，发起交易（钱包体系下管理私钥）。架构里统一的common API，使得第三方应用可以满足一处开发，到处适用，与账户/钱包的具体的归属运营系统无关。</li>
+<li>同时，中介机构可以代表其客户部署智能合约。与第2点提供了两种可编程方案，分别是common API + 第三方服务商，以及smart contract + 二层中介机构。</li>
+</ol>
+<h3 id="3-隐私与合规"><a href="#3-隐私与合规" class="headerlink" title="3. 隐私与合规"></a>3. 隐私与合规</h3><ol>
+<li>隐私合规与余额，交易限额是相关的。有限的AML/KYC机制可以方便非本地居民使用DC，例如基于价值体系的匿名P2P支付交易。</li>
+<li>二层中介机构负责合规管理。在客户开户时，应该要做开户检查，保证用户在二层运营系统里账号/钱包的唯一性（或者是关联钱包等，将新开的账号钱包与用户已有账号关联起来）。这样避免用户通过多开账号来逃避限额，逃税等。这样的信息共享需要使用适当的隐私保护技术，符合GDPR保护条例。</li>
+</ol>
+<h3 id="4-限额"><a href="#4-限额" class="headerlink" title="4. 限额"></a>4. 限额</h3><ol>
+<li>数字欧元可能会导致存款搬家。限制账户余额以及转出交易额是其中一个应对方案。同时也是有助于AML/CFT。</li>
+<li>账户分级，可以针对不同的账户设定差异化的限额。</li>
+<li>账户余额限制可能会导致在收款时超过限额。有两种方案可以解决：</li>
+</ol>
+<ul>
+<li>转账失败，返回错误信息。缺点是当收款人的余额是机密信息时，可能会暴露其隐私。</li>
+<li>DC账户绑定传统银行账户，超出限额部分自动转存到银行账户。缺点是增加结算过程的复杂性。</li>
+</ul>
+<h3 id="5-计息"><a href="#5-计息" class="headerlink" title="5. 计息"></a>5. 计息</h3><ol>
+<li>警惕引入DC可能导致银行系统的去中介化，以及阻碍货币政策的传导。</li>
+<li>对于中介机构而言，如果DC参照支票不计息，则在负利率的时代，中介机构倾向于持有超量的DC来避免存款准备金的负利率影响，从而影响负利率的货币政策传导；如果DC参照存款准备金的负利率政策，则中介机构会避免持有DC，从而导致DC的流动性不足。</li>
+<li>提议的分层计息方案。对中介机构持有的DC设置阈值，低于阈值的部分视为现金不计息，高于阈值的部分视同存款准备金。</li>
+<li>对于终端用户，超过阈值的不计息或者正利率的付息，超过的部分则支付更低的利息，有可能是负利率。</li>
+<li><code>To complement this technical analysis, thorough impact assessments of a digital euro on the transmission of monetary policy should be conducted.</code> 以上仅仅是理论分析，具体的政策还需要深入研究。</li>
+</ol>
+<h3 id="6-可编程性"><a href="#6-可编程性" class="headerlink" title="6. 可编程性"></a>6. 可编程性</h3><ol>
+<li>条件支付：例如DvP, PvP等</li>
+<li>货币的属性可编程： 例如利率，限额，收款方的黑白名单等</li>
+</ol>
+<p>总而言之，这个方案与公布出来的双层运营架构体系的思路很多地方类似，也不预设技术路线。从技术角度看，整个架构的各个角色，账户划分独立清晰，同时也保留最大限度的灵活性。最大的问题，可能还是在于如果处理好跟传统银行账户体系的关系，特别是涉及到计息，存款搬家，机构盈利可持续运营等。</p>
+]]></content>
+      <tags>
+        <tag>CBDC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CBDC系列（1） - OpenCBDC项目浅析</title>
     <url>/2023/02/06/open-cbdc/</url>
-    <content><![CDATA[<p>基于OpenCBDC项目（Boston Fed &amp; MIT联合项目，也叫Hamilton项目的）的公开资料：</p>
+    <content><![CDATA[<p>基于OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）的公开资料：</p>
 <blockquote>
 <p>论文 : <a href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>github仓库 : <a href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a>  </p>
 </blockquote>
@@ -839,7 +918,7 @@
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
-    <title>Fabric 2.0新特性</title>
+    <title>Hyperledger Fabric 2.0新特性</title>
     <url>/2020/04/02/fabric-2-0-new-feature/</url>
     <content><![CDATA[<p>Hyperledger Fabric升级到2.0大版本，主要以下有3个新特性。参看官网<a href="https://hyperledger-fabric.readthedocs.io/en/latest/whatsnew.html">What’s new in Hyperledger Fabric v2.0</a>。同时可以观看IBM员工也是Fabric开发者的系列视频讲座介绍新特性。参看<a href="https://v.qq.com/vplus/6a662f75e9a927ede370ba49c9e883e0#uin=6a662f75e9a927ede370ba49c9e883e0?page=video">超级账本Hyperledger频道</a>（超级账本网络研讨会2020年系列）。总体来说，2.0版本引入的新特性都是在实际应用过程中的痛点，增进了可用性。</p>
 <ol>
