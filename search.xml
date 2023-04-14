@@ -2393,6 +2393,12 @@ func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps .
 <li>货币的属性可编程： 例如利率，限额，收款方的黑白名单等</li>
 </ol>
 <p>总而言之，这个方案与公布出来的双层运营架构体系的思路很多地方类似，也不预设技术路线。从技术角度看，整个架构的各个角色，账户划分独立清晰，同时也保留最大限度的灵活性。最大的问题，可能还是在于如果处理好跟传统银行账户体系的关系，特别是涉及到计息，存款搬家，机构盈利可持续运营等。更多的政策性业务性研究，可以参看ECB在更早期2020年10月公开的研究报告<a href="http://www.zentral-bank.eu/pub/pdf/other/Report_on_a_digital_euro~4d7268b458.en.pdf">Report on a digital euro</a>。此技术研究报告也是基于此的实验报告。</p>
+<ul>
+<li>更多信息<blockquote>
+<p><a href="https://www.ecb.europa.eu/paym/intro/news/html/ecb.mipnews221221.en.html">ECB publishes second progress report on the digital euro investigation phase</a></p>
+</blockquote>
+</li>
+</ul>
 ]]></content>
       <tags>
         <tag>CBDC</tag>
