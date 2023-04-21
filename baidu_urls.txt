@@ -1,4 +1,5 @@
-https://simplexity.cn/2023/04/20/smart-contract-oracle/
+https://simplexity.cn/2023/04/21/sc-event-listener/
+https://simplexity.cn/2023/04/20/sc-oracle/
 https://simplexity.cn/2023/03/21/digital-euro-tiered-model/
 https://simplexity.cn/2023/02/06/open-cbdc/
 https://simplexity.cn/2022/09/15/whats-new-in-wasm-2-0/
@@ -47,4 +48,3 @@ https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-pr
 https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/
 https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/
 https://simplexity.cn/2019/02/23/fabric-tutorial-learning/
-https://simplexity.cn/2019/02/23/foreword/

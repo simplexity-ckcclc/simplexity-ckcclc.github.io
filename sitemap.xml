@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://simplexity.cn/2023/04/20/smart-contract-oracle/</loc>
+    <loc>https://simplexity.cn/2023/04/21/sc-event-listener/</loc>
+    
+    <lastmod>2023-04-21</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/2023/04/20/sc-oracle/</loc>
     
     <lastmod>2023-04-21</lastmod>
     
