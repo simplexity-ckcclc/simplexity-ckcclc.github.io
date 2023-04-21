@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2023/04/20/smart-contract-oracle/</loc>
+    <lastmod>2023-04-21</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2022/09/15/whats-new-in-wasm-2-0/</loc>
+    <lastmod>2023-04-21</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2020/11/04/privacy-on-chain/</loc>
+    <lastmod>2023-04-20</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2021/07/12/bigdata-metadata-governance/</loc>
+    <lastmod>2023-04-19</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2021/06/29/bigdata-data-governance/</loc>
+    <lastmod>2023-04-19</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2023/03/21/digital-euro-tiered-model/</loc>
     <lastmod>2023-04-14</lastmod>
   </url>
@@ -23,10 +43,6 @@
   <url>
     <loc>https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/</loc>
     <lastmod>2023-02-08</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2022/09/15/whats-new-in-wasm-2-0/</loc>
-    <lastmod>2022-09-15</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn/2020/07/25/bigdata-and-blockchain/</loc>
@@ -53,23 +69,11 @@
     <lastmod>2021-12-04</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2021/06/29/bigdata-data-governance/</loc>
-    <lastmod>2021-12-04</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2021/07/12/bigdata-metadata-governance/</loc>
-    <lastmod>2021-09-02</lastmod>
-  </url>
-  <url>
     <loc>https://simplexity.cn/2020/11/19/authorization-in-smart-contract/</loc>
     <lastmod>2021-02-08</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
-    <lastmod>2020-11-20</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2020/11/04/privacy-on-chain/</loc>
     <lastmod>2020-11-20</lastmod>
   </url>
   <url>

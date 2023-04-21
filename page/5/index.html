@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -186,6 +186,88 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-24 23:57:54" itemprop="dateCreated datePublished" datetime="2019-02-24T23:57:54+08:00">2019-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在instantiate(1)里提到，peer收集完endorsements后创建common.Envelope, 通过grpc发送到<code>/orderer.AtomicBroadcast/Broadcast</code>. common.Envelope的数据结构如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// common.Envelope</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Payload&quot;</span>: $&#123;common.Payload&#125;.byte,</span><br><span class="line">  <span class="attr">&quot;Signature&quot;</span>: #signer.Sign($&#123;common.Payload&#125;.byte)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// common.Payload</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Header&quot;</span>: $&#123;proposal.Header&#125;,   <span class="comment">// proposal参考instantiate（2）</span></span><br><span class="line">  <span class="attr">&quot;Data&quot;</span>: $&#123;peer.Transaction&#125;.byte</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.Transaction</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Actions&quot;</span>:  taas := make([]*peer.TransactionAction, 1), taas[0] = $&#123;peer.TransactionAction&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.TransactionAction</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;Header&quot;</span>: $&#123;proposal.Header.SignatureHeader&#125;, </span><br><span class="line">  <span class="attr">&quot;Payload&quot;</span>: $&#123;peer.ChaincodeActionPayload&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeActionPayload</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;ChaincodeProposalPayload&quot;</span>: $&#123;peer.ChaincodeProposalPayload&#125;.byte, </span><br><span class="line">  <span class="attr">&quot;Action&quot;</span>: $&#123;peer.ChaincodeEndorsedAction&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// peer.ChaincodeProposalPayload</span></span><br><span class="line"> &#123;</span><br><span class="line">   <span class="attr">&quot;Input&quot;</span>: $&#123;proposal.Payload.Input&#125;, </span><br><span class="line">   <span class="attr">&quot;TransientMap&quot;</span>: nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeEndorsedAction， response结构参考instantiate（7）</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;ProposalResponsePayload&quot;</span>: $&#123;resps[0].Payload&#125;,  <span class="comment">// 所有response的payload都应该是一致的，在前面已经校验过 </span></span><br><span class="line">  <span class="attr">&quot;Endorsements&quot;</span>: #endorsements := make([]*peer.Endorsement, len(resps)) <span class="comment">// 所有的endorsement</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1014,7 +1096,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

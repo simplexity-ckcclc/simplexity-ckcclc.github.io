@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -186,6 +186,83 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2023/04/20/smart-contract-oracle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/20/smart-contract-oracle/" class="post-title-link" itemprop="url">智能合约预言机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-20 11:13:08" itemprop="dateCreated datePublished" datetime="2023-04-20T11:13:08+08:00">2023-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-21 15:56:52" itemprop="dateModified" datetime="2023-04-21T15:56:52+08:00">2023-04-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>合约运行的可回溯重复执行及执行确定性要求，合约执行过程使用的数据必须被记录，可以采取记录在链上预言机合约内（公链），或者是合约的含预言机返回值的执行凭证（联盟链，用于事后审计）。对于前者，使用链上预言机主要分成三种方式：</p>
+<ol>
+<li>“立即读取” ： 用户合约直接访问预言机合约读取所需数据。（预言机数据可能被更新，导致多次读取不一致。需要结合数据版本等机制保证，较为复杂）</li>
+<li>“订阅发布” ： 关注预言机数据的变化。可以预言机合约在数据变动时，同时发出合约事件。链下应用监听特定的合约事件，然后相应的调用用户合约。本质上还是链下发起的上链交易，区别只是触发时机。</li>
+<li>“请求响应” ： 由用户合约执行时组装请求（常见的HTTP请求）向预言机合约请求数据，并且附带回调API。链下的预言机应用监听预言机合约，向外部系统请求数据，然后回写到预言机合约（上链或分布式账本）。然后预言机合约将改响应数据回调前述的用户合约声明的回调API。<em>可以是用以GET获取数据合约内计算，也可以是POST链下应用系统进行复杂计算，获取计算结果。</em>此过程的关键在于保证传输过程的完整性真实性，即防止预言机合约的传递篡改以及数据源作恶。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/04/20/smart-contract-oracle/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -377,10 +454,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-09-15 16:20:13 / Modified: 19:39:16" itemprop="dateCreated datePublished" datetime="2022-09-15T16:20:13+08:00">2022-09-15</time>
+              <time title="Created: 2022-09-15 16:20:13" itemprop="dateCreated datePublished" datetime="2022-09-15T16:20:13+08:00">2022-09-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-21 15:54:10" itemprop="dateModified" datetime="2023-04-21T15:54:10+08:00">2023-04-21</time>
+              </span>
 
           
 
@@ -414,7 +497,7 @@
 <li><em>New memory instructions: memory.fill, memory.init, memory.copy, data.drop</em><br>对应C里的<code>memcpy</code>, <code>memmove</code>等，目的提高处理大块内存的性能。Wasm1.0里使用<code>load</code>, <code>store</code>指令操作内存，只能处理基本类型的数值。</li>
 </ul>
 </li>
-<li><p>Multiple table<br><em>TBD</em></p>
+<li><p>Multiple table<br><em>coming soon</em></p>
 </li>
 </ol>
 
@@ -531,7 +614,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/12/bigdata-metadata-governance/" class="post-title-link" itemprop="url">大数据数据治理（2） - 元数据管理Atlas</a>
+            <a href="/2021/07/12/bigdata-metadata-governance/" class="post-title-link" itemprop="url">数据治理（2） - 元数据管理Atlas</a>
         </h2>
 
         <div class="post-meta">
@@ -548,7 +631,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-02 15:15:04" itemprop="dateModified" datetime="2021-09-02T15:15:04+08:00">2021-09-02</time>
+                <time title="Modified: 2023-04-19 15:27:11" itemprop="dateModified" datetime="2023-04-19T15:27:11+08:00">2023-04-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -625,7 +708,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/29/bigdata-data-governance/" class="post-title-link" itemprop="url">大数据数据治理（1） - 概述</a>
+            <a href="/2021/06/29/bigdata-data-governance/" class="post-title-link" itemprop="url">数据治理（1） - 概述</a>
         </h2>
 
         <div class="post-meta">
@@ -642,7 +725,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-04 19:18:18" itemprop="dateModified" datetime="2021-12-04T19:18:18+08:00">2021-12-04</time>
+                <time title="Modified: 2023-04-19 15:26:50" itemprop="dateModified" datetime="2023-04-19T15:26:50+08:00">2023-04-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -921,78 +1004,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/18/did-account-system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/18/did-account-system/" class="post-title-link" itemprop="url">DID分布式身份（2） - 账户体系架构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-18 20:21:44" itemprop="dateCreated datePublished" datetime="2020-11-18T20:21:44+08:00">2020-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-19 17:57:13" itemprop="dateModified" datetime="2020-11-19T17:57:13+08:00">2020-11-19</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          基于分布式身份的账户体系架构设计。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/18/did-account-system/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1064,7 +1075,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
