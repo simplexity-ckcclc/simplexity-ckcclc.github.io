@@ -25,13 +25,14 @@
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="合约运行的可回溯重复执行及执行确定性要求，合约执行过程使用的数据必须被记录，可以采取记录在链上预言机合约内（公链），或者是合约的含预言机返回值的执行凭证（联盟链，用于事后审计）。对于前者，使用链上预言机主要分成三种方式：  “立即读取” ： 用户合约直接访问预言机合约读取所需数据。（预言机数据可能被更新，导致多次读取不一致。需要结合数据版本等机制保证，较为复杂） “订阅发布” ： 关注预言机数据的">
 <meta property="og:locale">
-<meta property="og:image" content="https://simplexity.cn/images/smart-contract-oracle/tslnotary.jpg">
+<meta property="og:image" content="https://simplexity.cn/images/sc-oracle/tslnotary.jpg">
+<meta property="og:image" content="https://simplexity.cn/images/sc-oracle/chainlink-basic-request-model.png">
 <meta property="article:published_time" content="2023-04-20T03:13:08.000Z">
-<meta property="article:modified_time" content="2023-04-21T07:56:52.033Z">
+<meta property="article:modified_time" content="2023-04-27T08:28:56.534Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="Smart Contract">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://simplexity.cn/images/smart-contract-oracle/tslnotary.jpg">
+<meta name="twitter:image" content="https://simplexity.cn/images/sc-oracle/tslnotary.jpg">
 
 <link rel="canonical" href="https://simplexity.cn/2023/04/20/sc-oracle/">
 
@@ -226,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-21 15:56:52" itemprop="dateModified" datetime="2023-04-21T15:56:52+08:00">2023-04-21</time>
+                <time title="Modified: 2023-04-27 16:28:56" itemprop="dateModified" datetime="2023-04-27T16:28:56+08:00">2023-04-27</time>
               </span>
 
           
@@ -257,7 +258,7 @@
 <p>以下介绍在Ethereum上得到关注较多的两个预言机，Oraclize和Chainlink。</p>
 <h3 id="Oraclize"><a href="#Oraclize" class="headerlink" title="Oraclize"></a>Oraclize</h3><p><a target="_blank" rel="noopener" href="https://www.oraclize.it/"><em>Oraclize</em></a> 中心化预言机的核心是使用了<a target="_blank" rel="noopener" href="https://old.tlsnotary.org/"><em>TSLNotary</em></a> 协议来证明预言机合约的数据传递过程的真实性，即数据源确实来自于用户合约所想访问的特定服务及数据。算法的大致思路是，Auditor和Auditee通过混淆电路，不经意传输等方式，共享生成TSL协议里的通信信道的加密密钥。这样Auditee在不泄漏登陆信息等数据的前提下，有选择的向Auditor转发server端的response，同时保证转发的response来源。</p>
 <div align="center" style="width:50%;margin:auto">
-    <img src="/images/smart-contract-oracle/tslnotary.jpg">  
+    <img src="/images/sc-oracle/tslnotary.jpg">  
     图1    TSLNotary算法
 </div>
 
@@ -265,7 +266,31 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/201/how-does-oraclize-handle-the-tlsnotary-secret">How does Oraclize handle the TLSnotary secret?</a> ： 利弊分析，对于AWS的autidor实例和server端安全性的顾虑。提到对于有限参与方的场景（例如联盟链），可以自己扮演auditor和auditee的角色以规避风险。</p>
 </blockquote>
-<h3 id="Chainlink"><a href="#Chainlink" class="headerlink" title="Chainlink"></a>Chainlink</h3><p><em>coming soon</em></p>
+<h3 id="Chainlink"><a href="#Chainlink" class="headerlink" title="Chainlink"></a>Chainlink</h3><p><a target="_blank" rel="noopener" href="https://docs.chain.link/"><em>Chainlink</em></a> 从中心化到分布式分为三种模式。</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://docs.chain.link/architecture-overview/architecture-request-model?parent=gettingStarted">Basic Request Model 基本请求模型</a>。</p>
+<p> <img src="/images/sc-oracle/chainlink-basic-request-model.png" alt=""></p>
+<p> 类似于Oraclize的模式，链下的预言机应用监听链上预言机合约事件，代为发起链下HTTP访问，转发响应结果至链上。但此方式并没有考虑和解决链下预言机的作恶，链下预言机为中心化架构。只能通过对同一个数据多次请求不同的预言机服务聚合来减轻其问题。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.chain.link/architecture-overview/architecture-decentralized-model?parent=gettingStarted">Decentralized Data Model 分布式数据模型</a>。针对对是数据feed流订阅的方式，主要是价格，利率等不断变动并且实时性要求高的数据。官方提供了部分<a target="_blank" rel="noopener" href="https://docs.chain.link/data-feeds/">常用feed数据</a>。此模型链上主要有三种角色。</p>
+<ul>
+<li>Consumer Contract消费者合约。feed数据使用者。</li>
+<li>Proxy Contract代理者合约。指向aggregator合约地址。consumer通过proxy间接访问aggretator。间接访问使得consumer可以保持稳定的配置proxy合约的地址，aggregator合约的升级更换不影响consumer的正常使用，保证业务连续性。</li>
+<li>Aggregator Contrac聚合合约。链下各个数据源将数据发送到此合约，此合约进行数据聚合，例如选择大多数的值，尽可能的保证数据的准确性。有两种链下触发聚合轮次的触发时机。<ul>
+<li>Deviation Threshold: 当前值偏离链上的最新值一定的范围。</li>
+<li>Heartbeat Threshold: 定期更新。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.chain.link/architecture-overview/off-chain-reporting?parent=gettingStarted">Off-Chain Reporting 链下聚合报告</a>。对上一点的改进，将链上聚合转换成链下聚合。具体的方案是在链下p2p网络里，多个数据提供节点提供签名数据，由leader节点作为协调者作聚合，将聚合结果发还各提供节点进行确认并签名。然后随机选择一个节点将此数据上链，由aggreator合约来验证此数据的有效性。链下节点监视上链结果，防止所选节点上链失败。此方式可以减少上链交易的数量，同一个数据只需要上链一次；聚合无需等到超过阈值数的节点上链，缩短聚合时间，从而也可以容纳更多的数据提供源节点，增进数据可信度。</p>
+</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/72318627/chainlink-newbie-doubts">Chainlink newbie doubts</a>: 对chainlink局限性的分析</p>
+</blockquote>
+<hr>
+<p>预言机的时效性和准确性要从数据源和链下预言机等两个方向来保证。数据源的可靠性常规方法是通过增加数据提供源，链上进行的聚合，抵御拜占庭节点。或者链上预先配置可信源，数据进行签名，链上验证数据源身份。需要注意的是，传统网络世界里的CA证书认证体系无法直接适用。对于HTTP请求这类非固定访问地址数据，需要链下有可信节点（Chainlink是完全信赖链下预言机，虽然可以通过请求多个预言机来相互校验来提高可信度；Oraclize则是依靠可信的中立审计者）。在联盟链的场景下，各方的身份都可以通过身份合约配置和数据签名校验，多方响应数据聚合能相对有效的抵御拜占庭节点。</p>
 
     </div>
 

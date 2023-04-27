@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://simplexity.cn/2023/04/21/sc-event-listener/</loc>
-    <lastmod>2023-04-21</lastmod>
+    <loc>https://simplexity.cn/2023/04/20/sc-oracle/</loc>
+    <lastmod>2023-04-27</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2023/04/20/sc-oracle/</loc>
+    <loc>https://simplexity.cn/2023/04/21/sc-event-listener/</loc>
     <lastmod>2023-04-21</lastmod>
   </url>
   <url>
@@ -93,14 +93,6 @@
     <lastmod>2020-11-16</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/02/23/fabric-tutorial-learning/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/02/23/foreword/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
     <loc>https://simplexity.cn/2019/07/01/thunderchain-cross-chain/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
@@ -109,7 +101,15 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/</loc>
+    <loc>https://simplexity.cn/2019/02/23/fabric-tutorial-learning/</loc>
+    <lastmod>2020-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2019/02/23/foreword/</loc>
+    <lastmod>2020-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -121,15 +121,7 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/</loc>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -137,7 +129,15 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/</loc>
+    <lastmod>2020-10-28</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/</loc>
+    <lastmod>2020-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -149,6 +149,10 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
+    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
+    <lastmod>2020-10-28</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
@@ -157,11 +161,11 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/</loc>
+    <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
+    <loc>https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -170,10 +174,6 @@
   </url>
   <url>
     <loc>https://simplexity.cn/2019/03/11/fabric-orderer-kafka-design/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -193,7 +193,7 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
+    <loc>https://simplexity.cn/2019/07/08/consensus-pos/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -201,7 +201,7 @@
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/07/08/consensus-pos/</loc>
+    <loc>https://simplexity.cn/2019/03/06/consensus-paxos-raft/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
 </urlset> 
