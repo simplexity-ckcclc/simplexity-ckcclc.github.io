@@ -123,7 +123,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:10:29" itemprop="dateModified" datetime="2023-04-27T17:10:29+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,8 +244,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>回顾到<code>endorser.go#SimulateProposal</code>,执行完<code>callChaincode</code>后，回顾前面，在这里有两次调用chaincode，分别是lscc的Inovke和acc的Init，<code>callChaincode</code>这里返回的是第一次调用的lscc的response。调用acc Init的结果只判断调用是否正常完成返回<code>pb.ChaincodeMessage_COMPLETED</code>。这是因为在<code>handleInit</code>里对初始化失败，即<code>pb.Response.status</code>不等于200的统一返回<code>pb.ChaincodeMessage_ERROR</code>，这点与Invoke的处理方式是不一样的。Invoke允许<code>pb.ChaincodeMessage.Type</code>=<code>pb.ChaincodeMessage_COMPLETED</code>,但是内层的<code>pb.Response.status</code>不等于200. 若返回<code>pb.ChaincodeMessage_ERROR</code>，则向上层返回error，最终返回<code>&amp;pb.ProposalResponse&#123;Response: &amp;pb.Response&#123;Status: 500, Message: err.Error()&#125;&#125;</code>到<code>peer chainncode instantiate...</code>这个命令的执行节点peer。</p>
-<p>紧接着调用<code>txsim.GetTxSimulationResults()</code>获取上节提到的<code>lockbased_tx_simulator</code>的读写集合。先看下这个<code>txsim</code>是如何传递的。首先初始化后在<code>callChaincode</code>加入context<code>ctxt = context.WithValue(ctxt, chaincode.TXSimulatorKey, txsim)</code>。之后在<code>chaincode/handler</code>里构建<code>TransactionContext</code>实体对象时将txsim从context取出，包裹进这个新建的TransactionContext对象内。这个对象前面有提及，是关联于<code>chainID, txID</code>这两个存放于<code>chaincode/handler.TXContexts.map[string]*TransactionContext</code>里。后面在<code>chaincode/handler.go#handlerTranction</code>里调用<code>txContext, err = h.isValidTxSim(msg.ChannelId, msg.Txid)&#125;</code>也是以此取出该txsim，将读写结果放进读写集readwriteSet。</p>
+          <p>回顾到<code>endorser.go#SimulateProposal</code>,执行完<code>callChaincode</code>后，回顾前面，在这里有两次调用chaincode，分别是lscc的Inovke和acc的Init，<code>callChaincode</code>这里返回的是第一次调用的lscc的response。调用acc Init的结果只判断调用是否正常完成返回<code>pb.ChaincodeMessage_COMPLETED</code>。这是因为在<code>handleInit</code>里对初始化失败，即<code>pb.Response.status</code>不等于200的统一返回<code>pb.ChaincodeMessage_ERROR</code>，这点与Invoke的处理方式是不一样的。Invoke允许<code>pb.ChaincodeMessage.Type</code>=<code>pb.ChaincodeMessage_COMPLETED</code>,但是内层的<code>pb.Response.status</code>不等于200. 若返回<code>pb.ChaincodeMessage_ERROR</code>，则向上层返回error，最终返回<code>&amp;pb.ProposalResponse{Response: &amp;pb.Response{Status: 500, Message: err.Error()}}</code>到<code>peer chainncode instantiate...</code>这个命令的执行节点peer。</p>
+<p>紧接着调用<code>txsim.GetTxSimulationResults()</code>获取上节提到的<code>lockbased_tx_simulator</code>的读写集合。先看下这个<code>txsim</code>是如何传递的。首先初始化后在<code>callChaincode</code>加入context<code>ctxt = context.WithValue(ctxt, chaincode.TXSimulatorKey, txsim)</code>。之后在<code>chaincode/handler</code>里构建<code>TransactionContext</code>实体对象时将txsim从context取出，包裹进这个新建的TransactionContext对象内。这个对象前面有提及，是关联于<code>chainID, txID</code>这两个存放于<code>chaincode/handler.TXContexts.map[string]*TransactionContext</code>里。后面在<code>chaincode/handler.go#handlerTranction</code>里调用<code>txContext, err = h.isValidTxSim(msg.ChannelId, msg.Txid)}</code>也是以此取出该txsim，将读写结果放进读写集readwriteSet。</p>
 <p><code>txsim.GetTxSimulationResults()</code>这里在返回前，先对读写集合按照key排序。这里包含pub和pri两部分数据，先关注pub部分。rwset这部分以后展开专题介绍。然后调用<code>txsim.Done()</code>，签名初始化txsim时候提到获取了ledger的读锁，因此这里需要释放<code>h.txmgr.commitRWLock.RUnlock()</code>。返回共有数据的读写集到<code>endorser#ProcessProposal</code>。</p>
           <!--noindex-->
             <div class="post-button">
@@ -304,7 +304,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:08:55" itemprop="dateModified" datetime="2023-04-27T17:08:55+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -386,7 +386,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:10:09" itemprop="dateModified" datetime="2023-04-27T17:10:09+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -410,7 +410,7 @@
 
       
           <p>接下来分析lscc的执行过程，在这之前，先看下其初始化注册过程。在<code>peer/node/start.go#Serve</code>里<code>registerChaincodeSupport(ccSrv, ccEndpoint, ca, aclProvider)</code>。进入方法，主要是<code>scc.CreateSysCCs(ccp, sccp, aclProvider)</code>，就是引入了<code>scc/importsysccs.go#builtInSystemChaincodes</code>里定义的SCC,即<code>cscc</code>,<code>lscc</code>和<code>gscc</code>（包含chaincode的Name，Path代码地址，Chaincode对象，acl，policy等）。然后逐个执行<code>sccp.RegisterSysCC(cc)</code>注册SCC,实际上就是加入<code>SystemChaincodeProvider.Registrar.typeRegistry</code>（map[string]*inprocContainer）里，key是chaincode的Name，这个后面初始化时候会使用到。</p>
-<p>这里完成注册后，在<code>serve()</code>里稍后的位置执行<code>sccp.DeploySysCCs(&quot;&quot;, ccp)</code>进行部署。第一个参数是channelId为“”，说明这些scc是chainless的，可以供所有的channel使用。进入方法，首先构造cds<code>&amp;pb.ChaincodeDeploymentSpec&#123;ExecEnv: pb.ChaincodeDeploymentSpec_SYSTEM, ChaincodeSpec: spec&#125;</code>.这里注意到，部署类型是ChaincodeDeploymentSpec_SYSTEM，回顾上节acc类型是ChaincodeDeploymentSpec_DOCKER，说明SCC是部署在peer内的，而acc是部署在另外新的chaincode docker容器里。然后执行<code>ccprov.Execute(ctxt, cccid, chaincodeDeploymentSpec)</code>,最终实际上又回到前面介绍过的<code>ChaincodeSupport.Execute</code>方法上。后面的执行与acc是一致的，所区别的在于launch。区别于acc使用的是<code>dockercontroller/DockerVM#start</code>,scc使用的是<code>inproccontroller.InprocVM#start</code>.首先<code>vm.registry.typeRegistry[path]</code>,这个在前面已经注册了可以获取出来。然后开始真正的launch。</p>
+<p>这里完成注册后，在<code>serve()</code>里稍后的位置执行<code>sccp.DeploySysCCs("", ccp)</code>进行部署。第一个参数是channelId为“”，说明这些scc是chainless的，可以供所有的channel使用。进入方法，首先构造cds<code>&amp;pb.ChaincodeDeploymentSpec{ExecEnv: pb.ChaincodeDeploymentSpec_SYSTEM, ChaincodeSpec: spec}</code>.这里注意到，部署类型是ChaincodeDeploymentSpec_SYSTEM，回顾上节acc类型是ChaincodeDeploymentSpec_DOCKER，说明SCC是部署在peer内的，而acc是部署在另外新的chaincode docker容器里。然后执行<code>ccprov.Execute(ctxt, cccid, chaincodeDeploymentSpec)</code>,最终实际上又回到前面介绍过的<code>ChaincodeSupport.Execute</code>方法上。后面的执行与acc是一致的，所区别的在于launch。区别于acc使用的是<code>dockercontroller/DockerVM#start</code>,scc使用的是<code>inproccontroller.InprocVM#start</code>.首先<code>vm.registry.typeRegistry[path]</code>,这个在前面已经注册了可以获取出来。然后开始真正的launch。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-system-chaincode/#more" rel="contents">
@@ -468,7 +468,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:09:05" itemprop="dateModified" datetime="2023-04-27T17:09:05+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -491,14 +491,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string&#123;&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address=%s&quot;, c.PeerAddress)&#125;</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
-<pre><code class="lang-go">util.DockerBuildOptions&#123;
-  Cmd:          fmt.Sprintf(&quot;GOPATH=/chaincode/input:$GOPATH go build -tags \&quot;%s\&quot; %s -o /chaincode/output/chaincode %s&quot;, gotags, ldflagsOpt, pkgname),
+          <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string{"chaincode", fmt.Sprintf("-peer.address=%s", c.PeerAddress)}</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
+<pre><code class="lang-go">util.DockerBuildOptions{
+  Cmd:          fmt.Sprintf("GOPATH=/chaincode/input:$GOPATH go build -tags \"%s\" %s -o /chaincode/output/chaincode %s", gotags, ldflagsOpt, pkgname),
   InputStream:  codepackage,
   OutputStream: binpackage,
-&#125;
+}
 </code></pre>
-<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>$&#123;CC_SRC_PATH&#125;</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH=&quot;github.com/chaincode/chaincode_example02/go/&quot;</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
+<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>${CC_SRC_PATH}</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/#more" rel="contents">
@@ -556,7 +556,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:10:40" itemprop="dateModified" datetime="2023-04-27T17:10:40+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -579,7 +579,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>由peer的grpc请求到<code>/protos.Endorser/ProcessProposal</code>，在endorser里对应着<code>protos/peer/peer.pb.go#_Endorser_ProcessProposal_Handler</code>，进入处理方法<code>core/endorser/endorser.go#ProcessProposal</code>。endorser的处理过程主要分为三个阶段，preProcess, simulate和endorse。其中，preProcess主要做校验工作，包括数据结构的完整性(header)，唯一性防止重放攻击，校验签名，对application chaincode（以后简称acc）检查ACL策略等等。这部分校验比较直观和简单，这里不做深入分析。需要注意的是，在这里还获取了TX模拟器<code>txsim, err = e.s.GetTxSimulator(chainID, txid);</code>和历史请求执行器<code>historyQueryExecutor, err = e.s.GetHistoryQueryExecutor(chainID);</code>。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetTxSimulator returns the transaction simulator for the specified ledger</span></span><br><span class="line"><span class="comment">// a client may obtain more than one such simulator; they are made unique</span></span><br><span class="line"><span class="comment">// by way of the supplied txid</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *SupportImpl)</span> <span class="title">GetTxSimulator</span><span class="params">(ledgername <span class="keyword">string</span>, txid <span class="keyword">string</span>)</span> <span class="params">(ledger.TxSimulator, error)</span></span> &#123;</span><br><span class="line">    lgr := s.Peer.GetLedger(ledgername)</span><br><span class="line">    <span class="keyword">return</span> lgr.NewTxSimulator(txid)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// NewTxSimulator implements method in interface `txmgmt.TxMgr`</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(txmgr *LockBasedTxMgr)</span> <span class="title">NewTxSimulator</span><span class="params">(txid <span class="keyword">string</span>)</span> <span class="params">(ledger.TxSimulator, error)</span></span> &#123;</span><br><span class="line">    s, err := newLockBasedTxSimulator(txmgr, txid)</span><br><span class="line">    txmgr.commitRWLock.RLock()</span><br><span class="line">    <span class="keyword">return</span> s, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这个模拟器和执行器是对应于账本ledger的，也就是channel，入参ledgername就是channelId。chainless的proposals的ledger.TxSimulator和ledger.HistoryQueryExecutor都是nil。模拟器是基于锁的，在生成模拟器时，同时加上了读锁，在下一阶段simulate结束后就立即释放。同时，也生成了历史数据查询器。关于这个锁，代码里有下面一段解释。</p>
+          <p>由peer的grpc请求到<code>/protos.Endorser/ProcessProposal</code>，在endorser里对应着<code>protos/peer/peer.pb.go#_Endorser_ProcessProposal_Handler</code>，进入处理方法<code>core/endorser/endorser.go#ProcessProposal</code>。endorser的处理过程主要分为三个阶段，preProcess, simulate和endorse。其中，preProcess主要做校验工作，包括数据结构的完整性(header)，唯一性防止重放攻击，校验签名，对application chaincode（以后简称acc）检查ACL策略等等。这部分校验比较直观和简单，这里不做深入分析。需要注意的是，在这里还获取了TX模拟器<code>txsim, err = e.s.GetTxSimulator(chainID, txid);</code>和历史请求执行器<code>historyQueryExecutor, err = e.s.GetHistoryQueryExecutor(chainID);</code>。<br></p><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetTxSimulator returns the transaction simulator for the specified ledger</span></span><br><span class="line"><span class="comment">// a client may obtain more than one such simulator; they are made unique</span></span><br><span class="line"><span class="comment">// by way of the supplied txid</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *SupportImpl)</span> <span class="title">GetTxSimulator</span><span class="params">(ledgername <span class="keyword">string</span>, txid <span class="keyword">string</span>)</span> <span class="params">(ledger.TxSimulator, error)</span></span> {</span><br><span class="line">    lgr := s.Peer.GetLedger(ledgername)</span><br><span class="line">    <span class="keyword">return</span> lgr.NewTxSimulator(txid)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// NewTxSimulator implements method in interface `txmgmt.TxMgr`</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(txmgr *LockBasedTxMgr)</span> <span class="title">NewTxSimulator</span><span class="params">(txid <span class="keyword">string</span>)</span> <span class="params">(ledger.TxSimulator, error)</span></span> {</span><br><span class="line">    s, err := newLockBasedTxSimulator(txmgr, txid)</span><br><span class="line">    txmgr.commitRWLock.RLock()</span><br><span class="line">    <span class="keyword">return</span> s, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>这个模拟器和执行器是对应于账本ledger的，也就是channel，入参ledgername就是channelId。chainless的proposals的ledger.TxSimulator和ledger.HistoryQueryExecutor都是nil。模拟器是基于锁的，在生成模拟器时，同时加上了读锁，在下一阶段simulate结束后就立即释放。同时，也生成了历史数据查询器。关于这个锁，代码里有下面一段解释。<p></p>
 <blockquote>
 <p>txsim acquires a shared lock on the stateDB. As this would impact the block commits (i.e., commit of valid write-sets to the stateDB), we must release the lock as early as possible. Hence, this txsim object is closed in simulateProposal() as soon as the tx is simulated and rwset is collected before gossip dissemination if required for privateData. </p>
 </blockquote>
@@ -640,7 +640,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:09:58" itemprop="dateModified" datetime="2023-04-27T17:09:58+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -664,7 +664,7 @@
 
       
           <p>接下来具体执行<code>env, err := instantiate(cmd, cf)</code>，这里可以看到入参是<code>cobra.Command</code>和刚刚初始化的<code>ChaincodeCmdFactory</code>,结果是提交给Orderer的Envelope message<code>protos/common.Envelope</code>.</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instantiate the command via Endorser</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">instantiate</span><span class="params">(cmd *cobra.Command, cf *ChaincodeCmdFactory)</span> <span class="params">(*protcommon.Envelope, error)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    spec, err := getChaincodeSpec(cmd)</span><br><span class="line">    cds, err := getChaincodeDeploymentSpec(spec, <span class="literal">false</span>)</span><br><span class="line">    creator, err := cf.Signer.Serialize()   </span><br><span class="line">    prop, _, err := utils.CreateDeployProposalFromCDS(channelID, cds, creator, policyMarshalled, []<span class="keyword">byte</span>(escc), []<span class="keyword">byte</span>(vscc), collectionConfigBytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signedProp *pb.SignedProposal</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// instantiate is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> proposalResponse != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">// assemble a signed transaction (it&#x27;s an Envelope message)</span></span><br><span class="line">        env, err := utils.CreateSignedTx(prop, cf.Signer, proposalResponse)</span><br><span class="line">        <span class="keyword">return</span> env, <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instantiate the command via Endorser</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">instantiate</span><span class="params">(cmd *cobra.Command, cf *ChaincodeCmdFactory)</span> <span class="params">(*protcommon.Envelope, error)</span></span> {</span><br><span class="line"></span><br><span class="line">    spec, err := getChaincodeSpec(cmd)</span><br><span class="line">    cds, err := getChaincodeDeploymentSpec(spec, <span class="literal">false</span>)</span><br><span class="line">    creator, err := cf.Signer.Serialize()   </span><br><span class="line">    prop, _, err := utils.CreateDeployProposalFromCDS(channelID, cds, creator, policyMarshalled, []<span class="keyword">byte</span>(escc), []<span class="keyword">byte</span>(vscc), collectionConfigBytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signedProp *pb.SignedProposal</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// instantiate is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> proposalResponse != <span class="literal">nil</span> {</span><br><span class="line">        <span class="comment">// assemble a signed transaction (it's an Envelope message)</span></span><br><span class="line">        env, err := utils.CreateSignedTx(prop, cf.Signer, proposalResponse)</span><br><span class="line">        <span class="keyword">return</span> env, <span class="literal">nil</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li><code>getChaincodeSpec</code>和<code>getChaincodeDeploymentSpec</code>从提交的command里获取相应的参数，检查以及设置参数（例如是否指定escc(endorsement system chaincode), vscc(verification system chaincode), ConstructorJSON 构造参数），进而构造chaincode描述结构体<code>pb.ChaincodeSpec</code>和部署结构体<code>pb.ChaincodeDeploymentSpec</code>。<br><code>pb.ChaincodeSpec</code>(cs)里指定了<code>ChaincodeSpec_Type</code>语言类型，默认为go，<code>ChaincodeID</code>，chaincode的标识（包括路径Path，名称Name，版本Version），以及Input（即ConstructorJSON 构造参数，初始化的值，命令行里-c参数值，例子里的’{“Args”:[“init”,”a”, “100”, “b”,”200”]}’）。<br><code>pb.ChaincodeDeploymentSpec</code>(cds)里包裹<code>ChaincodeSpec</code>，以及<code>CodePackage</code>，打包后用于安装部署的代码，<code>ExecEnv</code>，指定运行于同一系统中或者docker容器。<code>getChaincodeDeploymentSpec</code>入参区分是否当前是dev开发模式，而且是否需要构造CodePackage。构造打包是在install安装时进行的，后面分析install时详述。</li>
 </ol>
@@ -725,7 +725,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:09:23" itemprop="dateModified" datetime="2023-04-27T17:09:23+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -756,9 +756,9 @@
 </ul>
 <p><em>选择peer chaincode instantiate作为开篇，是因为笔者学习官网过程中没有完全理解install与instantiate的区别，所以选择深入源码学习来加深理解</em></p>
 <p>官网<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c &#x27;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&#x27; -P &quot;AND (&#x27;Org1MSP.peer&#x27;,&#x27;Org2MSP.peer&#x27;)&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"</span><br></pre></td></tr></tbody></table></figure>
 <p>此前，需要先设置环境变量</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot;</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID="Org2MSP"</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></tbody></table></figure>
 <p>客户端调用<code>peer chaincode instatiate</code>命令部署chaincode，代码在‘peer/chaincode/instantiate.go’这个文件下，命令关联的方法是<code>chaincodeDeploy</code>(使用了流行的第三方命令行cobra库，具体可自行学习)。</p>
           <!--noindex-->
             <div class="post-button">
@@ -1027,7 +1027,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

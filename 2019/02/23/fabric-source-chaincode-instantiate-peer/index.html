@@ -26,10 +26,9 @@
 <meta property="og:description" content="接下来具体执行env, err :&#x3D; instantiate(cmd, cf)，这里可以看到入参是cobra.Command和刚刚初始化的ChaincodeCmdFactory,结果是提交给Orderer的Envelope messageprotos&#x2F;common.Envelope. 12345678910111213141516171819202122&#x2F;&#x2F;instantiate the comm">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-02-23T07:36:22.000Z">
-<meta property="article:modified_time" content="2020-10-28T01:59:15.296Z">
+<meta property="article:modified_time" content="2023-04-27T09:09:58.838Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="Hyperledger Fabric">
-<meta property="article:tag" content="源码分析">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/">
@@ -127,7 +126,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -225,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:09:58" itemprop="dateModified" datetime="2023-04-27T17:09:58+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +255,7 @@
 
       
         <p>接下来具体执行<code>env, err := instantiate(cmd, cf)</code>，这里可以看到入参是<code>cobra.Command</code>和刚刚初始化的<code>ChaincodeCmdFactory</code>,结果是提交给Orderer的Envelope message<code>protos/common.Envelope</code>.</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instantiate the command via Endorser</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">instantiate</span><span class="params">(cmd *cobra.Command, cf *ChaincodeCmdFactory)</span> <span class="params">(*protcommon.Envelope, error)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    spec, err := getChaincodeSpec(cmd)</span><br><span class="line">    cds, err := getChaincodeDeploymentSpec(spec, <span class="literal">false</span>)</span><br><span class="line">    creator, err := cf.Signer.Serialize()   </span><br><span class="line">    prop, _, err := utils.CreateDeployProposalFromCDS(channelID, cds, creator, policyMarshalled, []<span class="keyword">byte</span>(escc), []<span class="keyword">byte</span>(vscc), collectionConfigBytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signedProp *pb.SignedProposal</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// instantiate is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> proposalResponse != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">// assemble a signed transaction (it&#x27;s an Envelope message)</span></span><br><span class="line">        env, err := utils.CreateSignedTx(prop, cf.Signer, proposalResponse)</span><br><span class="line">        <span class="keyword">return</span> env, <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instantiate the command via Endorser</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">instantiate</span><span class="params">(cmd *cobra.Command, cf *ChaincodeCmdFactory)</span> <span class="params">(*protcommon.Envelope, error)</span></span> {</span><br><span class="line"></span><br><span class="line">    spec, err := getChaincodeSpec(cmd)</span><br><span class="line">    cds, err := getChaincodeDeploymentSpec(spec, <span class="literal">false</span>)</span><br><span class="line">    creator, err := cf.Signer.Serialize()   </span><br><span class="line">    prop, _, err := utils.CreateDeployProposalFromCDS(channelID, cds, creator, policyMarshalled, []<span class="keyword">byte</span>(escc), []<span class="keyword">byte</span>(vscc), collectionConfigBytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signedProp *pb.SignedProposal</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// instantiate is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> proposalResponse != <span class="literal">nil</span> {</span><br><span class="line">        <span class="comment">// assemble a signed transaction (it's an Envelope message)</span></span><br><span class="line">        env, err := utils.CreateSignedTx(prop, cf.Signer, proposalResponse)</span><br><span class="line">        <span class="keyword">return</span> env, <span class="literal">nil</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li><code>getChaincodeSpec</code>和<code>getChaincodeDeploymentSpec</code>从提交的command里获取相应的参数，检查以及设置参数（例如是否指定escc(endorsement system chaincode), vscc(verification system chaincode), ConstructorJSON 构造参数），进而构造chaincode描述结构体<code>pb.ChaincodeSpec</code>和部署结构体<code>pb.ChaincodeDeploymentSpec</code>。<br><code>pb.ChaincodeSpec</code>(cs)里指定了<code>ChaincodeSpec_Type</code>语言类型，默认为go，<code>ChaincodeID</code>，chaincode的标识（包括路径Path，名称Name，版本Version），以及Input（即ConstructorJSON 构造参数，初始化的值，命令行里-c参数值，例子里的’{“Args”:[“init”,”a”, “100”, “b”,”200”]}’）。<br><code>pb.ChaincodeDeploymentSpec</code>(cds)里包裹<code>ChaincodeSpec</code>，以及<code>CodePackage</code>，打包后用于安装部署的代码，<code>ExecEnv</code>，指定运行于同一系统中或者docker容器。<code>getChaincodeDeploymentSpec</code>入参区分是否当前是dev开发模式，而且是否需要构造CodePackage。构造打包是在install安装时进行的，后面分析install时详述。</li>
 </ol>
@@ -266,79 +265,79 @@
 <blockquote>
 <p>Transaction的结构可以参看总结<a target="_blank" rel="noopener" href="https://blockchain-fabric.blogspot.com/2017/04/hyperledger-fabric-v10-block-structure.html">Hyperledger Fabric V1.0: Block Structure</a> </p>
 </blockquote>
-<p><code>pb.ChaincodeInvokeSpec</code>(cis)里指定<code>Type</code>为golang，<code>ChaincodeID</code>指定为lscc（lifecycle system chaincode），然后将上面构造的cds序列化在[]byte作为<code>Input</code>字段。<br><code>CreateDeployProposalFromCDS</code>这个方法从部署结构体cds出发，生成随机字符串<code>NONCE</code>，使用签名生成<code>ProposalTxID</code>; 指定类型<code>Type</code>为<code>HeaderType_ENDORSER_TRANSACTION</code>(此处多补充一句，初始化时获取配置的类型为<code>HeaderType_CONFIG</code>),指定<code>channelId</code>，<code>chaincodeID</code>(包括chaincode的version，path，name)。这里的<code>chaincodeID</code>是构造的<code>peer.ChaincodeInvocationSpec</code>的参数，指定了Name为lscc，lifecycle systme chaincode。此外，还有初始化过程MSP获取的<code>creator</code>(即序列化后的signer)表明身份以及创建时间<code>Timestamp</code>等。这些构成了transaction的header,连同序列化后的<code>ChaincodeInvocationSpec</code>对象作为payload,共同组成了<code>peer.Proposal&#123;Header: hdrBytes, Payload: ccPropPayloadBytes&#125;</code>.最后使用signer进行签名。</p>
+<p><code>pb.ChaincodeInvokeSpec</code>(cis)里指定<code>Type</code>为golang，<code>ChaincodeID</code>指定为lscc（lifecycle system chaincode），然后将上面构造的cds序列化在[]byte作为<code>Input</code>字段。<br><code>CreateDeployProposalFromCDS</code>这个方法从部署结构体cds出发，生成随机字符串<code>NONCE</code>，使用签名生成<code>ProposalTxID</code>; 指定类型<code>Type</code>为<code>HeaderType_ENDORSER_TRANSACTION</code>(此处多补充一句，初始化时获取配置的类型为<code>HeaderType_CONFIG</code>),指定<code>channelId</code>，<code>chaincodeID</code>(包括chaincode的version，path，name)。这里的<code>chaincodeID</code>是构造的<code>peer.ChaincodeInvocationSpec</code>的参数，指定了Name为lscc，lifecycle systme chaincode。此外，还有初始化过程MSP获取的<code>creator</code>(即序列化后的signer)表明身份以及创建时间<code>Timestamp</code>等。这些构成了transaction的header,连同序列化后的<code>ChaincodeInvocationSpec</code>对象作为payload,共同组成了<code>peer.Proposal{Header: hdrBytes, Payload: ccPropPayloadBytes}</code>.最后使用signer进行签名。</p>
 </li>
-<li><p>rpc调用。初始化时候构建了endorser client组（实际上instantiate只允许有一个）。使用该client发送请求<code>grpc.Invoke(ctx, &quot;/protos.Endorser/ProcessProposal&quot;, in, out, c.cc, opts...)</code>，这里ctx传入了golang的<code>context.Background()</code>，后面的rpc调用派生自该顶层context。服务端的处理后面再详述。注意这里是同步调用。endorser rpc的数据结构<code>SignedProposal</code>如下</p>
+<li><p>rpc调用。初始化时候构建了endorser client组（实际上instantiate只允许有一个）。使用该client发送请求<code>grpc.Invoke(ctx, "/protos.Endorser/ProcessProposal", in, out, c.cc, opts...)</code>，这里ctx传入了golang的<code>context.Background()</code>，后面的rpc调用派生自该顶层context。服务端的处理后面再详述。注意这里是同步调用。endorser rpc的数据结构<code>SignedProposal</code>如下</p>
 </li>
 </ol>
 <pre><code class="lang-json">// peer.SignedProposal:
-&#123;
-    &quot;ProposalBytes&quot;: &quot;$&#123;propBytes&#125;&quot;, 
-    &quot;Signature&quot;: &quot;$&#123;signature&#125;&quot; // signature, err := signer.Sign(propBytes)
-&#125;
+{
+    "ProposalBytes": "${propBytes}", 
+    "Signature": "${signature}" // signature, err := signer.Sign(propBytes)
+}
 
 // peer.Proposal : 
-&#123;
-    &quot;Header&quot;: &quot;$&#123;hdrBytes&#125;&quot;, 
-    &quot;Payload&quot;: &quot;$&#123;ccPropPayloadBytes&#125;&quot;
-&#125;
+{
+    "Header": "${hdrBytes}", 
+    "Payload": "${ccPropPayloadBytes}"
+}
 
 // common.Header(hdrBytes) :
-&#123;
-    &quot;ChannelHeader&quot; : &#123; // common.ChannelHeader
-        &quot;Type&quot; : &quot;HeaderType_ENDORSER_TRANSACTION&quot;, // common.HeaderType
-        &quot;TxId&quot; : &quot;#ComputeProposalTxID(nonce, creator)&quot;,
-        &quot;Timestamp&quot;: &quot;timestamp&quot;,   // util.CreateUtcTimestamp()
-        &quot;ChannelId&quot;: &quot;$&#123;chainID&#125;&quot;, 
-        &quot;Extension&quot;: &quot;$&#123;ccHdrExtBytes&#125;&quot;,
-        &quot;Epoch&quot;:     &quot;epoch&quot; // always 0
-    &#125;,
-    &quot;SignatureHeader&quot; : &#123;   // common.SignatureHeader
-        &quot;Nonce&quot;: &quot;nonce&quot;,   // nonce, err := crypto.GetRandomNonce()
-        &quot;Creator&quot;: &quot;creator&quot;  // creator, err := cf.Signer.Serialize()
-    &#125;
-&#125;
+{
+    "ChannelHeader" : { // common.ChannelHeader
+        "Type" : "HeaderType_ENDORSER_TRANSACTION", // common.HeaderType
+        "TxId" : "#ComputeProposalTxID(nonce, creator)",
+        "Timestamp": "timestamp",   // util.CreateUtcTimestamp()
+        "ChannelId": "${chainID}", 
+        "Extension": "${ccHdrExtBytes}",
+        "Epoch":     "epoch" // always 0
+    },
+    "SignatureHeader" : {   // common.SignatureHeader
+        "Nonce": "nonce",   // nonce, err := crypto.GetRandomNonce()
+        "Creator": "creator"  // creator, err := cf.Signer.Serialize()
+    }
+}
 // peer.ChaincodeProposalPayload(ccPropPayload)
-&#123;
-    &quot;Input&quot;: &quot;cisBytes&quot;,
-    &quot;TransientMap&quot;: nil
-&#125;
+{
+    "Input": "cisBytes",
+    "TransientMap": nil
+}
 
 // peer.ChaincodeHeaderExtension(ccHdrExtBytes) :
-&#123;
-    &quot;ChaincodeId&quot; : &quot;$&#123;cis.ChaincodeSpec.ChaincodeId&#125;&quot;
-&#125;
+{
+    "ChaincodeId" : "${cis.ChaincodeSpec.ChaincodeId}"
+}
 
 // peer.ChaincodeInvokeSpec(cis)
-&#123;
-    &quot;ChaincodeInvokeSpec&quot; : &#123;
-        &quot;ChaincodeSpec&quot; : &#123; // pb.ChaincodeSpec
-            &quot;Type&quot; : &quot;ChaincodeSpec_GOLANG&quot;,
-            &quot;ChaincodeId&quot; : &#123;
-                &quot;Name&quot; : &quot;lscc&quot;
-            &#125;,
-            &quot;Input&quot; : &#123;
-                &quot;Args&quot; : [&quot;deploy&quot;, &quot;$&#123;channelId&#125;&quot;, &quot;$&#123;chaincodDeploySpec&#125;&quot;]
-            &#125;    
-        &#125;
-    &#125;
-&#125;
+{
+    "ChaincodeInvokeSpec" : {
+        "ChaincodeSpec" : { // pb.ChaincodeSpec
+            "Type" : "ChaincodeSpec_GOLANG",
+            "ChaincodeId" : {
+                "Name" : "lscc"
+            },
+            "Input" : {
+                "Args" : ["deploy", "${channelId}", "${chaincodDeploySpec}"]
+            }    
+        }
+    }
+}
 
 // pb.chaincodDeploySpec(cds)
-&#123;
-    &quot;ChaincodeSpec&quot;: &#123;
-        &quot;Type&quot; : &quot;ChaincodeSpec_GOLANG&quot;,
-        &quot;ChaincodeId&quot; : &#123;
-            &quot;Path&quot; : &quot;$&#123;chaincodePath&#125;&quot;,
-            &quot;Name&quot; : &quot;$&#123;chaincodeName&#125;&quot;,
-            &quot;Version&quot; : &quot;$&#123;chaincodeVersion&#125;&quot;
-        &#125;,
-        &quot;Input&quot; : &#123;
-            &quot;Args&quot; : [&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]
-        &#125;   
-    &#125;,
-    &quot;CodePackage&quot;: nil
-&#125;
+{
+    "ChaincodeSpec": {
+        "Type" : "ChaincodeSpec_GOLANG",
+        "ChaincodeId" : {
+            "Path" : "${chaincodePath}",
+            "Name" : "${chaincodeName}",
+            "Version" : "${chaincodeVersion}"
+        },
+        "Input" : {
+            "Args" : ["init","a", "100", "b","200"]
+        }   
+    },
+    "CodePackage": nil
+}
 </code></pre>
 <ol>
 <li>收集endorser的response，然后构建签名后的transaction。下面的方法是普适的。</li>
@@ -346,7 +345,7 @@
 <pre><code class="lang-go">// CreateSignedTx assembles an Envelope message from proposal, endorsements, and a signer.
 // This function should be called by a client when it has collected enough endorsements
 // for a proposal to create a transaction and submit it to peers for ordering
-func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps ...*peer.ProposalResponse) (*common.Envelope, error) &#123;
+func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps ...*peer.ProposalResponse) (*common.Envelope, error) {
     // the original header
     hdr, err := GetHeader(proposal.Header)
     // the original payload
@@ -358,31 +357,31 @@ func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps .
     // ensure that all actions are bitwise equal and that they are successful 
     // 比较所有的response返回的结果是一致的
     var a1 []byte
-    for n, r := range resps &#123;
-        if n == 0 &#123;
+    for n, r := range resps {
+        if n == 0 {
             a1 = r.Payload
-            if r.Response.Status != 200 &#123;
-                return nil, fmt.Errorf(&quot;Proposal response was not successful, error code %d, msg %s&quot;, r.Response.Status, r.Response.Message)
-            &#125;
+            if r.Response.Status != 200 {
+                return nil, fmt.Errorf("Proposal response was not successful, error code %d, msg %s", r.Response.Status, r.Response.Message)
+            }
             continue
-        &#125;
+        }
 
-        if bytes.Compare(a1, r.Payload) != 0 &#123;
-            return nil, fmt.Errorf(&quot;ProposalResponsePayloads do not match&quot;)
-        &#125;
-    &#125;
+        if bytes.Compare(a1, r.Payload) != 0 {
+            return nil, fmt.Errorf("ProposalResponsePayloads do not match")
+        }
+    }
 
     // fill endorsements
     endorsements := make([]*peer.Endorsement, len(resps))
-    for n, r := range resps &#123;
+    for n, r := range resps {
         endorsements[n] = r.Endorsement
-    &#125;
+    }
 
     // 构造各级数据结构并序列化，包含原始的proposal的payload，header等信息，
     // 以及repsponse的payload，各个resp相应的endorsement，
     // 构造了新的peer.Transaction，然后使用signer进行签名。
     // 最后将序列化后的transaction和签名组装成common.Envelope并返回。 
-&#125;
+}
 </code></pre>
 <p>最后，初始化时候得到的<code>cf.BroadcastClient.Send(env)</code>.至此，完成了chaincode instantiate在peer端的所有操作。</p>
 
@@ -395,7 +394,6 @@ func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps .
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Hyperledger-Fabric/" rel="tag"># Hyperledger Fabric</a>
-              <a href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" rel="tag"># 源码分析</a>
           </div>
 
         
@@ -498,7 +496,7 @@ func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps .
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

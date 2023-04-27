@@ -18,18 +18,17 @@
     var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为lc.Args &#x3D; []string&amp;#123;&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address&#x3D;%s&quot;, c.PeerAddress)&amp;#125;。在构建容器时fabric">
+  <meta name="description" content="接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为lc.Args &#x3D; []string{&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address&#x3D;%s&quot;, c.PeerAddress)}。在构建容器时fabric&#x2F;core&#x2F;chaincode&#x2F;platforms&#x2F;gola">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Fabric 1.4源码分析 - chaincode instantiate(4）chaincode容器启动及注册">
 <meta property="og:url" content="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为lc.Args &#x3D; []string&amp;#123;&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address&#x3D;%s&quot;, c.PeerAddress)&amp;#125;。在构建容器时fabric">
+<meta property="og:description" content="接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为lc.Args &#x3D; []string{&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address&#x3D;%s&quot;, c.PeerAddress)}。在构建容器时fabric&#x2F;core&#x2F;chaincode&#x2F;platforms&#x2F;gola">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-02-24T15:37:19.000Z">
-<meta property="article:modified_time" content="2020-10-28T01:59:15.295Z">
+<meta property="article:modified_time" content="2023-04-27T09:09:05.865Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="Hyperledger Fabric">
-<meta property="article:tag" content="源码分析">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-launch/">
@@ -127,7 +126,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -225,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-27 17:09:05" itemprop="dateModified" datetime="2023-04-27T17:09:05+08:00">2023-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,24 +254,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string&#123;&quot;chaincode&quot;, fmt.Sprintf(&quot;-peer.address=%s&quot;, c.PeerAddress)&#125;</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
-<pre><code class="lang-go">util.DockerBuildOptions&#123;
-  Cmd:          fmt.Sprintf(&quot;GOPATH=/chaincode/input:$GOPATH go build -tags \&quot;%s\&quot; %s -o /chaincode/output/chaincode %s&quot;, gotags, ldflagsOpt, pkgname),
+        <p>接下来回到容器启动后在容器中初始化和注册chaincode。在上一节构建docker里提到，容器的启动命令（指默认语言或者显式设置语言-l golang）为<code>lc.Args = []string{"chaincode", fmt.Sprintf("-peer.address=%s", c.PeerAddress)}</code>。在构建容器时<code>fabric/core/chaincode/platforms/golang/platform.go#GenerateDockerBuild</code>，指定了构建参数<code>DockerBuildOptions</code></p>
+<pre><code class="lang-go">util.DockerBuildOptions{
+  Cmd:          fmt.Sprintf("GOPATH=/chaincode/input:$GOPATH go build -tags \"%s\" %s -o /chaincode/output/chaincode %s", gotags, ldflagsOpt, pkgname),
   InputStream:  codepackage,
   OutputStream: binpackage,
-&#125;
+}
 </code></pre>
-<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>$&#123;CC_SRC_PATH&#125;</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH=&quot;github.com/chaincode/chaincode_example02/go/&quot;</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
+<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>${CC_SRC_PATH}</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
 <span id="more"></span>
 <ol>
 <li><code>SetupChaincodeLogging()</code>设置日志相关</li>
-<li>获取变量chaincode名称<code>viper.GetString(&quot;chaincode.id.name&quot;)</code>。回顾上节在创建chaincode容器时在<code>container_runtime.go</code>设置了变量<code>append(c.CommonEnv, &quot;CORE_CHAINCODE_ID_NAME=&quot;+cname)</code>。</li>
+<li>获取变量chaincode名称<code>viper.GetString("chaincode.id.name")</code>。回顾上节在创建chaincode容器时在<code>container_runtime.go</code>设置了变量<code>append(c.CommonEnv, "CORE_CHAINCODE_ID_NAME="+cname)</code>。</li>
 <li><code>factory.InitFactories(factory.GetDefaultOpts())</code>初始化BCCSP（blockchain crypto service）服务。待详述。</li>
 <li><code>userChaincodeStreamGetter</code>构建与peer节点的grpc client。首先，获取<code>peerAddress</code>,这个在<code>container_runtime.go</code>设置了flag启动参数<code>-peer.address</code>，即endorser的peerAddress。然后，与该peer建立连接，构造<code>/protos.ChaincodeSupport/Register</code>的grpc stream。</li>
-<li><code>chatWithPeer(chaincodename string, stream PeerChaincodeStream, cc Chaincode)</code>.新建<code>handler := newChaincodeHandler(stream, cc)</code>，（这里是shim/handler.go），这时候<code>handler.state = created</code>。这是在chaincode容器里的，与之相对的，在peer容器里也有<code>handler</code>，对等处理. 然后<code>handler.serialSend(&amp;pb.ChaincodeMessage&#123;Type: pb.ChaincodeMessage_REGISTER, Payload: payload&#125;);</code>这里payload是<code>&amp;pb.ChaincodeID&#123;Name: chaincodename&#125;</code>。将注册信息发送到peer节点后，启动goroutine。这个goroutine里是for循环，每次循环都新启动一个子goroutine，这个子go routine负责从stream里接受一条消息，放到两个channel（msgAvail, errc）里。<code>msgAvail, errc = stream.Recv()</code>，接收完一条即完成子goroutine的生命周期，下次循环再另起一个。父goroutine读取这两个channel，对接收到的消息msgAvail，则调用<code>handler.handleMessage(in, errc)</code>处理。最外层<code>waitC</code>等待终止信号，期间包含定期发送的<code>pb.ChaincodeMessage_KEEPALIVE</code>，直到遇到接收错误等才终止通信stream，返回异常。</li>
+<li><code>chatWithPeer(chaincodename string, stream PeerChaincodeStream, cc Chaincode)</code>.新建<code>handler := newChaincodeHandler(stream, cc)</code>，（这里是shim/handler.go），这时候<code>handler.state = created</code>。这是在chaincode容器里的，与之相对的，在peer容器里也有<code>handler</code>，对等处理. 然后<code>handler.serialSend(&amp;pb.ChaincodeMessage{Type: pb.ChaincodeMessage_REGISTER, Payload: payload});</code>这里payload是<code>&amp;pb.ChaincodeID{Name: chaincodename}</code>。将注册信息发送到peer节点后，启动goroutine。这个goroutine里是for循环，每次循环都新启动一个子goroutine，这个子go routine负责从stream里接受一条消息，放到两个channel（msgAvail, errc）里。<code>msgAvail, errc = stream.Recv()</code>，接收完一条即完成子goroutine的生命周期，下次循环再另起一个。父goroutine读取这两个channel，对接收到的消息msgAvail，则调用<code>handler.handleMessage(in, errc)</code>处理。最外层<code>waitC</code>等待终止信号，期间包含定期发送的<code>pb.ChaincodeMessage_KEEPALIVE</code>，直到遇到接收错误等才终止通信stream，返回异常。</li>
 </ol>
-<p>再看peer端的对等handler注册。（这里是chaincode/handler.go）这部分在<code>peer node start</code>启动时候执行，注册<code>pb.ChaincodeSupportServer(chaincodeSupport)</code>。每次收到shim/handler的register方法意味着新的<code>Register(&amp;chaincodeSupportRegisterServer&#123;stream&#125;</code>,一路下去在<code>fabric/core/chaincode/chaincode_support#HandleChaincodeStream</code>里新建<code>chaincode/handler</code>，handler.state没有显式设置则为0值，即Created。然后进入主要方法<code>chaincode/handler.ProcessStream</code>。这方法流程跟上面的<code>chatWithPeer</code>非常相似，多了主动发起KeepAlive，以及在异常退出时取消注册hanlder。这也就意味着，chaincode容器与peer容器始终建立连接。hanlder从steam里读取message，然后<code>handleMessage</code>。这里实际上也就是在<code>Handler.Registry（即ChaincodeSupport.HandlerRegistry)</code>里注册该hanlder，跟上节从registry里通过chaincode.cname查找hanlder呼应。此外，在这个处理过程中，peer相应的改变registry里handler的状态，给chaincode容器回复<code>&amp;pb.ChaincodeMessage&#123;Type: pb.ChaincodeMessage_REGISTERED&#125;</code>。然后，handler置成established状态，对端的handler收到pb.ChaincodeMessage_REGISTERED，也将状态置为established。</p>
-<p>chaincode/handler在置成established状态后马上执行<code>notifyRegistry</code>，这里主要两件事情，1.发送pb.ChaincodeMessage_READY，并且状态改为ready；2. 通知HandlerRegistry已完成注册（即从launching里delete当前chaincodename，关闭LaunchState.done channel可以判断以完成注册，这样，在<code>core/chaincode/runtime_launcher.go#start</code>里的<code>select &#123;case &lt;-launchState.Done():</code>可以继续往下走，因为这里调用的<code>RuntimeLauncher.Runtime.Start</code>是通过goroutine异步启动的），这里与上节介绍启动时注册aunching防止重复部署对应。对端收到通知后，也置状态为ready。至此完成了chaincode的启动工作，后续两端handler进入处理Init／Invoke请求流程。</p>
+<p>再看peer端的对等handler注册。（这里是chaincode/handler.go）这部分在<code>peer node start</code>启动时候执行，注册<code>pb.ChaincodeSupportServer(chaincodeSupport)</code>。每次收到shim/handler的register方法意味着新的<code>Register(&amp;chaincodeSupportRegisterServer{stream}</code>,一路下去在<code>fabric/core/chaincode/chaincode_support#HandleChaincodeStream</code>里新建<code>chaincode/handler</code>，handler.state没有显式设置则为0值，即Created。然后进入主要方法<code>chaincode/handler.ProcessStream</code>。这方法流程跟上面的<code>chatWithPeer</code>非常相似，多了主动发起KeepAlive，以及在异常退出时取消注册hanlder。这也就意味着，chaincode容器与peer容器始终建立连接。hanlder从steam里读取message，然后<code>handleMessage</code>。这里实际上也就是在<code>Handler.Registry（即ChaincodeSupport.HandlerRegistry)</code>里注册该hanlder，跟上节从registry里通过chaincode.cname查找hanlder呼应。此外，在这个处理过程中，peer相应的改变registry里handler的状态，给chaincode容器回复<code>&amp;pb.ChaincodeMessage{Type: pb.ChaincodeMessage_REGISTERED}</code>。然后，handler置成established状态，对端的handler收到pb.ChaincodeMessage_REGISTERED，也将状态置为established。</p>
+<p>chaincode/handler在置成established状态后马上执行<code>notifyRegistry</code>，这里主要两件事情，1.发送pb.ChaincodeMessage_READY，并且状态改为ready；2. 通知HandlerRegistry已完成注册（即从launching里delete当前chaincodename，关闭LaunchState.done channel可以判断以完成注册，这样，在<code>core/chaincode/runtime_launcher.go#start</code>里的<code>select {case &lt;-launchState.Done():</code>可以继续往下走，因为这里调用的<code>RuntimeLauncher.Runtime.Start</code>是通过goroutine异步启动的），这里与上节介绍启动时注册aunching防止重复部署对应。对端收到通知后，也置状态为ready。至此完成了chaincode的启动工作，后续两端handler进入处理Init／Invoke请求流程。</p>
 
     </div>
 
@@ -283,7 +282,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Hyperledger-Fabric/" rel="tag"># Hyperledger Fabric</a>
-              <a href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" rel="tag"># 源码分析</a>
           </div>
 
         
@@ -386,7 +384,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
