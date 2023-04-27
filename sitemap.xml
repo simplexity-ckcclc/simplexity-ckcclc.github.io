@@ -72,13 +72,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/2021/01/21/sc-in-e-commerce/</loc>
-    
-    <lastmod>2023-02-09</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/</loc>
     
     <lastmod>2023-02-08</lastmod>
@@ -159,13 +152,6 @@
     <loc>https://simplexity.cn/2020/11/17/did-w3c/</loc>
     
     <lastmod>2020-11-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/2019/09/07/go-channel-demo/</loc>
-    
-    <lastmod>2020-11-16</lastmod>
     
   </url>
   
@@ -459,13 +445,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/tags/Go/</loc>
-    <lastmod>2023-04-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/tags/MPC/</loc>
     <lastmod>2023-04-27</lastmod>
     <changefreq>daily</changefreq>
@@ -488,6 +467,13 @@
   
   <url>
     <loc>https://simplexity.cn/tags/CBDC/</loc>
+    <lastmod>2023-04-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/tags/Go-Language/</loc>
     <lastmod>2023-04-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
