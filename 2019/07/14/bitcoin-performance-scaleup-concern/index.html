@@ -20,8 +20,8 @@
 
   <meta name="description" content="区块大小扩容(Block size)比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。 Pros 提高TPS 更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）  Cons 节点性能要求增高准入门槛提高，导致网络全节点数量减少">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Blockchain性能扩容（1）- (Size, Segwit, Sidechain)">
-<meta property="og:url" content="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/index.html">
+<meta property="og:title" content="Bitcoin性能扩容">
+<meta property="og:url" content="https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="区块大小扩容(Block size)比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。 Pros 提高TPS 更多的交易得到确认（当前限制下，交易手续费低的费用可能无法得到确认）  Cons 节点性能要求增高准入门槛提高，导致网络全节点数量减少">
 <meta property="og:locale">
@@ -29,13 +29,13 @@
 <meta property="og:image" content="https://simplexity.cn/images/side-chain-two-way-peg.png">
 <meta property="og:image" content="https://simplexity.cn/images/lightning-network.png">
 <meta property="article:published_time" content="2019-07-14T08:59:39.000Z">
-<meta property="article:modified_time" content="2020-10-28T01:59:15.292Z">
+<meta property="article:modified_time" content="2023-04-28T07:38:41.741Z">
 <meta property="article:author" content="Travis Wong">
-<meta property="article:tag" content="Blockchain">
+<meta property="article:tag" content="Bitcoin">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://simplexity.cn/images/bitcoin-segwit.png">
 
-<link rel="canonical" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
+<link rel="canonical" href="https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>Blockchain性能扩容（1）- (Size, Segwit, Sidechain) | Simplexity</title>
+  <title>Bitcoin性能扩容 | Simplexity</title>
   
 
 
@@ -133,14 +133,9 @@
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
 
   </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -198,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -211,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Blockchain性能扩容（1）- (Size, Segwit, Sidechain)
+          Bitcoin性能扩容
         </h1>
 
         <div class="post-meta">
@@ -228,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-28 15:38:41" itemprop="dateModified" datetime="2023-04-28T15:38:41+08:00">2023-04-28</time>
               </span>
 
           
@@ -298,7 +293,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
+              <a href="/tags/Bitcoin/" rel="tag"># Bitcoin</a>
           </div>
 
         
@@ -389,13 +384,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-          
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -555,7 +549,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'simplexity-gitalk',
       owner       : 'simplexity-ckcclc',
       admin       : ['simplexity-ckcclc'],
-      id          : '9ee7f266932b4b2353a47941d6e6e732',
+      id          : 'd4d49786d87ae0e1cf065344366609a4',
         language: 'zh-CN',
       distractionFreeMode: true
     });

@@ -571,9 +571,9 @@
       </tags>
   </entry>
   <entry>
-    <title>智能合约授权</title>
-    <url>/2020/11/19/authorization-in-smart-contract/</url>
-    <content><![CDATA[<h3 id="1-合约内授权"><a href="#1-合约内授权" class="headerlink" title="1. 合约内授权"></a>1. 合约内授权</h3><p>业务智能合约内，可能会针对某些用户给予指定的数据访问权，或者调用方法的权限，涉及到合约内数据的授权。以下是solidity伪代码，适用于该业务合约由权威机构管理，也就是存在administrator角色统一分配权限，其他只能作为参与方访问授权数据。相应的可以参考微众银行<a href="https://github.com/WeBankBlockchain/Governance-Authority/tree/master/src/main/contracts">权限治理合约</a>，将用户权限按照分组在权限合约里统一管理，应用合约接口粒度的权限。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">contract Admin &#123;</span><br><span class="line">  address public administrator;</span><br><span class="line"></span><br><span class="line">  modifier <span class="function"><span class="title">admin</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">require</span>(msg.sender == administrator, <span class="string">&quot;Only called by administrator&quot;</span>);</span><br><span class="line">      _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">transferAdmin</span>(<span class="params">address newAdministrator</span>) <span class="title">admin</span> <span class="title">public</span> </span>&#123;</span><br><span class="line">      administrator = newAdministrator;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 业务合约（包含权限管理）</span></span><br><span class="line">contract Service is Admin &#123;</span><br><span class="line">  mapping(<span class="function"><span class="params">uint256</span> =&gt;</span> mapping(<span class="function"><span class="params">address</span> =&gt;</span> bool)) private _authorized;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> &#123;</span><br><span class="line">    administrator = msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只有administrator才有权限授权给userAddr</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">authourize</span>(<span class="params">uint256 itemID, address userAddr</span>) <span class="title">admin</span> <span class="title">public</span> </span>&#123;</span><br><span class="line">    _authorized[itemID][userAddr] = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 授权用户才能操作特定数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">doSth</span>(<span class="params">uint256 itemID</span>) <span class="title">admin</span> <span class="title">public</span> </span>&#123;</span><br><span class="line">    <span class="built_in">require</span>(_authorized[itemID][msg.sender] == <span class="literal">true</span>, <span class="string">&quot;Unthorized&quot;</span>);</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+    <title>智能合约权限管理</title>
+    <url>/2020/11/19/sc-authorization/</url>
+    <content><![CDATA[<h3 id="1-合约内授权"><a href="#1-合约内授权" class="headerlink" title="1. 合约内授权"></a>1. 合约内授权</h3><p>业务智能合约内，可能会针对某些用户给予指定的数据访问权，或者调用方法的权限，涉及到合约内数据的授权。以下是solidity伪代码，适用于该业务合约由权威机构管理，也就是存在administrator角色统一分配权限，其他只能作为参与方访问授权数据。相应的可以参考微众银行<a href="https://github.com/WeBankBlockchain/Governance-Authority/tree/master/src/main/contracts">权限治理合约</a>，将用户权限按照分组在权限合约里统一管理，应用合约接口粒度的权限。<br></p><figure class="highlight javascript"><table><tbody><tr><td class="code"><pre><span class="line">contract Admin {</span><br><span class="line">  address public administrator;</span><br><span class="line"></span><br><span class="line">  modifier <span class="function"><span class="title">admin</span>(<span class="params"></span>)</span> {</span><br><span class="line">      <span class="built_in">require</span>(msg.sender == administrator, <span class="string">"Only called by administrator"</span>);</span><br><span class="line">      _;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">transferAdmin</span>(<span class="params">address newAdministrator</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">      administrator = newAdministrator;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 业务合约（包含权限管理）</span></span><br><span class="line">contract Service is Admin {</span><br><span class="line">  mapping(<span class="function"><span class="params">uint256</span> =&gt;</span> mapping(<span class="function"><span class="params">address</span> =&gt;</span> bool)) private _authorized;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> {</span><br><span class="line">    administrator = msg.sender;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只有administrator才有权限授权给userAddr</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">authourize</span>(<span class="params">uint256 itemID, address userAddr</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">    _authorized[itemID][userAddr] = <span class="literal">true</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 授权用户才能操作特定数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">doSth</span>(<span class="params">uint256 itemID</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">    <span class="built_in">require</span>(_authorized[itemID][msg.sender] == <span class="literal">true</span>, <span class="string">"Unthorized"</span>);</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
 <span id="more"></span>
 <h3 id="2-应用授权"><a href="#2-应用授权" class="headerlink" title="2. 应用授权"></a>2. 应用授权</h3><p>回顾上一篇文章提到的钱包（应用商店）拓扑，平台会存在共用的合约，用户通过某个应用（类似于dapp）来调用这个平台合约（只能通过用户的身份而不是应用的身份，也就是msg.sender是用户身份合约地址）。此处涉及到两个验证，一是验证该应用被平台授权调用该合约，二是验证该用户被该应用授权可以通过来调用该合约。可以遵循以下三个步骤：</p>
 <ol>
@@ -1173,8 +1173,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Blockchain性能扩容（1）- (Size, Segwit, Sidechain)</title>
-    <url>/2019/07/14/blockchain-performance-scaleup-concern/</url>
+    <title>Bitcoin性能扩容</title>
+    <url>/2019/07/14/bitcoin-performance-scaleup-concern/</url>
     <content><![CDATA[<h3 id="区块大小扩容-Block-size"><a href="#区块大小扩容-Block-size" class="headerlink" title="区块大小扩容(Block size)"></a>区块大小扩容(Block size)</h3><p>比特币引入1MB区块大小的背景是大量的粉尘攻击导致区块巨大，区块需要同步的时间长，从而引发DOS（Denial of Service）。同时全节点的带宽，存储要求增高，导致性能不足的节点无法及时与主链同步。</p>
 <h4 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h4><ol>
 <li>提高TPS</li>
@@ -1217,7 +1217,7 @@
 <p>实际上，这样的Charlie相当于目前金融系统里的支付宝角色，一个持久而且大多数节点建立支付通道的节点（或者节点群，类似与Alice与Bob间经过多个节点，这些节点群之间建立支付通道，因此Alice与Bob之间能比较容易找到路由）。同时，对于频繁支付或者大额支付的节点（假设Bob是商家），则Bob与Charlie间的通道容量需要足够大，也就是双方在主链上锚定的资产价值足够高，否则需要经常的关闭（主动方提现需要等一定区块时间）和建立多个通道。这样的并非极端意义的分布式去中心化，但已经利用了区块链的无需信任属性。</p>
 ]]></content>
       <tags>
-        <tag>Blockchain</tag>
+        <tag>Bitcoin</tag>
       </tags>
   </entry>
   <entry>
@@ -1269,31 +1269,6 @@
       <tags>
         <tag>Consensus</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>技术沙龙（1）- 迅雷链同构跨链</title>
-    <url>/2019/07/01/thunderchain-cross-chain/</url>
-    <content><![CDATA[<p>目前公链关键性问题：1. TPS低，确认时间长；2.安全性。<br>迅雷链（同构多链）主要两个特性：1. 各链相互独立平等，独立运行共识机制；2. 保证链间安全。具体可以参看迅雷链官网查看其性能及特性，这里列举沙龙上交流获得的信息。</p>
-<p><img src="/images/thunderchain-cross-chain.jpeg" alt=""></p>
-<ol>
-<li><strong>同构多链</strong>。各链平等独立，相当于将单链分片（zone）。每个链负责部分账号，当链性能不足时动态扩链增加新链（目前还是中心化人工扩展），将账号归属重新分配，同时下发新的路由配置到接入层和各链PBFT共识节点。  </li>
-<li><strong>共识算法PBFT+DPOA</strong>。DPOA(ability)作用为单个链周期性（当前为一天，也可能为若干轮出块，可配置）的选举出部分节点（这个是由中心化根据检测到各个节点和其上报的性能计算出比重分值而选择，指标包含网络带宽，计算能力，网络情况，历史名声等）作为候选节点。然后在这些候选节点中选出PBFT节点（避免同一网络，区域等，根绝PBFT节点超过20多个后性能下降的特性，目前是21个）。此处利用的是PBFT的确定性共识。这些PBFT节点负责在该周期内出块。然后由中心将这些配置（包含这些PBFT节点的ip端口，公钥等）下发到该链（同时也会下发到其他链的PBFT节点用作跨链交易）。  </li>
-</ol>
-<ul>
-<li>当前仍然存在中心控制（包括参数动态调整，选举，监控等）。迅雷链并非需要严格意义上的完全去中心化，而是核心思想，分布式共识账本，不可篡改，以及智能合约。</li>
-</ul>
-<ol>
-<li><strong>交易过程</strong>。交易发起方通过接入层接入链，由接入层根据发起账号路由到其归属链。当动态扩链时，中心（metachain）会将更新路由规则。如果交易当接收方与发起方在同一个链上，该交易为单链交易，按照正常程序打包入块。如果交易接受方在其他链上，当交易在该链打包出块后（例如转账中对from账号扣钱），同时将跨链交易按照接收方所在链以目的链（从路由配置得到）为分割单独打包成交易。from链的relay节点（在PBFT节点中选取两个）将改打包后的交易（看作一个交易，由from链的PFBT节点签名）发送到to链的relay节点，然后to链的relay节点将该跨链交易与其他的普通同链交易进行后续的打包出块（例如转账中对to账号加钱）。to链的PBFT会验证from链PBFT节点对交易的签名。出块后执行结果会回送到from链的relay节点，同时relay节点也有重试功能。（当前是push的方式，后续可能增加pull的方式，由to链的relay节点定期去from链的relay节点拉取交易）  </li>
-</ol>
-<ul>
-<li>相当于一笔交易被拆分，没法保证单链下的原子性。from链的执行成功后，没法同时保证to链的执行成功（即不存在分布式事务）。当前没有回滚机制（主要是因为from一直在出块，跨链交易回滚会造成from链的扣款操作和该回滚操作中间的其他区块的操作也需要回滚，演变成雪球效应）。或者使用类似于分布式锁，将账户锁定，但相应的会损害性能。据说在研究使用UTXO模型来解决改问题。</li>
-</ul>
-<p>另外，其他的话题点包括：</p>
-<ol>
-<li>智能合约的安全性检测。通过账户的交易特征，合约的字节码特征等，使用机器学习的方法，识别诈骗等恶意智能合约。</li>
-<li>5G+区块链。改变对设备对控制权方式（拥有设备对私钥）</li>
-</ol>
-]]></content>
   </entry>
   <entry>
     <title>Ethereum概念理解</title>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2020/11/19/sc-authorization/</loc>
+    <lastmod>2023-04-28</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/</loc>
+    <lastmod>2023-04-28</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/</loc>
     <lastmod>2023-04-27</lastmod>
   </url>
@@ -125,10 +133,6 @@
     <lastmod>2021-12-04</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2020/11/19/authorization-in-smart-contract/</loc>
-    <lastmod>2021-02-08</lastmod>
-  </url>
-  <url>
     <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
     <lastmod>2020-11-20</lastmod>
   </url>
@@ -146,10 +150,6 @@
   </url>
   <url>
     <loc>https://simplexity.cn/2019/02/23/foreword/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/07/01/thunderchain-cross-chain/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
@@ -178,10 +178,6 @@
   </url>
   <url>
     <loc>https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>

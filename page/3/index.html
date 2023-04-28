@@ -126,14 +126,9 @@
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
 
   </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -346,7 +341,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -360,7 +355,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/14/blockchain-performance-scaleup-concern/" class="post-title-link" itemprop="url">Blockchain性能扩容（1）- (Size, Segwit, Sidechain)</a>
+            <a href="/2019/07/14/bitcoin-performance-scaleup-concern/" class="post-title-link" itemprop="url">Bitcoin性能扩容</a>
         </h2>
 
         <div class="post-meta">
@@ -377,7 +372,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-04-28 15:38:41" itemprop="dateModified" datetime="2023-04-28T15:38:41+08:00">2023-04-28</time>
               </span>
 
           
@@ -404,7 +399,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/14/blockchain-performance-scaleup-concern/#more" rel="contents">
+              <a class="btn" href="/2019/07/14/bitcoin-performance-scaleup-concern/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -506,90 +501,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/01/thunderchain-cross-chain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/01/thunderchain-cross-chain/" class="post-title-link" itemprop="url">技术沙龙（1）- 迅雷链同构跨链</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-01 10:32:44" itemprop="dateCreated datePublished" datetime="2019-07-01T10:32:44+08:00">2019-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>目前公链关键性问题：1. TPS低，确认时间长；2.安全性。<br>迅雷链（同构多链）主要两个特性：1. 各链相互独立平等，独立运行共识机制；2. 保证链间安全。具体可以参看迅雷链官网查看其性能及特性，这里列举沙龙上交流获得的信息。</p>
-<p><img src="/images/thunderchain-cross-chain.jpeg" alt=""></p>
-<ol>
-<li><strong>同构多链</strong>。各链平等独立，相当于将单链分片（zone）。每个链负责部分账号，当链性能不足时动态扩链增加新链（目前还是中心化人工扩展），将账号归属重新分配，同时下发新的路由配置到接入层和各链PBFT共识节点。  </li>
-<li><strong>共识算法PBFT+DPOA</strong>。DPOA(ability)作用为单个链周期性（当前为一天，也可能为若干轮出块，可配置）的选举出部分节点（这个是由中心化根据检测到各个节点和其上报的性能计算出比重分值而选择，指标包含网络带宽，计算能力，网络情况，历史名声等）作为候选节点。然后在这些候选节点中选出PBFT节点（避免同一网络，区域等，根绝PBFT节点超过20多个后性能下降的特性，目前是21个）。此处利用的是PBFT的确定性共识。这些PBFT节点负责在该周期内出块。然后由中心将这些配置（包含这些PBFT节点的ip端口，公钥等）下发到该链（同时也会下发到其他链的PBFT节点用作跨链交易）。  </li>
-</ol>
-<ul>
-<li>当前仍然存在中心控制（包括参数动态调整，选举，监控等）。迅雷链并非需要严格意义上的完全去中心化，而是核心思想，分布式共识账本，不可篡改，以及智能合约。</li>
-</ul>
-<ol>
-<li><strong>交易过程</strong>。交易发起方通过接入层接入链，由接入层根据发起账号路由到其归属链。当动态扩链时，中心（metachain）会将更新路由规则。如果交易当接收方与发起方在同一个链上，该交易为单链交易，按照正常程序打包入块。如果交易接受方在其他链上，当交易在该链打包出块后（例如转账中对from账号扣钱），同时将跨链交易按照接收方所在链以目的链（从路由配置得到）为分割单独打包成交易。from链的relay节点（在PBFT节点中选取两个）将改打包后的交易（看作一个交易，由from链的PFBT节点签名）发送到to链的relay节点，然后to链的relay节点将该跨链交易与其他的普通同链交易进行后续的打包出块（例如转账中对to账号加钱）。to链的PBFT会验证from链PBFT节点对交易的签名。出块后执行结果会回送到from链的relay节点，同时relay节点也有重试功能。（当前是push的方式，后续可能增加pull的方式，由to链的relay节点定期去from链的relay节点拉取交易）  </li>
-</ol>
-<ul>
-<li>相当于一笔交易被拆分，没法保证单链下的原子性。from链的执行成功后，没法同时保证to链的执行成功（即不存在分布式事务）。当前没有回滚机制（主要是因为from一直在出块，跨链交易回滚会造成from链的扣款操作和该回滚操作中间的其他区块的操作也需要回滚，演变成雪球效应）。或者使用类似于分布式锁，将账户锁定，但相应的会损害性能。据说在研究使用UTXO模型来解决改问题。</li>
-</ul>
-<p>另外，其他的话题点包括：</p>
-<ol>
-<li>智能合约的安全性检测。通过账户的交易特征，合约的字节码特征等，使用机器学习的方法，识别诈骗等恶意智能合约。</li>
-<li>5G+区块链。改变对设备对控制权方式（拥有设备对私钥）</li>
-</ol>
-
       
     </div>
 
@@ -1143,6 +1054,88 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/02/fabric-inpractice-concept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/02/fabric-inpractice-concept/" class="post-title-link" itemprop="url">Fabric 1.4实战 - 从现象看概念</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-02 14:58:50" itemprop="dateCreated datePublished" datetime="2019-04-02T14:58:50+08:00">2019-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>通过Fabric实战现象厘清和解析概念，本文只列举现象，未深入源码分析。</p>
+<h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><ol>
+<li><p><strong>【失败】</strong> 同一个节点peer重复install同一个chaincode<br>报错。<code>Error: Bad response: 500 - error installing chaincode code papercontract:0(chaincode /var/hyperledger/production/chaincodes/papercontract.0 exists)</code></p>
+</li>
+<li><p><strong>【失败】</strong> 同一个channle重复initiate同一个chaincode<br>报错。<code>Error: could not assemble transaction, err proposal response was not successful, error code 500, msg chaincode with name &#39;papercontract&#39; already exists</code></p>
+</li>
+<li><p><strong>【失败】</strong> 重复创建同一个channel<br>报错。<code>BAD_REQUEST -- error authorizing update: error validating ReadSet: readset expected key [Group]  /Channel/Application at version 0, but got version 1</code>。这是因为在之前的<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>指定的channel.tx的write_set里的version为1，而read_set的version为0。之前已经创建过，因此当前的version为1，<code>common/configtx/update.go#authorizeUpdate-&gt;common/configtx/update.go#verifyReadSet</code>校验不通过，报错。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1214,13 +1207,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-          
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>

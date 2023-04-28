@@ -7,7 +7,7 @@ https://simplexity.cn/2021/12/04/suptech-data-collection/
 https://simplexity.cn/2021/07/12/bigdata-metadata-governance/
 https://simplexity.cn/2021/06/29/bigdata-data-governance/
 https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/
-https://simplexity.cn/2020/11/19/authorization-in-smart-contract/
+https://simplexity.cn/2020/11/19/sc-authorization/
 https://simplexity.cn/2020/11/18/did-account-system/
 https://simplexity.cn/2020/11/17/did-w3c/
 https://simplexity.cn/2020/11/04/privacy-on-chain/
@@ -20,9 +20,8 @@ https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/
 https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/
 https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/
 https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/
-https://simplexity.cn/2019/07/14/blockchain-performance-scaleup-concern/
+https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/
 https://simplexity.cn/2019/07/08/consensus-pos/
-https://simplexity.cn/2019/07/01/thunderchain-cross-chain/
 https://simplexity.cn/2019/06/25/understanding-ethereum/
 https://simplexity.cn/2019/06/12/ethereum-design-rationale/
 https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/
