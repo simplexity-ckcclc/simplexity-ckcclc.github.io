@@ -20,7 +20,7 @@
 
   <meta name="description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程1234• Verifier chooses a random value for x and evaluates h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习">
+<meta property="og:title" content="零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记">
 <meta property="og:url" content="https://simplexity.cn/2020/08/12/zk-snark-paper/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="本文为Why and How zk-SNARK Works: Definitive Explanation论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。 2. The Medium of a Proof 多项式是zk-snark的核心   基本流程1234• Verifier chooses a random value for x and evaluates h">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snark-non-interactivity.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/zk-snarks/zk-snark-example.jpg">
 <meta property="article:published_time" content="2020-08-12T13:26:30.000Z">
-<meta property="article:modified_time" content="2020-11-20T16:31:40.527Z">
+<meta property="article:modified_time" content="2023-04-28T14:38:29.725Z">
 <meta property="article:author" content="Travis Wong">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://simplexity.cn/images/zk-snarks/zk-snarks-encrypted-polynomial.jpeg">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习 | Simplexity</title>
+  <title>零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记 | Simplexity</title>
   
 
 
@@ -207,7 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习
+          零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记
         </h1>
 
         <div class="post-meta">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-21 00:31:40" itemprop="dateModified" datetime="2020-11-21T00:31:40+08:00">2020-11-21</time>
+                <time title="Modified: 2023-04-28 22:38:29" itemprop="dateModified" datetime="2023-04-28T22:38:29+08:00">2023-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,7 +259,7 @@
 <li><strong>多项式是zk-snark的核心</strong></li>
 </ul>
 <ol>
-<li>基本流程<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></table></figure></li>
+<li>基本流程<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></tbody></table></figure></li>
 <li>存在问题<ul>
 <li>prover可以通过其他方式得到多项式结果，没有方法确保该结果是经过多项式计算得来</li>
 <li>多项式的阶数需要足够高</li>
@@ -269,7 +269,7 @@
 <h2 id=""><a href="#" class="headerlink" title=""></a><span id="more"></span></h2><h3 id="3-Non-Interactive-Zero-Knowledge-of-a-Polynomial"><a href="#3-Non-Interactive-Zero-Knowledge-of-a-Polynomial" class="headerlink" title="3 Non-Interactive Zero-Knowledge of a Polynomial"></a>3 Non-Interactive Zero-Knowledge of a Polynomial</h3><p>这一章是zk-snark的理论基础。</p>
 <h3 id="3-1-Proving-Knowledge-of-a-Polynomial"><a href="#3-1-Proving-Knowledge-of-a-Polynomial" class="headerlink" title="3.1 Proving Knowledge of a Polynomial"></a>3.1 Proving Knowledge of a Polynomial</h3><ol>
 <li><p>流程</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">• Verifier samples a random value r, calculates t = t(r) (i.e., evaluates) and gives r to the prover</span><br><span class="line">• Prover calculates h(x) = p(x) and evaluates p(r) and h(r); the resulting values p,h are t(x) provided to the verifier</span><br><span class="line">• Verifier then checks that p = t · h, if so those polynomials are equal, meaning that p(x) has t(x) as a cofactor.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">• Verifier samples a random value r, calculates t = t(r) (i.e., evaluates) and gives r to the prover</span><br><span class="line">• Prover calculates h(x) = p(x) and evaluates p(r) and h(r); the resulting values p,h are t(x) provided to the verifier</span><br><span class="line">• Verifier then checks that p = t · h, if so those polynomials are equal, meaning that p(x) has t(x) as a cofactor.</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><p>Q1： 为什么prover不直接传递t ?<br>A1： 需要证明的是 prover知道t，即其中的两个根。下文有说明，prover可能通过别的方式恰好知道t(s)的值，协议不安全。而zk-snark里是将要证明的表达成多项式，然后由verifier构造基础多项式，让prover来赋值输入/输出，通过证明t的根是verifier的目标多项式的根，从而证明其输出的正确性。</p>
 </li>
@@ -284,11 +284,11 @@
 </ul>
 </li>
 </ol>
-<h3 id="3-3-Obscure-Evaluation"><a href="#3-3-Obscure-Evaluation" class="headerlink" title="3.3 Obscure Evaluation"></a>3.3 Obscure Evaluation</h3><h3 id="3-3-1-Homomorphic-Encryption（同态加密）"><a href="#3-3-1-Homomorphic-Encryption（同态加密）" class="headerlink" title="3.3.1 Homomorphic Encryption（同态加密）"></a>3.3.1 Homomorphic Encryption（同态加密）</h3><p>The general idea is that we choose a base natural number g (say 5) and to encrypt a value we exponentiate g to the power of that value.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5^3 = 125, Where 125 is the encryption of 3.</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-Obscure-Evaluation"><a href="#3-3-Obscure-Evaluation" class="headerlink" title="3.3 Obscure Evaluation"></a>3.3 Obscure Evaluation</h3><h3 id="3-3-1-Homomorphic-Encryption（同态加密）"><a href="#3-3-1-Homomorphic-Encryption（同态加密）" class="headerlink" title="3.3.1 Homomorphic Encryption（同态加密）"></a>3.3.1 Homomorphic Encryption（同态加密）</h3><p>The general idea is that we choose a base natural number g (say 5) and to encrypt a value we exponentiate g to the power of that value.<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5^3 = 125, Where 125 is the encryption of 3.</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ol>
 <li>存在问题<br>将125持续的除以5，直到结果为1，此时的step就是加密的3</li>
 </ol>
-<h3 id="3-3-3-Strong-Homomorphic-Encryption"><a href="#3-3-3-Strong-Homomorphic-Encryption" class="headerlink" title="3.3.3 Strong Homomorphic Encryption"></a>3.3.3 Strong Homomorphic Encryption</h3><p>模运算。基本流程如下：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">encryption :  5^3 = 6 (mod 7)</span><br><span class="line">multiplication :  6^2 = (5^3)^2 = 5^6 = 1 (mod 7)</span><br><span class="line">addition:   5^3·5^2 =5^5 =3 (mod7)</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-3-Strong-Homomorphic-Encryption"><a href="#3-3-3-Strong-Homomorphic-Encryption" class="headerlink" title="3.3.3 Strong Homomorphic Encryption"></a>3.3.3 Strong Homomorphic Encryption</h3><p>模运算。基本流程如下：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">encryption :  5^3 = 6 (mod 7)</span><br><span class="line">multiplication :  6^2 = (5^3)^2 = 5^6 = 1 (mod 7)</span><br><span class="line">addition:   5^3·5^2 =5^5 =3 (mod7)</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ol>
 <li>局限性<br>while we can multiply an encrypted value by an unencrypted value, we cannot multiply (and divide) two encrypted values, as well as we cannot exponentiate an encrypted value.<br>两个加密结果间无法直接进行乘法运算。（下文引入pairing配对函数，解决乘法运算）</li>
 </ol>
@@ -306,14 +306,14 @@
 </ul>
 <ol>
 <li><p>结论：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">– Bob has applied the same exponent (i.e., c) to both values of the tuple</span><br><span class="line">– Bob could only use the original Alice’s tuple to maintain the α relationship</span><br><span class="line">– Bob knows the applied exponent c, because the only way to produce valid (b,b′) is to use the same exponent</span><br><span class="line">– Alice has not learned c for the same reason Bob cannot learn α</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">– Bob has applied the same exponent (i.e., c) to both values of the tuple</span><br><span class="line">– Bob could only use the original Alice’s tuple to maintain the α relationship</span><br><span class="line">– Bob knows the applied exponent c, because the only way to produce valid (b,b′) is to use the same exponent</span><br><span class="line">– Alice has not learned c for the same reason Bob cannot learn α</span><br></pre></td></tr></tbody></table></figure>
 <p>即Prover必须使用verifier提供的基于s<sup>i</sup>计算出来的值进行计算，verifier可以通过验证(g<sup>p</sup>, g<sup>p’</sup>)间仍然保持 α 的指数偏移量关系。同时verifier无法得知prover使用的参数c的值。</p>
 </li>
 <li><p>存在问题：</p>
 </li>
 </ol>
 <ul>
-<li>Q1: 如果原始的<code>p=(x+1)*(x+2)</code>，其中<code>t=x+1</code>,<code>h=x+2</code>。但是prover捏造<code>h&#39;=x+3</code>，即<code>p&#39;=(x+1)*(x+3)</code>，verifier是否无法验证？<br>A1: 在zk-snark实际应用中看4.8小节</li>
+<li>Q1: 如果原始的<code>p=(x+1)*(x+2)</code>，其中<code>t=x+1</code>,<code>h=x+2</code>。但是prover捏造<code>h'=x+3</code>，即<code>p'=(x+1)*(x+3)</code>，verifier是否无法验证？<br>A1: 在zk-snark实际应用中看4.8小节</li>
 </ul>
 <h3 id="3-5-Zero-Knowledge"><a href="#3-5-Zero-Knowledge" class="headerlink" title="3.5 Zero-Knowledge"></a>3.5 Zero-Knowledge</h3><p>verifier可以从E（p）知道关于p的多项式的具体参数。例如上面的例子对E（p）因式分解？<br>解决方案：类似verifier引入 α 保证prover使用其提供的值进行运算，相应的prover也映入 δ 指数偏移量。例如验证 g<sup>δ·p</sup> = g<sup>δ·t(s)h</sup></p>
 <h3 id="3-6-Non-Interactivity"><a href="#3-6-Non-Interactivity" class="headerlink" title="3.6 Non-Interactivity"></a>3.6 Non-Interactivity</h3><p>非交互式。多方各自验证，防止verifier和prover联合作假或者泄漏，proof可以重用提高效率，并且prover无需时刻在线响应。核心是Cryptographic pairings(配对函数)，即找到算法可以支持加密后数值的<strong>同态乘法</strong>运算，即e(g<sup>a</sup>, g<sup>b</sup>) = e(g, g)<sup>ab</sup>（小节3.3.3中不支持）。这样在setup阶段可以构造composite CRS（common reference string）（小节3.6.3）<br><img src="/images/zk-snarks/zk-snark-non-interactivity.jpg" alt=""></p>
@@ -321,7 +321,7 @@
 <h3 id="3-7-Succinct-Non-Interactive-Argument-of-Knowledge-of-Polynomial"><a href="#3-7-Succinct-Non-Interactive-Argument-of-Knowledge-of-Polynomial" class="headerlink" title="3.7 Succinct Non-Interactive Argument of Knowledge of Polynomial"></a>3.7 Succinct Non-Interactive Argument of Knowledge of Polynomial</h3><p>重要，基础。<strong>Setup-Proving-Verification</strong> 三步骤，详见文章。</p>
 <ul>
 <li><strong>Setup</strong>  <ul>
-<li>proving key: { g<sup>s<sup>i</sup>&lt;/sup&gt; } <sub> i∈[d] </sub> , { g<sup>αs<sup>i</sup>&lt;/sup&gt; }<sub> i∈[d] </sub>   (提供给prover)</li>
+<li>proving key: { g<sup>s<sup>i</sup>&lt;/sup&gt; } <sub> i∈[d] </sub> , { g<sup>αs<sup>i</sup>&lt;/sup&gt; }<sub> i∈[d] </sub>   (提供给prover)</sup></sup></li>
 <li>verification key: g<sup>α</sup>, g<sup>t(s)</sup> （自留，后续在Verification阶段使用）</li>
 </ul>
 </li>
@@ -376,13 +376,13 @@
 <li><p>Q1: 这里证明3X2=6,如果构造时候输入为4X3=12，verifier验证的等式同样成立。如何校验输入的正确性？</p>
 <p>A1: 这里verifier可以检查 g<sup>L(s)</sup> = g<sup>al<sub>a</sub>(s)</sup> · g<sup>dl<sub>d</sub>(s)</sup> = g<sup>al<sub>a</sub>(s) + dl<sub>d</sub>(s)</sup>，即可判断输入参数是否相符。<strong><em>verifie是否知道a,d的取值？</em></strong></p>
 </li>
-<li>Q2: 提供的是l(x)的阶数为多阶的，verifier提供是以{ g<sup>s<sup>i</sup>&lt;/sup&gt; }i∈[d]的方式提供的，在Proving阶段prover赋值时，如何保证对于每一阶都赋予相同的值？<br>A2: </li>
+<li>Q2: 提供的是l(x)的阶数为多阶的，verifier提供是以{ g<sup>s<sup>i</sup>&lt;/sup&gt; }i∈[d]的方式提供的，在Proving阶段prover赋值时，如何保证对于每一阶都赋予相同的值？<br>A2: </sup></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">As a consequence the prover:</span><br><span class="line">• is not able to modify provided variable polynomials by changing their coefficients, except “assigning” values, because prover is presented only with encrypted evaluations of these polynomials, and because necessary encrypted powers of s are unavailable separately with their α-shifts</span><br><span class="line">• is not able to add another polynomial to the provided ones because the α-ratio will be broken</span><br><span class="line">• is not able to modify operand polynomials through multiplication by some other polyno- mial u(x), which could disproportionately modify the values because encrypted multipli- cation is not possible in pre-pairings space</span><br></pre></td></tr></table></figure>
-<h3 id="4-7-Construction-Properties"><a href="#4-7-Construction-Properties" class="headerlink" title="4.7 Construction Properties"></a>4.7 Construction Properties</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note the operation’s construction is also called “constraint” because the operation represented by polynomial construction does not compute results per se, but rather checks that the prover already knows variables (including result), and they are valid for the operation, i.e., the prover is constrained to provide consistent values no matter what they are.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">As a consequence the prover:</span><br><span class="line">• is not able to modify provided variable polynomials by changing their coefficients, except “assigning” values, because prover is presented only with encrypted evaluations of these polynomials, and because necessary encrypted powers of s are unavailable separately with their α-shifts</span><br><span class="line">• is not able to add another polynomial to the provided ones because the α-ratio will be broken</span><br><span class="line">• is not able to modify operand polynomials through multiplication by some other polyno- mial u(x), which could disproportionately modify the values because encrypted multipli- cation is not possible in pre-pairings space</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="4-7-Construction-Properties"><a href="#4-7-Construction-Properties" class="headerlink" title="4.7 Construction Properties"></a>4.7 Construction Properties</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note the operation’s construction is also called “constraint” because the operation represented by polynomial construction does not compute results per se, but rather checks that the prover already knows variables (including result), and they are valid for the operation, i.e., the prover is constrained to provide consistent values no matter what they are.</span><br></pre></td></tr></tbody></table></figure>
 <p>也就是说，验证的是输入/输出计算结果，即代入上面构造的L(x),R(x),O(x)，需要证明其中的根，即t(x)。通过验证约束的方式取代直接提供输出结果的方式。</p>
 <h3 id="4-8-Example-Computation"><a href="#4-8-Example-Computation" class="headerlink" title="4.8 Example Computation"></a>4.8 Example Computation</h3><p>l(x),r(x),o(x)系列子函数的这些都是已知的，也是verifier加密后传递到prover。prover使用输入w=1,a=3,b=2,计算出结果v=6，并且代入计算得到L(x),R(x),O(x),然后即传统的p(x)=L(x)·R(x)-O(x)，其中t(x)已知，因为这个是verifier用来计算l(x),r(x),o(x)的根。也就是，<strong>需要证明的是v=6</strong>。这个是通过将v=6代入不等式证明的。</p>
-<p><img src="/images/zk-snarks/zk-snark-example.jpg" alt=""><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m=a·b</span><br><span class="line">w·(m-a-b)=v-a-b</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/zk-snarks/zk-snark-example.jpg" alt=""><br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m=a·b</span><br><span class="line">w·(m-a-b)=v-a-b</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>即图中在x=1,2,3三个点处都满足<code>L(x)·R(x)-O(x)=0</code>，如果改变v的值使其不等于6，则<code>L(x)·R(x)-O(x)</code>该等式在x=2处<code>w·（m-a-b）!= v-a-b</code>，即x=2不是其中一个根，verifier验证失败。</p>
 <h3 id="4-9-Verifiable-Computation-Protocol"><a href="#4-9-Verifiable-Computation-Protocol" class="headerlink" title="4.9 Verifiable Computation Protocol"></a>4.9 Verifiable Computation Protocol</h3><h4 id="4-9-1-限定L-x-只由-li-x-构成，并且证明的等式必须是L-x-·-R（x）-O-x-。-防止左操作数，右操作数，输出在证明中混用。"><a href="#4-9-1-限定L-x-只由-li-x-构成，并且证明的等式必须是L-x-·-R（x）-O-x-。-防止左操作数，右操作数，输出在证明中混用。" class="headerlink" title="4.9.1 - 限定L(x)只由 li(x) 构成，并且证明的等式必须是L(x) · R（x）= O(x)。 防止左操作数，右操作数，输出在证明中混用。"></a>4.9.1 - 限定<code>L(x)</code>只由 l<sub>i</sub>(x) 构成，并且证明的等式必须是<code>L(x) · R（x）= O(x)</code>。 防止左操作数，右操作数，输出在证明中混用。</h4><p><strong>Solution</strong>: <code>l(x),r(x),o(x)</code>分别使用不同的α<sub>l</sub>, α<sub>r</sub>, α<sub>o</sub>。</p>
 <h4 id="4-9-2-限定在L-x-R-x-O-x-使用的参数vi-即4-8例子中的a-b-w等）是一致的。"><a href="#4-9-2-限定在L-x-R-x-O-x-使用的参数vi-即4-8例子中的a-b-w等）是一致的。" class="headerlink" title="4.9.2 - 限定在L(x),R(x),O(x)使用的参数vi(即4.8例子中的a,b,w等）是一致的。"></a>4.9.2 - 限定在<code>L(x),R(x),O(x)</code>使用的参数v<sub>i</sub>(即4.8例子中的a,b,w等）是一致的。</h4><p><strong>Solution</strong>:  为校验校验 v<sub>l,i</sub> = v<sub>r,i</sub> = v<sub>o,i</sub> = v<sub>β,i</sub>，关键是通过以下等式<br>e(g<sup>v<sub>l,i</sub> ·l<sub>i</sub>(s)</sup> · g<sup>v<sub>r,i</sub> ·r<sub>i</sub>(s)</sup> · g<sup>v<sub>o,i</sub> ·o<sub>i</sub>(s)</sup>, g<sup>β</sup>) = e(g<sup>v<sub>β,i</sub> ·β·(l<sub>i</sub>(s)+r<sub>i</sub>(s)+o<sub>i</sub>(s))</sup>, g)。 进一步为防止如<code>l(x) = r(x)</code>的情况，选择各自不等的β<sub>l</sub>, β<sub>r</sub>, β<sub>o</sub></p>
@@ -402,7 +402,7 @@
 </li>
 </ul>
 <h4 id="4-9-3-Non-malleability-of-Variable-and-Variable-Consistency-Polynomials"><a href="#4-9-3-Non-malleability-of-Variable-and-Variable-Consistency-Polynomials" class="headerlink" title="4.9.3 Non-malleability of Variable and Variable Consistency Polynomials"></a>4.9.3 Non-malleability of Variable and Variable Consistency Polynomials</h4><p><strong>Q1</strong>:（Malleability of Variable Polynomials） g<sup>α<sub>l</sub></sup> 和 g<sup>β<sub>l</sub></sup>是在verification key里的，为什么prover能拿得到？<br><strong>Q2</strong>：（Non-Malleability） 作为verification key，这里的g<sup>γ</sup>是否就是类似与Q1里的g ? 这样的区别在哪里？</p>
-<h4 id="4-10-Constraints"><a href="#4-10-Constraints" class="headerlink" title="4.10 Constraints"></a>4.10 Constraints</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">However, the protocol is not actually “computing” but rather is checking that the output value is the correct result of an operation for the operand’s values. That is why it is called a constraint, i.e., a verifier is constraining a prover to provide valid values for the predefined “program” no matter what are they. </span><br></pre></td></tr></table></figure>
+<h4 id="4-10-Constraints"><a href="#4-10-Constraints" class="headerlink" title="4.10 Constraints"></a>4.10 Constraints</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">However, the protocol is not actually “computing” but rather is checking that the output value is the correct result of an operation for the operand’s values. That is why it is called a constraint, i.e., a verifier is constraining a prover to provide valid values for the predefined “program” no matter what are they. </span><br></pre></td></tr></tbody></table></figure>
 <h3 id="4-11-Public-Inputs-and-One-限定常量的值。"><a href="#4-11-Public-Inputs-and-One-限定常量的值。" class="headerlink" title="4.11 Public Inputs and One 限定常量的值。"></a>4.11 Public Inputs and One 限定常量的值。</h3><p><strong>Solution</strong>:<br>L(x)=L<sub>v</sub>(x)+L<sub>p</sub>(x)，其中verifier提供L<sub>v</sub>(x) = l<sub>0</sub>(x) + l<sub>1</sub>(x) + . . . + l<sub>m</sub>(x)。限定了0阶（即常量）的值v<sub>one</sub></p>
 <ul>
 <li><strong>Setup</strong>  <ul>
@@ -414,7 +414,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Effectively this is taking some variables from the prover into the hands of verifier while still preserving the balance of the equation. Therefore the valid operations check should still hold, but only if the prover has used the same values that the verifier used for his input.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Effectively this is taking some variables from the prover into the hands of verifier while still preserving the balance of the equation. Therefore the valid operations check should still hold, but only if the prover has used the same values that the verifier used for his input.</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="4-12-Zero-Knowledge-Proof-of-Computation"><a href="#4-12-Zero-Knowledge-Proof-of-Computation" class="headerlink" title="4.12 Zero-Knowledge Proof of Computation"></a>4.12 Zero-Knowledge Proof of Computation</h3><p>零知识证明，各自加上变换值。 δ<sub>l</sub>, δ<sub>r</sub>,  δ<sub>o</sub>。通过加法实现同态加密。<br>L(s) + δ<sub>l</sub>t(s)) · (R(s) + δ<sub>r</sub>t(s)) − (O(s) + δ<sub>o</sub>t(s)) = t(s) · (∆ + h(s))<br>∆ = δ<sub>r</sub>L(s) + δ<sub>l</sub>R(s) + δ<sub>l</sub>δ<sub>r</sub>t(s) − δ<sub>o</sub></p>
 <p>只要满足以上关系，可以推导，在verification阶段可以就可以验证<br>L · R − O + t · ∆  = t(s)h + t(s) · ∆ </p>
 <hr>
@@ -536,14 +536,6 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/simplexity-ckcclc" title="GitHub → https://github.com/simplexity-ckcclc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
 
 
 

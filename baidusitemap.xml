@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
+    <lastmod>2023-04-28</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2020/11/19/sc-authorization/</loc>
     <lastmod>2023-04-28</lastmod>
   </url>
@@ -131,10 +135,6 @@
   <url>
     <loc>https://simplexity.cn/2019/11/14/understanding-bitcoin/</loc>
     <lastmod>2021-12-04</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
-    <lastmod>2020-11-20</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn/2020/11/18/did-account-system/</loc>
