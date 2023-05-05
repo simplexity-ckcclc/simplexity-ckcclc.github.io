@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -1058,7 +1058,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/02/fabric-inpractice-concept/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -1072,7 +1072,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/02/fabric-inpractice-concept/" class="post-title-link" itemprop="url">Fabric 1.4实战 - 从现象看概念</a>
+            <a href="/2019/03/28/consensus-pbft-paper/" class="post-title-link" itemprop="url">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -1082,7 +1082,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-02 14:58:50" itemprop="dateCreated datePublished" datetime="2019-04-02T14:58:50+08:00">2019-04-02</time>
+              <time title="Created: 2019-03-28 20:11:29" itemprop="dateCreated datePublished" datetime="2019-03-28T20:11:29+08:00">2019-03-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1097,7 +1097,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
                 </span>
             </span>
 
@@ -1112,16 +1112,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>通过Fabric实战现象厘清和解析概念，本文只列举现象，未深入源码分析。</p>
-<h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><ol>
-<li><p><strong>【失败】</strong> 同一个节点peer重复install同一个chaincode<br>报错。<code>Error: Bad response: 500 - error installing chaincode code papercontract:0(chaincode /var/hyperledger/production/chaincodes/papercontract.0 exists)</code></p>
-</li>
-<li><p><strong>【失败】</strong> 同一个channle重复initiate同一个chaincode<br>报错。<code>Error: could not assemble transaction, err proposal response was not successful, error code 500, msg chaincode with name &#39;papercontract&#39; already exists</code></p>
-</li>
-<li><p><strong>【失败】</strong> 重复创建同一个channel<br>报错。<code>BAD_REQUEST -- error authorizing update: error validating ReadSet: readset expected key [Group]  /Channel/Application at version 0, but got version 1</code>。这是因为在之前的<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>指定的channel.tx的write_set里的version为1，而read_set的version为0。之前已经创建过，因此当前的version为1，<code>common/configtx/update.go#authorizeUpdate-&gt;common/configtx/update.go#verifyReadSet</code>校验不通过，报错。</p>
+          <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
+<li>算法的适用范围<blockquote>
+<p>Our algorithm can be used to implement any deterministic replicated service with a state and some operations.</p>
+</blockquote>
 </li>
 </ol>
-
+<ul>
+<li><em>deterministic</em> ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the execution of an operation in a given state and with a given set of arguments must always produce the same result）</li>
+<li><em>replicated</em> : 多副本</li>
+<li><em>a state and some operations</em> : 服务有相同的初始状态及相同的操作，保证当按相同顺序执行完相同的操作，各个副本的即时状态是完全一致的 (must start in the same state)</li>
+</ul>
+<ol>
+<li>在异步系统中要容忍<code>f</code>个恶意节点，则至少需要<code>3f+1</code>个节点才能提供safety and liveness（<em>Asynchronous Consensus and Broadcast Protocols</em>这篇论文中证明）。</li>
+</ol>
+<ul>
+<li><em>safety</em> : 副本服务满足线性一致性，像在中心化服务中同时原子性的执行操作。不受恶意client数量影响，恶意client的操作可以通过被正常client感知，利用access control来限制。</li>
+<li><em>liveness</em> : 利用同步提供liveness（论文证明）。只要满足<code>3f+1</code>个节点，可以保证client持续重传，并且到达destination的传输时间没有无限的增长情况下，client最终会收到回复。</li>
+</ul>
+<ol>
+<li>算法不提供隐私容错性，即隐私信息会泄漏给恶意节点<blockquote>
+<p>The algorithm does not address the problem of fault- tolerant privacy: a faulty replica may leak information to an attacker.</p>
+</blockquote>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/28/consensus-pbft-paper/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1207,7 +1229,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

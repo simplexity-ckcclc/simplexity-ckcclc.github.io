@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/</loc>
+    <lastmod>2023-05-05</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn/2020/08/12/zk-snark-paper/</loc>
     <lastmod>2023-04-28</lastmod>
   </url>
@@ -14,10 +18,6 @@
   </url>
   <url>
     <loc>https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/</loc>
-    <lastmod>2023-04-27</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/</loc>
     <lastmod>2023-04-27</lastmod>
   </url>
   <url>
@@ -145,19 +145,11 @@
     <lastmod>2020-11-18</lastmod>
   </url>
   <url>
-    <loc>https://simplexity.cn/2019/02/23/fabric-tutorial-learning/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
     <loc>https://simplexity.cn/2019/02/23/foreword/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/</loc>
-    <lastmod>2020-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn/2019/04/02/fabric-inpractice-concept/</loc>
     <lastmod>2020-10-28</lastmod>
   </url>
   <url>

@@ -27,7 +27,6 @@ https://simplexity.cn/2019/06/12/ethereum-design-rationale/
 https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/
 https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/
 https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/
-https://simplexity.cn/2019/04/02/fabric-inpractice-concept/
 https://simplexity.cn/2019/03/28/consensus-pbft-paper/
 https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/
 https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/
@@ -44,5 +43,4 @@ https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-l
 https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-process-proposal/
 https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-peer/
 https://simplexity.cn/2019/02/23/fabric-source-chaincode-instantiate-initcmdfactory/
-https://simplexity.cn/2019/02/23/fabric-tutorial-learning/
 https://simplexity.cn/2019/02/23/foreword/

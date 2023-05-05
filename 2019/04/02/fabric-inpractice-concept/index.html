@@ -26,7 +26,7 @@
 <meta property="og:description" content="通过Fabric实战现象厘清和解析概念，本文只列举现象，未深入源码分析。 Chaincode 【失败】 同一个节点peer重复install同一个chaincode报错。Error: Bad response: 500 - error installing chaincode code papercontract:0(chaincode &#x2F;var&#x2F;hyperledger&#x2F;production&#x2F;ch">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-04-02T06:58:50.000Z">
-<meta property="article:modified_time" content="2020-10-28T01:59:15.294Z">
+<meta property="article:modified_time" content="2023-05-05T07:05:36.583Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="Hyperledger Fabric">
 <meta name="twitter:card" content="summary">
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>Fabric 1.4实战 - 从现象看概念 | Simplexity</title>
+  <title>Fabric 1.4实战 - 从现象看概念 | Simplexity</title><meta name="robots" content="noindex">
   
 
 
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-05-05 15:05:36" itemprop="dateModified" datetime="2023-05-05T15:05:36+08:00">2023-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,12 +253,12 @@
 <h3 id="Chaincode"><a href="#Chaincode" class="headerlink" title="Chaincode"></a>Chaincode</h3><ol>
 <li><p><strong>【失败】</strong> 同一个节点peer重复install同一个chaincode<br>报错。<code>Error: Bad response: 500 - error installing chaincode code papercontract:0(chaincode /var/hyperledger/production/chaincodes/papercontract.0 exists)</code></p>
 </li>
-<li><p><strong>【失败】</strong> 同一个channle重复initiate同一个chaincode<br>报错。<code>Error: could not assemble transaction, err proposal response was not successful, error code 500, msg chaincode with name &#39;papercontract&#39; already exists</code></p>
+<li><p><strong>【失败】</strong> 同一个channle重复initiate同一个chaincode<br>报错。<code>Error: could not assemble transaction, err proposal response was not successful, error code 500, msg chaincode with name 'papercontract' already exists</code></p>
 </li>
 <li><p><strong>【失败】</strong> 重复创建同一个channel<br>报错。<code>BAD_REQUEST -- error authorizing update: error validating ReadSet: readset expected key [Group]  /Channel/Application at version 0, but got version 1</code>。这是因为在之前的<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>指定的channel.tx的write_set里的version为1，而read_set的version为0。之前已经创建过，因此当前的version为1，<code>common/configtx/update.go#authorizeUpdate-&gt;common/configtx/update.go#verifyReadSet</code>校验不通过，报错。</p>
 </li>
 </ol>
-
+<!-- flag of hidden posts -->
     </div>
 
     
@@ -274,16 +274,6 @@
 
 
         
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2019/03/28/consensus-pbft-paper/" rel="prev" title="共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记">
-      <i class="fa fa-chevron-left"></i> 共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/04/19/fabric-commercial-paper-go/" rel="next" title="Fabric官网Commercial Paper案例chaincode的golang实现">
-      Fabric官网Commercial Paper案例chaincode的golang实现 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
       </footer>
     
   </article>
@@ -358,7 +348,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

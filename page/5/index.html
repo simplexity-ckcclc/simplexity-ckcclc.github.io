@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -181,88 +181,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-24 23:47:30" itemprop="dateCreated datePublished" datetime="2019-02-24T23:47:30+08:00">2019-02-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:08:55" itemprop="dateModified" datetime="2023-04-27T17:08:55+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>接着继续分析acc的初始化过程，在instantiate(3)里提到<code>endorser.callChaincode</code>有两次的<code>ChaincodeSupport#Execute</code>调用,由代码分析两次不同的<code>ChaincodeMessage</code>的<code>MessageType</code>分别为<code>MessageType_TRANSACTION</code>（对应cis）和<code>MessageType_INIT</code>（对应cds），相应调用lscc的Invoke和acc的Init。具体过程可以参考上节分析。</p>
-<p>先看lscc的<code>Invoke</code>.参考上节提及的<code>execute</code>在两端<code>chaincode/handler.go</code>（peer端）和<code>shim/handler.go</code>（chaincode容器端）的流程，lscc相当于chaincode容器（尽管是inproccontainer），使用<code>shim/handler.go#handleReady</code>里<code>select-case</code>，lscc的<code>ChaincodeMessage_TRANSACTION</code>进入<code>handleTransaction</code>方法。这里的主要流程与上节介绍的<code>handleInit</code>一致，不同的是这里调用的是lscc的<code>Invoke</code>方法。这里需要强调一点，在<code>handleTransaction</code>,<code>handleInit</code>这些<code>handleXXX</code>方法里，进入就是启动goroutinne来运行所有的逻辑，这样可以立刻返回并行来处理下一个请求。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
       
   
   
@@ -698,94 +616,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/23/fabric-tutorial-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/02/23/fabric-tutorial-learning/" class="post-title-link" itemprop="url">Hyperledger Fabric（V1.4.0）官网Tutorial学习</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-23 15:09:01" itemprop="dateCreated datePublished" datetime="2019-02-23T15:09:01+08:00">2019-02-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>官方教程<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/write_first_app.html">Writing Your First Application</a>在安装最新的node（v11.7.0）和npm（v6.5.0）后，在fabric-samples/fabcar/javascript目录下执行<code>npm install</code>报错如下</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error Failed at the grpc@1.14.2 install script &#x27;node-pre-gyp install --fallback-to-build --library=static_library&#x27;.</span><br></pre></td></tr></table></figure>
-<p> <strong><em>Solution</em></strong> : 只需要在fabric-samples/fabcar/javascript目录下先执行<code>npm install grpc@1.14.2</code>（注意，需要先删除‘node_modules’这个目录和’package-lock.json’这个文件），然后再在该目录下执行<code>npm install</code>即可。<br> <strong><em>Update</em></strong> : 该grpc版本比较老，新版本node不兼容支持，可以将node版本降级。参考讨论 <a target="_blank" rel="noopener" href="https://github.com/grpc/grpc-node/issues/689#issuecomment-467106185">grpc-node issue-689</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>中，默认开启TSL链接，如果关闭配置，出现以下异常报错。</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-10-22 08:26:05.220 UTC [grpc] switchBalancer -&gt; DEBU 03b ClientConn switching balancer to &quot;pick_first&quot;</span><br><span class="line">2019-10-22 08:26:05.220 UTC [grpc] HandleSubConnStateChange -&gt; DEBU 03c pickfirstBalancer: HandleSubConnStateChange: 0xc0004e38c0, CONNECTING</span><br><span class="line">2019-10-22 08:26:05.223 UTC [grpc] createTransport -&gt; DEBU 03d grpc: addrConn.createTransport failed to connect to &#123;peer0.org1.example.com:7051 0  &lt;nil&gt;&#125;. Err :connection error: desc = &quot;transport: authentication handshake failed: tls: first record does not look like a TLS handshake&quot;. Reconnecting...</span><br></pre></td></tr></table></figure>
-<p> 这个是在以下3个配置文件里配置，调用<code>./byfn.sh up</code>，最后会执行/fabric-samples/first-network/scripts里的<code>script.sh</code>和<code>utils.sh</code>，里面的<code>peer channel create</code>, <code>peer chaincode install</code>等命令都携带参数<code>--tls $CORE_PEER_TLS_ENABLED</code>. </p>
-<ul>
-<li>orderer ： <code>ORDERER_GENERAL_TLS_ENABLED</code>(/fabric-samples/first-network/base/peer-base.yaml)</li>
-<li>ca ：<code>FABRIC_CA_SERVER_TLS_ENABLED</code>(/fabric-samples/first-network/base/peer-base.yaml)</li>
-<li>peer ：<code>CORE_PEER_TLS_ENABLED</code>(/fabric-samples/first-network/docker-compose-ca.yaml)</li>
-</ul>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/23/foreword/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -926,7 +756,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
