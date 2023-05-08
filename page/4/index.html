@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/20/fabric-source-deliver-peer-to-order/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-pbft-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -199,7 +199,111 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/20/fabric-source-deliver-peer-to-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互</a>
+            <a href="/articles/consensus-pbft-paper/" class="post-title-link" itemprop="url">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-28 20:11:29" itemprop="dateCreated datePublished" datetime="2019-03-28T20:11:29+08:00">2019-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
+<li>算法的适用范围<blockquote>
+<p>Our algorithm can be used to implement any deterministic replicated service with a state and some operations.</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><em>deterministic</em> ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the execution of an operation in a given state and with a given set of arguments must always produce the same result）</li>
+<li><em>replicated</em> : 多副本</li>
+<li><em>a state and some operations</em> : 服务有相同的初始状态及相同的操作，保证当按相同顺序执行完相同的操作，各个副本的即时状态是完全一致的 (must start in the same state)</li>
+</ul>
+<ol>
+<li>在异步系统中要容忍<code>f</code>个恶意节点，则至少需要<code>3f+1</code>个节点才能提供safety and liveness（<em>Asynchronous Consensus and Broadcast Protocols</em>这篇论文中证明）。</li>
+</ol>
+<ul>
+<li><em>safety</em> : 副本服务满足线性一致性，像在中心化服务中同时原子性的执行操作。不受恶意client数量影响，恶意client的操作可以通过被正常client感知，利用access control来限制。</li>
+<li><em>liveness</em> : 利用同步提供liveness（论文证明）。只要满足<code>3f+1</code>个节点，可以保证client持续重传，并且到达destination的传输时间没有无限的增长情况下，client最终会收到回复。</li>
+</ul>
+<ol>
+<li>算法不提供隐私容错性，即隐私信息会泄漏给恶意节点<blockquote>
+<p>The algorithm does not address the problem of fault- tolerant privacy: a faulty replica may leak information to an attacker.</p>
+</blockquote>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/consensus-pbft-paper/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-deliver-peer-to-order/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-source-deliver-peer-to-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - peer的deliver过程(1) peer与orderer的交互</a>
         </h2>
 
         <div class="post-meta">
@@ -243,7 +347,7 @@
 <p>从前文<a href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">orderer的deliver过程</a>可知，deliver的grpc服务是”/orderer.AtomicBroadcast/Deliver”,在源码中搜索并且一路回溯到方法<code>peer/node/start.go#serve</code>，这个方法是执行命令<code>peer node start</code>时的执行。（这里先介绍的当前peer重启的情况，新建立channel的情况后面介绍）。然后执行到<code>core/peer/peer.go:Initialize</code>，这里面执行<code>ledgermgmt.Initialize(ConfigTxProcessors)</code>恢复历史账本。然后从这些历史账本信息可以获取到ledgerId（即channelId）。然后对每个channel加载账本，并且从账本中获取最新的ConfigBlock，然后调用<code>createChain</code>重新构造channel信息。在<code>core/peer/peer.go:createChain</code>这个方法里，也是从ledger里获取到配置信息，从而得到orderer地址<code>ordererAddresses :=  bundle.ChannelConfig().OrdererAddresses()</code>,然后调用<code>service.GetGossipService().InitializeChannel</code>。在<code>gossip/service/gossip_service.go:InitializeChannel</code>里，启动deliver服务需要经过判断是否节点是leader peer，即<code>peer.gossip.useLeaderElection</code>（通过选举的方式动态决定leader peer）和<code>peer.gossip.orgLeader</code>（静态指定当前peer为leader peer），这两种方式是互斥的。前面提到过，只有leader才与orderer进行交互，如果不是，则返回，无需继续往下启动deliver服务。<br></p><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Parameters:</span></span><br><span class="line"><span class="comment">//      - peer.gossip.useLeaderElection</span></span><br><span class="line"><span class="comment">//      - peer.gossip.orgLeader</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// are mutual exclusive, setting both to true is not defined, hence peer will panic and terminate</span></span><br><span class="line">leaderElection := viper.GetBool(<span class="string">"peer.gossip.useLeaderElection"</span>)</span><br><span class="line">isStaticOrgLeader := viper.GetBool(<span class="string">"peer.gossip.orgLeader"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection &amp;&amp; isStaticOrgLeader {</span><br><span class="line">    logger.Panic(<span class="string">"Setting both orgLeader and useLeaderElection to true isn't supported, aborting execution"</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> leaderElection {</span><br><span class="line">    logger.Debug(<span class="string">"Delivery uses dynamic leader election mechanism, channel"</span>, chainID)</span><br><span class="line">    g.leaderElection[chainID] = g.newLeaderElectionComponent(chainID, g.onStatusChangeFactory(chainID, support.Committer))</span><br><span class="line">} <span class="keyword">else</span> <span class="keyword">if</span> isStaticOrgLeader {</span><br><span class="line">    logger.Debug(<span class="string">"This peer is configured to connect to ordering service for blocks delivery, channel"</span>, chainID)</span><br><span class="line">    g.deliveryService[chainID].StartDeliverForChannel(chainID, support.Committer, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> {})</span><br><span class="line">} <span class="keyword">else</span> {</span><br><span class="line">    logger.Debug(<span class="string">"This peer is not configured to connect to ordering service for blocks delivery, channel"</span>, chainID)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/03/20/fabric-source-deliver-peer-to-order/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-deliver-peer-to-order/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -267,7 +371,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/12/fabric-source-orderer-deliver/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-orderer-deliver/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -281,7 +385,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/12/fabric-source-orderer-deliver/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的deliver过程</a>
+            <a href="/articles/fabric-source-orderer-deliver/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的deliver过程</a>
         </h2>
 
         <div class="post-meta">
@@ -325,7 +429,7 @@
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SeekInfo specifies the range of requested blocks to return</span></span><br><span class="line"><span class="comment">// If the start position is not found, an error is immediately returned</span></span><br><span class="line"><span class="comment">// Otherwise, blocks are returned until a missing block is encountered, then behavior is dictated by the SeekBehavior specified.  </span></span><br><span class="line"><span class="comment">// If BLOCK_UNTIL_READY is specified, the reply will block until the requested blocks are available</span></span><br><span class="line"><span class="comment">// if FAIL_IF_NOT_READY is specified, the reply will return an error indicating that the block is not found.  </span></span><br><span class="line"><span class="comment">// To request that all blocks be returned indefinitely as they are created, behavior should be set to BLOCK_UNTIL_READY and the stop should be set to specified with a number of MAX_UINT64</span></span><br><span class="line"><span class="keyword">type</span> SeekInfo <span class="keyword">struct</span> {</span><br><span class="line">    Start    *SeekPosition </span><br><span class="line">    Stop     *SeekPosition </span><br><span class="line">    Behavior SeekInfo_SeekBehavior </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *Handler)</span> <span class="title">deliverBlocks</span><span class="params">(ctx context.Context, srv *Server, envelope *cb.Envelope)</span> <span class="title">error</span></span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... 校验，略</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据seekInfo.Stop计算range的终止block number</span></span><br><span class="line">    cursor, number := chain.Reader().Iterator(seekInfo.Start)</span><br><span class="line">    <span class="keyword">defer</span> cursor.Close()</span><br><span class="line">    <span class="keyword">switch</span> stop := seekInfo.Stop.Type.(<span class="keyword">type</span>) {</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Oldest:</span><br><span class="line">        stopNum = number</span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Newest:</span><br><span class="line">        stopNum = chain.Reader().Height() - <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> *ab.SeekPosition_Specified:</span><br><span class="line">        stopNum = stop.Specified.Number</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> {</span><br><span class="line">        <span class="comment">// 如果range超越当前到chain高度，fail fast</span></span><br><span class="line">        <span class="keyword">if</span> seekInfo.Behavior == ab.SeekInfo_FAIL_IF_NOT_READY {</span><br><span class="line">            <span class="keyword">if</span> number &gt; chain.Reader().Height()<span class="number">-1</span> {</span><br><span class="line">                <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_NOT_FOUND)</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        iterCh := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>{})</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> {</span><br><span class="line">            <span class="comment">// 读取下一个block</span></span><br><span class="line">            block, status = cursor.Next()</span><br><span class="line">            <span class="built_in">close</span>(iterCh)</span><br><span class="line">        }()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">select</span> {</span><br><span class="line">        <span class="keyword">case</span> &lt;-ctx.Done(): <span class="comment">// "context finished before block retrieved"</span></span><br><span class="line">            <span class="keyword">return</span> errors.Wrapf(ctx.Err(), <span class="string">"context finished before block retrieved"</span>)</span><br><span class="line">        <span class="keyword">case</span> &lt;-erroredChan: <span class="comment">// "Aborting deliver for request because of background error"</span></span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_SERVICE_UNAVAILABLE)</span><br><span class="line">        <span class="keyword">case</span> &lt;-iterCh:</span><br><span class="line">            <span class="comment">// Iterator has set the block and status vars，完成读取</span></span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">// increment block number to support FAIL_IF_NOT_READY deliver behavior</span></span><br><span class="line">        number++</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 再次通过权限校验 access control</span></span><br><span class="line">        <span class="keyword">if</span> err := accessControl.Evaluate(); err != <span class="literal">nil</span> {</span><br><span class="line">            <span class="keyword">return</span> srv.SendStatusResponse(cb.Status_FORBIDDEN)</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 逐个block发送</span></span><br><span class="line">        <span class="keyword">if</span> err := srv.SendBlockResponse(block); err != <span class="literal">nil</span> {</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stopNum == block.Header.Number {</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 全部block发送完成后，再回复当前deliver rpc请求</span></span><br><span class="line">    <span class="keyword">if</span> err := srv.SendStatusResponse(cb.Status_SUCCESS); err != <span class="literal">nil</span> {</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/03/12/fabric-source-orderer-deliver/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-orderer-deliver/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -349,7 +453,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/11/fabric-orderer-kafka-design/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-orderer-kafka-design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -363,7 +467,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/11/fabric-orderer-kafka-design/" class="post-title-link" itemprop="url">A Kafka-based Ordering Service for Fabric （orderer的应用kafka设计思想）学习笔记</a>
+            <a href="/articles/fabric-orderer-kafka-design/" class="post-title-link" itemprop="url">A Kafka-based Ordering Service for Fabric （orderer的应用kafka设计思想）学习笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -416,7 +520,7 @@
 <h2 id=""><a href="#" class="headerlink" title=""></a>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/03/11/fabric-orderer-kafka-design/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-orderer-kafka-design/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -440,7 +544,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/07/fabric-source-orderer-kafka/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-orderer-kafka/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -454,7 +558,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/07/fabric-source-orderer-kafka/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的kafka实现</a>
+            <a href="/articles/fabric-source-orderer-kafka/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的kafka实现</a>
         </h2>
 
         <div class="post-meta">
@@ -498,7 +602,7 @@
 <p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a target="_blank" rel="noopener" href="https://github.com/Shopify/sarama">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/03/07/fabric-source-orderer-kafka/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-orderer-kafka/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -522,7 +626,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/06/consensus-paxos-raft/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-paxos-raft/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -536,7 +640,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/03/06/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
+            <a href="/articles/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
         </h2>
 
         <div class="post-meta">
@@ -630,7 +734,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-endorsor/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-install-endorsor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -644,7 +748,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/02/25/fabric-source-chaincode-install-endorsor/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程</a>
+            <a href="/articles/fabric-source-chaincode-install-endorsor/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程</a>
         </h2>
 
         <div class="post-meta">
@@ -687,7 +791,7 @@
           <p>endorsor端流程也一致，入口都是<code>core/endorser/endorser.go#ProcessProposal</code>,具体不再重复展开，可以参看instantiate(3)。主要的区别在于<code>core/endorser/endorser.go#callChaincode</code>里，(“lscc”, “deploy”)的<code>if</code>条件不再满足，不需要进入（回顾一下，这里主要是launch用户application chaincode的容器，执行application chaincode的Init方法等，在install阶段当然不需要）。真正的区别在于<code>lscc.go#Invoke</code>的<code>select-case</code>里，进入的是<code>INSTALL</code>分支（部署chaincode时进入的是<code>DEPLOY</code>分支）。INSTALL首先执行<code>lscc.policyChecker.CheckPolicyNoChannel(mgmt.Admins, sp)</code>检查策略，这部分以后详述。从名字也印证出install是不指定channel的。然后执行lscc的<code>executeInstall</code>方法.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/02/25/fabric-source-chaincode-install-endorsor/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-chaincode-install-endorsor/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -711,7 +815,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/25/fabric-source-chaincode-install-peer/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-install-peer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -725,7 +829,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/02/25/fabric-source-chaincode-install-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程</a>
+            <a href="/articles/fabric-source-chaincode-install-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程</a>
         </h2>
 
         <div class="post-meta">
@@ -770,7 +874,7 @@
 <p>客户端调用<code>peer chaincode install</code>命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命令关联的方法是<code>chaincodeInstall</code>。<em>[install的流程与前面介绍的instantiate大体相似，重复不再展开，只勾勒差别处]</em></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/02/25/fabric-source-chaincode-install-peer/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-chaincode-install-peer/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -794,7 +898,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-orderer-order/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -808,7 +912,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程</a>
+            <a href="/articles/fabric-source-chaincode-instantiate-orderer-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程</a>
         </h2>
 
         <div class="post-meta">
@@ -852,7 +956,7 @@
 <figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// common.Envelope</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Payload"</span>: ${common.Payload}.byte,</span><br><span class="line">  <span class="attr">"Signature"</span>: #signer.Sign(${common.Payload}.byte)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// common.Payload</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Header"</span>: ${proposal.Header},   <span class="comment">// proposal参考instantiate（2）</span></span><br><span class="line">  <span class="attr">"Data"</span>: ${peer.Transaction}.byte</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.Transaction</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Actions"</span>:  taas := make([]*peer.TransactionAction, 1), taas[0] = ${peer.TransactionAction}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.TransactionAction</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Header"</span>: ${proposal.Header.SignatureHeader}, </span><br><span class="line">  <span class="attr">"Payload"</span>: ${peer.ChaincodeActionPayload}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeActionPayload</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"ChaincodeProposalPayload"</span>: ${peer.ChaincodeProposalPayload}.byte, </span><br><span class="line">  <span class="attr">"Action"</span>: ${peer.ChaincodeEndorsedAction}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"> <span class="comment">// peer.ChaincodeProposalPayload</span></span><br><span class="line"> {</span><br><span class="line">   <span class="attr">"Input"</span>: ${proposal.Payload.Input}, </span><br><span class="line">   <span class="attr">"TransientMap"</span>: nil</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeEndorsedAction， response结构参考instantiate（7）</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"ProposalResponsePayload"</span>: ${resps[0].Payload},  <span class="comment">// 所有response的payload都应该是一致的，在前面已经校验过 </span></span><br><span class="line">  <span class="attr">"Endorsements"</span>: #endorsements := make([]*peer.Endorsement, len(resps)) <span class="comment">// 所有的endorsement</span></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-orderer-order/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-orderer-order/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -876,7 +980,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-endorser-endorse-proposal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -890,7 +994,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程</a>
+            <a href="/articles/fabric-source-chaincode-instantiate-endorser-endorse-proposal/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(7）endoser的endorseProposal过程</a>
         </h2>
 
         <div class="post-meta">
@@ -935,89 +1039,7 @@
 <p><code>txsim.GetTxSimulationResults()</code>这里在返回前，先对读写集合按照key排序。这里包含pub和pri两部分数据，先关注pub部分。rwset这部分以后展开专题介绍。然后调用<code>txsim.Done()</code>，签名初始化txsim时候提到获取了ledger的读锁，因此这里需要释放<code>h.txmgr.commitRWLock.RUnlock()</code>。返回共有数据的读写集到<code>endorser#ProcessProposal</code>。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-endorser-endorse-proposal/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(6）application chaincode的初始化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-24 23:47:30" itemprop="dateCreated datePublished" datetime="2019-02-24T23:47:30+08:00">2019-02-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:08:55" itemprop="dateModified" datetime="2023-04-27T17:08:55+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>接着继续分析acc的初始化过程，在instantiate(3)里提到<code>endorser.callChaincode</code>有两次的<code>ChaincodeSupport#Execute</code>调用,由代码分析两次不同的<code>ChaincodeMessage</code>的<code>MessageType</code>分别为<code>MessageType_TRANSACTION</code>（对应cis）和<code>MessageType_INIT</code>（对应cds），相应调用lscc的Invoke和acc的Init。具体过程可以参考上节分析。</p>
-<p>先看lscc的<code>Invoke</code>.参考上节提及的<code>execute</code>在两端<code>chaincode/handler.go</code>（peer端）和<code>shim/handler.go</code>（chaincode容器端）的流程，lscc相当于chaincode容器（尽管是inproccontainer），使用<code>shim/handler.go#handleReady</code>里<code>select-case</code>，lscc的<code>ChaincodeMessage_TRANSACTION</code>进入<code>handleTransaction</code>方法。这里的主要流程与上节介绍的<code>handleInit</code>一致，不同的是这里调用的是lscc的<code>Invoke</code>方法。这里需要强调一点，在<code>handleTransaction</code>,<code>handleInit</code>这些<code>handleXXX</code>方法里，进入就是启动goroutinne来运行所有的逻辑，这样可以立刻返回并行来处理下一个请求。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/02/24/fabric-source-chaincode-instantiate-chaincode-init/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-endorser-endorse-proposal/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1108,7 +1130,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

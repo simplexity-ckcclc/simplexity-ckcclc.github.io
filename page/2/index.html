@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/18/did-account-system/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/sc-authorization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -199,7 +199,79 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/18/did-account-system/" class="post-title-link" itemprop="url">DID分布式身份（2） - 账户体系架构</a>
+            <a href="/articles/sc-authorization/" class="post-title-link" itemprop="url">智能合约权限管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-19 19:16:43" itemprop="dateCreated datePublished" datetime="2020-11-19T19:16:43+08:00">2020-11-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-28 15:45:15" itemprop="dateModified" datetime="2023-04-28T15:45:15+08:00">2023-04-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1-合约内授权"><a href="#1-合约内授权" class="headerlink" title="1. 合约内授权"></a>1. 合约内授权</h3><p>业务智能合约内，可能会针对某些用户给予指定的数据访问权，或者调用方法的权限，涉及到合约内数据的授权。以下是solidity伪代码，适用于该业务合约由权威机构管理，也就是存在administrator角色统一分配权限，其他只能作为参与方访问授权数据。相应的可以参考微众银行<a target="_blank" rel="noopener" href="https://github.com/WeBankBlockchain/Governance-Authority/tree/master/src/main/contracts">权限治理合约</a>，将用户权限按照分组在权限合约里统一管理，应用合约接口粒度的权限。<br></p><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">contract Admin {</span><br><span class="line">  address public administrator;</span><br><span class="line"></span><br><span class="line">  modifier <span class="function"><span class="title">admin</span>(<span class="params"></span>)</span> {</span><br><span class="line">      <span class="built_in">require</span>(msg.sender == administrator, <span class="string">"Only called by administrator"</span>);</span><br><span class="line">      _;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">transferAdmin</span>(<span class="params">address newAdministrator</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">      administrator = newAdministrator;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 业务合约（包含权限管理）</span></span><br><span class="line">contract Service is Admin {</span><br><span class="line">  mapping(<span class="function"><span class="params">uint256</span> =&gt;</span> mapping(<span class="function"><span class="params">address</span> =&gt;</span> bool)) private _authorized;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> {</span><br><span class="line">    administrator = msg.sender;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只有administrator才有权限授权给userAddr</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">authourize</span>(<span class="params">uint256 itemID, address userAddr</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">    _authorized[itemID][userAddr] = <span class="literal">true</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 授权用户才能操作特定数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">doSth</span>(<span class="params">uint256 itemID</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">    <span class="built_in">require</span>(_authorized[itemID][msg.sender] == <span class="literal">true</span>, <span class="string">"Unthorized"</span>);</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/sc-authorization/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/did-account-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/did-account-system/" class="post-title-link" itemprop="url">DID分布式身份（2） - 账户体系架构</a>
         </h2>
 
         <div class="post-meta">
@@ -233,7 +305,7 @@
           基于分布式身份的账户体系架构设计。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/18/did-account-system/#more" rel="contents">
+              <a class="btn" href="/articles/did-account-system/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -257,7 +329,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/17/did-w3c/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/did-w3c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -271,7 +343,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/17/did-w3c/" class="post-title-link" itemprop="url">DID分布式身份（1） - W3C规范</a>
+            <a href="/articles/did-w3c/" class="post-title-link" itemprop="url">DID分布式身份（1） - W3C规范</a>
         </h2>
 
         <div class="post-meta">
@@ -349,7 +421,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/04/privacy-on-chain/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/privacy-on-chain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -363,7 +435,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/04/privacy-on-chain/" class="post-title-link" itemprop="url">链上隐私数据保护</a>
+            <a href="/articles/privacy-on-chain/" class="post-title-link" itemprop="url">链上隐私数据保护</a>
         </h2>
 
         <div class="post-meta">
@@ -410,7 +482,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/04/privacy-on-chain/#more" rel="contents">
+              <a class="btn" href="/articles/privacy-on-chain/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -434,7 +506,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/10/20/mpc-terminology/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/mpc-terminology/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -448,7 +520,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/20/mpc-terminology/" class="post-title-link" itemprop="url">安全多方计算MPC的若干个概念</a>
+            <a href="/articles/mpc-terminology/" class="post-title-link" itemprop="url">安全多方计算MPC的若干个概念</a>
         </h2>
 
         <div class="post-meta">
@@ -504,7 +576,7 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/10/20/mpc-terminology/#more" rel="contents">
+              <a class="btn" href="/articles/mpc-terminology/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -528,7 +600,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/08/12/zk-snark-paper/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/zk-snark-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -542,7 +614,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/08/12/zk-snark-paper/" class="post-title-link" itemprop="url">零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记</a>
+            <a href="/articles/zk-snark-paper/" class="post-title-link" itemprop="url">零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -597,7 +669,7 @@
 <h2 id=""><a href="#" class="headerlink" title=""></a></h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/08/12/zk-snark-paper/#more" rel="contents">
+              <a class="btn" href="/articles/zk-snark-paper/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -621,7 +693,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/07/25/bigdata-and-blockchain/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bigdata-and-blockchain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -635,7 +707,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/25/bigdata-and-blockchain/" class="post-title-link" itemprop="url">大数据与区块链</a>
+            <a href="/articles/bigdata-and-blockchain/" class="post-title-link" itemprop="url">大数据与区块链</a>
         </h2>
 
         <div class="post-meta">
@@ -652,7 +724,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:37:08" itemprop="dateModified" datetime="2022-09-15T19:37:08+08:00">2022-09-15</time>
+                <time title="Modified: 2023-05-08 16:45:50" itemprop="dateModified" datetime="2023-05-08T16:45:50+08:00">2023-05-08</time>
               </span>
 
           
@@ -666,10 +738,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          大数据与区块链的简介，以及两者结合的火花。
+          技术的融合与碰撞。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/07/25/bigdata-and-blockchain/#more" rel="contents">
+              <a class="btn" href="/articles/bigdata-and-blockchain/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -693,7 +765,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/04/02/fabric-2-0-new-feature/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-2-0-new-feature/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -707,7 +779,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/02/fabric-2-0-new-feature/" class="post-title-link" itemprop="url">Hyperledger Fabric 2.0新特性</a>
+            <a href="/articles/fabric-2-0-new-feature/" class="post-title-link" itemprop="url">Hyperledger Fabric 2.0新特性</a>
         </h2>
 
         <div class="post-meta">
@@ -783,7 +855,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/11/14/understanding-bitcoin/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/understanding-bitcoin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -797,7 +869,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/14/understanding-bitcoin/" class="post-title-link" itemprop="url">Bitcoin概念理解</a>
+            <a href="/articles/understanding-bitcoin/" class="post-title-link" itemprop="url">Bitcoin概念理解</a>
         </h2>
 
         <div class="post-meta">
@@ -845,7 +917,7 @@
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/11/14/understanding-bitcoin/#more" rel="contents">
+              <a class="btn" href="/articles/understanding-bitcoin/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -869,7 +941,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-inpractice-commercialpaper-java-sdk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -883,7 +955,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/02/fabric-inpractice-commercialpaper-java-sdk/" class="post-title-link" itemprop="url">Fabric实战（2）- Commercial Paper的Fabric-Java-SDK客户端</a>
+            <a href="/articles/fabric-inpractice-commercialpaper-java-sdk/" class="post-title-link" itemprop="url">Fabric实战（2）- Commercial Paper的Fabric-Java-SDK客户端</a>
         </h2>
 
         <div class="post-meta">
@@ -945,99 +1017,6 @@
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63511862">Fabric Java SDK最新教程【201904】</a></p>
 </blockquote>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/10/23/fabric-inpractice-commercialpaper-byfn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/23/fabric-inpractice-commercialpaper-byfn/" class="post-title-link" itemprop="url">Fabric实战（1） - 基础篇，基于byfn的Commercial Paper案例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-23 18:13:46" itemprop="dateCreated datePublished" datetime="2019-10-23T18:13:46+08:00">2019-10-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前分享过<a href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">Fabric官网Commercial Paper案例chaincode的golang实现</a>，现在基于官网<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>再次记录过程，同时添加部分新操作及分析，以此作为以后的进阶实战基础。</p>
-<ol>
-<li><p>使用命令<code>./byfn.sh up</code>启动网络</p>
-</li>
-<li><p>查看配置文件<code>/fabric-samples/first-network/docker-compose-cli.yaml</code>,可见cli的挂载volume设置  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cli:</span><br><span class="line">  volume:</span><br><span class="line">    - ./../chaincode/:/opt/gopath/src/github.com/chaincode</span><br></pre></td></tr></table></figure></li>
-<li><p>将编写的chaincode源文件放置在该挂载的路径<code>/chaincode/go</code>下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp commercial_paper.go /chaincode/go</span><br><span class="line">cp paper.go /chaincode/go</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>docker exec -it cli bash</code>登入容器cli</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- 执行peer chaincode install -n commercialpaper -v 0 -p github.com/chaincode/commercial_paper/go</span><br><span class="line">- 执行echo $CORE_PEER_MSPCONFIGPATH。可见当前角色为admin</span><br><span class="line">    ---</span><br><span class="line">    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line">- 执行peer chaincode list -C mychannel --installed</span><br><span class="line">    ---</span><br><span class="line">    Get installed chaincodes on peer:</span><br><span class="line">    Name: commercialpaper, Version: 0, Path: github.com/chaincode/commercial_paper/go, Id: f033307bf72f876fb5a95883d53ed5209e6639386e21361eed65f459d8a9f276</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/23/fabric-inpractice-commercialpaper-byfn/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -1123,7 +1102,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为Ethereum设计理念官方文档Design Rationale的阅读理解，并非完整的中文翻译，可参考中文翻译。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。 基本准则 三文治式的复杂度模型     尽量简单的底层结构（如核心共识算法）以及易于使用理解的接口层（developers and users）。复杂度在中间层（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ethereum设计理念Design Rationale学习心得">
+<meta property="og:url" content="https://simplexity.cn/articles/ethereum-design-rationale/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="本文为Ethereum设计理念官方文档Design Rationale的阅读理解，并非完整的中文翻译，可参考中文翻译。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。 基本准则 三文治式的复杂度模型     尽量简单的底层结构（如核心共识算法）以及易于使用理解的接口层（developers and users）。复杂度在中间层（">
+<meta property="og:locale">
+<meta property="og:image" content="https://simplexity.cn/images/ethereum-evm.png">
+<meta property="article:published_time" content="2019-06-12T08:21:55.000Z">
+<meta property="article:modified_time" content="2021-12-04T11:22:50.389Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="Ethereum">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://simplexity.cn/images/ethereum-evm.png">
+
+<link rel="canonical" href="https://simplexity.cn/articles/ethereum-design-rationale/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Ethereum设计理念Design Rationale学习心得 | Simplexity</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/ethereum-design-rationale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ethereum设计理念Design Rationale学习心得
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-12 16:21:55" itemprop="dateCreated datePublished" datetime="2019-06-12T16:21:55+08:00">2019-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-04 19:22:50" itemprop="dateModified" datetime="2021-12-04T19:22:50+08:00">2021-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
+<h3 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h3><ol>
+<li><strong>三文治式的复杂度模型</strong>  </li>
+</ol>
+<ul>
+<li>尽量简单的底层结构（如核心共识算法）以及易于使用理解的接口层（developers and users）。复杂度在中间层（serialization and deserialization scripts, storage data structure models, the leveldb storage interface and the wire protocol, etc）。也就是，底层基本的核心思想维持稳定和简单，将易变的可替换的具体实现放在中间层。</li>
+<li>尽可能的包含底层概念，使得可以任意方式去组合。同时当剥离不必要的功能也能使底层运行得更有效率。</li>
+<li>核心层拒绝内嵌高层应用特性，而鼓励以合约的方式来模拟实现高层应用协议。</li>
+</ul>
+<ol>
+<li><p><strong>自由度</strong><br>保持”net neutrality”网络中性。对contracts or transactions没有先天的偏好性。通过设置费用引入激励。这里涉及到gas的概念，基本理念就是对需要计算和存储的操作需要付出代价。对计算，对存储的字节数等计算一个gas值，而每个发送方指定一个gas值所等值的Ether(即gas fee)，相乘得出为当前的交易费用。交易费用高的当然优先被确认。这就是所谓的将自由度交还给交易发起方，而Ethereum本身保持中性无偏好。引入计算和存储费用，也可以防止DOS攻击。</p>
+</li>
+<li><p><strong>高风险承受力</strong><br>可以接受高收益带来的高风险（例如出块速度提升50倍，共识效率等），意味着协议演进过程可能会变动较大</p>
+</li>
+</ol>
+<span id="more"></span>
+<h3 id="使用Account模型而非UTXO"><a href="#使用Account模型而非UTXO" class="headerlink" title="使用Account模型而非UTXO"></a>使用Account模型而非UTXO</h3><p>unspent transaction outputs (UTXOs)在数字货币内广泛使用，即所有者关联着多笔UTXO，其和为所有者对账户余额，每次交易以单笔或者多笔UTXO为输入，输出也为UTXO。主要符合三个约束：</p>
+<ol>
+<li>输入的UTXO有效，并且未被消费</li>
+<li>交易者能证实UTXO的所有权（签名）</li>
+<li>输入UTXO等于或者超过输出UTXO（消费，转账等）  </li>
+</ol>
+<p>UTXO的好处在于：</p>
+<ol>
+<li><strong>高隐私度</strong> - 每次交易都使用新地址，则这些账户很难被关联起来。但是dapp反而通常需要关联用户状态。</li>
+<li><strong>潜在的高扩展度</strong> - 用户自身保管UTXO，全网丢失只会影响当前用户。而账户模型下，是记录在merkle tree内的，如果全网丢失该账户记录，则永久影响该账户。</li>
+</ol>
+<p>（实际上，UTXO模型还有以下特点）  </p>
+<ol>
+<li>账户数据库会不断膨胀，因为账户不会被删除，而UTXO数据库体积会小很多。</li>
+<li>由于只有未花费的输出会被保留，所以每一个比特币用户可以拥有几乎无限多的地址，提高了匿名性。</li>
+<li>UTXO为高并发的交易带来可能，试想传统的账户模型，每个人的账户交易必须是线性的，无法并发。而现在每个人可能拥有多个UTXO，可同时发起多笔交易，实现了并发。</li>
+</ol>
+<p>而Account模型好处在于：</p>
+<ol>
+<li><strong>节约存储空间</strong> - 多个UTXO的存储合并成一个Account</li>
+<li>可以判断来源，从而建立红黑名单</li>
+<li>理解和编程模型简单，而且light client可以直接跟踪特定的account，而不用跟踪每笔交易带来的影响</li>
+</ol>
+<p>Account的问题在于重放攻击，因此可以每个交易添加nonce，每次交易nonce递增加1。同时，交易包含区块号，定期的修剪删除不再使用的账户。</p>
+<h3 id="Gas-and-Fee"><a href="#Gas-and-Fee" class="headerlink" title="Gas and Fee"></a>Gas and Fee</h3><p>Bitcoin等数字货币操作比较简单和单一的交易转账行为，而Ethereum则是图灵完备，具有很高的合约自由度。引入费用防止合约执行无限循环的DOS，实际上就是引入作恶成本。</p>
+<ol>
+<li>发起调用合约会预缴startGas * gasPrice（即一个gas等价于的Ether），途中每个交易操作会相应扣除gas，合约结束后剩余的gas退还到发起账户，消耗的gas奖励给miner。如果中途gas已消耗完，则该次交易内之前已执行的操作回滚，交易失败，gas奖励给miner。合约间调用也需要消耗gas，由发起合约设置值。</li>
+<li>按照计算复杂度（opcode），数据的字节数，存储的字节数等计算gas值。此外还有基础gas，用以支付计算椭圆曲线从签名确认身份等。也即是按消耗付款。</li>
+<li>删除存储的空间的操作有gas refund奖励，鼓励减少存储空间。</li>
+<li>gasPrice的设置则变成经济供求关系，自由竞争最终达到动态平衡。出价高收益大的交易会被优先执行和确认。</li>
+</ol>
+<h3 id="RLP"><a href="#RLP" class="headerlink" title="RLP"></a>RLP</h3><p><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/RLP">RLP</a> (“recursive length prefix”) encoding is the main serialization format used in Ethereum。例如，Account等数据从内存写入持久化存储时会将Hex16进制转换成RLP持久化(结合MPT树，将Extension node, Leaf node, Branch node等数据结构进行RLP编码)，紧凑节省空间。相比protocol buffer和BSON等现存的序列化方案，从新开发RLP序列化方案的目的是，1）实现简单。目的就是要高度简化，存储嵌套的字节序列，由上层应用决定这些字节序列的含义。2）保证字节级的绝对一致性（Key/value maps的有序性，浮点数的精度问题等）。RLP将 1）字符串（字节序列）作为item，2）item列表也看作一个item，针对这些item使用其定义的序列化编解码方式。</p>
+<h3 id="EVM虚拟机"><a href="#EVM虚拟机" class="headerlink" title="EVM虚拟机"></a>EVM虚拟机</h3><p>设计理念：</p>
+<ol>
+<li>简单 尽量少的数据类型，尽量少的操作指令。尽量节省的空间。结合起gas消费模型，也从根本上保证安全不被无限制利用。</li>
+<li>定制化 针对以太坊常见应用，对20字节地址，32字节对加密算法，加密算法中的数学运算，读取存储区块及交易信息等，作虚拟机层面的定制化的优化</li>
+</ol>
+<p><img src="/images/ethereum-evm.png" alt=""></p>
+<p>具体的设计：</p>
+<ol>
+<li>存储模型 EVM是基于栈的计算模型。stack（32字节，运行堆栈，所有运算在栈上执行，算子和执行中间结果都从栈存储和读取），memory（byte数组，存储函数调用的参数，本地变量，返回值等），storage（KV持久化存储，256-bit words to 256-bit words）</li>
+<li>合约间调用内存隔离，区分临时存储和持久化存储，递归调用每次都使用独立的实例，拥有独立的内存地址空间。具体实例参看原文。</li>
+<li>32字节的位宽 加密算法使用32字节，因此32字节位宽不需要分开存储，也不至于浪费空间。</li>
+<li>1024层的栈调用深度，并且单个操作码最多只能操作栈顶的16个元素</li>
+<li>定制化VM 没有使用JVM等原因在于：1）EVM相对简单，避免复杂带来的安全性等风险；2）可以针对性定制化设计；3）不存在部署的外部依赖；4）不需要改造其他VM时带来的安全性审核工作</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://takenobu-hs.github.io/downloads/ethereum_evm_illustrated.pdf">EVM详解</a> : 详细的ppt版本<br><a target="_blank" rel="noopener" href="https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-storage">A Deep Dive into the Ethereum Virtual Machine (EVM) - part 2: Memory and Storage</a> : 包含EVM的操作指令opcodes</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ethereum/" rel="tag"># Ethereum</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/fabric-configtxgen-tool/" rel="prev" title="Fabric的configtxgen工具生成区块及配置文件分析">
+      <i class="fa fa-chevron-left"></i> Fabric的configtxgen工具生成区块及配置文件分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/articles/understanding-ethereum/" rel="next" title="Ethereum概念理解">
+      Ethereum概念理解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%87%86%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">基本准则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Account%E6%A8%A1%E5%9E%8B%E8%80%8C%E9%9D%9EUTXO"><span class="nav-number">2.</span> <span class="nav-text">使用Account模型而非UTXO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gas-and-Fee"><span class="nav-number">3.</span> <span class="nav-text">Gas and Fee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RLP"><span class="nav-number">4.</span> <span class="nav-text">RLP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EVM%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">5.</span> <span class="nav-text">EVM虚拟机</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-anchor"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '12eedb094a3054014378',
+      clientSecret: 'a18108e1702f3c382aa9b2b6edd4c77336791528',
+      repo        : 'simplexity-gitalk',
+      owner       : 'simplexity-ckcclc',
+      admin       : ['simplexity-ckcclc'],
+      id          : 'c83ad8bf988f9d4ac20f272519ac7a62',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

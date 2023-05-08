@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2023/04/21/sc-event-listener/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/retry-strategy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -199,7 +199,73 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/04/21/sc-event-listener/" class="post-title-link" itemprop="url">智能合约事件监听的解决方案</a>
+            <a href="/articles/retry-strategy/" class="post-title-link" itemprop="url">失败任务重试策略</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-05-08 17:16:35 / Modified: 17:22:19" itemprop="dateCreated datePublished" datetime="2023-05-08T17:16:35+08:00">2023-05-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          架构与策略在实践中检验和演进。实践出真知。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/retry-strategy/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/sc-event-listener/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/sc-event-listener/" class="post-title-link" itemprop="url">智能合约事件监听的解决方案</a>
         </h2>
 
         <div class="post-meta">
@@ -227,7 +293,7 @@
           <p>合约里经常会包含有事件（event关键字），应用通过监听链上指定合约的指定事件，从而得到相应的数据触发相应的处理，也就是不同的系统不再需要链下的交互（api调用等），在这里链扮演了类似持久化的消息队列的角色。在多数场景下，对于链上事件，应用有着<strong>可以重复读，可以从指定块开始读，不能丢失事件</strong>等等的需求。应用监听智能合约事件，常见有主动轮询链节点和向链节点订阅推送的方式。当单个应用存在多个实例时，需要在各个实例间协调，避免对同一合约事件的重复处理。同时，当前监听实例一旦下线，对于该合约事件的处理需要由其他实例从当前位置接着消费（应用需要额外设计实现协调机制保证不丢事件不重复消费）。本方案将事件监听和消费协同的功能交给中间件及消息队列等组件。应用无需再额外实现实例间的协调机制，只需要负责从消息队列里消费就可以，保证消息at-least-once消费。一次注册，就可满足单应用多实例甚至多应用的共享。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/04/21/sc-event-listener/#more" rel="contents">
+              <a class="btn" href="/articles/sc-event-listener/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -251,7 +317,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2023/04/20/sc-oracle/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/sc-oracle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -265,7 +331,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/04/20/sc-oracle/" class="post-title-link" itemprop="url">智能合约预言机</a>
+            <a href="/articles/sc-oracle/" class="post-title-link" itemprop="url">智能合约预言机</a>
         </h2>
 
         <div class="post-meta">
@@ -282,7 +348,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 16:28:56" itemprop="dateModified" datetime="2023-04-27T16:28:56+08:00">2023-04-27</time>
+                <time title="Modified: 2023-05-08 11:34:30" itemprop="dateModified" datetime="2023-05-08T11:34:30+08:00">2023-05-08</time>
               </span>
 
           
@@ -304,7 +370,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/04/20/sc-oracle/#more" rel="contents">
+              <a class="btn" href="/articles/sc-oracle/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -328,7 +394,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2023/03/21/digital-euro-tiered-model/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/digital-euro-tiered-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -342,7 +408,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/03/21/digital-euro-tiered-model/" class="post-title-link" itemprop="url">CBDC系列（2） - 数字欧元研究报告（分层架构）浅析</a>
+            <a href="/articles/digital-euro-tiered-model/" class="post-title-link" itemprop="url">CBDC系列（2） - 数字欧元研究报告（分层架构）浅析</a>
         </h2>
 
         <div class="post-meta">
@@ -359,7 +425,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-14 17:00:04" itemprop="dateModified" datetime="2023-04-14T17:00:04+08:00">2023-04-14</time>
+                <time title="Modified: 2023-05-08 11:34:50" itemprop="dateModified" datetime="2023-05-08T11:34:50+08:00">2023-05-08</time>
               </span>
 
           
@@ -387,7 +453,7 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/03/21/digital-euro-tiered-model/#more" rel="contents">
+              <a class="btn" href="/articles/digital-euro-tiered-model/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -411,7 +477,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2023/02/06/open-cbdc/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/open-cbdc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -425,7 +491,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/06/open-cbdc/" class="post-title-link" itemprop="url">CBDC系列（1） - OpenCBDC项目浅析</a>
+            <a href="/articles/open-cbdc/" class="post-title-link" itemprop="url">CBDC系列（1） - OpenCBDC项目浅析</a>
         </h2>
 
         <div class="post-meta">
@@ -442,7 +508,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-03-21 13:19:32" itemprop="dateModified" datetime="2023-03-21T13:19:32+08:00">2023-03-21</time>
+                <time title="Modified: 2023-05-08 11:33:23" itemprop="dateModified" datetime="2023-05-08T11:33:23+08:00">2023-05-08</time>
               </span>
 
           
@@ -468,7 +534,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/02/06/open-cbdc/#more" rel="contents">
+              <a class="btn" href="/articles/open-cbdc/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -492,7 +558,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2022/09/15/whats-new-in-wasm-2-0/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/whats-new-in-wasm-2-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -506,7 +572,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/15/whats-new-in-wasm-2-0/" class="post-title-link" itemprop="url">WebAssembly 2.0新特性</a>
+            <a href="/articles/whats-new-in-wasm-2-0/" class="post-title-link" itemprop="url">WebAssembly 2.0新特性</a>
         </h2>
 
         <div class="post-meta">
@@ -580,7 +646,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2021/12/04/suptech-data-collection/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/suptech-data-collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -594,7 +660,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/04/suptech-data-collection/" class="post-title-link" itemprop="url">监管科技（1） - 数据采集</a>
+            <a href="/articles/suptech-data-collection/" class="post-title-link" itemprop="url">监管科技（1） - 数据采集</a>
         </h2>
 
         <div class="post-meta">
@@ -637,7 +703,7 @@
           他山之石，可以攻玉。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/12/04/suptech-data-collection/#more" rel="contents">
+              <a class="btn" href="/articles/suptech-data-collection/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -661,7 +727,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2021/07/12/bigdata-metadata-governance/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bigdata-metadata-governance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -675,7 +741,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/12/bigdata-metadata-governance/" class="post-title-link" itemprop="url">数据治理（2） - 元数据管理Atlas</a>
+            <a href="/articles/bigdata-metadata-governance/" class="post-title-link" itemprop="url">数据治理（2） - 元数据管理Atlas</a>
         </h2>
 
         <div class="post-meta">
@@ -755,7 +821,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2021/06/29/bigdata-data-governance/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bigdata-data-governance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -769,7 +835,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/29/bigdata-data-governance/" class="post-title-link" itemprop="url">数据治理（1） - 概述</a>
+            <a href="/articles/bigdata-data-governance/" class="post-title-link" itemprop="url">数据治理（1） - 概述</a>
         </h2>
 
         <div class="post-meta">
@@ -815,7 +881,7 @@
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/06/29/bigdata-data-governance/#more" rel="contents">
+              <a class="btn" href="/articles/bigdata-data-governance/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -839,7 +905,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/23/webank-fisco-bcos-middleware/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/webank-fisco-bcos-middleware/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -853,7 +919,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/23/webank-fisco-bcos-middleware/" class="post-title-link" itemprop="url">微众银行FISCO-BCOS中间件赏析</a>
+            <a href="/articles/webank-fisco-bcos-middleware/" class="post-title-link" itemprop="url">微众银行FISCO-BCOS中间件赏析</a>
         </h2>
 
         <div class="post-meta">
@@ -901,79 +967,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/23/webank-fisco-bcos-middleware/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2020/11/19/sc-authorization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/19/sc-authorization/" class="post-title-link" itemprop="url">智能合约权限管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-19 19:16:43" itemprop="dateCreated datePublished" datetime="2020-11-19T19:16:43+08:00">2020-11-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-28 15:45:15" itemprop="dateModified" datetime="2023-04-28T15:45:15+08:00">2023-04-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1-合约内授权"><a href="#1-合约内授权" class="headerlink" title="1. 合约内授权"></a>1. 合约内授权</h3><p>业务智能合约内，可能会针对某些用户给予指定的数据访问权，或者调用方法的权限，涉及到合约内数据的授权。以下是solidity伪代码，适用于该业务合约由权威机构管理，也就是存在administrator角色统一分配权限，其他只能作为参与方访问授权数据。相应的可以参考微众银行<a target="_blank" rel="noopener" href="https://github.com/WeBankBlockchain/Governance-Authority/tree/master/src/main/contracts">权限治理合约</a>，将用户权限按照分组在权限合约里统一管理，应用合约接口粒度的权限。<br></p><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">contract Admin {</span><br><span class="line">  address public administrator;</span><br><span class="line"></span><br><span class="line">  modifier <span class="function"><span class="title">admin</span>(<span class="params"></span>)</span> {</span><br><span class="line">      <span class="built_in">require</span>(msg.sender == administrator, <span class="string">"Only called by administrator"</span>);</span><br><span class="line">      _;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">transferAdmin</span>(<span class="params">address newAdministrator</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">      administrator = newAdministrator;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 业务合约（包含权限管理）</span></span><br><span class="line">contract Service is Admin {</span><br><span class="line">  mapping(<span class="function"><span class="params">uint256</span> =&gt;</span> mapping(<span class="function"><span class="params">address</span> =&gt;</span> bool)) private _authorized;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> {</span><br><span class="line">    administrator = msg.sender;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 只有administrator才有权限授权给userAddr</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">authourize</span>(<span class="params">uint256 itemID, address userAddr</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">    _authorized[itemID][userAddr] = <span class="literal">true</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 授权用户才能操作特定数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">doSth</span>(<span class="params">uint256 itemID</span>) <span class="title">admin</span> <span class="title">public</span> </span>{</span><br><span class="line">    <span class="built_in">require</span>(_authorized[itemID][msg.sender] == <span class="literal">true</span>, <span class="string">"Unthorized"</span>);</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/19/sc-authorization/#more" rel="contents">
+              <a class="btn" href="/articles/webank-fisco-bcos-middleware/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1064,7 +1058,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

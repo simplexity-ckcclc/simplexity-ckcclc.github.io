@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微众银行FISCO-BCOS中间件赏析">
+<meta property="og:url" content="https://simplexity.cn/articles/webank-fisco-bcos-middleware/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:  链数据管理： 相当于区块链浏">
+<meta property="og:locale">
+<meta property="og:image" content="https://simplexity.cn/images/webank/webase-front-event.jpg">
+<meta property="og:image" content="https://simplexity.cn/images/webank/weevent-stomp.jpg">
+<meta property="og:image" content="https://simplexity.cn/images/webank/webank-governance-auth.jpg">
+<meta property="og:image" content="https://simplexity.cn/images/webank/data-reconcile.jpg">
+<meta property="article:published_time" content="2020-11-23T08:43:09.000Z">
+<meta property="article:modified_time" content="2023-02-08T10:28:14.325Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="Blockchain">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://simplexity.cn/images/webank/webase-front-event.jpg">
+
+<link rel="canonical" href="https://simplexity.cn/articles/webank-fisco-bcos-middleware/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>微众银行FISCO-BCOS中间件赏析 | Simplexity</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/webank-fisco-bcos-middleware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          微众银行FISCO-BCOS中间件赏析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-23 16:43:09" itemprop="dateCreated datePublished" datetime="2020-11-23T16:43:09+08:00">2020-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-08 18:28:14" itemprop="dateModified" datetime="2023-02-08T18:28:14+08:00">2023-02-08</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:</p>
+<ul>
+<li><strong>链数据管理</strong>： 相当于区块链浏览器，获取链的信息，例如块高，块信息等，以及管理各个节点的管理员admin功能（对应微众的<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Node-Manager/index.html">WeBASE-Node-Manager</a>，下同）</li>
+<li><strong>交易</strong>： 交易上链，交易查询，交易回执查询，存证等（<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Transaction/index.html">WeBASE-Transcation</a>）</li>
+<li><strong>合约编译部署</strong>： 编译合约，部署合约等(<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
+<li><strong>合约事件监听</strong>： 订阅事件，事件推送等(在<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/index.html">WeBASE-Front</a>里有基于MQ的方案，以及单独的基于区块链的分布式事件驱动架构<a target="_blank" rel="noopener" href="https://fintech.webank.com/weevent">WeEvent</a>)</li>
+<li><strong>私钥托管</strong>： 托管私钥，代用户签名上链(<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
+<li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a target="_blank" rel="noopener" href="https://fintech.webank.com/weidentity">WeIdentity</a>）</li>
+</ul>
+<p>其他的还有<strong>跨链</strong><a target="_blank" rel="noopener" href="https://fintech.webank.com/wecross">WeCross</a>，<strong>链上数据导出</strong><a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
+<h1 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h1><ol>
+<li><a href="#event-listener">合约事件监听</a></li>
+<li><a href="#governance">WeBankBlockchain-Governance链治理通用组件</a></li>
+<li><a href="#data">WeBankBlockchain-Data数据治理通用组件</a></li>
+</ol>
+<span id="more"></span>
+<h2 id="1-合约事件监听"><a href="#1-合约事件监听" class="headerlink" title="1. 合约事件监听"></a><span id="event-listener">1. 合约事件监听</span></h2><p>合约里经常会包含有事件（event关键字），应用通过监听链上指定合约的指定事件，从而得到相应的数据触发相应的处理，也就是不同的系统不再需要链下的交互（例如api调用等），在这里，链扮演了类似<strong>持久化的消息队列</strong>的角色。在多数场景下，对于链上事件，应用方会有着 <strong>可以重复读，可以从指定块开始读，不能丢失事件</strong> 等等的需求，这些在设计中间件时都需要考虑在内。</p>
+<h3 id="1-1-基于MQ的通知方案"><a href="#1-1-基于MQ的通知方案" class="headerlink" title="1.1 基于MQ的通知方案"></a>1.1 基于MQ的通知方案</h3><p>该实现在<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/appendix.html#id8">WeBASE-Front:支持链上事件订阅和通知</a>内，大致流程（摘录）：</p>
+<ol>
+<li>WeBASE-Front连接到MQ-Server(目前支持RabbitMQ-Server);</li>
+<li>WeBASE-Front接收节点的事件Push后，如出块通知，WeBASE-Front将出块消息发送到消息队列中；</li>
+<li>区块链应用连接MQ-Server，获取消息队列中待消费的消息，即可获得事件通知；  </li>
+</ol>
+<p>接口文档在<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/interface.html#id491">订阅合约event事件通知</a>(基于版本v1.4.1，下同)。其中主要参数有（部分）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用编号</td>
+<td>appId</td>
+<td>注册事件通知的应用的唯一编号，仅支持数字字母和下划线</td>
+</tr>
+<tr>
+<td>合约abi</td>
+<td>contractAbi</td>
+<td>合约的ABI，用于合约event解析</td>
+</tr>
+<tr>
+<td>event起始区块</td>
+<td>fromBlock</td>
+<td>默认latest，表示一直监听最新区块，最小值为1</td>
+</tr>
+<tr>
+<td>event末区块</td>
+<td>toBlock</td>
+<td>最小值为1，最大值为当前区块高度，需 要大于等于fromBlock；填写latest，表示一直监听最新区块</td>
+</tr>
+<tr>
+<td>合约地址</td>
+<td>contractAddress</td>
+<td>合约地址</td>
+</tr>
+<tr>
+<td>合约event列表</td>
+<td>topicList</td>
+<td>List类型，合约Event事件列表，Event参数之间不带空格</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>大致流程如下：<br><img src="/images/webank/webase-front-event.jpg" width="50%" height="50%"></p>
+<ol>
+<li>应用通过API请求<a target="_blank" rel="noopener" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/interface.html#id491">订阅合约event事件通知</a>接口</li>
+<li><code>EventService</code>类构造了<code>ContractEventCallback</code>用于后续收到异步推送的回掉实现，同时生成UUID作为filterID，然后将（filterID-callback）这键值对记录到<code>eventLogFilterManager</code>(本地map结构）内。然后向FISCO BCOS节点同步发送<code>ChannelMessageType.CLIENT_REGISTER_EVENT_LOG</code>类型的注册请求。（客户端与节点的交互基于<a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#channelmessage-v2">Channel</a>协议。交互分为三个阶段：注册请求，节点回复，Event Log数据推送。）实际实现是基于netty通信框架，这里的webase-front中间件与链节点间维持着长链接。参考<a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/event_sub.html">Fisco Bcos的合约事件推送</a>。然后同步注册成功/失败后将结果返回给API调用方。</li>
+<li>中间件收到链节点推送的<code>ChannelMessageType.EVENT_LOG_PUSH</code>类型消息，根据消息体里携带的filterID从<code>eventLogFilterManager</code>里取出相应的callback，然后调用<code>ContractEventCallback#onPushMessageLog</code>。</li>
+<li>在callback里调用<code>ContractEventCallback#pushMeessage2MQ</code>，将监听到的log推送到MQ。在此之前，应用已经订阅了MQ的指定主题，后续的管理交由MQ。</li>
+</ol>
+<h4 id="观点："><a href="#观点：" class="headerlink" title="观点："></a>观点：</h4><ol>
+<li>在多consumer场景协同消费等情况下，传统MQ的管理是相对复杂的，而且也有很成熟的方案和组件。因此，区块链中间件负责监听链上数据并导入MQ，后续管理消费交由MQ，各司其职，也充分利用MQ的特性，值得借鉴。</li>
+<li>该方案没有持久化，每次front中间件重启之后需要重新注册。因此，需要在应用层持久化当前消费到的blockNumber，下次重启后指定fromBlock。下次重启后，很可能会造成重复消费。</li>
+<li>如果同一个应用的多个实例向多个front中间件注册，由于没有持久化，并且都是记录在进程map数据结构内，不同的filterID，就会造成多个front中间件独立注册（例如向不同的链节点），造成同一个事件的数据被重复推送（例如，总共3个front，各自向3个不同的链节点注册同一个事件，则3个front中间件都会收到同一个事件，也就是被3次写入MQ）。因此，需要在应用层做好多实例下的同步，包括实例的加入/退出场景，避免重复注册监听器。</li>
+<li>监听的事件通知是通过PUSH的模式实现的，也就是链上监听的lastBlockNumber是记录在链节点端的。存在一种极端的情况，例如<code>ContractEventCallback#pushMeessage2MQ</code>异常，没法推送到MQ里，当前只是记录到日志里error级别。在链节点端看来推送成功（无论是否处理成功），lastBlockNumber继续往前推进，而实际上MQ里没有这条数据，导致数据的丢失。即使后期通过日志来补发MQ，对于处理事件有先后顺序的特殊应用可能会引起连锁反应，（例如某个合约里在block N有事件一但是丢失了，block N+10里事件二，由于事件一未处理，状态对应不上，导致事件二也失败）。这种PUSH的方式在某些场景下难以接受。</li>
+</ol>
+<h4 id="解决思路："><a href="#解决思路：" class="headerlink" title="解决思路："></a>解决思路：</h4><ol>
+<li>仍然参考引入第三方MQ的思路，将链上事件导入MQ，由MQ来管理队列消费。此处考虑引入zk + kafka。</li>
+<li>改用PULL的方式。在front中间件持久化当前已经成功发送到MQ的lastBlockNumber，每次在成功发送MQ后再更新持久化的lastBlockNumber。能保证数据不会丢失，但是可能会重复加入MQ。这里的持久化可以考虑使用zk，将消费信息记录到zk上，如果交互可能会比较频繁，也可以考虑使用mysql等关系型数据库。</li>
+<li>多个front节点只需要一个实例来PULL链上的event log，而且需要有且仅有唯一。可以使用zk来做分布式锁，解决多实例的加入退出下的动态选主。</li>
+<li>由于在front中间件有持久化监听信息，因此即使在多个应用实例同时注册时，也可以通过判断同一个监听是否已被注册而且在运行中等状态（这里需要适当的锁），从而避免多实例重复注册的问题。</li>
+</ol>
+<h3 id="1-2-WeEvent框架"><a href="#1-2-WeEvent框架" class="headerlink" title="1.2 WeEvent框架"></a>1.2 <a target="_blank" rel="noopener" href="https://fintech.webank.com/weevent">WeEvent</a>框架</h3><p>基于WeEvent v1.4.0版本。概念及模型参考<a target="_blank" rel="noopener" href="https://weeventdoc.readthedocs.io/zh_CN/latest/introduction/core.html">核心概念</a>。consumer的实现逻辑如下图：<br><img src="/images/webank/weevent-stomp.jpg" width="80%" height="80%"></p>
+<ul>
+<li><strong>应用订阅主题</strong>：</li>
+</ul>
+<ol>
+<li>通过stomp协议订阅topic，这个是websocket的使用比较广泛的报文格式。这个在weevent-broker包里。里面有mqtt（用于IoT）和stomp协议用于consumer，另外有jsonrpc和rest用于producer。参看<a target="_blank" rel="noopener" href="https://weeventdoc.readthedocs.io/zh_CN/latest/introduction/core.html">接入说明</a>，其中，<strong><code>暂时不支持消息确认ACK和事务Transaction语义。</code>(</strong><a target="_blank" rel="noopener" href="https://weeventdoc.readthedocs.io/zh_CN/latest/protocol/stomp.html">摘录</a>)</li>
+<li>针对每个订阅，新建notifyTask并且注册。（weevent-core包）</li>
+</ol>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/amop_protocol.html">AMOP</a>（Advanced Messages Onchain Protocol）协议</strong><br>链上信使协议AMOP（Advanced Messages Onchain Protocol）系统旨在为Fisco Bcos联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯（摘）。这个实际上是构建在链的单播/广播消息通信协议，支持私有话题加密通信，发送文本和文件（以后有机会再深入研究），此处可以实现链节点和链外系统的通信。此处也有Topic的概念，需要区分该Topic和event topic不是同一个概念。</li>
+</ul>
+<ol>
+<li>链节点在出块时通过AMOP协议向<code>Consummer</code>推送<code>BLOCK_NOTIFY</code>消息。（该话题是consumer初始化时订阅的）</li>
+<li><code>BlockEventListener</code>向<code>BlockNotifyQueue</code>队列加入最新的blockNumer。</li>
+</ol>
+<ul>
+<li><strong>消费event并推送</strong></li>
+</ul>
+<ol>
+<li>常驻线程<code>MainEventLoop</code>从<code>BlockNotifyQueue</code>poll队列内的<code>blockNumber</code>，获得最新的blockNumer</li>
+<li><code>MainEventLoop</code>本地维护上次消费到的<code>lastBlock</code>，比较<code>lastBlock + 1 &lt;= blockNumber</code>，通过<code>getBlock</code>接口向链节点获取下一个区块（<code>lastBlock + 1</code>，每次只消费一个区块），从而获取区块包含的交易回执，从而decode出具体的event。</li>
+<li>然后dispatch提交到各自到<code>eventQueue</code>队列内，然后更新<code>lastBlock += 1</code>。此处<code>lastBlock</code>是线程内部变量，不持久化。</li>
+<li><code>NotifyTask</code>从自身的<code>eventQueue</code>poll队列内的event，然后回调<code>BrokerStomp.EventListener#onEvent</code>方法。</li>
+<li><code>BrokerStomp</code>使用stomp协议里<code>SEND</code>向应用推送event。</li>
+</ol>
+<h4 id="观点：-1"><a href="#观点：-1" class="headerlink" title="观点："></a>观点：</h4><ol>
+<li>链节点到event中间件间的AMOP协议是PUSH方式，event中间件向链节点获取区块时是PULL方式。因此，即使PULL方式偶尔失败，例如丢失若干个中间出块事件的块高，最后还是会以最大的块高为准。而获取区块getBlock使用pull的方式，可重复读，保证数据不会丢失。</li>
+<li>消费<code>lastBlock</code>没有持久化，应用每次subscribe后都是按照从最新的block开始取，<strong>不支持</strong>指定(fromBlock, toBlock)消费历史数据。</li>
+<li><code>BrokerStomp</code>到应用这一段的推送<strong>不支持</strong>ACK及事务，因此这部分推送有可能丢失。</li>
+<li><code>weevent-processor</code>包里主要是链上的流事件处理。（这个与大数据流计算的对比有待后续分析）</li>
+</ol>
+<hr>
+<h2 id="2-WeBankBlockchain-Governance链治理通用组件"><a href="#2-WeBankBlockchain-Governance链治理通用组件" class="headerlink" title="2. WeBankBlockchain-Governance链治理通用组件"></a><span id="governance">2. <a target="_blank" rel="noopener" href="https://github.com/WeBankBlockchain/Governance-Doc">WeBankBlockchain-Governance链治理通用组件</a></span></h2><p>微众银行提出面向区块链的多方协作治理框架—— Multilateral Collaborative Governance Framework（MCGF）。具体见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU0MDY4MDMzOA==&amp;mid=2247486381&amp;idx=1&amp;sn=caae41a2241e3b1c2cd58181ef73a1bc&amp;chksm=fb34c250cc434b46b2c1b72299c2eb71e1bd6b7597c341423c5d262f18a6e0af1628e0ba4037&amp;scene=21#wechat_redirect">白皮书</a></p>
+<h3 id="2-1-WeBankBlockchain-Governance-Key-私钥管理组件"><a href="#2-1-WeBankBlockchain-Governance-Key-私钥管理组件" class="headerlink" title="2.1 WeBankBlockchain-Governance-Key 私钥管理组件"></a>2.1 WeBankBlockchain-Governance-Key 私钥管理组件</h3><ol>
+<li><p>助记词生成私钥<br>参考类<code>PkeyByMnemonicService.java</code>。通过助记词<code>mnemonic</code>与密码<code>passphrase</code>进行<code>PBKDF2WithHmacSha512</code>哈希算法生成确定性的公私钥对<code>keyPair</code>和用于安全派生子密钥的<code>chaincode</code>。</p>
+</li>
+<li><p>私钥托管<br>参考类<code>KeyHandler.java</code>。以数据库存储为例，私钥 <strong><em>加密</em></strong> 后存储，加密的方式例如<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition">Ethereum wallet file</a>(适配Ethereum的模式), 或者p12的KeyStore（密码访问模式）等。按照加密口令根据是否同时托管也分为半托管（加密口令在用户手中，加密后的私钥存放在数据库中，需要使用私钥签名时候需要同时传入加密口令解密）和全托管。全托管方式下，加密口令和加密后的私钥分库存储，降低安全风险。</p>
+</li>
+<li><p>私钥派生</p>
+</li>
+<li>私钥分片</li>
+</ol>
+<h3 id="2-2-WeBankBlockchain-Governance-Account-账户治理组件"><a href="#2-2-WeBankBlockchain-Governance-Account-账户治理组件" class="headerlink" title="2.2 WeBankBlockchain-Governance-Account 账户治理组件"></a>2.2 WeBankBlockchain-Governance-Account 账户治理组件</h3><p>增加<code>普通账户（Normal Account）</code>的概念，与外部账户一对一绑定，在链上的身份用的是普通账户的地址。即<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------      --------       --------</span><br><span class="line">| 外部账户(用户手持的公私钥) | -&gt; | 普通账户 | -&gt; | 应用合约 |</span><br><span class="line"> ------------------------      --------       --------</span><br></pre></td></tr></table></figure><br>因此，管理员可以添加，替换，冻结，解冻普通账户（也可以由用户自身提出），例如用户遗失/泄露私钥的场景下，只需要更新&lt;外部, 普通&gt;账户对应关系，而链上的应用合约对应的普通账户不变。应用合约需要引入<code>AccountManager.sol</code>，使用<code>_accountManager</code>里记录的普通用户地址来代替<code>msg.sender</code>来判断身份权限。</p>
+<p>管理员的角色可以分类两类，一类是超级管理员（唯一），一类是管员委员会（投票决策）。部署的合约分别是<code>AdminGovernBuilder.sol</code>和<code>（Weight）VoteGovernBuilder.sol</code>。以<code>AdminGovernBuilder.sol</code>为例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AdminGovernBuilder.sol</span></span><br><span class="line"><span class="comment">// 部署合约，目的是为了实例化以下的合约。</span></span><br><span class="line">contract AdminGovernBuilder &#123;</span><br><span class="line">  address public _governance;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> &#123;</span><br><span class="line">    WEGovernance governance = <span class="keyword">new</span> WEGovernance(<span class="number">0</span>);</span><br><span class="line">    governance.setOwner(msg.sender);</span><br><span class="line">    _governance = address(governance);</span><br><span class="line">    address _accountManager = governance.getAccountManager();</span><br><span class="line">    AccountManager accountManager = AccountManager(_accountManager);</span><br><span class="line">    accountManager.newAccount(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getGovernance</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getAccountManager</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address</span>) </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// WEGovernance.sol</span></span><br><span class="line"><span class="comment">// 该合约是管理规则，例如在管理委员会方式下，发起投票requestVote和各个委员vote的汇总计算逻辑都是在此合约里。</span></span><br><span class="line">contract WEGovernance is WEBoardVoteGuard &#123;</span><br><span class="line">  address _accountManager;</span><br><span class="line">  <span class="comment">// 0: admin-mode; 1: vote-mode.</span></span><br><span class="line">  uint8 public _mode = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params">uint8 mode</span>) <span class="title">public</span> &#123;</span><br><span class="line">    _mode = mode;</span><br><span class="line">    AccountManager accountManager = <span class="keyword">new</span> AccountManager();</span><br><span class="line">    _accountManager = address(accountManager);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 发起投票，登记该投票信息</span></span><br><span class="line">  <span class="comment">// return id : 唯一标志提案，与vote方法的入参相对应</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">register</span>(<span class="params">uint8 txType, ...</span>) <span class="title">external</span> <span class="title">validVoter</span> <span class="title">returns</span> (<span class="params">bool b, uint256 id</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 投票</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">vote</span>(<span class="params">uint256 id, bool flag</span>) <span class="title">external</span> <span class="title">validVoter</span> <span class="title">returns</span> (<span class="params">bool b</span>)</span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// AccountManager.sol</span></span><br><span class="line"><span class="comment">// &lt;外部, 普通&gt;账户对应关系的存放</span></span><br><span class="line">contract AccountManager is WEBasicAuth &#123;</span><br><span class="line">  <span class="comment">// 外部账户 -&gt; 普通账户</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> address) _externalAccountMapping;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 普通账户 -&gt; 外部账户</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> address) _userAccountMapping;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// EvidenceDemo.sol</span></span><br><span class="line"><span class="comment">// 应用合约示例。引入AccountManager即可</span></span><br><span class="line">contract EvidenceDemo &#123;</span><br><span class="line">  address public _owner;</span><br><span class="line">  AccountManager _accountManager;</span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params">address accountManager</span>) <span class="title">public</span> &#123;</span><br><span class="line">    _accountManager = AccountManager(accountManager);</span><br><span class="line">    _owner = _accountManager.getUserAccount(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用_accountManager里记录的普通用户地址来代替 msg.sender</span></span><br><span class="line">  modifier <span class="function"><span class="title">onlyOwner</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    address userAccountAddress = _accountManager.getUserAccount(msg.sender);</span><br><span class="line">    <span class="built_in">require</span>(userAccountAddress == _owner, <span class="string">&quot;Not admin&quot;</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-WeBankBlockchain-Governance-Auth-权限治理组件"><a href="#2-3-WeBankBlockchain-Governance-Auth-权限治理组件" class="headerlink" title="2.3 WeBankBlockchain-Governance-Auth 权限治理组件"></a>2.3 WeBankBlockchain-Governance-Auth 权限治理组件</h3><p>与账户治理组件非常类似，也是引入了权限管理合约，由超级管理员或者管理员委员会进行管理。在应用合约里访问权限管理合约，调用<code>canCallFunction</code>来判断是否可以访问指定的合约方法。架构图如下：<br><img src="/images/webank/webank-governance-auth.jpg" width="50%" height="50%"></p>
+<hr>
+<h2 id="3-WeBankBlockchain-Data数据治理通用组件"><a href="#3-WeBankBlockchain-Data数据治理通用组件" class="headerlink" title="3. WeBankBlockchain-Data数据治理通用组件"></a><span id="data">3. WeBankBlockchain-Data数据治理通用组件</span></h2><p>参考<a target="_blank" rel="noopener" href="https://github.com/WeBankBlockchain/Data-Doc">文档</a></p>
+<h3 id="3-1-WeBankBlockchain-Data-Reconcile对账服务"><a href="#3-1-WeBankBlockchain-Data-Reconcile对账服务" class="headerlink" title="3.1 WeBankBlockchain-Data-Reconcile对账服务"></a>3.1 WeBankBlockchain-Data-Reconcile对账服务</h3><p>金融机构特别是央行/商业银行间清结算，而且在当前区块链的性能限制条件下，批量定时的对账是常采用的方式。这个组件其实是比较完成的对账项目代码，饱含了基本流程。具体参考<a target="_blank" rel="noopener" href="https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Reconcile/index.html">文档</a>。流程如下图所示：<br><img src="/images/webank/data-reconcile.jpg" width="50%" height="50%"></p>
+<p>以正向定时任务为例，代码里主要采用了责任链的方式，具体配置在<code>ReconcileHandlerFactory.java</code>类中。具体的hanlder chain如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">| ReconcileTaskHandler(创建任务，记录在数据库) | -&gt; | ReconcileFileObtainHandler（从FTP/区块链上获取对账文件） |  </span><br><span class="line"> ------------------------------------------      ------------------------------------------------------</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br><span class="line">    -&gt; | ReconcileExecuteHandler（对账过程，具体每条数据以索引对齐） | -&gt; | ReconcileResultHandler（将对账结果上传到FTP）｜</span><br><span class="line">         ------------------------------------------------------      ------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>实际过程中，需要考虑数据/文件的加密，特别是在多方对账的场景，需要在多个层面做好数据加密和隔离，这点在项目中没有体现。例如，上链方生成对称密钥，对每笔数据（例如涉及到金额的敏感字段等）使用对称密钥加密，并且在上链的数据中附带上该对称密钥的标志。上链方采用对账方的公钥对对称密钥进行加密，并且通过报文发送给对账方。对账方使用自己的私钥解密后，进而对链上数据进行对称解密。另外，上链方在FTP中存放的对账文件，也需要相应的进行加密写入，并且，不同的对账方也需要相互隔离，在FTP上使用不同的路径，并且配置可访问权限。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/sc-authorization/" rel="prev" title="智能合约权限管理">
+      <i class="fa fa-chevron-left"></i> 智能合约权限管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/articles/bigdata-data-governance/" rel="next" title="数据治理（1） - 概述">
+      数据治理（1） - 概述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">目录：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%90%88%E7%BA%A6%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">1.1.</span> <span class="nav-text">1. 合约事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%9F%BA%E4%BA%8EMQ%E7%9A%84%E9%80%9A%E7%9F%A5%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基于MQ的通知方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E7%82%B9%EF%BC%9A"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">观点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">解决思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-WeEvent%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 WeEvent框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E7%82%B9%EF%BC%9A-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">观点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-WeBankBlockchain-Governance%E9%93%BE%E6%B2%BB%E7%90%86%E9%80%9A%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2. WeBankBlockchain-Governance链治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-WeBankBlockchain-Governance-Key-%E7%A7%81%E9%92%A5%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 WeBankBlockchain-Governance-Key 私钥管理组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-WeBankBlockchain-Governance-Account-%E8%B4%A6%E6%88%B7%E6%B2%BB%E7%90%86%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 WeBankBlockchain-Governance-Account 账户治理组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-WeBankBlockchain-Governance-Auth-%E6%9D%83%E9%99%90%E6%B2%BB%E7%90%86%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 WeBankBlockchain-Governance-Auth 权限治理组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-WeBankBlockchain-Data%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E9%80%9A%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3. WeBankBlockchain-Data数据治理通用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-WeBankBlockchain-Data-Reconcile%E5%AF%B9%E8%B4%A6%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 WeBankBlockchain-Data-Reconcile对账服务</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-anchor"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '12eedb094a3054014378',
+      clientSecret: 'a18108e1702f3c382aa9b2b6edd4c77336791528',
+      repo        : 'simplexity-gitalk',
+      owner       : 'simplexity-ckcclc',
+      admin       : ['simplexity-ckcclc'],
+      id          : 'a9a3c657e5aa632eec80e264a713cfd0',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

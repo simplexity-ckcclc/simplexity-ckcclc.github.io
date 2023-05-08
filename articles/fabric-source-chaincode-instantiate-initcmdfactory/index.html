@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="推荐参考两个博客：    fabric源码解析——序 : 国内同道的源码分析系列，模块化   Hyperledger Fabric源码深度解析 : 对MSP，BCCSP的介绍到位  To know the internals of certain permissioned blockchain platform : IBM员工，参与HF项目的概念总结文章系列  选择peer chaincode i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程">
+<meta property="og:url" content="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="推荐参考两个博客：    fabric源码解析——序 : 国内同道的源码分析系列，模块化   Hyperledger Fabric源码深度解析 : 对MSP，BCCSP的介绍到位  To know the internals of certain permissioned blockchain platform : IBM员工，参与HF项目的概念总结文章系列  选择peer chaincode i">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-02-23T07:35:09.000Z">
+<meta property="article:modified_time" content="2023-04-27T09:09:23.946Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="Hyperledger Fabric">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程 | Simplexity</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-23 15:35:09" itemprop="dateCreated datePublished" datetime="2019-02-23T15:35:09+08:00">2019-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-27 17:09:23" itemprop="dateModified" datetime="2023-04-27T17:09:23+08:00">2023-04-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>推荐参考两个博客：  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/idsuf698987/article/details/74907281">fabric源码解析——序</a> : 国内同道的源码分析系列，模块化  </li>
+<li><a target="_blank" rel="noopener" href="https://www.chaindesk.cn/witbook/30/467">Hyperledger Fabric源码深度解析</a> : 对MSP，BCCSP的介绍到位 </li>
+<li><a target="_blank" rel="noopener" href="https://blockchain-fabric.blogspot.com/">To know the internals of certain permissioned blockchain platform</a> : IBM员工，参与HF项目的概念总结文章系列</li>
+</ul>
+<p><em>选择peer chaincode instantiate作为开篇，是因为笔者学习官网过程中没有完全理解install与instantiate的区别，所以选择深入源码学习来加深理解</em></p>
+<p>官网<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为  </p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"</span><br></pre></td></tr></tbody></table></figure>
+<p>此前，需要先设置环境变量</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID="Org2MSP"</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></tbody></table></figure>
+<p>客户端调用<code>peer chaincode instatiate</code>命令部署chaincode，代码在‘peer/chaincode/instantiate.go’这个文件下，命令关联的方法是<code>chaincodeDeploy</code>(使用了流行的第三方命令行cobra库，具体可自行学习)。</p>
+<span id="more"></span>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">chaincodeDeploy</span><span class="params">(cmd *cobra.Command, args []<span class="keyword">string</span>, cf *ChaincodeCmdFactory)</span> <span class="title">error</span></span> {</span><br><span class="line">    <span class="keyword">if</span> cf == <span class="literal">nil</span> {</span><br><span class="line">        cf, err = InitCmdFactory(cmd.Name(), <span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">defer</span> cf.BroadcastClient.Close()</span><br><span class="line"></span><br><span class="line">    env, err := instantiate(cmd, cf)</span><br><span class="line"></span><br><span class="line">    err = cf.BroadcastClient.Send(env)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>这个方法主要分为3个步骤（源码只列出关键步骤，省略判断逻辑及错误处理等，下同）。  </p>
+<ol>
+<li>入参<code>cf *ChaincodeCmdFactory</code>为nil，未初始化。（可回溯到peer启动<code>peer/main.go#main</code>时看到<code>mainCmd.AddCommand(chaincode.Cmd(nil))</code>）。初始化chaincode命令工厂，包含客户端及辅助类。这个方法在所有的chaincode命令前都先执行，入参有所不同。<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ChaincodeCmdFactory holds the clients used by ChaincodeCmd</span></span><br><span class="line"><span class="keyword">type</span> ChaincodeCmdFactory <span class="keyword">struct</span> {</span><br><span class="line">    EndorserClients []pb.EndorserClient     <span class="comment">// 与endorser交互的客户端</span></span><br><span class="line">    DeliverClients  []api.PeerDeliverClient     <span class="comment">// </span></span><br><span class="line">    Certificate     tls.Certificate     <span class="comment">//</span></span><br><span class="line">    Signer          msp.SigningIdentity        </span><br><span class="line">    BroadcastClient common.BroadcastClient      <span class="comment">// 与orderer交互的客户端</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+下面关注下初始化的过程<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// peer/chaincode/common.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitCmdFactory</span><span class="params">(cmdName <span class="keyword">string</span>, isEndorserRequired, isOrdererRequired <span class="keyword">bool</span>)</span> <span class="params">(*ChaincodeCmdFactory, error)</span></span> {</span><br><span class="line">    <span class="keyword">if</span> isEndorserRequired {</span><br><span class="line">        <span class="keyword">if</span> err = validatePeerConnectionParameters(cmdName); err != <span class="literal">nil</span> {} </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i, address := <span class="keyword">range</span> peerAddresses {</span><br><span class="line">            endorserClient, err := common.GetEndorserClientFnc(address, tlsRootCertFile)</span><br><span class="line">            endorserClients = <span class="built_in">append</span>(endorserClients, endorserClient)</span><br><span class="line">            </span><br><span class="line">            deliverClient, err := common.GetPeerDeliverClientFnc(address, tlsRootCertFile)</span><br><span class="line">            deliverClients = <span class="built_in">append</span>(deliverClients, deliverClient)</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    certificate, err := common.GetCertificateFnc()</span><br><span class="line"></span><br><span class="line">    signer, err := common.GetDefaultSignerFnc()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> broadcastClient common.BroadcastClient</span><br><span class="line">    <span class="keyword">if</span> isOrdererRequired {</span><br><span class="line">        endorserClient := endorserClients[<span class="number">0</span>]</span><br><span class="line">        orderingEndpoints, err := common.GetOrdererEndpointOfChainFnc(channelID, signer, endorserClient)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// override viper env</span></span><br><span class="line">        viper.Set(<span class="string">"orderer.address"</span>, orderingEndpoints[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        broadcastClient, err = common.GetBroadcastClientFnc()</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &amp;ChaincodeCmdFactory{</span><br><span class="line">        EndorserClients: endorserClients,</span><br><span class="line">        DeliverClients:  deliverClients,</span><br><span class="line">        Signer:          signer,</span><br><span class="line">        BroadcastClient: broadcastClient,</span><br><span class="line">        Certificate:     certificate,</span><br><span class="line">    }, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+<li>入参为<code>cmdName(命令名) string(命令名), isEndorserRequired（是否需要初始化endorser client）, isOrdererRequired（是否需要初始化orderer broadcast client） bool</code>。这个是根据命令传参，例如instantiate部署chaincode既需要endorser背书，也需要orderer排序打包并且扩散全网，而install安装则只需要背书。</li>
+<li>instantiate需要背书，<code>isEndorserRequired=true</code>。<code>validatePeerConnectionParameters</code>校验命令参数。例如，校验peerAddresses个数及相应的tlsRootCertFiles匹配。注意，这里有<code>// currently only support multiple peer addresses for invoke</code>注释，对非invoke方法只能传入一个peerAddress，如install，instantiate。这也说明，这些操作只能作用于单个节点，而且下面也可以看到只需要单个节点的背书。</li>
+<li><p><code>GetEndorserClientFnc</code>和<code>GetPeerDeliverClientFnc</code>方法非常类似。都是构造以下这个client(主要是grpc client, hyperledger fabric使用grpc作为rpc方案)，数据结构完全一致，只是后续的用途有所不同。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetEndorserClient returns a new endorser client. If the both the address and</span></span><br><span class="line"><span class="comment">// tlsRootCertFile are not provided, the target values for the client are taken</span></span><br><span class="line"><span class="comment">// from the configuration settings for "peer.address" and</span></span><br><span class="line"><span class="comment">// "peer.tls.rootcert.file"</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetEndorserClient</span><span class="params">(address, tlsRootCertFile <span class="keyword">string</span>)</span> <span class="params">(pb.EndorserClient, error)</span></span> {</span><br><span class="line">    <span class="keyword">if</span> address != <span class="string">""</span> {</span><br><span class="line">        <span class="comment">// 从命令行传入peer address, --peerAddresses, --tlsRootCertFiles</span></span><br><span class="line">        peerClient, err = NewPeerClientForAddress(address, tlsRootCertFile)</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        <span class="comment">// 从环境变量读取peer address</span></span><br><span class="line">        peerClient, err = NewPeerClientFromEnv()</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> peerClient.Endorser()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">&amp;PeerClient{</span><br><span class="line">    commonClient: commonClient{</span><br><span class="line">        GRPCClient: gClient,    <span class="comment">// grpc client. 工程使用grpc作为节点间的远程调用方案</span></span><br><span class="line">        address:    address,    <span class="comment">// “peer.address”</span></span><br><span class="line">        sn:         override   <span class="comment">// "peer.tls.serverhostoverride"</span></span><br></pre></td></tr></tbody></table></figure>
+<p>在上面的例子中，命令里并没有提供<code>peerAddress</code>和<code>tlsRootCertFile</code>这两个参数，因此从环境变量里读取。在源码中，使用了流行的第三方库viper来进行配置加载和管理。也就是我们要先设置的变量<code>CORE_PEER_ADDRESS</code>和<code>CORE_PEER_TLS_ROOTCERT_FILE</code>。</p>
+</li>
+<li><p>生成客户端X509证书<code>GetCertificateFnc</code>。客户端通信时是否需要校验X509证书是由环境变量<code>peer.tls.enabled</code>和<code>peer.tls.clientAuthRequired</code>这两个参数决定的。在该tutorial例子中并没有设置。如果需要校验，则另外需要提供两个参数<code>peer.tls.clientKey.file</code>和<code>peer.tls.clientCert.file</code>，分别对应节点的public/private key文件。需要说明的是，在前面构造的endorseClient和peerDeliverClient过程中，也已经读取这两个参数和文件，生成X509 key pair，可以进行tls通信。这里的方法也是构建peerClient，获取该key pair。（TODO：以后专题分析加密）</p>
+</li>
+<li><p><code>GetDefaultSignerFnc</code>调用本地MSP<code>mspmgmt.GetLocalMSP().GetDefaultSigningIdentity()</code>获取signer，后续用于发送的proposal进行签名，构造signedProposal。（TODO：以后专题分析msp成员管理服务）</p>
+</li>
+<li><p><code>isOrdererRequired</code>这个参数初始化时候传入，根据后续操作是否需要与orderer交互乃至全网同步而是否选择初始化。chaincode instantiate需要全网同步，因此需要初始化。命令行<code>-o</code>参数指定orderer地址，如果没有指定，则通过<code>GetOrdererEndpointOfChainFnc</code>获取orderer地址。这个是通过调用cscc（configuration system chaincode，配置系统链码）的GetConfigBlock方法（参数为channelId）实现的。流程与一般的chaincode调用相似。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetOrdererEndpointOfChain</span><span class="params">(chainID <span class="keyword">string</span>, signer msp.SigningIdentity, endorserClient pb.EndorserClient)</span> <span class="params">([]<span class="keyword">string</span>, error)</span></span> {</span><br><span class="line">	<span class="comment">// query cscc for chain config block</span></span><br><span class="line">	invocation := &amp;pb.ChaincodeInvocationSpec{</span><br><span class="line">		ChaincodeSpec: &amp;pb.ChaincodeSpec{</span><br><span class="line">			Type:        pb.ChaincodeSpec_Type(pb.ChaincodeSpec_Type_value[<span class="string">"GOLANG"</span>]),</span><br><span class="line">			ChaincodeId: &amp;pb.ChaincodeID{Name: <span class="string">"cscc"</span>},</span><br><span class="line">			Input:       &amp;pb.ChaincodeInput{Args: [][]<span class="keyword">byte</span>{[]<span class="keyword">byte</span>(cscc.GetConfigBlock), []<span class="keyword">byte</span>(chainID)}},</span><br><span class="line">		},</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	creator, err := signer.Serialize()</span><br><span class="line">	prop, _, err := putils.CreateProposalFromCIS(pcommon.HeaderType_CONFIG, <span class="string">""</span>, invocation, creator)</span><br><span class="line">	signedProp, err := putils.GetSignedProposal(prop, signer)</span><br><span class="line"></span><br><span class="line">	proposalResp, err := endorserClient.ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// parse config block</span></span><br><span class="line">	block, err := putils.GetBlockFromBlockBytes(proposalResp.Response.Payload)</span><br><span class="line">	envelopeConfig, err := putils.ExtractEnvelope(block, <span class="number">0</span>)</span><br><span class="line">	bundle, err := channelconfig.NewBundleFromEnvelope(envelopeConfig)</span><br><span class="line">	<span class="keyword">return</span> bundle.ChannelConfig().OrdererAddresses(), <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+</ol>
+<ul>
+<li>构造<code>ChaincodeInvocationSpec</code>cis描述该chaincode请求，包含请求的语言（GOLAND），chaincodeId（“cscc”），具体请求Input（cscc.GetConfigBlock）等。这个请求体格式通用于所有的系统及普通chaincode。然后，构造proplsal，并通过上面MSP获取的signer进行签名，在被调用方需要依次判断该节点是否有权限调用chaincode。  </li>
+<li>接着，通过上面构建等endorserClient进行grpc调用<code>grpc.Invoke(ctx, "/protos.Endorser/ProcessProposal", in, out, c.cc, opts...)</code>，简单介绍下参数(ctx context.Context，in *SignedProposal, opts …grpc.CallOption, out ProposalResponse, c.cc endorser.grpc.ClientConn)。此处grpc调用的方法是<code>/protos.Endorser/ProcessProposal</code>，endorser端校验，调用cscc，得到结果ProposalResponse返回。这个后面详述。  </li>
+<li>最后，从rpc调用的结果bytes依次反序列化成block，获取并反序列化block中第一个envelope，把envelope的payload反序列化成configtx，并且获取相应的信息channelConfig，最后从channelConfig中获取到OrdererAddresses。（这里的结构处理是根据cscc的GetConfigBlock调用结果）选择第一个orderer的地址重写为系统变量<code>orderer.address</code>。(TODO：这里是否会把所有的请求都集中到第一个orderer有待研究cscc的方法)  </li>
+</ul>
+<ol>
+<li><code>GetBroadcastClientFnc</code>与上面的<code>GetEndorserClient</code>主要流程非常相似，主要区别有两点。第一，<code>GetEndorserClient</code>构建的client，使用的是peer的设置，而<code>GetBroadcastClientFnc</code>获取的是orderer的设置，从环境变量里获取构造参数，<code>configFromEnv("orderer")</code>，这里<code>orderer.address</code>这个参数正是上面的方法从chaincode config block里获取并设置为环境变量的。第二，调用了<code>orderClient.Broadcast()</code>，这里<code>grpc.NewClientStream(ctx, &amp;_AtomicBroadcast_serviceDesc.Streams[0], c.cc, "/orderer.AtomicBroadcast/Broadcast", opts...)</code>直接指明了grpc的远程调用方法为<code>"/orderer.AtomicBroadcast/Broadcast"</code>.</li>
+</ol>
+<p>至此，完成了chaincode调用的初始化构造过程。后续的chaincode调用就可以直接使用此过程中构建的client及signer等执行不同的操作。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hyperledger-Fabric/" rel="tag"># Hyperledger Fabric</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/foreword/" rel="prev" title="起手式">
+      <i class="fa fa-chevron-left"></i> 起手式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/articles/fabric-source-chaincode-instantiate-peer/" rel="next" title="Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程">
+      Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-anchor"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '12eedb094a3054014378',
+      clientSecret: 'a18108e1702f3c382aa9b2b6edd4c77336791528',
+      repo        : 'simplexity-gitalk',
+      owner       : 'simplexity-ckcclc',
+      admin       : ['simplexity-ckcclc'],
+      id          : 'e5e5ffc129e76da81096d16407de78f7',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

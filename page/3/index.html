@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/10/19/fabric-chaincode-lifecycle-uml/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-inpractice-commercialpaper-byfn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -199,7 +199,100 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/19/fabric-chaincode-lifecycle-uml/" class="post-title-link" itemprop="url">Fabric 1.4 chaincode lifecycle(install & instantiate)</a>
+            <a href="/articles/fabric-inpractice-commercialpaper-byfn/" class="post-title-link" itemprop="url">Fabric实战（1） - 基础篇，基于byfn的Commercial Paper案例</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-23 18:13:46" itemprop="dateCreated datePublished" datetime="2019-10-23T18:13:46+08:00">2019-10-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前分享过<a href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">Fabric官网Commercial Paper案例chaincode的golang实现</a>，现在基于官网<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>再次记录过程，同时添加部分新操作及分析，以此作为以后的进阶实战基础。</p>
+<ol>
+<li><p>使用命令<code>./byfn.sh up</code>启动网络</p>
+</li>
+<li><p>查看配置文件<code>/fabric-samples/first-network/docker-compose-cli.yaml</code>,可见cli的挂载volume设置  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cli:</span><br><span class="line">  volume:</span><br><span class="line">    - ./../chaincode/:/opt/gopath/src/github.com/chaincode</span><br></pre></td></tr></table></figure></li>
+<li><p>将编写的chaincode源文件放置在该挂载的路径<code>/chaincode/go</code>下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp commercial_paper.go /chaincode/go</span><br><span class="line">cp paper.go /chaincode/go</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>docker exec -it cli bash</code>登入容器cli</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- 执行peer chaincode install -n commercialpaper -v 0 -p github.com/chaincode/commercial_paper/go</span><br><span class="line">- 执行echo $CORE_PEER_MSPCONFIGPATH。可见当前角色为admin</span><br><span class="line">    ---</span><br><span class="line">    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line">- 执行peer chaincode list -C mychannel --installed</span><br><span class="line">    ---</span><br><span class="line">    Get installed chaincodes on peer:</span><br><span class="line">    Name: commercialpaper, Version: 0, Path: github.com/chaincode/commercial_paper/go, Id: f033307bf72f876fb5a95883d53ed5209e6639386e21361eed65f459d8a9f276</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/fabric-inpractice-commercialpaper-byfn/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-chaincode-lifecycle-uml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-chaincode-lifecycle-uml/" class="post-title-link" itemprop="url">Fabric 1.4 chaincode lifecycle(install & instantiate)</a>
         </h2>
 
         <div class="post-meta">
@@ -260,7 +353,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/09/29/fabric-source-orderer-etcdraft/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-orderer-etcdraft/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -274,7 +367,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/09/29/fabric-source-orderer-etcdraft/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的raft实现</a>
+            <a href="/articles/fabric-source-orderer-etcdraft/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的raft实现</a>
         </h2>
 
         <div class="post-meta">
@@ -317,7 +410,7 @@
           <p>Raft可以说是Fabric 1.X系列的首个真正意义的共识算法。Fabric的实现主要涉及到三个类，<code>chain.go &lt;-&gt; etcdraft/node.go &lt;-&gt; raft/node.go</code>, 其中<code>raft/node.go</code>是etcd的开源包，<code>chain.go</code>是实现共识算法的主要类，<code>etcdraft/node.go</code>则是相当于适配模式下的适配器，用于连接两者，对实现屏蔽Raft的具体实现方案。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/09/29/fabric-source-orderer-etcdraft/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-source-orderer-etcdraft/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -341,7 +434,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/14/bitcoin-performance-scaleup-concern/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bitcoin-performance-scaleup-concern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -355,7 +448,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/14/bitcoin-performance-scaleup-concern/" class="post-title-link" itemprop="url">Bitcoin性能扩容</a>
+            <a href="/articles/bitcoin-performance-scaleup-concern/" class="post-title-link" itemprop="url">Bitcoin性能扩容</a>
         </h2>
 
         <div class="post-meta">
@@ -399,7 +492,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/14/bitcoin-performance-scaleup-concern/#more" rel="contents">
+              <a class="btn" href="/articles/bitcoin-performance-scaleup-concern/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -423,7 +516,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/07/08/consensus-pos/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-pos/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -437,7 +530,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/08/consensus-pos/" class="post-title-link" itemprop="url">共识算法(3) - PoS</a>
+            <a href="/articles/consensus-pos/" class="post-title-link" itemprop="url">共识算法(3) - PoS</a>
         </h2>
 
         <div class="post-meta">
@@ -495,7 +588,7 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/08/consensus-pos/#more" rel="contents">
+              <a class="btn" href="/articles/consensus-pos/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -519,7 +612,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/06/25/understanding-ethereum/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/understanding-ethereum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -533,7 +626,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/06/25/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
+            <a href="/articles/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
         </h2>
 
         <div class="post-meta">
@@ -632,7 +725,7 @@
 </code></pre>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/06/25/understanding-ethereum/#more" rel="contents">
+              <a class="btn" href="/articles/understanding-ethereum/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -656,7 +749,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/06/12/ethereum-design-rationale/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/ethereum-design-rationale/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -670,7 +763,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/06/12/ethereum-design-rationale/" class="post-title-link" itemprop="url">Ethereum设计理念Design Rationale学习心得</a>
+            <a href="/articles/ethereum-design-rationale/" class="post-title-link" itemprop="url">Ethereum设计理念Design Rationale学习心得</a>
         </h2>
 
         <div class="post-meta">
@@ -727,7 +820,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/06/12/ethereum-design-rationale/#more" rel="contents">
+              <a class="btn" href="/articles/ethereum-design-rationale/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -751,7 +844,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/05/14/fabric-configtxgen-tool/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-configtxgen-tool/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -765,7 +858,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/05/14/fabric-configtxgen-tool/" class="post-title-link" itemprop="url">Fabric的configtxgen工具生成区块及配置文件分析</a>
+            <a href="/articles/fabric-configtxgen-tool/" class="post-title-link" itemprop="url">Fabric的configtxgen工具生成区块及配置文件分析</a>
         </h2>
 
         <div class="post-meta">
@@ -832,7 +925,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/29/fabric-cryptography-msp-summary/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-cryptography-msp-summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -846,7 +939,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/29/fabric-cryptography-msp-summary/" class="post-title-link" itemprop="url">密码学基础知识汇总及Fabric的MSP体系</a>
+            <a href="/articles/fabric-cryptography-msp-summary/" class="post-title-link" itemprop="url">密码学基础知识汇总及Fabric的MSP体系</a>
         </h2>
 
         <div class="post-meta">
@@ -957,7 +1050,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-commercial-paper-go/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -971,7 +1064,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/19/fabric-commercial-paper-go/" class="post-title-link" itemprop="url">Fabric官网Commercial Paper案例chaincode的golang实现</a>
+            <a href="/articles/fabric-commercial-paper-go/" class="post-title-link" itemprop="url">Fabric官网Commercial Paper案例chaincode的golang实现</a>
         </h2>
 
         <div class="post-meta">
@@ -1034,111 +1127,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/19/fabric-commercial-paper-go/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/2019/03/28/consensus-pbft-paper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/28/consensus-pbft-paper/" class="post-title-link" itemprop="url">共识算法(2) - Practical Byzantine Fault Tolerance论文学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-28 20:11:29" itemprop="dateCreated datePublished" datetime="2019-03-28T20:11:29+08:00">2019-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
-<li>算法的适用范围<blockquote>
-<p>Our algorithm can be used to implement any deterministic replicated service with a state and some operations.</p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li><em>deterministic</em> ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the execution of an operation in a given state and with a given set of arguments must always produce the same result）</li>
-<li><em>replicated</em> : 多副本</li>
-<li><em>a state and some operations</em> : 服务有相同的初始状态及相同的操作，保证当按相同顺序执行完相同的操作，各个副本的即时状态是完全一致的 (must start in the same state)</li>
-</ul>
-<ol>
-<li>在异步系统中要容忍<code>f</code>个恶意节点，则至少需要<code>3f+1</code>个节点才能提供safety and liveness（<em>Asynchronous Consensus and Broadcast Protocols</em>这篇论文中证明）。</li>
-</ol>
-<ul>
-<li><em>safety</em> : 副本服务满足线性一致性，像在中心化服务中同时原子性的执行操作。不受恶意client数量影响，恶意client的操作可以通过被正常client感知，利用access control来限制。</li>
-<li><em>liveness</em> : 利用同步提供liveness（论文证明）。只要满足<code>3f+1</code>个节点，可以保证client持续重传，并且到达destination的传输时间没有无限的增长情况下，client最终会收到回复。</li>
-</ul>
-<ol>
-<li>算法不提供隐私容错性，即隐私信息会泄漏给恶意节点<blockquote>
-<p>The algorithm does not address the problem of fault- tolerant privacy: a faulty replica may leak information to an attacker.</p>
-</blockquote>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/28/consensus-pbft-paper/#more" rel="contents">
+              <a class="btn" href="/articles/fabric-commercial-paper-go/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1229,7 +1218,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
