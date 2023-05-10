@@ -248,7 +248,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
+        <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
 <h3 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h3><ol>
 <li><strong>三文治式的复杂度模型</strong>  </li>
 </ol>
@@ -295,7 +295,7 @@
 <li>删除存储的空间的操作有gas refund奖励，鼓励减少存储空间。</li>
 <li>gasPrice的设置则变成经济供求关系，自由竞争最终达到动态平衡。出价高收益大的交易会被优先执行和确认。</li>
 </ol>
-<h3 id="RLP"><a href="#RLP" class="headerlink" title="RLP"></a>RLP</h3><p><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/RLP">RLP</a> (“recursive length prefix”) encoding is the main serialization format used in Ethereum。例如，Account等数据从内存写入持久化存储时会将Hex16进制转换成RLP持久化(结合MPT树，将Extension node, Leaf node, Branch node等数据结构进行RLP编码)，紧凑节省空间。相比protocol buffer和BSON等现存的序列化方案，从新开发RLP序列化方案的目的是，1）实现简单。目的就是要高度简化，存储嵌套的字节序列，由上层应用决定这些字节序列的含义。2）保证字节级的绝对一致性（Key/value maps的有序性，浮点数的精度问题等）。RLP将 1）字符串（字节序列）作为item，2）item列表也看作一个item，针对这些item使用其定义的序列化编解码方式。</p>
+<h3 id="RLP"><a href="#RLP" class="headerlink" title="RLP"></a>RLP</h3><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/RLP">RLP</a> (“recursive length prefix”) encoding is the main serialization format used in Ethereum。例如，Account等数据从内存写入持久化存储时会将Hex16进制转换成RLP持久化(结合MPT树，将Extension node, Leaf node, Branch node等数据结构进行RLP编码)，紧凑节省空间。相比protocol buffer和BSON等现存的序列化方案，从新开发RLP序列化方案的目的是，1）实现简单。目的就是要高度简化，存储嵌套的字节序列，由上层应用决定这些字节序列的含义。2）保证字节级的绝对一致性（Key/value maps的有序性，浮点数的精度问题等）。RLP将 1）字符串（字节序列）作为item，2）item列表也看作一个item，针对这些item使用其定义的序列化编解码方式。</p>
 <h3 id="EVM虚拟机"><a href="#EVM虚拟机" class="headerlink" title="EVM虚拟机"></a>EVM虚拟机</h3><p>设计理念：</p>
 <ol>
 <li>简单 尽量少的数据类型，尽量少的操作指令。尽量节省的空间。结合起gas消费模型，也从根本上保证安全不被无限制利用。</li>
@@ -311,7 +311,7 @@
 <li>定制化VM 没有使用JVM等原因在于：1）EVM相对简单，避免复杂带来的安全性等风险；2）可以针对性定制化设计；3）不存在部署的外部依赖；4）不需要改造其他VM时带来的安全性审核工作</li>
 </ol>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://takenobu-hs.github.io/downloads/ethereum_evm_illustrated.pdf">EVM详解</a> : 详细的ppt版本<br><a target="_blank" rel="noopener" href="https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-storage">A Deep Dive into the Ethereum Virtual Machine (EVM) - part 2: Memory and Storage</a> : 包含EVM的操作指令opcodes</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://takenobu-hs.github.io/downloads/ethereum_evm_illustrated.pdf">EVM详解</a> : 详细的ppt版本<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-storage">A Deep Dive into the Ethereum Virtual Machine (EVM) - part 2: Memory and Storage</a> : 包含EVM的操作指令opcodes</p>
 </blockquote>
 
     </div>
@@ -446,7 +446,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

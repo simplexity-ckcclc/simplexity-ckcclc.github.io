@@ -247,11 +247,11 @@
 
       
         <ol>
-<li><p>官方教程<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/write_first_app.html">Writing Your First Application</a>在安装最新的node（v11.7.0）和npm（v6.5.0）后，在fabric-samples/fabcar/javascript目录下执行<code>npm install</code>报错如下</p>
+<li><p>官方教程<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/latest/write_first_app.html">Writing Your First Application</a>在安装最新的node（v11.7.0）和npm（v6.5.0）后，在fabric-samples/fabcar/javascript目录下执行<code>npm install</code>报错如下</p>
  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error Failed at the grpc@1.14.2 install script 'node-pre-gyp install --fallback-to-build --library=static_library'.</span><br></pre></td></tr></tbody></table></figure>
-<p> <strong><em>Solution</em></strong> : 只需要在fabric-samples/fabcar/javascript目录下先执行<code>npm install grpc@1.14.2</code>（注意，需要先删除‘node_modules’这个目录和’package-lock.json’这个文件），然后再在该目录下执行<code>npm install</code>即可。<br> <strong><em>Update</em></strong> : 该grpc版本比较老，新版本node不兼容支持，可以将node版本降级。参考讨论 <a target="_blank" rel="noopener" href="https://github.com/grpc/grpc-node/issues/689#issuecomment-467106185">grpc-node issue-689</a></p>
+<p> <strong><em>Solution</em></strong> : 只需要在fabric-samples/fabcar/javascript目录下先执行<code>npm install grpc@1.14.2</code>（注意，需要先删除‘node_modules’这个目录和’package-lock.json’这个文件），然后再在该目录下执行<code>npm install</code>即可。<br> <strong><em>Update</em></strong> : 该grpc版本比较老，新版本node不兼容支持，可以将node版本降级。参考讨论 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/grpc/grpc-node/issues/689#issuecomment-467106185">grpc-node issue-689</a></p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>中，默认开启TSL链接，如果关闭配置，出现以下异常报错。</p>
+<li><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>中，默认开启TSL链接，如果关闭配置，出现以下异常报错。</p>
  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-10-22 08:26:05.220 UTC [grpc] switchBalancer -&gt; DEBU 03b ClientConn switching balancer to "pick_first"</span><br><span class="line">2019-10-22 08:26:05.220 UTC [grpc] HandleSubConnStateChange -&gt; DEBU 03c pickfirstBalancer: HandleSubConnStateChange: 0xc0004e38c0, CONNECTING</span><br><span class="line">2019-10-22 08:26:05.223 UTC [grpc] createTransport -&gt; DEBU 03d grpc: addrConn.createTransport failed to connect to {peer0.org1.example.com:7051 0  &lt;nil&gt;}. Err :connection error: desc = "transport: authentication handshake failed: tls: first record does not look like a TLS handshake". Reconnecting...</span><br></pre></td></tr></tbody></table></figure>
 <p> 这个是在以下3个配置文件里配置，调用<code>./byfn.sh up</code>，最后会执行/fabric-samples/first-network/scripts里的<code>script.sh</code>和<code>utils.sh</code>，里面的<code>peer channel create</code>, <code>peer chaincode install</code>等命令都携带参数<code>--tls $CORE_PEER_TLS_ENABLED</code>. </p>
 <ul>
@@ -383,7 +383,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

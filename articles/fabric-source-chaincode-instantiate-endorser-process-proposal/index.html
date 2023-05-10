@@ -270,7 +270,7 @@
 <li>由于启动容器是异步操作，马上返回到<code>runtime_launcher.start</code>，这里是<code>select-cast</code>,等待启动完成的chan信号，或者异常，或者超时。如果启动失败，则停止容器，取消注册<code>RuntimeLauncher.Registry</code>里到handler以及launchState状态。</li>
 </ol>
 <p>在<code>core/container/dockercontroller/dockercontroller.go:preFormatImageName</code>定义了docker镜像和容器名，其中，镜像名为<code>${NetworkID}-${PeerId}-${ChaincodeName}-${Version}-${Hash}</code>，容器名为<code>${NetworkID}-${PeerId}-${ChaincodeName}-${Version}</code>，其中NetworkID从配置文件core.yml里的<code>peer.NetworkId</code>配置项。</p>
-<p><em>这部分docker相关比较繁琐，暂时没有时间精力深入学习和分析源码，可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/idsuf698987/article/details/78353481">fabric源码解析20——ACC的部署</a></em></p>
+<p><em>这部分docker相关比较繁琐，暂时没有时间精力深入学习和分析源码，可以参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/idsuf698987/article/details/78353481">fabric源码解析20——ACC的部署</a></em></p>
 
     </div>
 
@@ -403,7 +403,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

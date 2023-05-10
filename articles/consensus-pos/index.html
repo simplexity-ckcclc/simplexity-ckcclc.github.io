@@ -252,7 +252,7 @@
         <h3 id="PoS-Proof-of-Stake权益证明-相对于PoW的优点："><a href="#PoS-Proof-of-Stake权益证明-相对于PoW的优点：" class="headerlink" title="PoS(Proof of Stake权益证明)相对于PoW的优点："></a>PoS(Proof of Stake权益证明)相对于PoW的优点：</h3><ol>
 <li>不需要消耗大量电力成本</li>
 <li>发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全）<blockquote>
-<p><a target="_blank" rel="noopener" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
 </blockquote>
 </li>
 </ol>
@@ -263,7 +263,7 @@
 <li>广播交易，确认（PoS分为基于链的PoS和BFT风格的PoS。在<strong>基于链的PoS</strong>中，最长链原则，随机算法选出验证者创建新区块，但是验证者要确保该块指向最长链，通常也需要一定数量的验证节点背书签名后上链。在<strong>BFT风格的PoS</strong>中，分配给验证者相对的权力，以RR的方式提出块并且给被提出的块投票，从而决定哪个块是新块，并在每一轮选出一个新块加入区块链。在每一轮中，每一个验证者都为某一特定的块进行投票，最后所有在线和诚实的验证者都将商量被给定的块是否可以添加到区块链中，并且意见不能改变）</li>
 </ol>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
 </blockquote>
 <span id="more"></span>
 <h3 id="PoS的攻击风险"><a href="#PoS的攻击风险" class="headerlink" title="PoS的攻击风险"></a>PoS的攻击风险</h3><p>比较突出的是<strong>Nothing-at-stake</strong>(无利害关系)和<strong>Long-range-atack</strong>(长程攻击）两种  </p>
@@ -273,7 +273,7 @@
 <blockquote>
 <p>如下图所示，仍然是 A、B、C 三个出块节点，假如 A是攻击节点，它在产生分叉时创造两笔交易。一笔将X个币发给自己的一个钱包地址，同时在另外一个分叉上将X个币发到交易所。B、C出块节点因 Nothing At Stake 所以同时会在两条分叉链上出块。当交易被交易所确认后， A 将 X 个币出售兑换成隐私币种，移出交易所。之后 A 通过增加质押币量，或创建多个其他出块节点的方式提升出块权重，只在分叉链继续出块。此时最长链很明显，且逐渐拉开差距，会最终成为最长链，A 成功将 X 个币双花。</p>
 <p><img src="/images/token-double-spend.png" alt=""></p>
-<p>摘自 ：<a target="_blank" rel="noopener" href="http://www.gongxiangcj.com/posts/19085">PoS背后的Nothing At Stake与Long-Range Attack</a></p>
+<p>摘自 ：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.gongxiangcj.com/posts/19085">PoS背后的Nothing At Stake与Long-Range Attack</a></p>
 </blockquote>
 <p> 解决方案 ： 无成本攻击则引入惩罚机制。验证节点提前抵押一定的stake做为保证金，如果发现验证节点“在多条链上同时出块” 或者 “在错误的链上出块”，立即惩罚扣除一定保证金。只要保证金设置合理，使“双挖”的收益期望值降低，可以从经济学意义上消除这个风险。</p>
 </li>
@@ -284,7 +284,7 @@
 <p> <img src="/images/pos-stake-bleeding.png" alt=""></p>
 <p> 长程攻击通常与<strong>Weak Subjectivity</strong>(弱主观性)相关联。区块链网络中的新节点或是长期离线的节点加入到网络中时，会收到当前区块链上所有公开的分支，但是节点并不能分辨出哪些分支是从属于主链的（PoS里最长链原则并不足够，因为PoS里创建区块成本极小，可能存在多条等长链，这与PoW是区别的）。因此，在PoS里，新节点要求验证链外最新状态来解决，节点可以通过询问他们的朋友、区块浏览器等进行区块同步，离线的节点要求在“还原上限”时间内至少要登录同步一次。在线节点因为一直与主链同步，则不存在这个风险。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.positive.com/rewriting-history-a-brief-introduction-to-long-range-attacks-54e473acdba9">Rewriting History: A Brief Introduction to Long Range Attacks</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.positive.com/rewriting-history-a-brief-introduction-to-long-range-attacks-54e473acdba9">Rewriting History: A Brief Introduction to Long Range Attacks</a></p>
 </blockquote>
 </li>
 </ol>
@@ -421,7 +421,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

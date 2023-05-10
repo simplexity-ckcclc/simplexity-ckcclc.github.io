@@ -236,7 +236,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>之前分享过<a href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">Fabric官网Commercial Paper案例chaincode的golang实现</a>，现在基于官网<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>再次记录过程，同时添加部分新操作及分析，以此作为以后的进阶实战基础。</p>
+          <p>之前分享过<a href="https://simplexity.cn/2019/04/19/fabric-commercial-paper-go/">Fabric官网Commercial Paper案例chaincode的golang实现</a>，现在基于官网<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>再次记录过程，同时添加部分新操作及分析，以此作为以后的进阶实战基础。</p>
 <ol>
 <li><p>使用命令<code>./byfn.sh up</code>启动网络</p>
 </li>
@@ -594,7 +594,7 @@
           <h3 id="PoS-Proof-of-Stake权益证明-相对于PoW的优点："><a href="#PoS-Proof-of-Stake权益证明-相对于PoW的优点：" class="headerlink" title="PoS(Proof of Stake权益证明)相对于PoW的优点："></a>PoS(Proof of Stake权益证明)相对于PoW的优点：</h3><ol>
 <li>不需要消耗大量电力成本</li>
 <li>发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全）<blockquote>
-<p><a target="_blank" rel="noopener" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
 </blockquote>
 </li>
 </ol>
@@ -605,7 +605,7 @@
 <li>广播交易，确认（PoS分为基于链的PoS和BFT风格的PoS。在<strong>基于链的PoS</strong>中，最长链原则，随机算法选出验证者创建新区块，但是验证者要确保该块指向最长链，通常也需要一定数量的验证节点背书签名后上链。在<strong>BFT风格的PoS</strong>中，分配给验证者相对的权力，以RR的方式提出块并且给被提出的块投票，从而决定哪个块是新块，并在每一轮选出一个新块加入区块链。在每一轮中，每一个验证者都为某一特定的块进行投票，最后所有在线和诚实的验证者都将商量被给定的块是否可以添加到区块链中，并且意见不能改变）</li>
 </ol>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
@@ -696,8 +696,8 @@
           <blockquote>
 <p>必读：</p>
 <ul>
-<li><strong><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
-<li><strong><a target="_blank" rel="noopener" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
 </ul>
 </blockquote>
 <ol>
@@ -708,7 +708,7 @@
 <li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
 <li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
 </ul>
-<p>摘自: <a target="_blank" rel="noopener" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
+<p>摘自: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
 </li>
 <li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt=""></p>
 </li>
@@ -836,7 +836,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
+          <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
 <h3 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h3><ol>
 <li><strong>三文治式的复杂度模型</strong>  </li>
 </ol>
@@ -937,13 +937,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>本节主要基于<a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
+          <p>本节主要基于<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
 <p><code>cryptogen</code>和<code>configtxgen</code>分别用于加密和配置的工具，其代码路径为<code>hyperledger/fabric/common/tools/cryptogen</code>和<code>hyperledger/fabric/common/tools/configtxgen</code>。cryptogen产生了各级msp，在peer，orderer里皆有用到，包括后面介绍的configtxgen里包含msp信息这些也是由此产生。这里暂且不展开分析。</p>
-<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a target="_blank" rel="noopener" href="https://www.chaindesk.cn/witbook/30/503">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">&quot;CONFIGTX&quot;</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure><br>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
-<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json">JSON结构</a>。</p>
-<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>$&#123;CHANNEL_NAME&#125;.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock $&#123;CHANNEL_NAME&#125;.block</code>这个命令查看其<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
+<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chaindesk.cn/witbook/30/503">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">&quot;CONFIGTX&quot;</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure><br>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
+<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json">JSON结构</a>。</p>
+<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>$&#123;CHANNEL_NAME&#125;.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock $&#123;CHANNEL_NAME&#125;.block</code>这个命令查看其<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
 <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><blockquote>
-<p><a target="_blank" rel="noopener" href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb">Hyperledger Fabric权限进阶篇</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb">Hyperledger Fabric权限进阶篇</a></p>
 </blockquote>
 
       
@@ -1029,49 +1029,49 @@
 <li><p>密码学的基础知识概述（Hash算法，对称加密算法，X.509证书）</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ckcclc/article/details/89361898">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
-<li><a target="_blank" rel="noopener" href="https://knowledge.digicert.com/solution/SO4583.html">Structure of X509 Certificates</a> : X.509结构  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/ckcclc/article/details/89361898">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://knowledge.digicert.com/solution/SO4583.html">Structure of X509 Certificates</a> : X.509结构  </li>
 </ul>
 </blockquote>
 </li>
 <li><p>RSA</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
 </ul>
 </blockquote>
 </li>
 <li><p>ECC（椭圆曲线）</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
-<li><a target="_blank" rel="noopener" href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
 </ul>
 </blockquote>
-<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Fabric官网-Membership Service Providers (MSP)</a></p>
+<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Fabric官网-Membership Service Providers (MSP)</a></p>
 <p>Ref: Bitcoin和Ethereum中的vrs（v：recovery id）</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
-<li><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work">How does recovering the public key from an ECDSA signature work?</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work">How does recovering the public key from an ECDSA signature work?</a></li>
 </ul>
 </blockquote>
 </li>
 <li><p>零知识证明 Zero-Knowledge-Proof</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">Zero-Knowledge-Proof Wikipedia</a>  </li>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">Zero-Knowledge-Proof Wikipedia</a>  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
 </ul>
 </blockquote>
 </li>
 <li><p>Fabric官网的MSP相关文档汇总</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
 </ul>
 </blockquote>
 </li>
@@ -1155,7 +1155,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>官网上描述了<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/developapps/developing_applications.html">Commercial Paper</a>这个应用场景，并且提供了<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/tutorial/commercial_paper.html#">nodejs实现</a>。这里补充chaincode的golang实现，保持逻辑一致，以及记录实际操作中的一些步骤和要点。实现的源码已上传<a target="_blank" rel="noopener" href="https://github.com/simplexity-ckcclc/gofabric/tree/master/chaincode/commercial-paper/go">github</a>。</p>
+          <p>官网上描述了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/developapps/developing_applications.html">Commercial Paper</a>这个应用场景，并且提供了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/tutorial/commercial_paper.html#">nodejs实现</a>。这里补充chaincode的golang实现，保持逻辑一致，以及记录实际操作中的一些步骤和要点。实现的源码已上传<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/tree/master/chaincode/commercial-paper/go">github</a>。</p>
 <ol>
 <li><p>按照官网Commercial Paper nodejs实现里的步骤，启动<code>net_basic</code>网络，并且启动了<code>peer0.org1.example.com</code>, <code>couchdb</code>, <code>ca.example.com</code>, <code>orderer.example.com</code>, <code>cliDigiBank</code>, <code>cliMagnetoCorp</code>这些容器（按照步骤里执行下来，docker ps能看到这些容器）。</p>
 </li>
@@ -1294,7 +1294,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

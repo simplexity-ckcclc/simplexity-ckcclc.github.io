@@ -522,7 +522,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/19JihmW-8blTzN99lAubOfseLUZqdrB6sBR0HsRgCAnY/edit">A Kafka-based Ordering Service for Fabric</a>这篇文章是orderer的kafka设计文档，详细介绍orderer应用kafka的设计思想演进过程，从基本点逐步深入，由问题到解决方案，值得阅读。这里列举学习过程中的笔记。</p>
+          <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.google.com/document/d/19JihmW-8blTzN99lAubOfseLUZqdrB6sBR0HsRgCAnY/edit">A Kafka-based Ordering Service for Fabric</a>这篇文章是orderer的kafka设计文档，详细介绍orderer应用kafka的设计思想演进过程，从基本点逐步深入，由问题到解决方案，值得阅读。这里列举学习过程中的笔记。</p>
 <ul>
 <li><em>Solution 0（S0）</em> ： 单个tx（transaction）构成block。  </li>
 <li><em>Problem 1（P1）</em> ： 单个block的size很小，当网络有大量tx时会产生大量的block。而OSN（ordering service node）需要对block进行打包，签名，client需要解包，验证签名。overhead太大，效率太低。  </li>
@@ -620,7 +620,7 @@
 
       
           <p>在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在<code>orderer/consensus/kafka/chain.go</code>里，与solo一样实现了<code>orderer/common/broadcast/broadcast.go#Consenter</code>这个接口。在orderer的处理消息时<code>orderer/common/broadcast/broadcast.go#Handle</code>，调用了其<code>Order</code>方法。<br></p><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">Order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> {</span><br><span class="line">	<span class="keyword">return</span> chain.order(env, configSeq, <span class="keyword">int64</span>(<span class="number">0</span>))</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>, originalOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> {</span><br><span class="line">    marshaledEnv, err := utils.Marshal(env)</span><br><span class="line">    <span class="keyword">if</span> !chain.enqueue(newNormalMessage(marshaledEnv, configSeq, originalOffset)) {</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"cannot enqueue"</span>)</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue accepts a message and returns true on acceptance, or false otheriwse.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">enqueue</span><span class="params">(kafkaMsg *ab.KafkaMessage)</span> <span class="title">bool</span></span> {</span><br><span class="line">    <span class="keyword">select</span> {</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> {</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">// The post path</span></span><br><span class="line">            payload, err := utils.Marshal(kafkaMsg)</span><br><span class="line"></span><br><span class="line">            message := newProducerMessage(chain.channel, payload)</span><br><span class="line">            <span class="keyword">if</span> _, _, err = chain.producer.SendMessage(message); err != <span class="literal">nil</span> {</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        }</span><br><span class="line">    <span class="keyword">default</span>: <span class="comment">// Not ready yet</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProducerMessage</span><span class="params">(channel channel, pld []<span class="keyword">byte</span>)</span> *<span class="title">sarama</span>.<span class="title">ProducerMessage</span></span> {</span><br><span class="line">    <span class="keyword">return</span> &amp;sarama.ProducerMessage{</span><br><span class="line">        Topic: channel.topic(),</span><br><span class="line">        Key:   sarama.StringEncoder(strconv.Itoa(<span class="keyword">int</span>(channel.partition()))), </span><br><span class="line">        Value: sarama.ByteEncoder(pld),</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a target="_blank" rel="noopener" href="https://github.com/Shopify/sarama">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
+<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Shopify/sarama">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/fabric-source-orderer-kafka/#more" rel="contents">
@@ -714,8 +714,8 @@
 </ol>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos (computer science) - wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://angus.nyc/2012/paxos-by-example/">Paxos By Example</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos (computer science) - wiki</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://angus.nyc/2012/paxos-by-example/">Paxos By Example</a></li>
 </ul>
 </blockquote>
 <ol>
@@ -725,10 +725,10 @@
 </ol>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://raft.github.io/">The Raft Consensus Algorithm</a> : Raft的github page</li>
-<li><a target="_blank" rel="noopener" href="http://thesecretlivesofdata.com/raft/">Raft example</a> : 国外的动画，非常形象</li>
-<li><a target="_blank" rel="noopener" href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d">Understanding the Raft consensus algorithm: an academic article summary</a></li>
-<li><a target="_blank" rel="noopener" href="https://infoq.cn/article/coreos-analyse-etcd">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://raft.github.io/">The Raft Consensus Algorithm</a> : Raft的github page</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://thesecretlivesofdata.com/raft/">Raft example</a> : 国外的动画，非常形象</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d">Understanding the Raft consensus algorithm: an academic article summary</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://infoq.cn/article/coreos-analyse-etcd">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
 </ul>
 </blockquote>
 <ol>
@@ -738,8 +738,8 @@
 </ol>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52617675">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
-<li><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos">Zab vs. Paxos</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/52617675">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos">Zab vs. Paxos</a></li>
 </ul>
 </blockquote>
 
@@ -908,7 +908,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为</p>
+          <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></tbody></table></figure>
 <p>客户端调用<code>peer chaincode install</code>命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命令关联的方法是<code>chaincodeInstall</code>。<em>[install的流程与前面介绍的instantiate大体相似，重复不再展开，只勾勒差别处]</em></p>
           <!--noindex-->
@@ -1206,7 +1206,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

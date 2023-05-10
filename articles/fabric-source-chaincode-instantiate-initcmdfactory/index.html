@@ -248,12 +248,12 @@
       
         <p>推荐参考两个博客：  </p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/idsuf698987/article/details/74907281">fabric源码解析——序</a> : 国内同道的源码分析系列，模块化  </li>
-<li><a target="_blank" rel="noopener" href="https://www.chaindesk.cn/witbook/30/467">Hyperledger Fabric源码深度解析</a> : 对MSP，BCCSP的介绍到位 </li>
-<li><a target="_blank" rel="noopener" href="https://blockchain-fabric.blogspot.com/">To know the internals of certain permissioned blockchain platform</a> : IBM员工，参与HF项目的概念总结文章系列</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/idsuf698987/article/details/74907281">fabric源码解析——序</a> : 国内同道的源码分析系列，模块化  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chaindesk.cn/witbook/30/467">Hyperledger Fabric源码深度解析</a> : 对MSP，BCCSP的介绍到位 </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blockchain-fabric.blogspot.com/">To know the internals of certain permissioned blockchain platform</a> : IBM员工，参与HF项目的概念总结文章系列</li>
 </ul>
 <p><em>选择peer chaincode instantiate作为开篇，是因为笔者学习官网过程中没有完全理解install与instantiate的区别，所以选择深入源码学习来加深理解</em></p>
-<p>官网<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为  </p>
+<p>官网<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为  </p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"</span><br></pre></td></tr></tbody></table></figure>
 <p>此前，需要先设置环境变量</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID="Org2MSP"</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></tbody></table></figure>
@@ -419,7 +419,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

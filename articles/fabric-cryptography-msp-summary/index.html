@@ -252,49 +252,49 @@
 <li><p>密码学的基础知识概述（Hash算法，对称加密算法，X.509证书）</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ckcclc/article/details/89361898">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
-<li><a target="_blank" rel="noopener" href="https://knowledge.digicert.com/solution/SO4583.html">Structure of X509 Certificates</a> : X.509结构  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/ckcclc/article/details/89361898">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://knowledge.digicert.com/solution/SO4583.html">Structure of X509 Certificates</a> : X.509结构  </li>
 </ul>
 </blockquote>
 </li>
 <li><p>RSA</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
 </ul>
 </blockquote>
 </li>
 <li><p>ECC（椭圆曲线）</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
-<li><a target="_blank" rel="noopener" href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
 </ul>
 </blockquote>
-<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Fabric官网-Membership Service Providers (MSP)</a></p>
+<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Fabric官网-Membership Service Providers (MSP)</a></p>
 <p>Ref: Bitcoin和Ethereum中的vrs（v：recovery id）</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
-<li><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work">How does recovering the public key from an ECDSA signature work?</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work">How does recovering the public key from an ECDSA signature work?</a></li>
 </ul>
 </blockquote>
 </li>
 <li><p>零知识证明 Zero-Knowledge-Proof</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">Zero-Knowledge-Proof Wikipedia</a>  </li>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">Zero-Knowledge-Proof Wikipedia</a>  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
 </ul>
 </blockquote>
 </li>
 <li><p>Fabric官网的MSP相关文档汇总</p>
 <blockquote>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
-<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
 </ul>
 </blockquote>
 </li>
@@ -432,7 +432,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

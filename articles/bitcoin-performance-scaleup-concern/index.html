@@ -263,7 +263,7 @@
 <li>每笔交易平均250字节，见证部分的数据约为150字节。这样相当于实际上增大了区块大小，隔离见证的整个区块大小为2.5到3MB左右。增加区块实际大小带来的风险依然存在（当然，也有通过将见证信息放在侧链上，交易主链通过引用的方式）。</li>
 </ol>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/bitcoin/bips/blob/master/bip-0062.mediawiki">bips/bip-0062.mediawiki</a> ：Transaction Malleability的官方文档<br><a target="_blank" rel="noopener" href="https://www.bitdegree.org/tutorials/what-is-segwit/">What is SegWit and How it Works Explained</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/bitcoin/bips/blob/master/bip-0062.mediawiki">bips/bip-0062.mediawiki</a> ：Transaction Malleability的官方文档<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bitdegree.org/tutorials/what-is-segwit/">What is SegWit and How it Works Explained</a></p>
 </blockquote>
 <h3 id="侧链（Sidechain）"><a href="#侧链（Sidechain）" class="headerlink" title="侧链（Sidechain）"></a>侧链（Sidechain）</h3><p>侧链只需符合侧链协议，能够与主链进行安全的资产/数据转移的都可以成为侧链，可以作为二层网络分担主链上的压力（例如比特币闪电网络进行结算），或者实现更复杂的逻辑功能，将主链作为最后的清算链，另外也可以实现异构链间的资产转移。实现的技术基础是双向锚定（Two-way Peg），通过双向锚定技术，可以实现暂时的将数字资产在主链中锁定，同时将等价的数字资产在侧链中释放，同样当等价的数字资产在侧链中被锁定的时候，主链的数字资产也可以被释放。具体有多种实现方式，常见的是SPV（Simplified Payment Verification）。SPV主要涉及到两个东西, 第一个是Merkle Tree，另一个是布隆过滤器（Bloom Filter）。譬如说转账后watch event，如果不在乎隐私的话, 可以直接告诉全节点所关注的地址就可以；但是如果不想暴露隐私, 那就把关注的信息映射到BF上, 然后全节点返回所有命中BF的event。</p>
 <p>双向锚定分为以下几个阶段：</p>
@@ -274,12 +274,12 @@
 <li>当这种数字资产返回到主链上时，该过程会进行重复。它们被发送到侧链上锁定的输出中，锁定一个竞争期，竞争期的作用是防止双花。然后就可以创建一个SPV证明，来将其发送回主区块链上，以解锁主链上的数字资产。<br><img src="/images/side-chain-two-way-peg.png" alt=""></li>
 </ol>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42769604">全面理解区块链侧链技术</a> ： 提及多种侧链实现方式</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/42769604">全面理解区块链侧链技术</a> ： 提及多种侧链实现方式</p>
 </blockquote>
 <h4 id="闪电网络（Bitcoin-lightning-network）"><a href="#闪电网络（Bitcoin-lightning-network）" class="headerlink" title="闪电网络（Bitcoin lightning network）"></a>闪电网络（Bitcoin lightning network）</h4><p>在侧链建立点对点通道channel，进行小额和持续多次的资产往来，然后等达成共识后关闭通道，将资产合约发主链上完成结算。核心思想是提高欺诈成本，进行惩罚。<br><img src="/images/lightning-network.png" alt=""></p>
-<p>参考 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/46515457">什么是比特币的闪电网络？</a>一文中的例子，在双方达成C2a共识后(C1a和C2a始终由Alice持有，达成c2a时Alice需要将Alice2秘钥给到Bob。这里C1a只有Alice持有，因此Bob即使拥有Alcie2秘钥也无法签发经过双方原始秘钥Alice和Bob签名的合同)，若然Alice广播C1a并且关闭通道（主动关闭通道方需要等待指定seq数量的块后才能执行RD1a），此时Bob监控到Alice广播旧的分配合约(这需要Bob节点在线，或者事先构建好BR1a交付给信任的第三方或者机器人在Alice欺诈时自动触发)，可以使用Alice2秘钥对BR1a签名并广播，这个是无需等待即时结算的，所以原本属于Alice的都分配给Bob。这就是欺诈作恶成本。</p>
+<p>参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/question/46515457">什么是比特币的闪电网络？</a>一文中的例子，在双方达成C2a共识后(C1a和C2a始终由Alice持有，达成c2a时Alice需要将Alice2秘钥给到Bob。这里C1a只有Alice持有，因此Bob即使拥有Alcie2秘钥也无法签发经过双方原始秘钥Alice和Bob签名的合同)，若然Alice广播C1a并且关闭通道（主动关闭通道方需要等待指定seq数量的块后才能执行RD1a），此时Bob监控到Alice广播旧的分配合约(这需要Bob节点在线，或者事先构建好BR1a交付给信任的第三方或者机器人在Alice欺诈时自动触发)，可以使用Alice2秘钥对BR1a签名并广播，这个是无需等待即时结算的，所以原本属于Alice的都分配给Bob。这就是欺诈作恶成本。</p>
 <p>之所以说Segwit隔离见证是闪电网络的基础，是因为Funding Tx只有在第一个Commitment Tx完成签名并交换之后，才会继续签名和广播（否则，广播Funding Tx后若Bob拒绝提供第一个Commitment的签名，这笔资金将被永久锁定，无法消费。拥有Commitment Tx后可以广播赎回）。此时第一个Commitment Tx消费的Funding Tx未曾广播入链，因此需要保证该Funding Tx未被篡改，即txid的固定性。</p>
-<p>而对于多方中转交易，在上文中描述有误。根据<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=SUfBq2nwPek">Bitcoin Lightning Network Payment Channels Explained - Thaddeus Dryja</a>（Youtube视频，需要梯子），在上文的例子中，Alice和Bob之间没有建立直接支付通道，需要经过第三方Charlie中转（与Alice和Bob各自建立支付通道，非可信第三方），同时Alice与Bob之间需要建立正常的TCP/IP等通信通道。若Alice需要向Bob转账，Bob选择随机数R，并且生成哈希H，将H通过通信信道发给Alice。Alice与Charlie之间达成合约，即Charlie能在指定时间内展示出正确的R值，Alice即支付指定金额，否则撤回该合约。同理Charlie与Bob间也是如此。</p>
+<p>而对于多方中转交易，在上文中描述有误。根据<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/watch?v=SUfBq2nwPek">Bitcoin Lightning Network Payment Channels Explained - Thaddeus Dryja</a>（Youtube视频，需要梯子），在上文的例子中，Alice和Bob之间没有建立直接支付通道，需要经过第三方Charlie中转（与Alice和Bob各自建立支付通道，非可信第三方），同时Alice与Bob之间需要建立正常的TCP/IP等通信通道。若Alice需要向Bob转账，Bob选择随机数R，并且生成哈希H，将H通过通信信道发给Alice。Alice与Charlie之间达成合约，即Charlie能在指定时间内展示出正确的R值，Alice即支付指定金额，否则撤回该合约。同理Charlie与Bob间也是如此。</p>
 <p>实际上，这样的Charlie相当于目前金融系统里的支付宝角色，一个持久而且大多数节点建立支付通道的节点（或者节点群，类似与Alice与Bob间经过多个节点，这些节点群之间建立支付通道，因此Alice与Bob之间能比较容易找到路由）。同时，对于频繁支付或者大额支付的节点（假设Bob是商家），则Bob与Charlie间的通道容量需要足够大，也就是双方在主链上锚定的资产价值足够高，否则需要经常的关闭（主动方提现需要等一定区块时间）和建立多个通道。这样的并非极端意义的分布式去中心化，但已经利用了区块链的无需信任属性。</p>
 
     </div>
@@ -414,7 +414,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

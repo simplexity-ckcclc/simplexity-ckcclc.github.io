@@ -254,8 +254,8 @@
         <blockquote>
 <p>必读：</p>
 <ul>
-<li><strong><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
-<li><strong><a target="_blank" rel="noopener" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
 </ul>
 </blockquote>
 <ol>
@@ -266,7 +266,7 @@
 <li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
 <li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
 </ul>
-<p>摘自: <a target="_blank" rel="noopener" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
+<p>摘自: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
 </li>
 <li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt=""></p>
 </li>
@@ -313,7 +313,7 @@
 <p> <img src="/images/ethereum-mpt.png" alt=""></p>
 <p> 以太坊采用改进的Merkle树，因为前后两个block的数据绝大部分都是相同的，不需要同时存储两份。新block的树可以引用上一个block，加上新block内的交易修改的账户。<br> <img src="/images/ethereum-mpt-block.png" alt=""></p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.yuanxuxu.com/2018/08/17/ethereum-code-analysis-mpt/">以太坊源码分析—MPT树</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50242014">Ethereum以太坊源码分析（三）Trie树源码分析（上）</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50244166">Ethereum以太坊源码分析（三）Trie树源码分析（下）</a>  </p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.yuanxuxu.com/2018/08/17/ethereum-code-analysis-mpt/">以太坊源码分析—MPT树</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/50242014">Ethereum以太坊源码分析（三）Trie树源码分析（上）</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/50244166">Ethereum以太坊源码分析（三）Trie树源码分析（下）</a>  </p>
 </blockquote>
 </li>
 <li><p><strong>Event</strong><br>In Ethereum, when a transaction is mined, smart contracts can emit events and write logs to the blockchain that the frontend can then process. Event在Ethereum里主要有三种用途：  </p>
@@ -323,12 +323,12 @@
 <li><em>a cheaper form of storage</em><br> 称为log（通过LOG这个EVM操作码）。相比stroage耗费的gas小得多，可以用作存储，但是不能在合约中被调用。例如可以存放历史数据，前端可以通过遍历区块去获取。</li>
 </ol>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e">Technical Introduction to Events and Logs in Ethereum</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e">Technical Introduction to Events and Logs in Ethereum</a></p>
 </blockquote>
 </li>
-<li><p><strong>GHOST</strong><br>GHOST协议（Greedy Heaviest Observed Subtree protocol）。同样是POW，比特币由于出块时间10min，取最长链。而Ethereum出块时间短（6s），不足扩撒至全网，如果取最长链，则地域优势明显。因此，Ethereum选择最重的链，也就是兄弟节点之间子树节点最多的被选为主链。例子可以参考 <a target="_blank" rel="noopener" href="http://www.jouypub.com/2018/9b19cff7135411bd37356e6c4f5f63b7/">以太坊Ghost协议和叔块</a>。主要是要解决 1. 出块速度快，存在多个节点同时出块，但是在自身出块后才接收到别的节点传输的块，浪费算力。2. 更严重的是因为出块速度块带来的地域优势，越早接收到合法块的节点出下一个块的可能性更大，从而造成的中心化风险。通过增加叔块选择最重的链，也就是选择工作量最大的链，降低地域优势。同时奖励叔块，激励节点出块。</p>
+<li><p><strong>GHOST</strong><br>GHOST协议（Greedy Heaviest Observed Subtree protocol）。同样是POW，比特币由于出块时间10min，取最长链。而Ethereum出块时间短（6s），不足扩撒至全网，如果取最长链，则地域优势明显。因此，Ethereum选择最重的链，也就是兄弟节点之间子树节点最多的被选为主链。例子可以参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.jouypub.com/2018/9b19cff7135411bd37356e6c4f5f63b7/">以太坊Ghost协议和叔块</a>。主要是要解决 1. 出块速度快，存在多个节点同时出块，但是在自身出块后才接收到别的节点传输的块，浪费算力。2. 更严重的是因为出块速度块带来的地域优势，越早接收到合法块的节点出下一个块的可能性更大，从而造成的中心化风险。通过增加叔块选择最重的链，也就是选择工作量最大的链，降低地域优势。同时奖励叔块，激励节点出块。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/White-Paper#modified-ghost-implementation">官方文档 - Modified GHOST Implementation</a> ： 详细介绍了GHOST稀释风险，以及叔块的选择标准和奖励方案。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/White-Paper#modified-ghost-implementation">官方文档 - Modified GHOST Implementation</a> ： 详细介绍了GHOST稀释风险，以及叔块的选择标准和奖励方案。</p>
 </blockquote>
 </li>
 <li><p><strong>Transaction Structure</strong>  </p>
@@ -365,7 +365,7 @@
 </tr>
 <tr>
 <td><strong>v, r, s</strong></td>
-<td>Values corresponding to the signature of the transaction and used to determine the sender of the transaction.<br>For the signing, Ethereum uses the same elliptic curve as Bitcoin’s, which is <a target="_blank" rel="noopener" href="https://en.bitcoin.it/wiki/Secp256k1">secpk256k1</a>.<br>用于从签名中恢复ECDSA公钥，从而得到发送方from的地址<br>Ref: <a target="_blank" rel="noopener" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a></td>
+<td>Values corresponding to the signature of the transaction and used to determine the sender of the transaction.<br>For the signing, Ethereum uses the same elliptic curve as Bitcoin’s, which is <a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.bitcoin.it/wiki/Secp256k1">secpk256k1</a>.<br>用于从签名中恢复ECDSA公钥，从而得到发送方from的地址<br>Ref: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a></td>
 </tr>
 <tr>
 <td><strong>data</strong></td>
@@ -375,7 +375,7 @@
 </table>
 </div>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html">FISCO BCOS 2.0+ 的交易结构</a>在原以太坊的交易结构的基础上，有所增减字段。比较重要的新增字段是<strong>blockLimit</strong>，表示 交易生命周期，该交易最晚被处理的块高.</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html">FISCO BCOS 2.0+ 的交易结构</a>在原以太坊的交易结构的基础上，有所增减字段。比较重要的新增字段是<strong>blockLimit</strong>，表示 交易生命周期，该交易最晚被处理的块高.</p>
 </blockquote>
 
     </div>
@@ -509,7 +509,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

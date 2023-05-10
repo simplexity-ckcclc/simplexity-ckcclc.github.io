@@ -358,15 +358,15 @@
 </ol>
 <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>所有的replica间需要全联接并且多次交互通信，系统中这些消息随着节点数指数增长。单次请求的最少消息数为<code>1 + 3f + 3f(3f-f) + (3f-f+1)(3f+1) + 3f-1</code>.</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae">pBFT— Understanding the Consensus Algorithm</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae">pBFT— Understanding the Consensus Algorithm</a></p>
 </blockquote>
 <h3 id="私货"><a href="#私货" class="headerlink" title="私货"></a>私货</h3><ol>
 <li>为什么需要至少3f+1个节点？<br>首先最后达成共识的正常节点数需要大于f，否则这f个异常节点就可以达成错误的共识。即至少需要f+1个正常节点达成共识。而达成共识时，有可能给最后共识投票的包含这f个异常节点，所以需要至少2f+1个节点投票达成共识，这样可以保证其中至少含有f+1个正常节点。（例如P为异常节点向不同的正常节点提议不同的值，这也是造成上文提到3f+1个节点最后达成共识时只能保证多于f+1个）。而最后的共识只能有一个，即达成共识的正常节点应该超过所有正常节点数的过半，否则f个异常节点可以重复投票导致最后正常节点分裂成两组以上各自达成共识。因此，实际上最后的阈值<code>T&gt;=lower((R-f)/2)+1+f</code>，这样就保证了correctness正确性。接下来考虑liveness可用性。因为异常节点有可能不参与投票（P为正常节点），需要保证正常节点总数应该大于阈值，即<code>R-f&gt;=T</code>。</li>
 </ol>
 <p><strong>References</strong></p>
 <blockquote>
-<p>[1] M. Castro and B. Liskov.   <a target="_blank" rel="noopener" href="http://pmg.csail.mit.edu/papers/osdi99.pdf">Practical Byzantine Fault Tolerance</a>.  <em>Proceedings of the Third Symposium on Operating Systems Design and Implementation, New Orleans, USA, February 1999</em></p>
-<p>[2] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/40684348">区块链PBFT共识算法节点主动恢复设计与实现</a><br>[3] <a target="_blank" rel="noopener" href="https://www.8btc.com/article/70370">拜占庭将军问题深入探讨</a></p>
+<p>[1] M. Castro and B. Liskov.   <a target="_blank" rel="noopener external nofollow noreferrer" href="http://pmg.csail.mit.edu/papers/osdi99.pdf">Practical Byzantine Fault Tolerance</a>.  <em>Proceedings of the Third Symposium on Operating Systems Design and Implementation, New Orleans, USA, February 1999</em></p>
+<p>[2] <a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/40684348">区块链PBFT共识算法节点主动恢复设计与实现</a><br>[3] <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.8btc.com/article/70370">拜占庭将军问题深入探讨</a></p>
 </blockquote>
 
     </div>
@@ -501,7 +501,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

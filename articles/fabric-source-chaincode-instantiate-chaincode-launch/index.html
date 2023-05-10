@@ -253,7 +253,7 @@
   OutputStream: binpackage,
 }
 </code></pre>
-<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>${CC_SRC_PATH}</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
+<p>这里指的是，将<code>pkgname</code>(spec.ChaincodeId.Path)指定的chaincode代码运行<code>go build -o chaincode</code>打包成名为<code>chaincode</code>的可执行文件。因此容器启动时，实际上调用了install的chaincode代码里的main方法，这也是分析的入口。在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html">Building Your First Network</a>官方教程，在fabric-samples/first-network/scripts的<code>scripts.sh</code>和<code>utils.sh</code>里找到install chaincode路径为<code>${CC_SRC_PATH}</code>,在<code>scripts.sh</code>里可以得到<code>CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"</code>. 该目录下<code>chaincode_example02.go</code>的main方法<code>err := shim.Start(new(SimpleChaincode))</code>启动。进入到<code>chaincode.Start(cc Chaincode)</code>方法</p>
 <span id="more"></span>
 <ol>
 <li><code>SetupChaincodeLogging()</code>设置日志相关</li>
@@ -396,7 +396,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 

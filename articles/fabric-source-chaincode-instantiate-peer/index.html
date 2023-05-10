@@ -255,7 +255,7 @@
 <ol>
 <li><p><code>CreateDeployProposalFromCDS</code>从上面构造的部署结构体得到<code>peer.ChaincodeInvocationSpec</code>(cis),进而得到<code>peer.Proposal</code>,然后使用初始化时候得到的signer对这个提案进行签名，这个步骤与初始化时候非常相似。</p>
 <blockquote>
-<p>Transaction的结构可以参看总结<a target="_blank" rel="noopener" href="https://blockchain-fabric.blogspot.com/2017/04/hyperledger-fabric-v10-block-structure.html">Hyperledger Fabric V1.0: Block Structure</a> </p>
+<p>Transaction的结构可以参看总结<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blockchain-fabric.blogspot.com/2017/04/hyperledger-fabric-v10-block-structure.html">Hyperledger Fabric V1.0: Block Structure</a> </p>
 </blockquote>
 <p><code>pb.ChaincodeInvokeSpec</code>(cis)里指定<code>Type</code>为golang，<code>ChaincodeID</code>指定为lscc（lifecycle system chaincode），然后将上面构造的cds序列化在[]byte作为<code>Input</code>字段。<br><code>CreateDeployProposalFromCDS</code>这个方法从部署结构体cds出发，生成随机字符串<code>NONCE</code>，使用签名生成<code>ProposalTxID</code>; 指定类型<code>Type</code>为<code>HeaderType_ENDORSER_TRANSACTION</code>(此处多补充一句，初始化时获取配置的类型为<code>HeaderType_CONFIG</code>),指定<code>channelId</code>，<code>chaincodeID</code>(包括chaincode的version，path，name)。这里的<code>chaincodeID</code>是构造的<code>peer.ChaincodeInvocationSpec</code>的参数，指定了Name为lscc，lifecycle systme chaincode。此外，还有初始化过程MSP获取的<code>creator</code>(即序列化后的signer)表明身份以及创建时间<code>Timestamp</code>等。这些构成了transaction的header,连同序列化后的<code>ChaincodeInvocationSpec</code>对象作为payload,共同组成了<code>peer.Proposal{Header: hdrBytes, Payload: ccPropPayloadBytes}</code>.最后使用signer进行签名。</p>
 </li>
@@ -508,7 +508,7 @@ func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps .
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
