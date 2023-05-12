@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://simplexity.cn/images/ethereum-mpt.png">
 <meta property="og:image" content="https://simplexity.cn/images/ethereum-mpt-block.png">
 <meta property="article:published_time" content="2019-06-25T09:02:44.000Z">
-<meta property="article:modified_time" content="2021-12-04T11:23:03.926Z">
+<meta property="article:modified_time" content="2023-05-12T06:37:08.145Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="Ethereum">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-04 19:23:03" itemprop="dateModified" datetime="2021-12-04T19:23:03+08:00">2021-12-04</time>
+                <time title="Modified: 2023-05-12 14:37:08" itemprop="dateModified" datetime="2023-05-12T14:37:08+08:00">2023-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,7 +262,7 @@
 <li><p><strong>Block, transaction, account state objects and Ethereum tries</strong><br><img src="/images/ethereum-all-structure.jpg" alt=""></p>
 <ul>
 <li><strong>The world state trie contains the mapping between addresses and account states.</strong> The hash of the root node of the world state trie is included in a block (in the stateRoot field) to represent the current state when that block was created. <strong>We only have one world state trie.</strong></li>
-<li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the sccount state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
+<li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the account state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
 <li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
 <li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
 </ul>

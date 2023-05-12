@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn//articles/understanding-ethereum/</loc>
+    <lastmod>2023-05-12</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn//articles/foreword/</loc>
     <lastmod>2023-05-10</lastmod>
   </url>
@@ -131,10 +135,6 @@
   <url>
     <loc>https://simplexity.cn//articles/suptech-data-collection/</loc>
     <lastmod>2021-12-15</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn//articles/understanding-ethereum/</loc>
-    <lastmod>2021-12-04</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn//articles/ethereum-design-rationale/</loc>
