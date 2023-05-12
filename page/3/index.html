@@ -480,7 +480,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-28 15:38:41" itemprop="dateModified" datetime="2023-04-28T15:38:41+08:00">2023-04-28</time>
+                <time title="Modified: 2023-05-12 17:03:16" itemprop="dateModified" datetime="2023-05-12T17:03:16+08:00">2023-05-12</time>
               </span>
 
           
@@ -568,7 +568,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+                <time title="Modified: 2023-05-12 17:09:26" itemprop="dateModified" datetime="2023-05-12T17:09:26+08:00">2023-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -670,7 +670,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-12 14:37:08" itemprop="dateModified" datetime="2023-05-12T14:37:08+08:00">2023-05-12</time>
+                <time title="Modified: 2023-05-12 16:58:05" itemprop="dateModified" datetime="2023-05-12T16:58:05+08:00">2023-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -700,19 +700,16 @@
 <li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
 </ul>
 </blockquote>
-<ol>
-<li><p><strong>Block, transaction, account state objects and Ethereum tries</strong><br><img src="/images/ethereum-all-structure.jpg" alt=""></p>
+<h2 id="Block-transaction-account-state-objects-and-Ethereum-tries"><a href="#Block-transaction-account-state-objects-and-Ethereum-tries" class="headerlink" title="Block, transaction, account state objects and Ethereum tries"></a>Block, transaction, account state objects and Ethereum tries</h2><p><img src="/images/understanding-ethereum/ethereum-all-structure.jpg" alt=""></p>
 <ul>
 <li><strong>The world state trie contains the mapping between addresses and account states.</strong> The hash of the root node of the world state trie is included in a block (in the stateRoot field) to represent the current state when that block was created. <strong>We only have one world state trie.</strong></li>
 <li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the account state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
 <li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
-<li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
-</ul>
+<li><p><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></p>
 <p>摘自: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
 </li>
-<li><p><strong>Externally owned account(EOA) VS. Contract account</strong><br> 两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br> <img src="/images/ethereum-account.png" alt=""></p>
-</li>
-</ol>
+</ul>
+<h2 id="Externally-owned-account-EOA-VS-Contract-account"><a href="#Externally-owned-account-EOA-VS-Contract-account" class="headerlink" title="Externally owned account(EOA) VS. Contract account"></a>Externally owned account(EOA) VS. Contract account</h2><p>两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。<br><img src="/images/understanding-ethereum/ethereum-account.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -741,15 +738,17 @@
 </tbody>
 </table>
 </div>
-<pre><code>&gt; It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:
-&gt; 1. Runs the code in the contract’s constructor, setting storage values, etc.
-&gt; 2. Copies the code for the rest of the contract into memory and returns it.  
-
-新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom
-
-&gt; [How Ethereum Transactions Work](https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/)  
-&gt; [How Smart Contract Deployment Works](https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/)
-</code></pre>
+<blockquote>
+<p>It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:</p>
+<ol>
+<li>Runs the code in the contract’s constructor, setting storage values, etc.</li>
+<li>Copies the code for the rest of the contract into memory and returns it.  </li>
+</ol>
+</blockquote>
+<p>新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom</p>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/">How Ethereum Transactions Work</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/">How Smart Contract Deployment Works</a></p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/understanding-ethereum/#more" rel="contents">

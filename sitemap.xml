@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://simplexity.cn/articles/consensus-pos/</loc>
+    
+    <lastmod>2023-05-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/articles/bitcoin-performance-scaleup-concern/</loc>
+    
+    <lastmod>2023-05-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/articles/understanding-bitcoin/</loc>
+    
+    <lastmod>2023-05-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/articles/understanding-ethereum/</loc>
     
     <lastmod>2023-05-12</lastmod>
@@ -73,13 +94,6 @@
   
   <url>
     <loc>https://simplexity.cn/articles/sc-authorization/</loc>
-    
-    <lastmod>2023-04-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/articles/bitcoin-performance-scaleup-concern/</loc>
     
     <lastmod>2023-04-28</lastmod>
     
@@ -254,13 +268,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/understanding-bitcoin/</loc>
-    
-    <lastmod>2021-12-04</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/articles/did-account-system/</loc>
     
     <lastmod>2020-11-19</lastmod>
@@ -332,13 +339,6 @@
   
   <url>
     <loc>https://simplexity.cn/articles/fabric-cryptography-msp-summary/</loc>
-    
-    <lastmod>2020-10-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://simplexity.cn/articles/consensus-pos/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
