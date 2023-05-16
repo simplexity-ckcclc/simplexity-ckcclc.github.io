@@ -25,14 +25,14 @@
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="PoS(Proof of Stake权益证明)相对于PoW的优点： 不需要消耗大量电力成本 发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全） PoS为什么比PoW更能避免51%攻击？    PoS运行过程 质押stak">
 <meta property="og:locale">
-<meta property="og:image" content="https://simplexity.cn/images/consensus-pos/token-double-spend.png">
-<meta property="og:image" content="https://simplexity.cn/images/consensus-pos/pos-stake-bleeding.png">
+<meta property="og:image" content="https://simplexity.cn/images/token-double-spend.png">
+<meta property="og:image" content="https://simplexity.cn/images/pos-stake-bleeding.png">
 <meta property="article:published_time" content="2019-07-08T09:51:14.000Z">
-<meta property="article:modified_time" content="2023-05-12T09:09:26.777Z">
+<meta property="article:modified_time" content="2020-10-28T01:59:15.292Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="Consensus">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://simplexity.cn/images/consensus-pos/token-double-spend.png">
+<meta name="twitter:image" content="https://simplexity.cn/images/token-double-spend.png">
 
 <link rel="canonical" href="https://simplexity.cn/articles/consensus-pos/">
 
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-12 17:09:26" itemprop="dateModified" datetime="2023-05-12T17:09:26+08:00">2023-05-12</time>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,6 +238,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
             </span>
 
         </div>
@@ -272,7 +286,7 @@
 <p> Nothing At Stake, a situation where someone loses nothing when behaving badly, but stands to gain everything. 在出现多条区块链相互竞争的情况下，会激励验证者在每条链上都创造区块，以确保利益最大化。因为PoS创造新区块基本上无需成本，只受持有的资产（token）影响，这样使得双花攻击更加容易，而PoW则受算力影响，分散算力反而降低收益期望值，即经济学意义上的机会成本。这个可以一个例子说明。</p>
 <blockquote>
 <p>如下图所示，仍然是 A、B、C 三个出块节点，假如 A是攻击节点，它在产生分叉时创造两笔交易。一笔将X个币发给自己的一个钱包地址，同时在另外一个分叉上将X个币发到交易所。B、C出块节点因 Nothing At Stake 所以同时会在两条分叉链上出块。当交易被交易所确认后， A 将 X 个币出售兑换成隐私币种，移出交易所。之后 A 通过增加质押币量，或创建多个其他出块节点的方式提升出块权重，只在分叉链继续出块。此时最长链很明显，且逐渐拉开差距，会最终成为最长链，A 成功将 X 个币双花。</p>
-<p><img src="/images/consensus-pos/token-double-spend.png" alt=""></p>
+<p><img src="/images/token-double-spend.png" alt=""></p>
 <p>摘自 ：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.gongxiangcj.com/posts/19085">PoS背后的Nothing At Stake与Long-Range Attack</a></p>
 </blockquote>
 <p> 解决方案 ： 无成本攻击则引入惩罚机制。验证节点提前抵押一定的stake做为保证金，如果发现验证节点“在多条链上同时出块” 或者 “在错误的链上出块”，立即惩罚扣除一定保证金。只要保证金设置合理，使“双挖”的收益期望值降低，可以从经济学意义上消除这个风险。</p>
@@ -281,7 +295,7 @@
 <p> 恶意节点从很早以前的甚至是创世块开始重新建造一条链，目的来代替正常运行的主链。由于PoS创建区块的成本极小，新链的构造速度可以很快，赶上主链的高度。如果不考虑timestamp，那么恶意节点可以超前当前时刻，创造大量的未来区块时间，从而增加链高度代替正常链。这种情况加上timestamp即可避免。</p>
 <p> 考虑timestamp的主要有两种形态，一种是<strong>Posterior Corruption</strong>。譬如如果当前区块高度为X，想从之前的区块K开始分支。那么从K到X之间所有的区块的签发者联合起来（或者通过贿赂，盗窃秘钥等方式），将质押的stake全部撤回，然后创建从K开始创建新链（没有质押就不存在签发X之后的新的区块，但是可以签发之前的，而且避开了双签的惩罚措施），此时创建的新链长度就赶上甚至替代正常链。Casper通过“检查点”（checkpoint）机制来应对这种方案。取消抵押保证金有一个“解冻”时期。同时限制区块分叉上限，节点拒绝回滚比保证金被锁定时间更久的区块，特定的上限区块称之为“检查点”，这样这些撤回的stake在可以用来重签时已经过了检查点。（要理解这段需要了解节点随机选举过程的Follow-the-Satoshi算法，选择随机stake的持有节点）。另外也有研究KEC（Key-Evolving Cryptography）即秘钥签发一次即失效的方案防止二次签发。还有的方案是在交易时也带上前任区块的hash值，这样通过检查交易的这个值，可以避免链的中途恶意分叉。</p>
 <p> 另一种方式是<strong>Stake Bleeding</strong>。如图，恶意节点M在正常链选择在M的出块时刻不出块，即Liveness Denial attack，则该轮被跳过，链高度不变，M被惩罚，逐渐的演变下去stake减少，出块机会减少。而在恶意链，M在其时刻出块，其他的则不可能出块，导致M的出块机会增加，演变到最后只有其出块。随着时间的推移会赶上主链。但是研究表明，拥有30%stake的攻击者也需要6年才能实现，现实可行性比较低。</p>
-<p> <img src="/images/consensus-pos/pos-stake-bleeding.png" alt=""></p>
+<p> <img src="/images/pos-stake-bleeding.png" alt=""></p>
 <p> 长程攻击通常与<strong>Weak Subjectivity</strong>(弱主观性)相关联。区块链网络中的新节点或是长期离线的节点加入到网络中时，会收到当前区块链上所有公开的分支，但是节点并不能分辨出哪些分支是从属于主链的（PoS里最长链原则并不足够，因为PoS里创建区块成本极小，可能存在多条等长链，这与PoW是区别的）。因此，在PoS里，新节点要求验证链外最新状态来解决，节点可以通过询问他们的朋友、区块浏览器等进行区块同步，离线的节点要求在“还原上限”时间内至少要登录同步一次。在线节点因为一直与主链同步，则不存在这个风险。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.positive.com/rewriting-history-a-brief-introduction-to-long-range-attacks-54e473acdba9">Rewriting History: A Brief Introduction to Long Range Attacks</a></p>
