@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,120 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-inpractice-commercialpaper-java-sdk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-inpractice-commercialpaper-java-sdk/" class="post-title-link" itemprop="url">Fabric实战（2）- Commercial Paper的Fabric-Java-SDK客户端</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-02 18:13:46" itemprop="dateCreated datePublished" datetime="2019-11-02T18:13:46+08:00">2019-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>到目前为止都是通过在cli容器执行<code>peer chaincode</code>命令调用chaincode，实际上官方提供<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/fabric-sdks.html">SDK</a>（当前只有Node.js和Java两种）。这里提供基于Fabric Java SDK的commercial paper客户端，设置使用TLS，详细项目代码在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/fabric-learning/tree/master/java-sdk/commercial-paper">github</a>。项目采用Springboot，swagger提供网页调用。注意，这里只是demo，不能作为生产环境使用。具体步骤大致拆解如下：</p>
+<ol>
+<li>构建HFClient<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> HFClient <span class="title">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// 使用Org1的admin用户身份。由于使用TSL，这里提供keyFile：admin的私钥和certFile：由ca.org1.example.com签发的证书</span></span><br><span class="line">    <span class="comment">// 也可以通过使用HFCAClient向ca发送enroll和register请求用于新增注册和登记身份证书。具体可以参看参考文档。</span></span><br><span class="line">    Enrollment enrollment = PaperUser.createEnrollmentFromPemFile(keyFile, certFile);</span><br><span class="line">    PaperUser admin = <span class="keyword">new</span> PaperUser(name, mspId, enrollment);</span><br><span class="line"></span><br><span class="line">    HFClient client = HFClient.createNewInstance();</span><br><span class="line">    client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());</span><br><span class="line">    client.setUserContext(admin);</span><br><span class="line">    initChannel();</span><br><span class="line">    <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> Enrollment <span class="title">createEnrollmentFromPemFile</span><span class="params">(String keyFile, String certFile)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] keyPem = Files.readAllBytes(Paths.get(keyFile));     <span class="comment">//载入私钥PEM文本</span></span><br><span class="line">    <span class="keyword">byte</span>[] certPem = Files.readAllBytes(Paths.get(certFile));   <span class="comment">//载入证书PEM文本</span></span><br><span class="line">    CryptoPrimitives suite = <span class="keyword">new</span> CryptoPrimitives();            <span class="comment">//载入密码学套件</span></span><br><span class="line">    PrivateKey privateKey = suite.bytesToPrivateKey(keyPem);    <span class="comment">//将PEM文本转换为私钥对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> X509Enrollment(privateKey,<span class="keyword">new</span> String(certPem));  <span class="comment">//创建并返回X509Enrollment对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用TSL，需要提供peerTLScaCertFile：tlsca.org1.example.com的证书和ordererTLScaCertFile：tlsca.example.com的证书</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Channel channel = client.newChannel(channelID);</span><br><span class="line">    Properties peerProps = <span class="keyword">new</span> Properties();</span><br><span class="line">    peerProps.put(<span class="string">&quot;pemFile&quot;</span>, peerTLScaCertFile);</span><br><span class="line">    peerProps.setProperty(<span class="string">&quot;sslProvider&quot;</span>, <span class="string">&quot;openSSL&quot;</span>);</span><br><span class="line">    peerProps.setProperty(<span class="string">&quot;negotiationType&quot;</span>, <span class="string">&quot;TLS&quot;</span>);</span><br><span class="line">    Peer peer = client.newPeer(peerName, peerURL, peerProps);</span><br><span class="line">    channel.addPeer(peer);</span><br><span class="line"></span><br><span class="line">    Properties ordererProps = <span class="keyword">new</span> Properties();</span><br><span class="line">    ordererProps.put(<span class="string">&quot;pemFile&quot;</span>, ordererTLScaCertFile);</span><br><span class="line">    ordererProps.setProperty(<span class="string">&quot;sslProvider&quot;</span>, <span class="string">&quot;openSSL&quot;</span>);</span><br><span class="line">    ordererProps.setProperty(<span class="string">&quot;negotiationType&quot;</span>, <span class="string">&quot;TLS&quot;</span>);</span><br><span class="line">    Orderer orderer = client.newOrderer(ordererName, ordererURL, ordererProps);</span><br><span class="line">    channel.addOrderer(orderer);</span><br><span class="line"></span><br><span class="line">    channel.initialize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><code>peerURL</code>设置为<code>grpcs://peer0.org1.example.com:7051</code>。首先，TLS需要设置使用<code>grpcs</code>。其次，只能使用<code>peer0.org1.example.com</code>（同时需要配置hosts文件），不能使用  <code>127.0.0.1</code>或者<code>localhost</code>(报错<code>Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching IP address 127.0.0.1/localhost found</code>) 。因为peer0返回的证书的CN是peer0.org1.example.com，java ssl会校验这个域名。</li>
+</ul>
+<ol>
+<li><p>chaincode - query</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">query</span><span class="params">(String issuer, String paperNumber)</span> </span>&#123;</span><br><span class="line">    QueryByChaincodeRequest req = client.newQueryProposalRequest();</span><br><span class="line">    ChaincodeID cid = ChaincodeID.newBuilder().setName(chaincodeName).build();</span><br><span class="line">    req.setChaincodeID(cid);</span><br><span class="line">    req.setFcn(QUERY_FUNC);</span><br><span class="line">    req.setArgs(issuer, paperNumber);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Channel对象已在上面构建</span></span><br><span class="line">    Channel channel = client.getChannel(channelID);</span><br><span class="line">    Collection&lt;ProposalResponse&gt; propResps = channel.queryByChaincode(req);</span><br><span class="line">    <span class="comment">// endorser返回的ProposalResponse需要保持一致</span></span><br><span class="line">    Collection&lt;Set&lt;ProposalResponse&gt;&gt; proposalConsistencySets = SDKUtils.getProposalConsistencySets(propResps);</span><br><span class="line">    <span class="keyword">if</span> (proposalConsistencySets.size() != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR)</span><br><span class="line">                .withErrorMsg(<span class="string">&quot;Expected only one set of consistent proposal responses but got more&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    FabricProposalResponse.Response res = propResps.iterator().next().getProposalResponse().getResponse();</span><br><span class="line">    <span class="keyword">if</span> (res.getStatus() == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.success().withResponse(res.getPayload().toStringUtf8());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR).withErrorMsg(res.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>chaincode - invoke</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">issue</span><span class="params">(IssueRequest request)</span> </span>&#123;</span><br><span class="line">    TransactionProposalRequest proposalRequest = client.newTransactionProposalRequest();</span><br><span class="line">    ChaincodeID cid = ChaincodeID.newBuilder().setName(chaincodeName).build();</span><br><span class="line">    proposalRequest.setChaincodeID(cid);</span><br><span class="line">    proposalRequest.setFcn(ISSUE_FUNC);</span><br><span class="line">    proposalRequest.setArgs(request.getIssuer(), request.getPaperNumber(), issueDate, maturityDate,</span><br><span class="line">            String.valueOf(request.getFaceValue()));</span><br><span class="line"></span><br><span class="line">    Channel channel = client.getChannel(channelID);</span><br><span class="line">    <span class="comment">// Endorsing(simulate) phase</span></span><br><span class="line">    Collection&lt;ProposalResponse&gt; propResps = channel.sendTransactionProposal(proposalRequest);</span><br><span class="line">    <span class="comment">// endorser返回的ProposalResponse需要保持一致</span></span><br><span class="line">    Collection&lt;Set&lt;ProposalResponse&gt;&gt; proposalConsistencySets = SDKUtils.getProposalConsistencySets(propResps);</span><br><span class="line">    <span class="keyword">if</span> (proposalConsistencySets.size() != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR)</span><br><span class="line">                .withErrorMsg(<span class="string">&quot;Expected only one set of consistent proposal responses but got more&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Orderer phase</span></span><br><span class="line">    <span class="comment">// 这里同步调用，需要等到提交orderer并且orderer排序后发送到各个peer，peer处理了block里的交易后才返回。</span></span><br><span class="line">    <span class="comment">// 或者同步返回txid。可以配置eventHub异步接收和执行block，通过txid来返回最终的执行结果</span></span><br><span class="line">    BlockEvent.TransactionEvent event = channel.sendTransaction(propResps).get();</span><br><span class="line">    <span class="keyword">if</span> (event.isValid()) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.success().withResponse(<span class="string">&quot;txid : &quot;</span> + event.getTransactionID());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="WIP"><a href="#WIP" class="headerlink" title="WIP:"></a>WIP:</h4><ol>
+<li>eventHub</li>
+</ol>
+<h4 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h4><blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/63511862">Fabric Java SDK最新教程【201904】</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1222,127 +1336,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-commercial-paper-go/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-commercial-paper-go/" class="post-title-link" itemprop="url">Fabric官网Commercial Paper案例chaincode的golang实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-19 16:20:28" itemprop="dateCreated datePublished" datetime="2019-04-19T16:20:28+08:00">2019-04-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-08 18:29:32" itemprop="dateModified" datetime="2023-02-08T18:29:32+08:00">2023-02-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>官网上描述了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/developapps/developing_applications.html">Commercial Paper</a>这个应用场景，并且提供了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/tutorial/commercial_paper.html#">nodejs实现</a>。这里补充chaincode的golang实现，保持逻辑一致，以及记录实际操作中的一些步骤和要点。实现的源码已上传<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/tree/master/chaincode/commercial-paper/go">github</a>。</p>
-<ol>
-<li><p>按照官网Commercial Paper nodejs实现里的步骤，启动<code>net_basic</code>网络，并且启动了<code>peer0.org1.example.com</code>, <code>couchdb</code>, <code>ca.example.com</code>, <code>orderer.example.com</code>, <code>cliDigiBank</code>, <code>cliMagnetoCorp</code>这些容器（按照步骤里执行下来，docker ps能看到这些容器）。</p>
-</li>
-<li><p>install chaincode。执行<code>docker inspect cliMagnetoCorp</code>，能看到<code>/Users/ckcclc/github/fabric-samples/commercial-paper/organization/magnetocorp:/opt/gopath/src/github.com</code>这个路径绑定。在<code>/Users/ckcclc/github/fabric-samples/commercial-paper/organization/magnetocorp</code>创建目录<code>gocontract</code>，将golang实现放在这个目录里。这时候登录到<code>cliMagnetoCorp</code>容器，可以看到容器内<code>/opt/gopath/src/github.com/application</code>下有<code>gocontract</code>这个目录，并且go实现在内。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n gopapercontract -v 0 -p github.com/gocontract</span><br></pre></td></tr></table></figure>
-<p> 同时，<code>docker inspect cliMagnetoCorp</code>(或者<code>cliMagnetoCorp</code>容器执行<code>env</code>查看），<code>GOPATH=/opt/gopath, CORE_PEER_ADDRESS=peer0.org1.example.com:7051</code>。<code>install</code>会到<code>$&#123;GOPATH&#125;/src</code>下寻找source code。然后install chaincode到<code>$&#123;CORE_PEER_ADDRESS&#125;</code>。</p>
-<p> 登录<code>peer0.org1.example.com</code>容器。<code>env</code>出来<code>FABRIC_CFG_PATH=/etc/hyperledger/fabric</code>，查看改路径下的<code>core.yaml</code>配置文件，其中<code>peer.fileSystemPath : /var/hyperledger/production</code>。查看<code>/var/hyperledger/production/chaincodes</code>目录，存在文件<code>gopapercontract.0</code>(即${chaincodeName}.${chaincodeVersion}).</p>
-</li>
-<li><p>instantiate chaincode。登录<code>cliMagnetoCorp</code>容器，执行</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -n gopapercontract -v 0 -c <span class="string">&#x27;&#123;&quot;Args&quot;:[]&#125;&#x27;</span> -C mychannel -P <span class="string">&quot;AND (&#x27;Org1MSP.member&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
-<p> 此时，<code>docker ps</code>可以看到dev-peer0.org1.example.com-gopapercontract-0这个容器。可以在<code>cliMagnetoCorp</code>容器执行。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode invoke -c <span class="string">&#x27;&#123;&quot;Args&quot;:[&quot;issue&quot;,&quot;MagnetoCorp&quot;, &quot;00001&quot;, &quot;2020-05-31&quot;, &quot;2020-11-30&quot;, &quot;5000000&quot;]&#125;&#x27;</span> -C mychannel -n gopapercontract</span><br><span class="line">peer chaincode query -c <span class="string">&#x27;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;MagnetoCorp&quot;, &quot;00001&quot;]&#125;&#x27;</span> -C mychannel -n gopapercontract</span><br></pre></td></tr></table></figure>
-<p> 如果后续更新chaincode，假设更新版本为1，则执行</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode upgrade -n gopapercontract -v 1 -c <span class="string">&#x27;&#123;&quot;Args&quot;:[]&#125;&#x27;</span> -C mychannel -P <span class="string">&quot;AND (&#x27;Org1MSP.member&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改<code>fabric-samples/commercial-paper/organization/magnetocorp/application/issue.js</code>这个文件</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 63行 const contract = await network.getContract(&#x27;papercontract&#x27;, &#x27;org.papernet.commercialpaper&#x27;);</span></span><br><span class="line">    <span class="keyword">const</span> contract = <span class="keyword">await</span> network.getContract(<span class="string">&#x27;gopapercontract&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 73行 let paper = CommercialPaper.fromBuffer(issueResponse);</span></span><br><span class="line">    <span class="keyword">let</span> paper = <span class="built_in">JSON</span>.parse(issueResponse);</span><br></pre></td></tr></table></figure>
-<p> 然后，就可以正常调用<code>node issue.js</code>访问刚启动的golang commercial paper容器了。在整个流程中，可以执行<code>./monitordocker.sh net_basic</code>查看chaincode的日志。</p>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-commercial-paper-go/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1414,7 +1407,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

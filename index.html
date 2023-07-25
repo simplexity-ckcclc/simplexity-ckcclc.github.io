@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,109 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/understanding-corda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/understanding-corda/" class="post-title-link" itemprop="url">R3 Corda概念理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-07-25 15:15:39 / Modified: 16:53:19" itemprop="dateCreated datePublished" datetime="2023-07-25T15:15:39+08:00">2023-07-25</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>14 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Corda的设计理念"><a href="#Corda的设计理念" class="headerlink" title="Corda的设计理念"></a>Corda的设计理念</h3><blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.finyear.com/R3-Corda-A-Distributed-Ledger-Designed-for-Financial-Services_a35855.html">R3 Corda: A Distributed Ledger Designed for Financial Services</a> : R3 CTO在2016年设计之初分享的设计理念及心路历程</p>
+</blockquote>
+<ol>
+<li>专门针对金融场景开发，而非通用区块链。受区块链思想的影响，在很多设计理念上考虑了当前金融领域的特点和经典场景。<ul>
+<li>交易不再全局广播，只在相关方可见；</li>
+<li>引入可信公证人机制；</li>
+<li>没有经典的区块&amp;全局一条链的设计等等；</li>
+</ul>
+</li>
+<li>借鉴了区块链经典思想，回归到本质：共识，有效性，唯一性，不可篡改性，可验证性。<ul>
+<li>使用公证人机制防止双花；</li>
+<li>UTXO模型，从单纯的资产扩展到状态；</li>
+<li>签名放篡改抵赖；</li>
+</ul>
+</li>
+</ol>
+<p><em>无链之链，非链之链</em>。更恰当应该叫分布式账本DLT。基于金融领域真实存在的一些假设和前提（例如存在可信公证人），更像是借鉴区块链思想去解决金融领域的实际问题，提升效率。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/understanding-corda/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1090,112 +1193,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/webank-fisco-bcos-middleware/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/webank-fisco-bcos-middleware/" class="post-title-link" itemprop="url">微众银行FISCO-BCOS中间件赏析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-23 16:43:09" itemprop="dateCreated datePublished" datetime="2020-11-23T16:43:09+08:00">2020-11-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-08 18:28:14" itemprop="dateModified" datetime="2023-02-08T18:28:14+08:00">2023-02-08</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:</p>
-<ul>
-<li><strong>链数据管理</strong>： 相当于区块链浏览器，获取链的信息，例如块高，块信息等，以及管理各个节点的管理员admin功能（对应微众的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Node-Manager/index.html">WeBASE-Node-Manager</a>，下同）</li>
-<li><strong>交易</strong>： 交易上链，交易查询，交易回执查询，存证等（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Transaction/index.html">WeBASE-Transcation</a>）</li>
-<li><strong>合约编译部署</strong>： 编译合约，部署合约等(<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
-<li><strong>合约事件监听</strong>： 订阅事件，事件推送等(在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/index.html">WeBASE-Front</a>里有基于MQ的方案，以及单独的基于区块链的分布式事件驱动架构<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/weevent">WeEvent</a>)</li>
-<li><strong>私钥托管</strong>： 托管私钥，代用户签名上链(<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
-<li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/weidentity">WeIdentity</a>）</li>
-</ul>
-<p>其他的还有<strong>跨链</strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/wecross">WeCross</a>，<strong>链上数据导出</strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
-<h1 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h1><ol>
-<li><a href="#event-listener">合约事件监听</a></li>
-<li><a href="#governance">WeBankBlockchain-Governance链治理通用组件</a></li>
-<li><a href="#data">WeBankBlockchain-Data数据治理通用组件</a></li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/webank-fisco-bcos-middleware/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1267,7 +1264,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

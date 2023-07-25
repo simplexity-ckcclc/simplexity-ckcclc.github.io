@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">47</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,112 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/webank-fisco-bcos-middleware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/webank-fisco-bcos-middleware/" class="post-title-link" itemprop="url">微众银行FISCO-BCOS中间件赏析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-23 16:43:09" itemprop="dateCreated datePublished" datetime="2020-11-23T16:43:09+08:00">2020-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-08 18:28:14" itemprop="dateModified" datetime="2023-02-08T18:28:14+08:00">2023-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>区块链中间件是在区块链节点和区块链应用间的通用组件，由于多数情况下会存在多个应用共用一条链的情况，因此中间件功能的通用性和完备性就非常重要。针对不同的链，中间件跟链的接口是不同的，但是提供给上层应用的功能和接口应该是稳定的，而且理想状态下应该尽可能的不与具体的链特性做绑定（实际上很多情况下做不到完全的屏蔽底层链特性），即适配层。一般来说，中间件需要提供有以下的功能:</p>
+<ul>
+<li><strong>链数据管理</strong>： 相当于区块链浏览器，获取链的信息，例如块高，块信息等，以及管理各个节点的管理员admin功能（对应微众的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Node-Manager/index.html">WeBASE-Node-Manager</a>，下同）</li>
+<li><strong>交易</strong>： 交易上链，交易查询，交易回执查询，存证等（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Transaction/index.html">WeBASE-Transcation</a>）</li>
+<li><strong>合约编译部署</strong>： 编译合约，部署合约等(<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
+<li><strong>合约事件监听</strong>： 订阅事件，事件推送等(在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Front/index.html">WeBASE-Front</a>里有基于MQ的方案，以及单独的基于区块链的分布式事件驱动架构<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/weevent">WeEvent</a>)</li>
+<li><strong>私钥托管</strong>： 托管私钥，代用户签名上链(<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Sign/index.html">WeBASE-Sign</a>)</li>
+<li><strong>分布式身份</strong>：DID，一般遵从W3C规范（基于公众联盟链的实体身份标识与可信数据交换解决方案<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/weidentity">WeIdentity</a>）</li>
+</ul>
+<p>其他的还有<strong>跨链</strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/wecross">WeCross</a>，<strong>链上数据导出</strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://fintech.webank.com/developer/docs/webase/docs/WeBASE-Collect-Bee/index.html">WeBASE-Collect-Bee</a>等。设计遵从模块独立可扩展，分布式按需部署的理念。在后端设计上通常使用http restful接口服务的形式，减少对调用方的要求，同时屏蔽底层，使应用开发方专注于业务开发。下面具体分析各个组件。</p>
+<h1 id="目录："><a href="#目录：" class="headerlink" title="目录："></a>目录：</h1><ol>
+<li><a href="#event-listener">合约事件监听</a></li>
+<li><a href="#governance">WeBankBlockchain-Governance链治理通用组件</a></li>
+<li><a href="#data">WeBankBlockchain-Data数据治理通用组件</a></li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/webank-fisco-bcos-middleware/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1114,120 +1220,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-inpractice-commercialpaper-java-sdk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-inpractice-commercialpaper-java-sdk/" class="post-title-link" itemprop="url">Fabric实战（2）- Commercial Paper的Fabric-Java-SDK客户端</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-11-02 18:13:46" itemprop="dateCreated datePublished" datetime="2019-11-02T18:13:46+08:00">2019-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>到目前为止都是通过在cli容器执行<code>peer chaincode</code>命令调用chaincode，实际上官方提供<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/fabric-sdks.html">SDK</a>（当前只有Node.js和Java两种）。这里提供基于Fabric Java SDK的commercial paper客户端，设置使用TLS，详细项目代码在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/fabric-learning/tree/master/java-sdk/commercial-paper">github</a>。项目采用Springboot，swagger提供网页调用。注意，这里只是demo，不能作为生产环境使用。具体步骤大致拆解如下：</p>
-<ol>
-<li>构建HFClient<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> HFClient <span class="title">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// 使用Org1的admin用户身份。由于使用TSL，这里提供keyFile：admin的私钥和certFile：由ca.org1.example.com签发的证书</span></span><br><span class="line">    <span class="comment">// 也可以通过使用HFCAClient向ca发送enroll和register请求用于新增注册和登记身份证书。具体可以参看参考文档。</span></span><br><span class="line">    Enrollment enrollment = PaperUser.createEnrollmentFromPemFile(keyFile, certFile);</span><br><span class="line">    PaperUser admin = <span class="keyword">new</span> PaperUser(name, mspId, enrollment);</span><br><span class="line"></span><br><span class="line">    HFClient client = HFClient.createNewInstance();</span><br><span class="line">    client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());</span><br><span class="line">    client.setUserContext(admin);</span><br><span class="line">    initChannel();</span><br><span class="line">    <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> Enrollment <span class="title">createEnrollmentFromPemFile</span><span class="params">(String keyFile, String certFile)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] keyPem = Files.readAllBytes(Paths.get(keyFile));     <span class="comment">//载入私钥PEM文本</span></span><br><span class="line">    <span class="keyword">byte</span>[] certPem = Files.readAllBytes(Paths.get(certFile));   <span class="comment">//载入证书PEM文本</span></span><br><span class="line">    CryptoPrimitives suite = <span class="keyword">new</span> CryptoPrimitives();            <span class="comment">//载入密码学套件</span></span><br><span class="line">    PrivateKey privateKey = suite.bytesToPrivateKey(keyPem);    <span class="comment">//将PEM文本转换为私钥对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> X509Enrollment(privateKey,<span class="keyword">new</span> String(certPem));  <span class="comment">//创建并返回X509Enrollment对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用TSL，需要提供peerTLScaCertFile：tlsca.org1.example.com的证书和ordererTLScaCertFile：tlsca.example.com的证书</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Channel channel = client.newChannel(channelID);</span><br><span class="line">    Properties peerProps = <span class="keyword">new</span> Properties();</span><br><span class="line">    peerProps.put(<span class="string">&quot;pemFile&quot;</span>, peerTLScaCertFile);</span><br><span class="line">    peerProps.setProperty(<span class="string">&quot;sslProvider&quot;</span>, <span class="string">&quot;openSSL&quot;</span>);</span><br><span class="line">    peerProps.setProperty(<span class="string">&quot;negotiationType&quot;</span>, <span class="string">&quot;TLS&quot;</span>);</span><br><span class="line">    Peer peer = client.newPeer(peerName, peerURL, peerProps);</span><br><span class="line">    channel.addPeer(peer);</span><br><span class="line"></span><br><span class="line">    Properties ordererProps = <span class="keyword">new</span> Properties();</span><br><span class="line">    ordererProps.put(<span class="string">&quot;pemFile&quot;</span>, ordererTLScaCertFile);</span><br><span class="line">    ordererProps.setProperty(<span class="string">&quot;sslProvider&quot;</span>, <span class="string">&quot;openSSL&quot;</span>);</span><br><span class="line">    ordererProps.setProperty(<span class="string">&quot;negotiationType&quot;</span>, <span class="string">&quot;TLS&quot;</span>);</span><br><span class="line">    Orderer orderer = client.newOrderer(ordererName, ordererURL, ordererProps);</span><br><span class="line">    channel.addOrderer(orderer);</span><br><span class="line"></span><br><span class="line">    channel.initialize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><code>peerURL</code>设置为<code>grpcs://peer0.org1.example.com:7051</code>。首先，TLS需要设置使用<code>grpcs</code>。其次，只能使用<code>peer0.org1.example.com</code>（同时需要配置hosts文件），不能使用  <code>127.0.0.1</code>或者<code>localhost</code>(报错<code>Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching IP address 127.0.0.1/localhost found</code>) 。因为peer0返回的证书的CN是peer0.org1.example.com，java ssl会校验这个域名。</li>
-</ul>
-<ol>
-<li><p>chaincode - query</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">query</span><span class="params">(String issuer, String paperNumber)</span> </span>&#123;</span><br><span class="line">    QueryByChaincodeRequest req = client.newQueryProposalRequest();</span><br><span class="line">    ChaincodeID cid = ChaincodeID.newBuilder().setName(chaincodeName).build();</span><br><span class="line">    req.setChaincodeID(cid);</span><br><span class="line">    req.setFcn(QUERY_FUNC);</span><br><span class="line">    req.setArgs(issuer, paperNumber);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Channel对象已在上面构建</span></span><br><span class="line">    Channel channel = client.getChannel(channelID);</span><br><span class="line">    Collection&lt;ProposalResponse&gt; propResps = channel.queryByChaincode(req);</span><br><span class="line">    <span class="comment">// endorser返回的ProposalResponse需要保持一致</span></span><br><span class="line">    Collection&lt;Set&lt;ProposalResponse&gt;&gt; proposalConsistencySets = SDKUtils.getProposalConsistencySets(propResps);</span><br><span class="line">    <span class="keyword">if</span> (proposalConsistencySets.size() != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR)</span><br><span class="line">                .withErrorMsg(<span class="string">&quot;Expected only one set of consistent proposal responses but got more&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    FabricProposalResponse.Response res = propResps.iterator().next().getProposalResponse().getResponse();</span><br><span class="line">    <span class="keyword">if</span> (res.getStatus() == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.success().withResponse(res.getPayload().toStringUtf8());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR).withErrorMsg(res.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>chaincode - invoke</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">issue</span><span class="params">(IssueRequest request)</span> </span>&#123;</span><br><span class="line">    TransactionProposalRequest proposalRequest = client.newTransactionProposalRequest();</span><br><span class="line">    ChaincodeID cid = ChaincodeID.newBuilder().setName(chaincodeName).build();</span><br><span class="line">    proposalRequest.setChaincodeID(cid);</span><br><span class="line">    proposalRequest.setFcn(ISSUE_FUNC);</span><br><span class="line">    proposalRequest.setArgs(request.getIssuer(), request.getPaperNumber(), issueDate, maturityDate,</span><br><span class="line">            String.valueOf(request.getFaceValue()));</span><br><span class="line"></span><br><span class="line">    Channel channel = client.getChannel(channelID);</span><br><span class="line">    <span class="comment">// Endorsing(simulate) phase</span></span><br><span class="line">    Collection&lt;ProposalResponse&gt; propResps = channel.sendTransactionProposal(proposalRequest);</span><br><span class="line">    <span class="comment">// endorser返回的ProposalResponse需要保持一致</span></span><br><span class="line">    Collection&lt;Set&lt;ProposalResponse&gt;&gt; proposalConsistencySets = SDKUtils.getProposalConsistencySets(propResps);</span><br><span class="line">    <span class="keyword">if</span> (proposalConsistencySets.size() != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR)</span><br><span class="line">                .withErrorMsg(<span class="string">&quot;Expected only one set of consistent proposal responses but got more&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Orderer phase</span></span><br><span class="line">    <span class="comment">// 这里同步调用，需要等到提交orderer并且orderer排序后发送到各个peer，peer处理了block里的交易后才返回。</span></span><br><span class="line">    <span class="comment">// 或者同步返回txid。可以配置eventHub异步接收和执行block，通过txid来返回最终的执行结果</span></span><br><span class="line">    BlockEvent.TransactionEvent event = channel.sendTransaction(propResps).get();</span><br><span class="line">    <span class="keyword">if</span> (event.isValid()) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.success().withResponse(<span class="string">&quot;txid : &quot;</span> + event.getTransactionID());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(ErrorCode.CHAINCOED_SERVICE_ERROR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="WIP"><a href="#WIP" class="headerlink" title="WIP:"></a>WIP:</h4><ol>
-<li>eventHub</li>
-</ol>
-<h4 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h4><blockquote>
-<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/63511862">Fabric Java SDK最新教程【201904】</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1299,7 +1291,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
