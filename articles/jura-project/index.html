@@ -18,26 +18,22 @@
     var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="总体思路1. 建组织  摘自 信通院《数据资产管理实践白皮书4.0》2. 立规范3. 选平台4. 重运营">
+  <meta name="description" content="Jura项目是BIS创新中心，Bank of France，Swiss National Bank合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用。具体参见BIS的项目介绍Project Jura - Cross-border settlement using wholesale CBDC。 框架 项目的主要技术服务商是R3，技术架构就采用了Corda。这个是wholesale CBDC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据治理（1） - 概述">
-<meta property="og:url" content="https://simplexity.cn/articles/bigdata-data-governance/index.html">
+<meta property="og:title" content="CBDC系列（3） - Jura项目浅析(批发型CBDC跨境支付实验项目)">
+<meta property="og:url" content="https://simplexity.cn/articles/jura-project/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="总体思路1. 建组织  摘自 信通院《数据资产管理实践白皮书4.0》2. 立规范3. 选平台4. 重运营">
+<meta property="og:description" content="Jura项目是BIS创新中心，Bank of France，Swiss National Bank合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用。具体参见BIS的项目介绍Project Jura - Cross-border settlement using wholesale CBDC。 框架 项目的主要技术服务商是R3，技术架构就采用了Corda。这个是wholesale CBDC">
 <meta property="og:locale">
-<meta property="og:image" content="https://simplexity.cn/images/bigdata-data-governance/organization.png">
-<meta property="og:image" content="https://simplexity.cn/images/bigdata-data-governance/roles1.png">
-<meta property="og:image" content="https://simplexity.cn/images/bigdata-data-governance/roles2.png">
-<meta property="og:image" content="https://simplexity.cn/images/bigdata-data-governance/roles3.png">
-<meta property="og:image" content="https://simplexity.cn/images/bigdata-data-governance/rules.png">
-<meta property="article:published_time" content="2021-06-29T03:11:29.000Z">
-<meta property="article:modified_time" content="2023-04-19T07:26:50.750Z">
+<meta property="og:image" content="https://simplexity.cn/images/jura-project/architecture.png">
+<meta property="article:published_time" content="2023-07-27T15:47:57.000Z">
+<meta property="article:modified_time" content="2023-07-27T15:47:57.639Z">
 <meta property="article:author" content="Travis Wong">
-<meta property="article:tag" content="Data Governance">
+<meta property="article:tag" content="CBDC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://simplexity.cn/images/bigdata-data-governance/organization.png">
+<meta name="twitter:image" content="https://simplexity.cn/images/jura-project/architecture.png">
 
-<link rel="canonical" href="https://simplexity.cn/articles/bigdata-data-governance/">
+<link rel="canonical" href="https://simplexity.cn/articles/jura-project/">
 
 
 <script id="page-configurations">
@@ -50,7 +46,7 @@
   };
 </script>
 
-  <title>数据治理（1） - 概述 | Simplexity</title>
+  <title>CBDC系列（3） - Jura项目浅析(批发型CBDC跨境支付实验项目) | Simplexity</title>
   
 
 
@@ -192,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bigdata-data-governance/">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/jura-project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -205,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          数据治理（1） - 概述
+          CBDC系列（3） - Jura项目浅析(批发型CBDC跨境支付实验项目)
         </h1>
 
         <div class="post-meta">
@@ -215,23 +211,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-06-29 11:11:29" itemprop="dateCreated datePublished" datetime="2021-06-29T11:11:29+08:00">2021-06-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-19 15:26:50" itemprop="dateModified" datetime="2023-04-19T15:26:50+08:00">2023-04-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-                </span>
+              <time title="Created: 2023-07-27 23:47:57" itemprop="dateCreated datePublished" datetime="2023-07-27T23:47:57+08:00">2023-07-27</time>
             </span>
 
           
@@ -247,14 +227,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>5 mins.</span>
             </span>
 
         </div>
@@ -266,74 +246,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h2><h4 id="1-建组织"><a href="#1-建组织" class="headerlink" title="1. 建组织"></a>1. 建组织</h4><p><img src="/images/bigdata-data-governance/organization.png" alt=""><br><img src="/images/bigdata-data-governance/roles1.png" alt=""><br><img src="/images/bigdata-data-governance/roles2.png" alt=""><br><img src="/images/bigdata-data-governance/roles3.png" alt=""></p>
-<ul>
-<li>摘自 信通院《数据资产管理实践白皮书4.0》<h4 id="2-立规范"><a href="#2-立规范" class="headerlink" title="2. 立规范"></a>2. 立规范</h4><img src="/images/bigdata-data-governance/rules.png" alt=""><h4 id="3-选平台"><a href="#3-选平台" class="headerlink" title="3. 选平台"></a>3. 选平台</h4><h4 id="4-重运营"><a href="#4-重运营" class="headerlink" title="4. 重运营"></a>4. 重运营</h4></li>
-</ul>
-<span id="more"></span>
-<hr>
-<h2 id="技术角度"><a href="#技术角度" class="headerlink" title="技术角度"></a>技术角度</h2><h3 id="1-元数据治理"><a href="#1-元数据治理" class="headerlink" title="1. 元数据治理"></a>1. 元数据治理</h3><ol>
-<li>数据字典&amp;数据地图。需要提供可用工具，数据使用方能很方便的查找到所需要的数据，理解大数据数仓中的表，字段定义，例如统计交易数据该使用哪张表等等。同时当线上的数仓结构更新时，能自动的捕获变化，保证使用方查到的数据字典等信息与生产的时刻保持一致，减少人工维护成本。</li>
-<li>工具需要记录技术元数据（表，列的schema等） &amp; 业务元数据（维度/属性，业务过程，指标的规范化定义） &amp; 任务运行/调度元数据（运行时间过长节点）</li>
-<li>血缘关系。方便查看表/字段间各层的相互关系，可以看到在数仓里，数据是从哪里来，如何使用。当发现数据问题，可以回溯到源头；当需要对数据进行清洗时，也可以看到对后面的哪些数据造成影响。</li>
-<li>规范指标定义。指标产出需要指定业务责任人，技术责任人。业务团队需要清晰定义统计口径。当组织人员流动比较大，缺乏责任人机制会造成历史任务无法跟踪，造成任务上线多，下线少。同时，对统计指标缺乏明确定义，既不利于理解指标，也容易造成技术开发与业务对口径的理解偏差，还不利于指标的复用。</li>
-<li>物理表查询热度，资源消耗。</li>
-</ol>
-<h3 id="2-数据资产分级及标签化"><a href="#2-数据资产分级及标签化" class="headerlink" title="2. 数据资产分级及标签化"></a>2. 数据资产分级及标签化</h3><ol>
-<li>根据业务重要性及影响力划分等级（例如 灾难，重要，普通，未知）等。借助上述的元数据管理工具，根据任务的血缘关系，将分级上推至各层级的数据，数仓表。数据分级的应用可以在监控任务等。例如，监控任务产出时效性，监控重要任务链路上的节点，按照不同的等级设置告警策略。</li>
-<li>利用元数据管理工具，可以数据标签化，进行分级。<ul>
-<li>基础标签： 安全等级，访问情况（冷热数据）</li>
-<li>数仓标签： 全量/增量，是否可再生，生命周期</li>
-<li>业务标签： 主题域，层，业务类型</li>
-</ul>
-</li>
-</ol>
-<p>分级处理可以应用在治理中的各个维度，分级的标准依据根据具体的维度设计。</p>
-<h3 id="3-数据质量"><a href="#3-数据质量" class="headerlink" title="3. 数据质量"></a>3. 数据质量</h3><ol>
-<li>质量衡量由事前（DQC覆盖，自定义规则），事中（异常报警），事后（问题跟踪，质量评分，历史趋势）结合。</li>
-<li>根据数据资产分级进行质量监控程度分级。准确性，完整性，及时性，唯一性，规范性，一致性。</li>
-<li>准确性。DQC检查，按照资产等级配置监控覆盖率。由于DQC检查嵌入任务，需要按等级做好覆盖率等级配置。</li>
-<li>及时性。按照任务优先级分配资源，设置告警策略，任务延迟预警等。相应的规范人工运维介入时机，保证重要任务产出。</li>
-<li>事后质量问题记录。故障定义，分级，处理，review。形成长期记录，质量问题有跟踪记录，同时避免质量问题重复的出现。</li>
-</ol>
-<h3 id="4-数据安全"><a href="#4-数据安全" class="headerlink" title="4. 数据安全"></a>4. 数据安全</h3><p>数据安全分为四个层次。</p>
+        <p>Jura项目是BIS创新中心，Bank of France，Swiss National Bank合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用。具体参见BIS的项目介绍<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/publ/othp44.htm">Project Jura - Cross-border settlement using wholesale CBDC</a>。</p>
+<h4 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h4><p><img src="/images/jura-project/architecture.png" alt=""></p>
+<p>项目的主要技术服务商是R3，技术架构就采用了Corda。这个是wholesale CBDC的场景，Corda的性能和设计理念也算比较契合。</p>
 <ol>
-<li>利用上述的分级思想，从字段含义，产出指标反推等，定义数据密级。利用元数据管理工具，可以将密级推送到上下游。</li>
-<li>角色/分组访问授权，数据确权。数据所有者/管理员分配数据访问权限。按照最小权限分配。</li>
-<li>数据脱敏，加密。即使越权获取到数据也无法读懂理解数据。根据不同的数据类型，密级，数据使用方式，使用不同的权限控制与加密方式，例如隐藏数据列，hash，对称加密，同态加密等。确保即使越权获取到数据也无法读懂理解数据。最晚解密原则。</li>
-<li>对数据访问进行审计。使用数据水印，在数据泄漏时可追溯泄漏源。</li>
+<li>资产代币化asset tokenize。商业票据Comercial Paper（CP）由DAR生成数字资产，通过Gateway（也就是图中的NATIXIS）mirror映射到平台上，同时赋予了所有者等属性。对应到Corda里的概念，就是state，可关联到实际环境中的资产和条款等。Corda的这种设计，将wCBDC和CP在技术逻辑上一致，使得这个SDX测试平台可以用相似的逻辑去支持PvP和DvP交易。</li>
+<li>发行/赎回。SDX平台有几类节点，Notary node, Issuer node, Monitor/Observer node监管节点, Bank node。其中，Issuer node跟RTGS完成传统账户体系的兑换。在白皮书里提到 “In Project Jura, EUR and CHF wCBDC and the NEU CP token on the SDX test platform had no legal force, meaning that the wCBDCs did not represent a direct central bank liability.” 这点感觉更多的是强调<strong>非直接央行负债</strong>，实际上是明确了issuer居中转换的必要地位。</li>
+<li>不同的资产类型通常属于司法管辖区，由不同的notary公证人节点，通常由该资产管理员角色来承担，例如商行，或者授权的管理者。由于Corda的无需全局广播共识的设计，因此单个种类资产的交易情况，只需要该资产的notary进行签署，保证了账本或者资产管辖的独立性隔离性。由于notary节点通常只是技术意义上的，不授权查看具体的交易内容，通常引入监管节点来监控具体的交易（一种办法是只需在交易规则上配置有效的交易需要监管节点签名）。</li>
+<li>子网划分。各个央行可以独立划分和管理子网，允许商行节点接入子网进行业务，实际上就是实现了对其管辖货币的准入机制，只有接入该子网的商行节点才能执行该种资产的业务。在本次实验的拓扑中，银行节点是物理网络联通的，这在实际情况中由于网络策略管控，特别是随着银行借点数量增加，往往是不可全联通的。一种替代方案是参考DAR的类似做法，通过每个央行子网引入Operator Node（可以是逻辑的，与其他角色的node，例如Observer Node共用）作为Gateway，同时不同子网Gatewa互联，本国的商行只与本国的Gateway联通，把全网变成雪花拓扑结构。跨司法领域的，例如外币兑换等，就需要通过Gateway与他国商行交互，这种路由方式可以由全局的网络地图服务提供。这种方式，使得每笔交易都经过了交易双方央行及交易货币对的所属央行，满足监管需要。</li>
+<li>DvP,PvP的交易，涉及两种资产在两个子网的处置，需要两种资产的notary的签名赋予有效性。为保证交易的原子性，引入了R3的dual-notary signing机制，类似于哈希时间锁算法，常用的跨链方案。</li>
 </ol>
-<h3 id="5-生命周期"><a href="#5-生命周期" class="headerlink" title="5. 生命周期"></a>5. 生命周期</h3><ol>
-<li>表分类。 空表， 3个月无访问表，数据无更新无/有任务表等</li>
-<li>删除策略<ul>
-<li>周期性删除X天前。适用于每天从数据库同步</li>
-<li>永久保留（增量交易） + 迁移至冷数据中心（3年以上日志）</li>
-<li>增量同步，全量merge。对应的delta表保留3个月</li>
-</ul>
-</li>
-<li>划分历史数据等级<ul>
-<li>非常重要/重要/不重要，可恢复/不可恢复</li>
-</ul>
-</li>
-<li>根据 （数据重要性等级，数据表类型（全量表，维度表，交易增量表），数仓层） 等组合维度划分生命周期管理矩阵 ，按照所在的区间，相应的采取保留3天，一周，一月，一年，永久保存等不同的策略。</li>
-</ol>
-<h3 id="6-数据成本"><a href="#6-数据成本" class="headerlink" title="6. 数据成本"></a>6. 数据成本</h3><ol>
-<li>计算资源成本。<ul>
-<li>监控资源使用率，合理分配资源，避免浪费。</li>
-<li>无效任务下线。需要根据数据表的访问统计，识别废弃任务/表。</li>
-<li>超长任务优化。</li>
-</ul>
-</li>
-<li>数据存储成本。结合上述的数据生命周期，分级处理，制定策略。例如如何处理冷数据，重复数据，压缩，无效数据下线销毁等。</li>
-<li>按照分组/个体人员，以统一的标准折算数据成本（例如，1CPU，1T折合一个单位成本），每周统计折算后成本，督促成本大户重新审视和优化任务.</li>
-</ol>
-<hr>
-<h3 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h3><blockquote>
-<ol>
-<li>《大数据之路-阿里巴巴大数据实践》</li>
-<li>信通院《数据资产管理实践白皮书4.0》</li>
-</ol>
-</blockquote>
 
     </div>
 
@@ -357,7 +279,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Data-Governance/" rel="tag"><i class="fa fa-tag"></i> Data Governance</a>
+              <a href="/tags/CBDC/" rel="tag"><i class="fa fa-tag"></i> CBDC</a>
           </div>
 
         
@@ -366,13 +288,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/articles/webank-fisco-bcos-middleware/" rel="prev" title="微众银行FISCO-BCOS中间件赏析">
-      <i class="fa fa-chevron-left"></i> 微众银行FISCO-BCOS中间件赏析
+    <a href="/articles/understanding-corda/" rel="prev" title="R3 Corda概念理解">
+      <i class="fa fa-chevron-left"></i> R3 Corda概念理解
     </a></div>
-      <div class="post-nav-item">
-    <a href="/articles/bigdata-metadata-governance/" rel="next" title="数据治理（2） - 元数据管理Atlas">
-      数据治理（2） - 元数据管理Atlas <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -432,7 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">总体思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%BB%BA%E7%BB%84%E7%BB%87"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 建组织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%AB%8B%E8%A7%84%E8%8C%83"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 立规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%80%89%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 选平台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%87%8D%E8%BF%90%E8%90%A5"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. 重运营</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E8%A7%92%E5%BA%A6"><span class="nav-number">2.</span> <span class="nav-text">技术角度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%85%83%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">1. 元数据治理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E8%B5%84%E4%BA%A7%E5%88%86%E7%BA%A7%E5%8F%8A%E6%A0%87%E7%AD%BE%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">2. 数据资产分级及标签化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">3. 数据质量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8"><span class="nav-number">2.4.</span> <span class="nav-text">4. 数据安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.5.</span> <span class="nav-text">5. 生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%95%B0%E6%8D%AE%E6%88%90%E6%9C%AC"><span class="nav-number">2.6.</span> <span class="nav-text">6. 数据成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3%EF%BC%9A"><span class="nav-number">2.7.</span> <span class="nav-text">参考文档：</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">框架</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -609,7 +528,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'simplexity-gitalk',
       owner       : 'simplexity-ckcclc',
       admin       : ['simplexity-ckcclc'],
-      id          : '20235b02426272cbc74fb86fd05d6910',
+      id          : 'a94efc949b2253c4d2445c0e770916f0',
         language: 'zh-CN',
       distractionFreeMode: true
     });

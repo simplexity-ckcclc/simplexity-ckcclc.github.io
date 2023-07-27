@@ -27,7 +27,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/understanding-corda/tx-flow.png">
 <meta property="article:published_time" content="2023-07-25T07:15:39.000Z">
-<meta property="article:modified_time" content="2023-07-25T08:53:19.163Z">
+<meta property="article:modified_time" content="2023-07-27T08:53:34.458Z">
 <meta property="article:author" content="Travis Wong">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://simplexity.cn/images/understanding-corda/tx-flow.png">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -209,10 +209,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-07-25 15:15:39 / Modified: 16:53:19" itemprop="dateCreated datePublished" datetime="2023-07-25T15:15:39+08:00">2023-07-25</time>
+              <time title="Created: 2023-07-25 15:15:39" itemprop="dateCreated datePublished" datetime="2023-07-25T15:15:39+08:00">2023-07-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-07-27 16:53:34" itemprop="dateModified" datetime="2023-07-27T16:53:34+08:00">2023-07-27</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -227,14 +233,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.1k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>14 mins.</span>
+              <span>13 mins.</span>
             </span>
 
         </div>
@@ -278,7 +284,7 @@
 <li>节点存储的<code>State</code>可以是任意格式，不限定于KV结构。丰富了其在金融领域的实际表达能力，可以是包含真实的合同文件等。Corda关注的是状态转移，所以除了最开始的发行外，所有的后续的状态转移都必然有输入输出。</li>
 </ol>
 <h4 id="3-Transaction-Model"><a href="#3-Transaction-Model" class="headerlink" title="3. Transaction Model"></a>3. Transaction Model</h4><blockquote>
-<p>• <strong><em>Input references</em></strong> : These are (hash, output index) pairs that point to the states a transaction is consuming.<br>• <strong><em>Output states</em></strong> : Each state specifies the notary for the new state, the contract(s) that define its allowed transition functions and finally the data itself.<br>• <strong><em>Attachments</em></strong> : Transactions specify an ordered list of zip file hashes. Each zip file may contain code, data, certificates or supporting documentation for the transaction. Contract code has access to the contents of the attachments when checking the transaction for validity.<br>• <strong><em>Commands</em></strong> : There may be multiple allowed output states from any given input state. For instance an asset can be moved to a new owner on the ledger, or issued, or exited from the ledger if the asset has been redeemed by the owner and no longer needs to be tracked. A command is essentially a parameter to the contract that specifies more information than is obtainable from examination of the states by themselves (e.g. data from an oracle service). Each command has an associated list of public keys. Like states, commands are object graphs.<br>• <strong><em>Signatures</em></strong> : The set of required signatures is equal to the union of the commands’ public keys.<br>• <strong><em>Type</em></strong> : Transactions can either be normal or notary-changing. The validation rules for each are different.<br>• <strong><em>Timestamp</em></strong> : When present, a timestamp defines a time range in which the transaction is considered to have occurrred. This is discussed in more detail below.<br>• <strong><em>Summaries</em></strong> : Textual summaries of what the transaction does, checked by the involved smart contracts. This field is useful for secure signing devices.</p>
+<p>• <strong><em>Input references</em></strong> : These are (hash, output index) pairs that point to the states a transaction is consuming.<br>• <strong><em>Output states</em></strong> : Each state specifies the notary for the new state, the contract(s) that define its allowed transition functions and finally the data itself.<br>• <strong><em>Attachments</em></strong> : Transactions specify an ordered list of zip file hashes. Each zip file may contain code, data, certificates or supporting documentation for the transaction. Contract code has access to the contents of the attachments when checking the transaction for validity.<br>• <strong><em>Commands</em></strong> : There may be multiple allowed output states from any given input state. For instance an asset can be moved to a new owner on the ledger, or issued, or exited from the ledger if the asset has been redeemed by the owner and no longer needs to be tracked. A command is essentially a parameter to the contract that specifies more information than is obtainable from examination of the states by themselves (e.g. data from an oracle service). Each command has an associated list of public keys. Like states, commands are object graphs.<br>• <strong><em>Signatures</em></strong> : The set of required signatures is equal to the union of the commands’ public keys.<br>• <strong><em>Type</em></strong> : Transactions can either be normal or notary-changing. The validation rules for each are different.<br>• <strong><em>Timestamp</em></strong> : When present, a timestamp defines a time range in which the transaction is considered to have occurrred.<br>• <strong><em>Summaries</em></strong> : Textual summaries of what the transaction does, checked by the involved smart contracts. This field is useful for secure signing devices.</p>
 </blockquote>
 <h3 id="Corda流程"><a href="#Corda流程" class="headerlink" title="Corda流程"></a>Corda流程</h3><p><img src="/images/understanding-corda/tx-flow.png" alt=""></p>
 <ol>
@@ -325,7 +331,10 @@
     <a href="/articles/retry-strategy/" rel="prev" title="失败任务重试策略">
       <i class="fa fa-chevron-left"></i> 失败任务重试策略
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/articles/jura-project/" rel="next" title="CBDC系列（3） - Jura项目浅析(批发型CBDC跨境支付实验项目)">
+      CBDC系列（3） - Jura项目浅析(批发型CBDC跨境支付实验项目) <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -401,7 +410,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

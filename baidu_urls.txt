@@ -1,3 +1,4 @@
+https://simplexity.cn/articles/jura-project/
 https://simplexity.cn/articles/understanding-corda/
 https://simplexity.cn/articles/retry-strategy/
 https://simplexity.cn/articles/sc-event-listener/

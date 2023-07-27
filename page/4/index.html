@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">48</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,151 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-cryptography-msp-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-cryptography-msp-summary/" class="post-title-link" itemprop="url">密码学基础知识汇总及Fabric的MSP体系</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-29 14:12:08" itemprop="dateCreated datePublished" datetime="2019-04-29T14:12:08+08:00">2019-04-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这篇只是汇总在学习密码学和Fabric的MSP体系过程中的阅读，方便日后回头翻阅，可以迅速回忆。涉及内容较多主体较为分散，挂一漏万。仍有待深入研究学习。</p>
+<ol>
+<li><p>密码学的基础知识概述（Hash算法，对称加密算法，X.509证书）</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/ckcclc/article/details/89361898">CSDN笔记 - MD5, SHA, AES, DES, X.509, PKCS概述</a> : 记录基础知识 </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://knowledge.digicert.com/solution/SO4583.html">Structure of X509 Certificates</a> : X.509结构  </li>
+</ul>
+</blockquote>
+</li>
+<li><p>RSA</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a> : 数学原理介绍，欧拉函数，大数因数分解</li>
+</ul>
+</blockquote>
+</li>
+<li><p>ECC（椭圆曲线）</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">Elliptic Curve Cryptography: a gentle introduction</a> : 英文介绍系列，原理解释。非欧式几何，有限域离散对数问题。强力推荐  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.ssl.com/article/comparing-ecdsa-vs-rsa/">Comparing ECDSA vs RSA</a> : ECDSA和RSA的全方位对比。RSA历史更悠久更成熟，部分CA还不支持ECDSA。在提供相同安全程度上，ECDSA需要的bit更少。同时，RSA seems to be significantly faster than ECDSA in verifying signatures, though it is slower while signing. Higher security level require more bits, this results in RSA’s performance to decline dramatically, whereas ECDSA is only slightly affected.</li>
+</ul>
+</blockquote>
+<p>当前，Fabric的签名算法只支持ECDSA（The signing key used for signing by the node <strong>(currently only ECDSA keys are supported)</strong>），摘自<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Fabric官网-Membership Service Providers (MSP)</a></p>
+<p>Ref: Bitcoin和Ethereum中的vrs（v：recovery id）</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v">ECDSA: (v, r, s), what is v?</a> ： Strictly speaking the recid is not necessary, as we can just cycle through all the possible coordinate pairs and check if any of them match the signature. The recid just speeds up this verification.</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://crypto.stackexchange.com/questions/18105/how-does-recovering-the-public-key-from-an-ecdsa-signature-work">How does recovering the public key from an ECDSA signature work?</a></li>
+</ul>
+</blockquote>
+</li>
+<li><p>零知识证明 Zero-Knowledge-Proof</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">Zero-Knowledge-Proof Wikipedia</a>  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/idemix.html">MSP Implementation with Identity Mixer</a> : Fabric里对零知识证明的使用  </li>
+</ul>
+</blockquote>
+</li>
+<li><p>Fabric官网的MSP相关文档汇总</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/identity/identity.html">Identity</a> : 最基本的概念，PKI体系，X.509证书，CA，CRL，概念介绍  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/membership/membership.html">Membership</a> : 概念介绍，MSP的层次设计（Local MSP，Channel MSP），MSP的结构（主要是在节点内的证书存放目录），以及与Org的关系  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/master/msp.html#how-to-generate-msp-certificates-and-their-signing-keys">Membership Service Providers (MSP)</a> : 配置，偏实践应用  </li>
+</ul>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1172,108 +1317,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-orderer-order/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-chaincode-instantiate-orderer-order/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(8）orderer的排序过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-24 23:57:54" itemprop="dateCreated datePublished" datetime="2019-02-24T23:57:54+08:00">2019-02-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:09:43" itemprop="dateModified" datetime="2023-04-27T17:09:43+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在instantiate(1)里提到，peer收集完endorsements后创建common.Envelope, 通过grpc发送到<code>/orderer.AtomicBroadcast/Broadcast</code>. common.Envelope的数据结构如下</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// common.Envelope</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Payload"</span>: ${common.Payload}.byte,</span><br><span class="line">  <span class="attr">"Signature"</span>: #signer.Sign(${common.Payload}.byte)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// common.Payload</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Header"</span>: ${proposal.Header},   <span class="comment">// proposal参考instantiate（2）</span></span><br><span class="line">  <span class="attr">"Data"</span>: ${peer.Transaction}.byte</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.Transaction</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Actions"</span>:  taas := make([]*peer.TransactionAction, 1), taas[0] = ${peer.TransactionAction}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.TransactionAction</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"Header"</span>: ${proposal.Header.SignatureHeader}, </span><br><span class="line">  <span class="attr">"Payload"</span>: ${peer.ChaincodeActionPayload}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeActionPayload</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"ChaincodeProposalPayload"</span>: ${peer.ChaincodeProposalPayload}.byte, </span><br><span class="line">  <span class="attr">"Action"</span>: ${peer.ChaincodeEndorsedAction}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"> <span class="comment">// peer.ChaincodeProposalPayload</span></span><br><span class="line"> {</span><br><span class="line">   <span class="attr">"Input"</span>: ${proposal.Payload.Input}, </span><br><span class="line">   <span class="attr">"TransientMap"</span>: nil</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// peer.ChaincodeEndorsedAction， response结构参考instantiate（7）</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"ProposalResponsePayload"</span>: ${resps[0].Payload},  <span class="comment">// 所有response的payload都应该是一致的，在前面已经校验过 </span></span><br><span class="line">  <span class="attr">"Endorsements"</span>: #endorsements := make([]*peer.Endorsement, len(resps)) <span class="comment">// 所有的endorsement</span></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-orderer-order/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1345,7 +1388,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
