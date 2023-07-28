@@ -208,6 +208,13 @@
 
               <time title="Created: 2023-07-27 23:47:57" itemprop="dateCreated datePublished" datetime="2023-07-27T23:47:57+08:00">2023-07-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-07-28 15:22:24" itemprop="dateModified" datetime="2023-07-28T15:22:24+08:00">2023-07-28</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -242,8 +249,23 @@
 <li>发行/赎回。SDX平台有几类节点，Notary node, Issuer node, Monitor/Observer node监管节点, Bank node。其中，Issuer node跟RTGS完成传统账户体系的兑换。在白皮书里提到 “In Project Jura, EUR and CHF wCBDC and the NEU CP token on the SDX test platform had no legal force, meaning that the wCBDCs did not represent a direct central bank liability.” 这点感觉更多的是强调<strong>非直接央行负债</strong>，实际上是明确了issuer居中转换的必要地位。</li>
 <li>不同的资产类型通常属于司法管辖区，由不同的notary公证人节点，通常由该资产管理员角色来承担，例如商行，或者授权的管理者。由于Corda的无需全局广播共识的设计，因此单个种类资产的交易情况，只需要该资产的notary进行签署，保证了账本或者资产管辖的独立性隔离性。由于notary节点通常只是技术意义上的，不授权查看具体的交易内容，通常引入监管节点来监控具体的交易（一种办法是只需在交易规则上配置有效的交易需要监管节点签名）。</li>
 <li>子网划分。各个央行可以独立划分和管理子网，允许商行节点接入子网进行业务，实际上就是实现了对其管辖货币的准入机制，只有接入该子网的商行节点才能执行该种资产的业务。在本次实验的拓扑中，银行节点是物理网络联通的，这在实际情况中由于网络策略管控，特别是随着银行借点数量增加，往往是不可全联通的。一种替代方案是参考DAR的类似做法，通过每个央行子网引入Operator Node（可以是逻辑的，与其他角色的node，例如Observer Node共用）作为Gateway，同时不同子网Gatewa互联，本国的商行只与本国的Gateway联通，把全网变成雪花拓扑结构。跨司法领域的，例如外币兑换等，就需要通过Gateway与他国商行交互，这种路由方式可以由全局的网络地图服务提供。这种方式，使得每笔交易都经过了交易双方央行及交易货币对的所属央行，满足监管需要。</li>
-<li>DvP,PvP的交易，涉及两种资产在两个子网的处置，需要两种资产的notary的签名赋予有效性。为保证交易的原子性，引入了R3的dual-notary signing机制，类似于哈希时间锁算法，常用的跨链方案。</li>
+<li>DvP,PvP的交易，涉及两种资产在两个子网的处置，需要两种资产的notary的签名赋予有效性。为保证交易的原子性，引入了R3的dual-notary signing机制，即哈希时间锁算法（在前面的bitcoin闪电网络部分有介绍过），常用的跨链方案。具体参看<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/publ/othp44.pdf">Jura项目白皮书</a>附录部分。</li>
 </ol>
+<div style="width:50%;margin:auto">
+    <img src="/images/jura-project/dual-notary-1.png">
+</div>
+
+<div style="width:50%;margin:auto">
+    <img src="/images/jura-project/dual-notary-2.png">
+</div>
+
+
+
+
+
+
+
+
 
       
     </div>
@@ -894,7 +916,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-21 15:54:10" itemprop="dateModified" datetime="2023-04-21T15:54:10+08:00">2023-04-21</time>
+                <time title="Modified: 2023-07-28 14:32:00" itemprop="dateModified" datetime="2023-07-28T14:32:00+08:00">2023-07-28</time>
               </span>
 
           <br>
@@ -903,14 +925,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>756</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -926,13 +948,13 @@
 <ol>
 <li><p>Multiple values</p>
 <ul>
-<li><em>Function types allow more than one result</em><br>  适配go语言等函数多返回值的特性。</li>
-<li><em>Block types can be arbitrary function types</em><br>  控制块带参数，适配C语言等内联函数的展开。Wasm1.0里调用内联函数使用的是<code>call</code>指令。</li>
+<li><em>Function types allow more than one result.</em><br>  适配go语言等函数多返回值的特性。</li>
+<li><em>Block types can be arbitrary function types.</em><br>  控制块带参数，适配C语言等内联函数的展开。Wasm1.0里调用内联函数使用的是<code>call</code>指令。</li>
 </ul>
 </li>
 <li><p>Reference types</p>
 <ul>
-<li><em>Added <code>funcref</code> and <code>externref</code> as new value types and respective</em>： 表元素增加新类型<blockquote>
+<li><em>Added <code>funcref</code> and <code>externref</code> as new value types and respective.</em><br>表元素增加新类型。<blockquote>
 <p><code>externref</code> allows modules to hold references to objects provided by the host environment; in other words, you can pass a JavaScript object to your .wasm module. The .wasm module can’t really do much with the object via the type. What’s more important is that the module is holding a reference to a garbage collected object on the JavaScript heap. 持有外部引用，为将来wasm引入GC准备。 参看<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.oreilly.com/library/view/what-is-webassembly/9781492076902/ch04.html">Upcoming Features and Proposals</a></p>
 </blockquote>
 </li>
@@ -940,7 +962,7 @@
 </li>
 <li><p>Bulk memory </p>
 <ul>
-<li><em>New memory instructions: memory.fill, memory.init, memory.copy, data.drop</em><br>对应C里的<code>memcpy</code>, <code>memmove</code>等，目的提高处理大块内存的性能。Wasm1.0里使用<code>load</code>, <code>store</code>指令操作内存，只能处理基本类型的数值。</li>
+<li><em>New memory instructions: <code>memory.fill</code>, <code>memory.init</code>, <code>memory.copy</code>, <code>data.drop</code></em>.<br>对应C里的<code>memcpy</code>, <code>memmove</code>等，目的提高处理大块内存的性能。Wasm1.0里使用<code>load</code>, <code>store</code>指令操作内存，只能处理基本类型的数值。</li>
 </ul>
 </li>
 <li><p>Multiple table<br><em>coming soon</em></p>

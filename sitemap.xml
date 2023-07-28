@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://simplexity.cn/articles/bigdata-data-governance/</loc>
+    <loc>https://simplexity.cn/articles/jura-project/</loc>
     
-    <lastmod>2023-07-27</lastmod>
+    <lastmod>2023-07-28</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/jura-project/</loc>
+    <loc>https://simplexity.cn/articles/bigdata-data-governance/</loc>
     
-    <lastmod>2023-07-27</lastmod>
+    <lastmod>2023-07-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://simplexity.cn/articles/whats-new-in-wasm-2-0/</loc>
+    
+    <lastmod>2023-07-28</lastmod>
     
   </url>
   
@@ -219,13 +226,6 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/whats-new-in-wasm-2-0/</loc>
-    
-    <lastmod>2023-04-21</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://simplexity.cn/articles/privacy-on-chain/</loc>
     
     <lastmod>2023-04-20</lastmod>
@@ -331,14 +331,14 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/fabric-inpractice-commercialpaper-byfn/</loc>
+    <loc>https://simplexity.cn/articles/fabric-orderer-kafka-design/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/fabric-orderer-kafka-design/</loc>
+    <loc>https://simplexity.cn/articles/fabric-inpractice-commercialpaper-byfn/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
