@@ -4,3 +4,4 @@ Disallow: /tags/
 Disallow: /page/
 Disallow: /categories/
 Disallow: /archives/
+Disallow: /copyright/
