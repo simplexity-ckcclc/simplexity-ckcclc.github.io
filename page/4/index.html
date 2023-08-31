@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,107 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-configtxgen-tool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-configtxgen-tool/" class="post-title-link" itemprop="url">Fabric的configtxgen工具生成区块及配置文件分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-14 18:41:06" itemprop="dateCreated datePublished" datetime="2019-05-14T18:41:06+08:00">2019-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本节主要基于<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hyperledger/fabric-samples/tree/release-1.4/basic-network">fabric-samples/basic-network</a>分析。查看<code>generate.sh</code>这个脚本，里面主要执行了如下四个命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 生成msp模块需要的证书</span><br><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br><span class="line"></span><br><span class="line">// 生成创世块</span><br><span class="line">configtxgen -profile OneOrgOrdererGenesis -outputBlock ./config/genesis.block</span><br><span class="line"></span><br><span class="line">// 生成创建channel的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputCreateChannelTx ./config/channel.tx -channelID <span class="variable">$CHANNEL_NAME</span></span><br><span class="line"></span><br><span class="line">// 生成设置anchor节点的配置</span><br><span class="line">configtxgen -profile OneOrgChannel -outputAnchorPeersUpdate ./config/Org1MSPanchors.tx -channelID <span class="variable">$CHANNEL_NAME</span> -asOrg Org1MSP</span><br></pre></td></tr></table></figure></p>
+<p><code>cryptogen</code>和<code>configtxgen</code>分别用于加密和配置的工具，其代码路径为<code>hyperledger/fabric/common/tools/cryptogen</code>和<code>hyperledger/fabric/common/tools/configtxgen</code>。cryptogen产生了各级msp，在peer，orderer里皆有用到，包括后面介绍的configtxgen里包含msp信息这些也是由此产生。这里暂且不展开分析。</p>
+<p>在<code>configtxgen/main.go</code>里，依然使用viper作为命令行管理工具。代码比较直观，阅读简单不展开分析，感兴趣可以参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chaindesk.cn/witbook/30/503">Hyperledger Fabric（V1.2）源码深度解析－configtxgen命令解析</a>，写的比较概述。其中读取配置文件的<code>common/tools/configtxgen/localconfig/config.go#Load</code>方法里，主要由以下几行<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Prefix <span class="keyword">string</span> = <span class="string">&quot;CONFIGTX&quot;</span></span><br><span class="line"><span class="keyword">var</span> configName = strings.ToLower(Prefix)</span><br><span class="line"></span><br><span class="line">viper.SetConfigName(configName)</span><br></pre></td></tr></table></figure><br>可见，默认读取的是当前目录的<code>configtx.yaml</code>配置文件。生成创世块和创建channel的配置对应的分别是<code>doOutputBlock</code>和<code>doOutputChannelCreateTx</code>这两个方法。<code>doOutputBlock</code>生成<code>cb.Block</code>对象，这个对象通过<code>ioutil.WriteFile(outputBlock, utils.MarshalOrPanic(genesisBlock), 0644)</code>写到指定的<code>genesis.block</code>这个文件。这个对象可以使用<code>configtxgen -inspectBlock genesis.block</code>这个命令查看。生成的JSON格式文件可参见<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/genesis_block.json">JSON结构</a>。其中ChannelHeaderType设置为HeaderType_CONFIG，block.number为0，previousHash为nil。payload里主要是ConfigGroup对象，包含有序号sequence，以及channel_group对象。channel_group主要是Consortium（包含version，policies，configtx.yaml里定义的orgs，此处orgs里又包含MSP和policies）和Orderer（包含policies，msp）。同时ConfigGroup还包含OrdererAddress,hashAlgorithm,BlockDataHashiungStructure这些。从中，还可以看出，每一级的设置，都包含不同的polocies。</p>
+<p><code>doOutputChannelCreateTx</code>生成<code>cb.Envelope</code>对象，写到<code>channel.tx</code>。ChannelHeaderType设置为HeaderType_CONFIG_UPDATE，channel_id为命令后参数$CHANNEL_NAME。payload里是<code>cb.ConfigUpdateEnvelope</code>对象，包含channel_id, read_set, write_set. 这里，read_set里policies为空，version为0；write_set里version为1，并且定义了policies。所以当使用该channel.tx文件再次创建已经存在的channel时，会报错verifyReadset失败。同样的可以用<code>configtxgen --inspectChannelCreateTx channel.tx</code>这个命令查看其<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/channel_tx.json">JSON结构</a>。</p>
+<p>查看<code>start.sh</code>脚本，实际上在peer节点使用Admin角色执行了创建channel命令。<code>peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx</code>。当顺利执行后，结果返回一个当前channel的首个block，名称为<code>$&#123;CHANNEL_NAME&#125;.block</code>。这里block的number为0，pre_hash为null，channel_header里的channel_id是当前channel名称，ChannelHeaderType还是HeaderType_CONFIG。这里因为使用了Admin角色创建，因此signature_header里记录了creator的信息。而payload同时包含了创世块genesis.block和创建channel配置文件channel.tx的信息，特别的是，里面last_update字段则完整记录了<code>channel.tx</code>。同样的可以用<code>configtxgen -inspectBlock $&#123;CHANNEL_NAME&#125;.block</code>这个命令查看其<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/simplexity-ckcclc/gofabric/blob/master/doc/fabric-samples/basic-network/mychannel.json">JSON结构</a>。这个区块在<code>start.sh</code>脚本里后续用于<code>channel join -b mychannel.block</code>将节点加入到该channel。</p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://tech.lock-in.cn/news/a74a120208ac49c0a457e54e9efed4bb">Hyperledger Fabric权限进阶篇</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1214,109 +1315,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-install-peer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-chaincode-install-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(1）peer端的install流程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-25 00:00:48" itemprop="dateCreated datePublished" datetime="2019-02-25T00:00:48+08:00">2019-02-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:08:23" itemprop="dateModified" datetime="2023-04-27T17:08:23+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></tbody></table></figure>
-<p>客户端调用<code>peer chaincode install</code>命令安装chaincode，代码在‘peer/chaincode/install.go’这个文件下，命令关联的方法是<code>chaincodeInstall</code>。<em>[install的流程与前面介绍的instantiate大体相似，重复不再展开，只勾勒差别处]</em></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-chaincode-install-peer/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1388,7 +1386,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
