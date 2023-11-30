@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文基于BIS于2021年9月发布的Inthonan-LionRock项目的二阶段报告Inthanon-LionRock to mBridge: building a multi CBDC platform for international payments。本阶段结束后，新增了中国大陆央行和阿联酋央行，项目也被重新命名为mBridge，也就是现在熟知的多边央行数字货币桥项目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CBDC系列（5） - Inthonan-LionRock项目阶段 II (批发型CBDC跨境支付实验项目)">
+<meta property="og:url" content="https://simplexity.cn/articles/inthanon-lionrock-phase-2/index.html">
+<meta property="og:site_name" content="Simplexity">
+<meta property="og:description" content="本文基于BIS于2021年9月发布的Inthonan-LionRock项目的二阶段报告Inthanon-LionRock to mBridge: building a multi CBDC platform for international payments。本阶段结束后，新增了中国大陆央行和阿联酋央行，项目也被重新命名为mBridge，也就是现在熟知的多边央行数字货币桥项目。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-11-30T09:51:15.000Z">
+<meta property="article:modified_time" content="2023-11-30T09:51:15.786Z">
+<meta property="article:author" content="Travis Wong">
+<meta property="article:tag" content="CBDC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://simplexity.cn/articles/inthanon-lionrock-phase-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>CBDC系列（5） - Inthonan-LionRock项目阶段 II (批发型CBDC跨境支付实验项目) | Simplexity</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simplexity</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/inthanon-lionrock-phase-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CBDC系列（5） - Inthonan-LionRock项目阶段 II (批发型CBDC跨境支付实验项目)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-30 17:51:15" itemprop="dateCreated datePublished" datetime="2023-11-30T17:51:15+08:00">2023-11-30</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>10 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文基于BIS于2021年9月发布的Inthonan-LionRock项目的二阶段报告<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/publ/othp40.htm">Inthanon-LionRock to mBridge: building a multi CBDC platform for international payments</a>。本阶段结束后，新增了中国大陆央行和阿联酋央行，项目也被重新命名为mBridge，也就是现在熟知的多边央行数字货币桥项目。</p>
+<span id="more"></span>
+<ol>
+<li><p>二阶段由ConsenSys公司提供技术支持，区块链技术选型选择了Hyperledger Besu，企业级的类Ethereum联盟链。官方的说法是<code>Hyperledger Besu was chosen, in order to assess how an Ethereum-inspired architecture could support the objectives of a single ledger multi- currency network. Features of Hyperledger Besu that were considered include privacy, flexible choice of the consensus mechanism, and support from the Hyperledger ecosystem and community</code>。相比一阶段的R3 corda，单链的架构使涉及多币种的FX等交易的原子性更容易实现，这一切都通过链上智能合约来保证，不再需要类似于哈希时间锁等跨链技术来保证，简化技术架构，从而减少分布式事务的潜在风险。但同时由于是单链，所有参与方的交易数据都在链上，因此对于链上数据隐私保护的要求更高。所以引入了Orion transaction manager (<code>The nodes maintain the public state for blockchain and a corresponding private state for each privacy group.</code>)，隐私数据加密签名后在orion网络peer-to-peer传输，交易哈希上链；引入privacy group，数据分组可见。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">There are three types of privacy groups:</span><br><span class="line">1. Public: main group for all members,</span><br><span class="line">2. Private: between central bank and each commercial bank, and</span><br><span class="line">3. Bilateral: peer-to-peer between commercial banks with the central bank as needed.</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>角色权限等级。央行是验证节点，参与共识出块，共识算法可插板；商行/外汇交易中心是普通节点，只同步数据不参与共识，有提交交易的权限。还有一类权限是只有查看交易的权限，类似于只读，通常是金融科技公司等。央行可以看到其发行币种的所有交易，包括在岸和离岸的交易；而其他角色只能看到跟其自身相关的交易。另外，只有央行节点才有发行和注销其管辖币种的权限。这个的权限控制是在区块链本身实现的，而不是外层的后端应用等。这里涉及两组概念，共识，验证出块，这个是区块链共识节点的身份，偏技术层面；交易可见性，发行/注销，这个是央行角色身份，偏业务层面，例如可以通过智能合约来控制；两者并不完全重合，但现在方案里统一。本实验中是如何将这两者有机整合的，没有看到详细介绍，还有待研究。</p>
+</li>
+<li><p>Token合约使用了ConsenSys公司的Universal Token标准，扩展了ERC-20和ERC-1400（增强了合规管理，受控的强制支付等功能），这些是Ethereum领域里最普遍的合约规范，同时也支持了现在真实世界的金融场景。</p>
+</li>
+<li><p>LSM机制。<code>The IL2 prototype uses the hybrid model, developed to support bilateral and multilateral net settlements in centralized queues. Each central bank is responsible for facilitating the LSM within their own currenc.</code>。明确了流动性节约机制是在央行的中心化的队列里实现的。目前只是各央行单独解决其发行币种的流动性问题，缺乏多个币种间的最优化解决。另外在链上想要通过智能合约实现LSM机制，既要实现复杂的机制达到最优解，又要保证数据隐私，目前来说难度还是很大的。<code>The central bank will periodically and automatically initiate the LSM process</code>:</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">The process contains four stages:</span><br><span class="line">1. Detect: The central bank asks banks to send in their pending transactions and balances for LSM planning calculations.</span><br><span class="line">2. Plan: After receiving the pending transactions and balances from the banks, the central node will calculate which transactions can be netted.</span><br><span class="line">3. Propose: With the results from the planning stage, the central bank will </span><br><span class="line">    - Send instructions of netted positions to resolve the cyclical gridlock, or </span><br><span class="line">    - Will inject liquidity in the situation of a transaction deadlock. </span><br><span class="line">4. Execute: Banks then execute the transfers.</span><br></pre></td></tr></tbody></table></figure>
+<p>央行的gridlock解决方案是插件式的，支持可插拔，方便各个央行自己定制开发。</p>
+</li>
+<li><p>最后也提到了目前的几个不足和缺陷</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 隐私：In particular, the reliance on Privacy Groups to preserve privacy across multiple jurisdictions does not allow for fully atomic PvP transactions. </span><br><span class="line">2. LSM机制：In addition, since there is no single entity or jurisdiction that can view the balance of all pending FX transactions; an optimal liquidity savings mechanism has yet to be found. </span><br><span class="line">3. 性能：Lastly, the scalability and performance of DLT in handling large transaction volumes will need to be assessed further if more jurisdictions or currencies are added onto the platform. </span><br><span class="line">4. 风控：Detailed risk governance procedures will also need to be created.</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:right;color:#C0C0C0;font-size:15px;"><br><br><a href="https://simplexity.cn/copyright/">©原创版权所有，转载请注明出处</a></div>
+    
+</div>
+
+        
+      </div>
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/CBDC/" rel="tag"><i class="fa fa-tag"></i> CBDC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/inthanon-lionrock-phase-1/" rel="prev" title="CBDC系列（4） - Inthonan-LionRock项目阶段 I (批发型CBDC跨境支付实验项目)">
+      <i class="fa fa-chevron-left"></i> CBDC系列（4） - Inthonan-LionRock项目阶段 I (批发型CBDC跨境支付实验项目)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <div class="site-description" itemprop="description">Simple is Complex</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:wchuang5900@gmail.com" title="E-Mail → mailto:wchuang5900@gmail.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-registered"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '12eedb094a3054014378',
+      clientSecret: 'a18108e1702f3c382aa9b2b6edd4c77336791528',
+      repo        : 'simplexity-gitalk',
+      owner       : 'simplexity-ckcclc',
+      admin       : ['simplexity-ckcclc'],
+      id          : '9594247ad37b80e0dfbbf77aae9ba549',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

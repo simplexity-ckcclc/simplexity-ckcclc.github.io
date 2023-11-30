@@ -1,3 +1,4 @@
+https://simplexity.cn/articles/inthanon-lionrock-phase-2/
 https://simplexity.cn/articles/inthanon-lionrock-phase-1/
 https://simplexity.cn/articles/jura-project/
 https://simplexity.cn/articles/understanding-corda/
@@ -47,4 +48,3 @@ https://simplexity.cn/articles/fabric-source-chaincode-instantiate-chaincode-lau
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-endorser-process-proposal/
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-peer/
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/
-https://simplexity.cn/articles/foreword/
