@@ -2527,19 +2527,51 @@ func CreateSignedTx(proposal *peer.Proposal, signer msp.SigningIdentity, resps .
     <content><![CDATA[<p>本文基于BIS于2021年9月发布的Inthonan-LionRock项目的二阶段报告<a href="https://www.bis.org/publ/othp40.htm">Inthanon-LionRock to mBridge: building a multi CBDC platform for international payments</a>。本阶段结束后，新增了中国大陆央行和阿联酋央行，项目也被重新命名为mBridge，也就是现在熟知的多边央行数字货币桥项目。</p>
 <span id="more"></span>
 <ol>
-<li><p>二阶段由ConsenSys公司提供技术支持，区块链技术选型选择了Hyperledger Besu，企业级的类Ethereum联盟链。官方的说法是<code>Hyperledger Besu was chosen, in order to assess how an Ethereum-inspired architecture could support the objectives of a single ledger multi- currency network. Features of Hyperledger Besu that were considered include privacy, flexible choice of the consensus mechanism, and support from the Hyperledger ecosystem and community</code>。相比一阶段的R3 corda，单链的架构使涉及多币种的FX等交易的原子性更容易实现，这一切都通过链上智能合约来保证，不再需要类似于哈希时间锁等跨链技术来保证，简化技术架构，从而减少分布式事务的潜在风险。但同时由于是单链，所有参与方的交易数据都在链上，因此对于链上数据隐私保护的要求更高。所以引入了Orion transaction manager (<code>The nodes maintain the public state for blockchain and a corresponding private state for each privacy group.</code>)，隐私数据加密签名后在orion网络peer-to-peer传输，交易哈希上链；引入privacy group，数据分组可见。</p>
+<li><p>二阶段由ConsenSys公司提供技术支持，区块链技术选型选择了企业级以太坊的Java实现客户端<a href="https://besu.hyperledger.org/">Hyperledger Besu</a>。官方的说法是<code>Hyperledger Besu was chosen, in order to assess how an Ethereum-inspired architecture could support the objectives of a single ledger multi-currency network. Features of Hyperledger Besu that were considered include privacy, flexible choice of the consensus mechanism, and support from the Hyperledger ecosystem and community</code>。相比一阶段的R3 corda，单链的架构使涉及多币种的FX等交易的原子性更容易实现，这一切都通过链上智能合约来保证，不再需要类似于哈希时间锁等跨链技术来保证，简化技术架构，从而减少分布式事务的潜在风险。但同时由于是单链，所有参与方的交易数据都在链上，因此对于链上数据隐私保护的要求更高。所以引入了<a href="https://github.com/Consensys/orion">Orion transaction manager</a> (<code>The nodes maintain the public state for blockchain and a corresponding private state for each privacy group.</code> 后续升级到<code>TESSERA</code>项目)，隐私数据加密签名后在orion网络peer-to-peer传输，交易哈希上链；引入privacy group，数据分组可见。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">There are three types of privacy groups:</span><br><span class="line">1. Public: main group for all members,</span><br><span class="line">2. Private: between central bank and each commercial bank, and</span><br><span class="line">3. Bilateral: peer-to-peer between commercial banks with the central bank as needed.</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>角色权限等级。央行是验证节点，参与共识出块，共识算法可插板；商行/外汇交易中心是普通节点，只同步数据不参与共识，有提交交易的权限。还有一类权限是只有查看交易的权限，类似于只读，通常是金融科技公司等。央行可以看到其发行币种的所有交易，包括在岸和离岸的交易；而其他角色只能看到跟其自身相关的交易。另外，只有央行节点才有发行和注销其管辖币种的权限。这个的权限控制是在区块链本身实现的，而不是外层的后端应用等。这里涉及两组概念，共识，验证出块，这个是区块链共识节点的身份，偏技术层面；交易可见性，发行/注销，这个是央行角色身份，偏业务层面，例如可以通过智能合约来控制；两者并不完全重合，但现在方案里统一。本实验中是如何将这两者有机整合的，没有看到详细介绍，还有待研究。</p>
 </li>
-<li><p>Token合约使用了ConsenSys公司的Universal Token标准，扩展了ERC-20和ERC-1400（增强了合规管理，受控的强制支付等功能），这些是Ethereum领域里最普遍的合约规范，同时也支持了现在真实世界的金融场景。</p>
+<li><p>Token合约使用了ConsenSys公司的<a href="https://github.com/Consensys/UniversalToken">Universal Token</a>标准，扩展了ERC-20和ERC-1400（增强了合规管理，受控的强制支付等功能），这些是Ethereum领域里最普遍的合约规范，同时也支持了现在真实世界的金融场景。</p>
 </li>
 <li><p>LSM机制。<code>The IL2 prototype uses the hybrid model, developed to support bilateral and multilateral net settlements in centralized queues. Each central bank is responsible for facilitating the LSM within their own currenc.</code>。明确了流动性节约机制是在央行的中心化的队列里实现的。目前只是各央行单独解决其发行币种的流动性问题，缺乏多个币种间的最优化解决。另外在链上想要通过智能合约实现LSM机制，既要实现复杂的机制达到最优解，又要保证数据隐私，目前来说难度还是很大的。<code>The central bank will periodically and automatically initiate the LSM process</code>:</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">The process contains four stages:</span><br><span class="line">1. Detect: The central bank asks banks to send in their pending transactions and balances for LSM planning calculations.</span><br><span class="line">2. Plan: After receiving the pending transactions and balances from the banks, the central node will calculate which transactions can be netted.</span><br><span class="line">3. Propose: With the results from the planning stage, the central bank will </span><br><span class="line">    - Send instructions of netted positions to resolve the cyclical gridlock, or </span><br><span class="line">    - Will inject liquidity in the situation of a transaction deadlock. </span><br><span class="line">4. Execute: Banks then execute the transfers.</span><br></pre></td></tr></tbody></table></figure>
 <p>央行的gridlock解决方案是插件式的，支持可插拔，方便各个央行自己定制开发。</p>
 </li>
 <li><p>最后也提到了目前的几个不足和缺陷</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">1. 隐私：In particular, the reliance on Privacy Groups to preserve privacy across multiple jurisdictions does not allow for fully atomic PvP transactions. </span><br><span class="line">2. LSM机制：In addition, since there is no single entity or jurisdiction that can view the balance of all pending FX transactions; an optimal liquidity savings mechanism has yet to be found. </span><br><span class="line">3. 性能：Lastly, the scalability and performance of DLT in handling large transaction volumes will need to be assessed further if more jurisdictions or currencies are added onto the platform. </span><br><span class="line">4. 风控：Detailed risk governance procedures will also need to be created.</span><br></pre></td></tr></tbody></table></figure></li>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">1. 隐私：In particular, the reliance on Privacy Groups to preserve privacy across multiple jurisdictions does not allow for fully atomic PvP transactions. </span><br><span class="line">2. LSM机制：In addition, since there is no single entity or jurisdiction that can view the balance of all pending FX transactions; an optimal liquidity savings mechanism has yet to be found. </span><br><span class="line">3. 性能：Lastly, the scalability and performance of DLT in handling large transaction volumes will need to be assessed further if more jurisdictions or currencies are added onto the platform. </span><br><span class="line">4. 风控：Detailed risk governance procedures will also need to be created.</span><br></pre></td></tr></tbody></table></figure>
+</li>
+</ol>
+<h4 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h4><blockquote>
+<ol>
+<li><a href="https://besu.hyperledger.org/private-networks/concepts/privacy/private-transactions/processing">Besu - Private transaction processing</a></li>
+<li><a href="https://blog.geveo.com/Consensus-Quorum">Hyperledger Besu vs Go-Quorum</a></li>
+<li><a href="https://blockgeeks.com/guides/quorum-a-blockchain-platform-for-the-enterprise/">What Is Quorum Blockchain? A Platform for The Enterprise</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/179260785?utm_id=0">深度解析企业级区块链解决方案-Quorum</a></li>
+</ol>
+</blockquote>
+<div style="width:75%;margin:auto">
+    <img src="/images/besu-flow.jpg">
+    <div style="text-align: center">图1 Besu私有交易处理流程</div>
+</div>
+
+<ol>
+<li>Submit a private transaction using eea_sendRawTransaction. The signed transaction includes transaction parameters specific to private transactions, including:<ul>
+<li><code>privateFor</code> or <code>privacyGroupId</code>, which specifies the list of recipients.</li>
+<li><code>privateFrom</code>, which specifies the sender.</li>
+<li><code>restriction</code>, which specifies the transaction is restricted to the transaction participants.</li>
+</ul>
+</li>
+<li>The JSON-RPC endpoint passes the private transaction to the Private Transaction Handler.</li>
+<li>The Private Transaction Handler sends the private transaction to Tessera.</li>
+<li>Tessera distributes the private transaction directly (that is, point-to-point) to the Tessera nodes specified in privateFor or belonging to the privacy group identified by privacyGroupId. All recipient Tessera nodes store the transaction. Tessera associates the stored transaction with the transaction hash and privacy group ID.</li>
+<li>Tessera returns the transaction hash to the Private Transaction Handler.</li>
+<li>The Private Transaction Handler creates a PMT for the private transaction. The Private Transaction Handler propagates the PMT using devP2P in the same way as any other public Ethereum transaction.</li>
+<li>Besu mines the PMT into a block and the PMT is distributed to all Ethereum nodes in the network.</li>
+<li>The Mainnet Transaction Processor processes the PMT in the same way as any other public transaction. On nodes containing the privacy precompile contract specified in the to attribute of the PMT, the Mainnet Transaction Processor passes the PMT to the privacy precompile contract.</li>
+<li>The privacy precompile contract queries Tessera for the private transaction and privacy group ID using the transaction hash.</li>
+<li>The privacy precompile contract passes the private transaction to the Private Transaction Processor. The privacy group ID specifies the private world state to use.</li>
+<li>The Private Transaction Processor executes the transaction. The Private Transaction Processor can read and write to the private world state, and read from the public world state.</li>
 </ol>
 ]]></content>
       <tags>
