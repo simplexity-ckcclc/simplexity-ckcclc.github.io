@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,134 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-paxos-raft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-06 19:49:27" itemprop="dateCreated datePublished" datetime="2019-03-06T19:49:27+08:00">2019-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p>Paxos  </p>
+<p> 算法的介绍在wikipedia里解释很清楚，可以结合example里的例子加深理解。概括来说，paxos分为prepare和accept两个阶段，将角色分为proposer，acceptor和learner，最基本的标准是majority quorum。每次proposer以（sequence number n, value v）的形式向acceptor提议（n为每个proposer节点自行管理的单增值，注意，这里会有多个proposer在并行的提议）。如果将prepare request到最终accept视作一轮，那么最终accept的提议是来自n最高的proposer，但是v是在prepare阶段最早得到quorum accept的，因为acceptor收到prepare request作出这样的promise（即承诺不再accept比该proposal的n更小或相等的值），并且返回收到并回复的prepare request的值。</p>
+</li>
+</ol>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos (computer science) - wiki</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://angus.nyc/2012/paxos-by-example/">Paxos By Example</a></li>
+</ul>
+</blockquote>
+<ol>
+<li><p>Raft</p>
+<p> 大致思路是，raft角色分为leader，follower和candidate（在leader election阶段）。每个leader的当选任期有全局统一且历史递增的term number。所有的写请求被路由或者follow重定向提交到leader，相当于将proposer缩减成唯一一个leader，leader给每个请求log entry添加index。整个过程也分为两个阶段，prepare阶段leader将log entry同步到所有follower，收到majority quorum回复同步后进入commit阶段，leader先commit本地，发送commit消息到follower，并且回复client。follower再commit本地执行，commit该index也意味着之前小于该index的消息都已同步并且全网一致。leader失败后则进入新一轮的选举（term值增加），最新最全数据的节点当选，新leader将其本地数据全网同步，follower相应补充或者剪枝，保证全局数据一致。</p>
+</li>
+</ol>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://raft.github.io/">The Raft Consensus Algorithm</a> : Raft的github page</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://thesecretlivesofdata.com/raft/">Raft example</a> : 国外的动画，非常形象</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d">Understanding the Raft consensus algorithm: an academic article summary</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://infoq.cn/article/coreos-analyse-etcd">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
+</ul>
+</blockquote>
+<ol>
+<li><p>综述</p>
+<p> paxos最早的理论基础，但是工程上实现难度比较大，所以zookeeper（07年）自己设计了zab。13年raft出现，借鉴了zab的设计思想，同时工程上相对paxos更容易实现和理解。这些算法大量用于分布式应用及组件设计，假设前提是没有恶意节点，但并不能解决拜占庭将军问题（Paxos可以针对性扩展为Byzantine Paxos）。</p>
+</li>
+</ol>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/52617675">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos">Zab vs. Paxos</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1108,118 +1236,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-chaincode-instantiate-initcmdfactory/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-23 15:35:09" itemprop="dateCreated datePublished" datetime="2019-02-23T15:35:09+08:00">2019-02-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:09:23" itemprop="dateModified" datetime="2023-04-27T17:09:23+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>推荐参考两个博客：  </p>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/idsuf698987/article/details/74907281">fabric源码解析——序</a> : 国内同道的源码分析系列，模块化  </li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chaindesk.cn/witbook/30/467">Hyperledger Fabric源码深度解析</a> : 对MSP，BCCSP的介绍到位 </li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blockchain-fabric.blogspot.com/">To know the internals of certain permissioned blockchain platform</a> : IBM员工，参与HF项目的概念总结文章系列</li>
-</ul>
-<p><em>选择peer chaincode instantiate作为开篇，是因为笔者学习官网过程中没有完全理解install与instantiate的区别，所以选择深入源码学习来加深理解</em></p>
-<p>官网<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为  </p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"</span><br></pre></td></tr></tbody></table></figure>
-<p>此前，需要先设置环境变量</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID="Org2MSP"</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></tbody></table></figure>
-<p>客户端调用<code>peer chaincode instatiate</code>命令部署chaincode，代码在‘peer/chaincode/instantiate.go’这个文件下，命令关联的方法是<code>chaincodeDeploy</code>(使用了流行的第三方命令行cobra库，具体可自行学习)。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-initcmdfactory/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1291,7 +1307,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

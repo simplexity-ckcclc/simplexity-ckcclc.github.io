@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,114 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/whats-new-in-wasm-2-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/whats-new-in-wasm-2-0/" class="post-title-link" itemprop="url">WebAssembly 2.0新特性</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-09-15 16:20:13" itemprop="dateCreated datePublished" datetime="2022-09-15T16:20:13+08:00">2022-09-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-07-28 14:32:00" itemprop="dateModified" datetime="2023-07-28T14:32:00+08:00">2023-07-28</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>756</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官网： <a target="_blank" rel="noopener external nofollow noreferrer" href="https://webassembly.github.io/spec/core/appendix/changes.html#change-history">Change History</a></p>
+<ol>
+<li><p>Multiple values</p>
+<ul>
+<li><em>Function types allow more than one result.</em><br>  适配go语言等函数多返回值的特性。</li>
+<li><em>Block types can be arbitrary function types.</em><br>  控制块带参数，适配C语言等内联函数的展开。Wasm1.0里调用内联函数使用的是<code>call</code>指令。</li>
+</ul>
+</li>
+<li><p>Reference types</p>
+<ul>
+<li><em>Added <code>funcref</code> and <code>externref</code> as new value types and respective.</em><br>表元素增加新类型。<blockquote>
+<p><code>externref</code> allows modules to hold references to objects provided by the host environment; in other words, you can pass a JavaScript object to your .wasm module. The .wasm module can’t really do much with the object via the type. What’s more important is that the module is holding a reference to a garbage collected object on the JavaScript heap. 持有外部引用，为将来wasm引入GC准备。 参看<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.oreilly.com/library/view/what-is-webassembly/9781492076902/ch04.html">Upcoming Features and Proposals</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Bulk memory </p>
+<ul>
+<li><em>New memory instructions: <code>memory.fill</code>, <code>memory.init</code>, <code>memory.copy</code>, <code>data.drop</code></em>.<br>对应C里的<code>memcpy</code>, <code>memmove</code>等，目的提高处理大块内存的性能。Wasm1.0里使用<code>load</code>, <code>store</code>指令操作内存，只能处理基本类型的数值。</li>
+</ul>
+</li>
+<li><p>Multiple table<br><em>coming soon</em></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1132,119 +1240,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/zk-snark-paper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/zk-snark-paper/" class="post-title-link" itemprop="url">零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-12 21:26:30" itemprop="dateCreated datePublished" datetime="2020-08-12T21:26:30+08:00">2020-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-28 22:38:29" itemprop="dateModified" datetime="2023-04-28T22:38:29+08:00">2023-04-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文为<a target="_blank" rel="noopener external nofollow noreferrer" href="https://arxiv.org/abs/1906.07221">Why and How zk-SNARK Works: Definitive Explanation</a>论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。</p>
-<h3 id="2-The-Medium-of-a-Proof"><a href="#2-The-Medium-of-a-Proof" class="headerlink" title="2. The Medium of a Proof"></a>2. The Medium of a Proof</h3><ul>
-<li><strong>多项式是zk-snark的核心</strong></li>
-</ul>
-<ol>
-<li>基本流程<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></tbody></table></figure></li>
-<li>存在问题<ul>
-<li>prover可以通过其他方式得到多项式结果，没有方法确保该结果是经过多项式计算得来</li>
-<li>多项式的阶数需要足够高</li>
-</ul>
-</li>
-</ol>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/zk-snark-paper/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1316,7 +1311,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

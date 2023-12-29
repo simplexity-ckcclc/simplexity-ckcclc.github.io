@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,119 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/zk-snark-paper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/zk-snark-paper/" class="post-title-link" itemprop="url">零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-12 21:26:30" itemprop="dateCreated datePublished" datetime="2020-08-12T21:26:30+08:00">2020-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-28 22:38:29" itemprop="dateModified" datetime="2023-04-28T22:38:29+08:00">2023-04-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文为<a target="_blank" rel="noopener external nofollow noreferrer" href="https://arxiv.org/abs/1906.07221">Why and How zk-SNARK Works: Definitive Explanation</a>论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。</p>
+<h3 id="2-The-Medium-of-a-Proof"><a href="#2-The-Medium-of-a-Proof" class="headerlink" title="2. The Medium of a Proof"></a>2. The Medium of a Proof</h3><ul>
+<li><strong>多项式是zk-snark的核心</strong></li>
+</ul>
+<ol>
+<li>基本流程<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></tbody></table></figure></li>
+<li>存在问题<ul>
+<li>prover可以通过其他方式得到多项式结果，没有方法确保该结果是经过多项式计算得来</li>
+<li>多项式的阶数需要足够高</li>
+</ul>
+</li>
+</ol>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/zk-snark-paper/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1127,162 +1240,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/understanding-ethereum/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-06-25 17:02:44" itemprop="dateCreated datePublished" datetime="2019-06-25T17:02:44+08:00">2019-06-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-16 15:31:02" itemprop="dateModified" datetime="2023-05-16T15:31:02+08:00">2023-05-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>5.5k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>18 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>必读：</p>
-<ul>
-<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
-<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
-</ul>
-</blockquote>
-<h2 id="Block-transaction-account-state-objects-and-Ethereum-tries"><a href="#Block-transaction-account-state-objects-and-Ethereum-tries" class="headerlink" title="Block, transaction, account state objects and Ethereum tries"></a>Block, transaction, account state objects and Ethereum tries</h2><p><img src="/images/understanding-ethereum/ethereum-all-structure.jpg" alt=""></p>
-<ul>
-<li><strong>The world state trie contains the mapping between addresses and account states.</strong> The hash of the root node of the world state trie is included in a block (in the stateRoot field) to represent the current state when that block was created. <strong>We only have one world state trie.</strong></li>
-<li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the sccount state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
-<li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
-<li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
-</ul>
-<p>摘自: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
-<h2 id="Externally-owned-account-EOA-VS-Contract-account"><a href="#Externally-owned-account-EOA-VS-Contract-account" class="headerlink" title="Externally owned account(EOA) VS. Contract account"></a>Externally owned account(EOA) VS. Contract account</h2><p>两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。 </p>
-<p><img src="/images/understanding-ethereum/ethereum-account.png" alt=""></p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>nonce</strong></td>
-<td>A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account.</td>
-</tr>
-<tr>
-<td><strong>balance</strong></td>
-<td>A scalar value equal to the number of Wei owned by this address.</td>
-</tr>
-<tr>
-<td><strong>storageRoot</strong></td>
-<td>A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.</td>
-</tr>
-<tr>
-<td><strong>codeHash</strong></td>
-<td>The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<blockquote>
-<p>It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:</p>
-<ol>
-<li>Runs the code in the contract’s constructor, setting storage values, etc.</li>
-<li>Copies the code for the rest of the contract into memory and returns it.  </li>
-</ol>
-</blockquote>
-<p>新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom</p>
-<blockquote>
-<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/">How Ethereum Transactions Work</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/">How Smart Contract Deployment Works</a></p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/understanding-ethereum/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1354,7 +1311,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

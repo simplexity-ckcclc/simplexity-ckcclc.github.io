@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,162 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/understanding-ethereum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-25 17:02:44" itemprop="dateCreated datePublished" datetime="2019-06-25T17:02:44+08:00">2019-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-05-16 15:31:02" itemprop="dateModified" datetime="2023-05-16T15:31:02+08:00">2023-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>18 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>必读：</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
+</ul>
+</blockquote>
+<h2 id="Block-transaction-account-state-objects-and-Ethereum-tries"><a href="#Block-transaction-account-state-objects-and-Ethereum-tries" class="headerlink" title="Block, transaction, account state objects and Ethereum tries"></a>Block, transaction, account state objects and Ethereum tries</h2><p><img src="/images/understanding-ethereum/ethereum-all-structure.jpg" alt=""></p>
+<ul>
+<li><strong>The world state trie contains the mapping between addresses and account states.</strong> The hash of the root node of the world state trie is included in a block (in the stateRoot field) to represent the current state when that block was created. <strong>We only have one world state trie.</strong></li>
+<li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the sccount state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
+<li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
+<li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
+</ul>
+<p>摘自: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
+<h2 id="Externally-owned-account-EOA-VS-Contract-account"><a href="#Externally-owned-account-EOA-VS-Contract-account" class="headerlink" title="Externally owned account(EOA) VS. Contract account"></a>Externally owned account(EOA) VS. Contract account</h2><p>两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。 </p>
+<p><img src="/images/understanding-ethereum/ethereum-account.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>nonce</strong></td>
+<td>A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account.</td>
+</tr>
+<tr>
+<td><strong>balance</strong></td>
+<td>A scalar value equal to the number of Wei owned by this address.</td>
+</tr>
+<tr>
+<td><strong>storageRoot</strong></td>
+<td>A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.</td>
+</tr>
+<tr>
+<td><strong>codeHash</strong></td>
+<td>The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:</p>
+<ol>
+<li>Runs the code in the contract’s constructor, setting storage values, etc.</li>
+<li>Copies the code for the rest of the contract into memory and returns it.  </li>
+</ol>
+</blockquote>
+<p>新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom</p>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/">How Ethereum Transactions Work</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/">How Smart Contract Deployment Works</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/understanding-ethereum/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1201,134 +1357,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-paxos-raft/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-06 19:49:27" itemprop="dateCreated datePublished" datetime="2019-03-06T19:49:27+08:00">2019-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>Paxos  </p>
-<p> 算法的介绍在wikipedia里解释很清楚，可以结合example里的例子加深理解。概括来说，paxos分为prepare和accept两个阶段，将角色分为proposer，acceptor和learner，最基本的标准是majority quorum。每次proposer以（sequence number n, value v）的形式向acceptor提议（n为每个proposer节点自行管理的单增值，注意，这里会有多个proposer在并行的提议）。如果将prepare request到最终accept视作一轮，那么最终accept的提议是来自n最高的proposer，但是v是在prepare阶段最早得到quorum accept的，因为acceptor收到prepare request作出这样的promise（即承诺不再accept比该proposal的n更小或相等的值），并且返回收到并回复的prepare request的值。</p>
-</li>
-</ol>
-<blockquote>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos (computer science) - wiki</a></li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://angus.nyc/2012/paxos-by-example/">Paxos By Example</a></li>
-</ul>
-</blockquote>
-<ol>
-<li><p>Raft</p>
-<p> 大致思路是，raft角色分为leader，follower和candidate（在leader election阶段）。每个leader的当选任期有全局统一且历史递增的term number。所有的写请求被路由或者follow重定向提交到leader，相当于将proposer缩减成唯一一个leader，leader给每个请求log entry添加index。整个过程也分为两个阶段，prepare阶段leader将log entry同步到所有follower，收到majority quorum回复同步后进入commit阶段，leader先commit本地，发送commit消息到follower，并且回复client。follower再commit本地执行，commit该index也意味着之前小于该index的消息都已同步并且全网一致。leader失败后则进入新一轮的选举（term值增加），最新最全数据的节点当选，新leader将其本地数据全网同步，follower相应补充或者剪枝，保证全局数据一致。</p>
-</li>
-</ol>
-<blockquote>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://raft.github.io/">The Raft Consensus Algorithm</a> : Raft的github page</li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://thesecretlivesofdata.com/raft/">Raft example</a> : 国外的动画，非常形象</li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d">Understanding the Raft consensus algorithm: an academic article summary</a></li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://infoq.cn/article/coreos-analyse-etcd">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
-</ul>
-</blockquote>
-<ol>
-<li><p>综述</p>
-<p> paxos最早的理论基础，但是工程上实现难度比较大，所以zookeeper（07年）自己设计了zab。13年raft出现，借鉴了zab的设计思想，同时工程上相对paxos更容易实现和理解。这些算法大量用于分布式应用及组件设计，假设前提是没有恶意节点，但并不能解决拜占庭将军问题（Paxos可以针对性扩展为Byzantine Paxos）。</p>
-</li>
-</ol>
-<blockquote>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/52617675">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos">Zab vs. Paxos</a></li>
-</ul>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1400,7 +1428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
