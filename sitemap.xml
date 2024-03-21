@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://simplexity.cn/articles/dunbar-project/</loc>
+    
+    <lastmod>2024-03-21</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://simplexity.cn/articles/jura-project/</loc>
     
     <lastmod>2024-02-27</lastmod>
@@ -352,14 +359,14 @@
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/fabric-inpractice-commercialpaper-byfn/</loc>
+    <loc>https://simplexity.cn/articles/fabric-orderer-kafka-design/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
   </url>
   
   <url>
-    <loc>https://simplexity.cn/articles/fabric-orderer-kafka-design/</loc>
+    <loc>https://simplexity.cn/articles/fabric-inpractice-commercialpaper-byfn/</loc>
     
     <lastmod>2020-10-28</lastmod>
     
