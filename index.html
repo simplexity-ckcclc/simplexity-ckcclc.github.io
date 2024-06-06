@@ -205,10 +205,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-03-21 11:40:38 / Modified: 11:43:53" itemprop="dateCreated datePublished" datetime="2024-03-21T11:40:38+08:00">2024-03-21</time>
+              <time title="Created: 2024-03-21 11:40:38" itemprop="dateCreated datePublished" datetime="2024-03-21T11:40:38+08:00">2024-03-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-06-06 16:30:45" itemprop="dateModified" datetime="2024-06-06T16:30:45+08:00">2024-06-06</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -216,14 +222,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.3k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
+              <span>5 mins.</span>
             </span>
 
         </div>
@@ -236,7 +242,7 @@
 
       
           <p>Dunbar项目是BIS新加坡创新中心，the Reserve Bank of Australia (RBA), the Bank Negara Malaysia (BNM), the Monetary Authority of Singapore (MAS) and the South African Reserve Bank (SARB) 在2021年合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用，并在同年11月公开发布研究报告。具体参见BIS的项目介绍<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/about/bisih/topics/cbdc/dunbar.html">Project Dunbar: international settlements using multi-CBDCs</a>。</p>
-<p>Dunbar项目的探讨了跨境支付，FX等场景，与其他的跨境批发CBDC项目（例如Jura, mbridge等）关注点基本一致。同时，报告中也有其独特的有意思的一些设计。<br>1.项目的组织。项目拆分为设计和技术开发两个工作组，职责分离；设计工作组着眼于业务需求，包括交易流程设计，合规监管，治理模式等；而作为试验性的项目，技术开发采用了Corda和Partior（类企业级以太坊）两种常用的DLT技术路线并行开发原型，探讨不同的技术路线对于需求的满足度。整个过程采用敏捷开发的方式，拆分迭代，适合这种多团队间的合作。</p>
+<p>Dunbar项目的探讨了跨境支付，FX等场景，与其他的跨境批发CBDC项目（例如Jura, mBridge等）关注点基本一致。同时，报告中也有其独特的有意思的一些设计。<br>1.项目的组织。项目拆分为设计和技术开发两个工作组，职责分离；设计工作组着眼于业务需求，包括交易流程设计，合规监管，治理模式等；而作为试验性的项目，技术开发采用了Corda（账本隔离，只能看到己方相关交易信息，不存在全局一本帐）和Quorum（类企业级以太坊，以dApp智能合约的方式按币种逻辑隔离，用Tessera方案解决隐私）两种常用的DLT技术路线并行开发原型，探讨不同的技术路线对于需求的满足度。整个过程采用敏捷开发的方式，拆分迭代，适合这种多团队间的合作。</p>
 <div style="width:90%;margin:auto">
     <img src="/images/dunbar-project/sprint-objective.jpg">
     <div style="text-align: center">图1 拓扑</div>
@@ -495,7 +501,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-11-30 15:54:29" itemprop="dateModified" datetime="2023-11-30T15:54:29+08:00">2023-11-30</time>
+                <time title="Modified: 2024-06-06 16:07:29" itemprop="dateModified" datetime="2024-06-06T16:07:29+08:00">2024-06-06</time>
               </span>
 
           <br>
@@ -587,7 +593,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-02-27 17:26:31" itemprop="dateModified" datetime="2024-02-27T17:26:31+08:00">2024-02-27</time>
+                <time title="Modified: 2024-06-06 16:25:13" itemprop="dateModified" datetime="2024-06-06T16:25:13+08:00">2024-06-06</time>
               </span>
 
           <br>
@@ -624,7 +630,7 @@
 
 <p>项目的主要技术服务商是R3，技术架构就采用了Corda。这个是wholesale CBDC的场景，Corda的性能和设计理念也算比较契合。</p>
 <ol>
-<li>资产代币化asset tokenize。商业票据Comercial Paper（CP）由DAR生成数字资产，通过Gateway（也就是图中的NATIXIS）mirror映射到平台上，同时赋予了所有者等属性。对应到Corda里的概念，就是state，可关联到实际环境中的资产和条款等。Corda的这种设计，将wCBDC和CP在技术逻辑上一致，使得这个SDX测试平台可以用相似的逻辑去支持PvP和DvP交易。</li>
+<li>资产代币化asset tokenize。商业票据Comercial Paper（CP）由DAR生成数字资产，通过Gateway（也就是图中的NATIXIS）mirror映射到平台上，同时赋予了所有者等属性。对应到Corda里的概念，就是state，可关联到实际环境中的资产和条款等。Corda的这种设计，将wCBDC和CP在技术逻辑上一致，使得这个单一的第三方运营的SDX测试平台可以用相似的逻辑去支持PvP和DvP交易。</li>
 <li>发行/赎回。SDX平台有几类节点，Notary node, Issuer node, Monitor/Observer node监管节点, Bank node。其中，Issuer node跟RTGS完成传统账户体系的兑换。在白皮书里提到 “In Project Jura, EUR and CHF wCBDC and the NEU CP token on the SDX test platform had no legal force, meaning that the wCBDCs did not represent a direct central bank liability.” 这点感觉更多的是强调<strong>非直接央行负债</strong>，实际上是明确了issuer居中转换的必要地位。</li>
 <li>不同的资产类型通常属于司法管辖区，由不同的notary公证人节点，通常由该资产管理员角色来承担，例如商行，或者授权的管理者。由于Corda的无需全局广播共识的设计，因此单个种类资产的交易情况，只需要该资产的notary进行签署，保证了账本或者资产管辖的独立性隔离性。由于notary节点通常只是技术意义上的，不授权查看具体的交易内容，通常引入监管节点来监控具体的交易（一种办法是只需在交易规则上配置有效的交易需要监管节点签名）。</li>
 <li>子网划分。各个央行可以独立划分和管理子网，允许商行节点接入子网进行业务，实际上就是实现了对其管辖货币的准入机制，只有接入该子网的商行节点才能执行该种资产的业务。在本次实验的拓扑中，银行节点是物理网络联通的，这在实际情况中由于网络策略管控，特别是随着银行借点数量增加，往往是不可全联通的。一种替代方案是参考DAR的类似做法，通过每个央行子网引入Operator Node（可以是逻辑的，与其他角色的node，例如Observer Node共用）作为Gateway，同时不同子网Gatewa互联，本国的商行只与本国的Gateway联通，把全网变成雪花拓扑结构。跨司法领域的，例如外币兑换等，就需要通过Gateway与他国商行交互，这种路由方式可以由全局的网络地图服务提供。这种方式，使得每笔交易都经过了交易双方央行及交易货币对的所属央行，满足监管需要。</li>

@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://simplexity.cn/images/inthanon-lionrock-phase-1/case-study-model.png">
 <meta property="og:image" content="https://simplexity.cn/images/inthanon-lionrock-phase-1/technical-design.png">
 <meta property="article:published_time" content="2023-08-31T11:47:59.000Z">
-<meta property="article:modified_time" content="2023-11-30T07:54:29.102Z">
+<meta property="article:modified_time" content="2024-06-06T08:07:29.325Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="CBDC">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-11-30 15:54:29" itemprop="dateModified" datetime="2023-11-30T15:54:29+08:00">2023-11-30</time>
+                <time title="Modified: 2024-06-06 16:07:29" itemprop="dateModified" datetime="2024-06-06T16:07:29+08:00">2024-06-06</time>
               </span>
 
           
@@ -270,7 +270,7 @@
 </div>
 
 <ol>
-<li>三个技术同构，相互隔离和独立运营的网络。各个管辖区有各自的网络（Inthanon network and LionRock network），用于本币CBDC（即W-CBDC）的发行，注销，仅限本币管辖区内的银行借入。“corridor network”专用于跨境结算，使用特定的token(DR, Depository Receipt)做价值转移。运行在corridor的“operator node”是由BOT和HKMA联合共同管理（具体原因不明，而且如何做操作隔离和治理也没有看到更具体的说明），负责发行注销DR-THB和DR-HKD；提供清结算的流动性节约解决方案，死锁问题解决方案；以及合规监督。参与银行在本地网络及corridor上都有独立隔离节点，可以发起支付，以及管理各自的本币和外币的流动性。</li>
+<li>三个相互隔离和独立运营的网络。各个管辖区有各自的网络（Inthanon network and LionRock network），用于本币CBDC（即W-CBDC）的发行，注销，仅限本币管辖区内的银行接入。“corridor network”专用于跨境结算，使用特定的token(DR, Depository Receipt)做价值转移。运行在corridor的“operator node”是由BOT和HKMA联合共同管理（具体原因不明，而且如何做操作隔离和治理也没有看到更具体的说明），负责发行注销DR-THB和DR-HKD；提供清结算的流动性节约解决方案，死锁问题解决方案；以及合规监督。参与银行在本地网络及corridor上都有独立隔离节点，可以发起支付，以及管理各自的本币和外币的流动性。</li>
 <li>Corridor需要以下服务。W-CBDC和DR-CBDC间的兑换；合规监管；流动性补充；FX board rate的广播。可以由央行以外的角色提供（例如FX board rate的广播通常由外汇交易所提供）。</li>
 <li>项目加入了流动性管理，包括排队机制（商行流动不足，其发起交易按照优先级排队），多币种流动性节约机制（针对gridlock场景作周期性的触发净额结算，包括单向支付和FX），即时流动性补充（出现deadlock情况，只能通过流动性补充的方式。本币流动性可以通过本币网络兑换，外币则需要通过向外币流动性提供方借入外币，然后必须在当天日切前全额还款）。在corridor网络上有一个外币流动性提供方的角色，技术上是可插拔的接口方式实现，具体由哪个实体担任并没有限定和说明。</li>
 <li>与Jura类似，央行扮演了本币网络和corridor网络的网关角色实现互操作，负责W-CBDC和DR-CBDC的兑换。这里假设央行间是互信的。</li>
