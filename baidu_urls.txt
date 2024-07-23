@@ -19,7 +19,6 @@ https://simplexity.cn/articles/did-account-system/
 https://simplexity.cn/articles/did-w3c/
 https://simplexity.cn/articles/privacy-on-chain/
 https://simplexity.cn/articles/mpc-terminology/
-https://simplexity.cn/articles/zk-snark-paper/
 https://simplexity.cn/articles/bigdata-and-blockchain/
 https://simplexity.cn/articles/fabric-2-0-new-feature/
 https://simplexity.cn/articles/understanding-bitcoin/
@@ -48,3 +47,4 @@ https://simplexity.cn/articles/fabric-source-chaincode-instantiate-chaincode-ini
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-system-chaincode/
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-chaincode-launch/
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-endorser-process-proposal/
+https://simplexity.cn/articles/fabric-source-chaincode-instantiate-peer/

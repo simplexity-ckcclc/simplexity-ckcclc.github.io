@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -267,119 +267,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/mpc-terminology/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/zk-snark-paper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/zk-snark-paper/" class="post-title-link" itemprop="url">零知识证明： Why and How zk-SNARK Works：Definitive Explanation论文学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-12 21:26:30" itemprop="dateCreated datePublished" datetime="2020-08-12T21:26:30+08:00">2020-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-28 22:38:29" itemprop="dateModified" datetime="2023-04-28T22:38:29+08:00">2023-04-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文为<a target="_blank" rel="noopener external nofollow noreferrer" href="https://arxiv.org/abs/1906.07221">Why and How zk-SNARK Works: Definitive Explanation</a>论文学习心得，纯粹个人在阅读过程中的疑问和思考，详细的理解请阅读附录引用的文章。</p>
-<h3 id="2-The-Medium-of-a-Proof"><a href="#2-The-Medium-of-a-Proof" class="headerlink" title="2. The Medium of a Proof"></a>2. The Medium of a Proof</h3><ul>
-<li><strong>多项式是zk-snark的核心</strong></li>
-</ul>
-<ol>
-<li>基本流程<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Verifier chooses a random value for x and evaluates his polynomial locally</span><br><span class="line">• Verifier gives x to the prover and asks to evaluate the polynomial in question</span><br><span class="line">• Prover evaluates his polynomial at x and gives the result to the verifier</span><br><span class="line">• Verifier checks if the local result is equal to the prover’s result, and if so then the statement is proven with a high confidence</span><br></pre></td></tr></tbody></table></figure></li>
-<li>存在问题<ul>
-<li>prover可以通过其他方式得到多项式结果，没有方法确保该结果是经过多项式计算得来</li>
-<li>多项式的阶数需要足够高</li>
-</ul>
-</li>
-</ol>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/zk-snark-paper/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1238,6 +1125,122 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-pos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/consensus-pos/" class="post-title-link" itemprop="url">共识算法(3) - PoS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-08 17:51:14" itemprop="dateCreated datePublished" datetime="2019-07-08T17:51:14+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-05-18 15:04:03" itemprop="dateModified" datetime="2023-05-18T15:04:03+08:00">2023-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>9 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="PoS-Proof-of-Stake权益证明-相对于PoW的优点："><a href="#PoS-Proof-of-Stake权益证明-相对于PoW的优点：" class="headerlink" title="PoS(Proof of Stake权益证明)相对于PoW的优点："></a>PoS(Proof of Stake权益证明)相对于PoW的优点：</h3><ol>
+<li>不需要消耗大量电力成本</li>
+<li>发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全）<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="PoS运行过程"><a href="#PoS运行过程" class="headerlink" title="PoS运行过程"></a>PoS运行过程</h3><ol>
+<li>质押stake，声明为验证节点（区别于全节点拥有出块的权利，会有一定的门槛，如持有stake量，占有比例，或者top n等条件，意在控制验证节点数量，缩小选举的范围以及达成bft共识的节点数）</li>
+<li>选举 （周期性选举，以之前已出块的值作为随机种子，选取下一周期的出块节点和顺序，选举算法包含Follow-the-Satoshi选择随机stake的持有节点和RR-BFT轮询算法）</li>
+<li>打包交易 （该论的出块节点从交易缓存池选择，通常为交易手续费高，时间早等，验证，包括签名，账户余额等。如果该论的出块节点没有出块，则跳过该论，并且惩罚）</li>
+<li>广播交易，确认（PoS分为基于链的PoS和BFT风格的PoS。在<strong>基于链的PoS</strong>中，最长链原则，随机算法选出验证者创建新区块，但是验证者要确保该块指向最长链，通常也需要一定数量的验证节点背书签名后上链。在<strong>BFT风格的PoS</strong>中，分配给验证者相对的权力，以RR的方式提出块并且给被提出的块投票，从而决定哪个块是新块，并在每一轮选出一个新块加入区块链。在每一轮中，每一个验证者都为某一特定的块进行投票，最后所有在线和诚实的验证者都将商量被给定的块是否可以添加到区块链中，并且意见不能改变）</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/consensus-pos/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1309,7 +1312,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

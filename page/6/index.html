@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,111 +178,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-peer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-chaincode-instantiate-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-23 15:36:22" itemprop="dateCreated datePublished" datetime="2019-02-23T15:36:22+08:00">2019-02-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:09:58" itemprop="dateModified" datetime="2023-04-27T17:09:58+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>接下来具体执行<code>env, err := instantiate(cmd, cf)</code>，这里可以看到入参是<code>cobra.Command</code>和刚刚初始化的<code>ChaincodeCmdFactory</code>,结果是提交给Orderer的Envelope message<code>protos/common.Envelope</code>.</p>
-<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instantiate the command via Endorser</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">instantiate</span><span class="params">(cmd *cobra.Command, cf *ChaincodeCmdFactory)</span> <span class="params">(*protcommon.Envelope, error)</span></span> {</span><br><span class="line"></span><br><span class="line">    spec, err := getChaincodeSpec(cmd)</span><br><span class="line">    cds, err := getChaincodeDeploymentSpec(spec, <span class="literal">false</span>)</span><br><span class="line">    creator, err := cf.Signer.Serialize()   </span><br><span class="line">    prop, _, err := utils.CreateDeployProposalFromCDS(channelID, cds, creator, policyMarshalled, []<span class="keyword">byte</span>(escc), []<span class="keyword">byte</span>(vscc), collectionConfigBytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signedProp *pb.SignedProposal</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// instantiate is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> proposalResponse != <span class="literal">nil</span> {</span><br><span class="line">        <span class="comment">// assemble a signed transaction (it's an Envelope message)</span></span><br><span class="line">        env, err := utils.CreateSignedTx(prop, cf.Signer, proposalResponse)</span><br><span class="line">        <span class="keyword">return</span> env, <span class="literal">nil</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<ol>
-<li><code>getChaincodeSpec</code>和<code>getChaincodeDeploymentSpec</code>从提交的command里获取相应的参数，检查以及设置参数（例如是否指定escc(endorsement system chaincode), vscc(verification system chaincode), ConstructorJSON 构造参数），进而构造chaincode描述结构体<code>pb.ChaincodeSpec</code>和部署结构体<code>pb.ChaincodeDeploymentSpec</code>。<br><code>pb.ChaincodeSpec</code>(cs)里指定了<code>ChaincodeSpec_Type</code>语言类型，默认为go，<code>ChaincodeID</code>，chaincode的标识（包括路径Path，名称Name，版本Version），以及Input（即ConstructorJSON 构造参数，初始化的值，命令行里-c参数值，例子里的’{“Args”:[“init”,”a”, “100”, “b”,”200”]}’）。<br><code>pb.ChaincodeDeploymentSpec</code>(cds)里包裹<code>ChaincodeSpec</code>，以及<code>CodePackage</code>，打包后用于安装部署的代码，<code>ExecEnv</code>，指定运行于同一系统中或者docker容器。<code>getChaincodeDeploymentSpec</code>入参区分是否当前是dev开发模式，而且是否需要构造CodePackage。构造打包是在install安装时进行的，后面分析install时详述。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-peer/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
       
   
   
@@ -555,7 +450,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
