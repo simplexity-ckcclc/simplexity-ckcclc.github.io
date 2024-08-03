@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">52</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -178,6 +178,122 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-pos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/consensus-pos/" class="post-title-link" itemprop="url">共识算法(3) - PoS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-08 17:51:14" itemprop="dateCreated datePublished" datetime="2019-07-08T17:51:14+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-05-18 15:04:03" itemprop="dateModified" datetime="2023-05-18T15:04:03+08:00">2023-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>9 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="PoS-Proof-of-Stake权益证明-相对于PoW的优点："><a href="#PoS-Proof-of-Stake权益证明-相对于PoW的优点：" class="headerlink" title="PoS(Proof of Stake权益证明)相对于PoW的优点："></a>PoS(Proof of Stake权益证明)相对于PoW的优点：</h3><ol>
+<li>不需要消耗大量电力成本</li>
+<li>发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全）<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="PoS运行过程"><a href="#PoS运行过程" class="headerlink" title="PoS运行过程"></a>PoS运行过程</h3><ol>
+<li>质押stake，声明为验证节点（区别于全节点拥有出块的权利，会有一定的门槛，如持有stake量，占有比例，或者top n等条件，意在控制验证节点数量，缩小选举的范围以及达成bft共识的节点数）</li>
+<li>选举 （周期性选举，以之前已出块的值作为随机种子，选取下一周期的出块节点和顺序，选举算法包含Follow-the-Satoshi选择随机stake的持有节点和RR-BFT轮询算法）</li>
+<li>打包交易 （该论的出块节点从交易缓存池选择，通常为交易手续费高，时间早等，验证，包括签名，账户余额等。如果该论的出块节点没有出块，则跳过该论，并且惩罚）</li>
+<li>广播交易，确认（PoS分为基于链的PoS和BFT风格的PoS。在<strong>基于链的PoS</strong>中，最长链原则，随机算法选出验证者创建新区块，但是验证者要确保该块指向最长链，通常也需要一定数量的验证节点背书签名后上链。在<strong>BFT风格的PoS</strong>中，分配给验证者相对的权力，以RR的方式提出块并且给被提出的块投票，从而决定哪个块是新块，并在每一轮选出一个新块加入区块链。在每一轮中，每一个验证者都为某一特定的块进行投票，最后所有在线和诚实的验证者都将商量被给定的块是否可以添加到区块链中，并且意见不能改变）</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/consensus-pos/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1255,108 +1371,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-orderer-kafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-orderer-kafka/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的kafka实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-07 15:17:56" itemprop="dateCreated datePublished" datetime="2019-03-07T15:17:56+08:00">2019-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:12:46" itemprop="dateModified" datetime="2023-04-27T17:12:46+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在<code>orderer/consensus/kafka/chain.go</code>里，与solo一样实现了<code>orderer/common/broadcast/broadcast.go#Consenter</code>这个接口。在orderer的处理消息时<code>orderer/common/broadcast/broadcast.go#Handle</code>，调用了其<code>Order</code>方法。<br></p><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">Order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> {</span><br><span class="line">	<span class="keyword">return</span> chain.order(env, configSeq, <span class="keyword">int64</span>(<span class="number">0</span>))</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>, originalOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> {</span><br><span class="line">    marshaledEnv, err := utils.Marshal(env)</span><br><span class="line">    <span class="keyword">if</span> !chain.enqueue(newNormalMessage(marshaledEnv, configSeq, originalOffset)) {</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"cannot enqueue"</span>)</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue accepts a message and returns true on acceptance, or false otheriwse.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">enqueue</span><span class="params">(kafkaMsg *ab.KafkaMessage)</span> <span class="title">bool</span></span> {</span><br><span class="line">    <span class="keyword">select</span> {</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> {</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">// The post path</span></span><br><span class="line">            payload, err := utils.Marshal(kafkaMsg)</span><br><span class="line"></span><br><span class="line">            message := newProducerMessage(chain.channel, payload)</span><br><span class="line">            <span class="keyword">if</span> _, _, err = chain.producer.SendMessage(message); err != <span class="literal">nil</span> {</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        }</span><br><span class="line">    <span class="keyword">default</span>: <span class="comment">// Not ready yet</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProducerMessage</span><span class="params">(channel channel, pld []<span class="keyword">byte</span>)</span> *<span class="title">sarama</span>.<span class="title">ProducerMessage</span></span> {</span><br><span class="line">    <span class="keyword">return</span> &amp;sarama.ProducerMessage{</span><br><span class="line">        Topic: channel.topic(),</span><br><span class="line">        Key:   sarama.StringEncoder(strconv.Itoa(<span class="keyword">int</span>(channel.partition()))), </span><br><span class="line">        Value: sarama.ByteEncoder(pld),</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Shopify/sarama">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-orderer-kafka/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1428,7 +1442,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1575,6 +1589,13 @@
 
 
   
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+
 
   
 
