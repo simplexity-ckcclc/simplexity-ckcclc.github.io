@@ -981,7 +981,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-18 15:04:21" itemprop="dateModified" datetime="2023-05-18T15:04:21+08:00">2023-05-18</time>
+                <time title="Modified: 2024-08-09 16:57:48" itemprop="dateModified" datetime="2024-08-09T16:57:48+08:00">2024-08-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -999,14 +999,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>9.1k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>30 mins.</span>
+              <span>38 mins.</span>
             </span>
 
         </div>
@@ -1018,30 +1018,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Service-Properties"><a href="#Service-Properties" class="headerlink" title="Service Properties"></a>Service Properties</h3><ol>
-<li>算法的适用范围<blockquote>
+          <h3 id="service-properties"><a class="markdownIt-Anchor" href="#service-properties"></a> Service Properties</h3>
+<ol>
+<li>算法的适用范围</li>
+</ol>
+<blockquote>
 <p>Our algorithm can be used to implement any deterministic replicated service with a state and some operations.</p>
 </blockquote>
-</li>
-</ol>
 <ul>
 <li><em>deterministic</em> ：确定性服务，即相同的参数执行相同操作，每次得到的结果都是一致的，不存在随机性（the execution of an operation in a given state and with a given set of arguments must always produce the same result）</li>
 <li><em>replicated</em> : 多副本</li>
 <li><em>a state and some operations</em> : 服务有相同的初始状态及相同的操作，保证当按相同顺序执行完相同的操作，各个副本的即时状态是完全一致的 (must start in the same state)</li>
 </ul>
-<ol>
-<li>在异步系统中要容忍<code>f</code>个恶意节点，则至少需要<code>3f+1</code>个节点才能提供safety and liveness（<em>Asynchronous Consensus and Broadcast Protocols</em>这篇论文中证明）。</li>
+<ol start="2">
+<li>在异步系统中要容忍<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span>个恶意节点，则至少需要<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>f</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3f+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个节点才能提供safety and liveness（<em>Asynchronous Consensus and Broadcast Protocols</em>这篇论文中证明）。</li>
 </ol>
 <ul>
 <li><em>safety</em> : 副本服务满足线性一致性，像在中心化服务中同时原子性的执行操作。不受恶意client数量影响，恶意client的操作可以通过被正常client感知，利用access control来限制。</li>
-<li><em>liveness</em> : 利用同步提供liveness（论文证明）。只要满足<code>3f+1</code>个节点，可以保证client持续重传，并且到达destination的传输时间没有无限的增长情况下，client最终会收到回复。</li>
+<li><em>liveness</em> : 利用同步提供liveness（论文证明）。只要满足<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>f</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3f+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个节点，可以保证client持续重传，并且到达destination的传输时间没有无限的增长情况下，client最终会收到回复。</li>
 </ul>
-<ol>
-<li>算法不提供隐私容错性，即隐私信息会泄漏给恶意节点<blockquote>
+<ol start="3">
+<li>算法不提供隐私容错性，即隐私信息会泄漏给恶意节点</li>
+</ol>
+<blockquote>
 <p>The algorithm does not address the problem of fault- tolerant privacy: a faulty replica may leak information to an attacker.</p>
 </blockquote>
-</li>
-</ol>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/consensus-pbft-paper/#more" rel="contents">

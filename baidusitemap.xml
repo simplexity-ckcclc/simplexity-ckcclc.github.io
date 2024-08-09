@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn//articles/consensus-pbft-paper/</loc>
+    <lastmod>2024-08-09</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn//articles/zk-snark-paper/</loc>
     <lastmod>2024-08-07</lastmod>
   </url>
@@ -43,10 +47,6 @@
   <url>
     <loc>https://simplexity.cn//articles/understanding-corda/</loc>
     <lastmod>2023-07-27</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn//articles/consensus-pbft-paper/</loc>
-    <lastmod>2023-05-18</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn//articles/consensus-pos/</loc>
