@@ -48,3 +48,6 @@ https://simplexity.cn/articles/fabric-source-chaincode-instantiate-chaincode-ini
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-system-chaincode/
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-chaincode-launch/
 https://simplexity.cn/articles/fabric-source-chaincode-instantiate-endorser-process-proposal/
+https://simplexity.cn/articles/fabric-source-chaincode-instantiate-peer/
+https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/
+https://simplexity.cn/articles/foreword/
