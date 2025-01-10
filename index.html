@@ -306,7 +306,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/dunbar-project/" class="post-title-link" itemprop="url">CBDC系列（7） - Dunbar项目(批发型CBDC跨境支付实验项目)</a>
+            <a href="/articles/dunbar-project/" class="post-title-link" itemprop="url">CBDC系列（7） - Dunbar项目(wCBDC跨境支付, 商业银行的多角色)</a>
         </h2>
 
         <div class="post-meta">
@@ -325,7 +325,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-06-06 16:30:45" itemprop="dateModified" datetime="2024-06-06T16:30:45+08:00">2024-06-06</time>
+                <time title="Modified: 2025-01-10 16:15:31" itemprop="dateModified" datetime="2025-01-10T16:15:31+08:00">2025-01-10</time>
               </span>
 
           <br>
@@ -354,30 +354,27 @@
 
       
           <p>Dunbar项目是BIS新加坡创新中心，the Reserve Bank of Australia (RBA), the Bank Negara Malaysia (BNM), the Monetary Authority of Singapore (MAS) and the South African Reserve Bank (SARB) 在2021年合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用，并在同年11月公开发布研究报告。具体参见BIS的项目介绍<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/about/bisih/topics/cbdc/dunbar.html">Project Dunbar: international settlements using multi-CBDCs</a>。</p>
-<p>Dunbar项目的探讨了跨境支付，FX等场景，与其他的跨境批发CBDC项目（例如Jura, mBridge等）关注点基本一致。同时，报告中也有其独特的有意思的一些设计。<br>1.项目的组织。项目拆分为设计和技术开发两个工作组，职责分离；设计工作组着眼于业务需求，包括交易流程设计，合规监管，治理模式等；而作为试验性的项目，技术开发采用了Corda（账本隔离，只能看到己方相关交易信息，不存在全局一本帐）和Quorum（类企业级以太坊，以dApp智能合约的方式按币种逻辑隔离，用Tessera方案解决隐私）两种常用的DLT技术路线并行开发原型，探讨不同的技术路线对于需求的满足度。整个过程采用敏捷开发的方式，拆分迭代，适合这种多团队间的合作。</p>
+<p>Dunbar项目的探讨了跨境支付，FX等场景，与其他的跨境批发CBDC项目（例如Jura, mBridge等）关注点基本一致。同时，报告中也有其独特的有意思的一些设计。<br>
+1.项目的组织。项目拆分为设计和技术开发两个工作组，职责分离；设计工作组着眼于业务需求，包括交易流程设计，合规监管，治理模式等；而作为试验性的项目，技术开发采用了Corda（账本隔离，只能看到己方相关交易信息，不存在全局一本帐）和Quorum（类企业级以太坊，以dApp智能合约的方式按币种逻辑隔离，用Tessera方案解决隐私）两种常用的DLT技术路线并行开发原型，探讨不同的技术路线对于需求的满足度。整个过程采用敏捷开发的方式，拆分迭代，适合这种多团队间的合作。</p>
 <div style="width:90%;margin:auto">
     <img src="/images/dunbar-project/sprint-objective.jpg">
     <div style="text-align: center">图1 拓扑</div>
 </div>
-
 <p>2.角色的划分。虽然项目的目的是为了解决当前跨境支付中依赖中介，导致交易链路长，耗时多，费用高等痛点，但考虑到实际中由于参与银行的规模，从属等，也试图最大程度利用代理银行的优势。项目将参与各方划分成以下多个角色职责，主要关注银行的划分。特许银行（一般是规模大实力强的本地银行）承担最多的职能，包括与传统支付系统互联，执行CBDC交易，登入其他非特许银行/非本地银行，对其进行AML审查等。相比其他项目里只考虑了直参，dunbar在角色设计考虑的更多，并且也赋予此类特许银行更高的权限，参与到整个项目的治理中，而并非仅仅只是规则遵守者。</p>
 <div style="width:70%;margin:auto">
     <img src="/images/dunbar-project/participant-role.jpg">
     <div style="text-align: center">图2 参与者角色</div>
 </div>
-
 <p>由于各参与方（主要是商业银行）的职责和参与度不同，跨境支付场景下的流程简化如下。其中，只有收付双方的Sponsor bank都执行完AML等风控措施通过后，批准执行交易，此交易才会在智能合约里执行。</p>
 <div style="width:70%;margin:auto">
     <img src="/images/dunbar-project/payment-flow.jpg">
     <div style="text-align: center">图3 跨境支付流程</div>
 </div>
-
 <p>对于FX，则对比了多个模型，其中考虑到AMM(Automated market- making)这种在加密资产业界常用的方式。具体的本期没有过多的展开和实现，留到将来的研究。</p>
 <div style="width:80%;margin:auto">
     <img src="/images/dunbar-project/fx-model.jpg">
     <div style="text-align: center">图4 FX模型</div>
 </div>
-
 <p>3.未来多平台互联。报告最后预测了将来的multi-CBDC平台会是多个地区性平台互联组成的一个通用平台，而不是全球唯一的。下一步的工作是保证这些平台的互联互通。个人深以为然，在当前BIS的牵头下已经存在了多个类似项目的持续试验和演进中，在技术上是可行的，在治理方面，各平台方有各自协商一致的治理方式，合规等，比起传统swift仅仅只是消息系统，当前的mCBDC平台赋予了更多的能力，及时结算，这个与各辖区的法令和风控制度等也有很大的关联，一个全球参与建设的平台从协商组织上难度也很大，最后很容易沦为寡头政治的金融工具。因此，当前BIS牵头的多个mCBDC平台在齐头并进，并且有更多的项目也在新增研发中。同一个实体同时参加不同的项目，不同的区域性性平台，也是会出现的。</p>
 
       
@@ -506,7 +503,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/inthanon-lionrock-phase-2/" class="post-title-link" itemprop="url">CBDC系列（5） - Inthonan-LionRock项目阶段 II (批发型CBDC跨境支付实验项目)</a>
+            <a href="/articles/inthanon-lionrock-phase-2/" class="post-title-link" itemprop="url">CBDC系列（5） - Inthonan-LionRock项目阶段 II (wCBDC跨境支付)</a>
         </h2>
 
         <div class="post-meta">
@@ -525,7 +522,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-12-27 17:15:23" itemprop="dateModified" datetime="2023-12-27T17:15:23+08:00">2023-12-27</time>
+                <time title="Modified: 2025-01-10 16:23:45" itemprop="dateModified" datetime="2025-01-10T16:23:45+08:00">2025-01-10</time>
               </span>
 
           <br>
@@ -600,7 +597,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/inthanon-lionrock-phase-1/" class="post-title-link" itemprop="url">CBDC系列（4） - Inthonan-LionRock项目阶段 I (批发型CBDC跨境支付实验项目)</a>
+            <a href="/articles/inthanon-lionrock-phase-1/" class="post-title-link" itemprop="url">CBDC系列（4） - Inthonan-LionRock项目阶段 I (wCBDC跨境支付)</a>
         </h2>
 
         <div class="post-meta">
@@ -619,7 +616,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-06-06 16:07:29" itemprop="dateModified" datetime="2024-06-06T16:07:29+08:00">2024-06-06</time>
+                <time title="Modified: 2025-01-10 16:23:24" itemprop="dateModified" datetime="2025-01-10T16:23:24+08:00">2025-01-10</time>
               </span>
 
           <br>
@@ -694,7 +691,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/jura-project/" class="post-title-link" itemprop="url">CBDC系列（3） - Jura项目(批发型CBDC跨境支付实验项目)</a>
+            <a href="/articles/jura-project/" class="post-title-link" itemprop="url">CBDC系列（3） - Jura项目(wCBDC跨境支付, 基于区块链的PvP & DvP)</a>
         </h2>
 
         <div class="post-meta">
@@ -713,7 +710,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-06-06 16:25:13" itemprop="dateModified" datetime="2024-06-06T16:25:13+08:00">2024-06-06</time>
+                <time title="Modified: 2025-01-10 16:22:12" itemprop="dateModified" datetime="2025-01-10T16:22:12+08:00">2025-01-10</time>
               </span>
 
           <br>
@@ -746,8 +743,6 @@
     <img src="/images/jura-project/architecture.png">
     <div style="text-align: center">图1 拓扑</div>
 </div>
-
-
 <p>项目的主要技术服务商是R3，技术架构就采用了Corda。这个是wholesale CBDC的场景，Corda的性能和设计理念也算比较契合。</p>
 <ol>
 <li>资产代币化asset tokenize。商业票据Comercial Paper（CP）由DAR生成数字资产，通过Gateway（也就是图中的NATIXIS）mirror映射到平台上，同时赋予了所有者等属性。对应到Corda里的概念，就是state，可关联到实际环境中的资产和条款等。Corda的这种设计，将wCBDC和CP在技术逻辑上一致，使得这个单一的第三方运营的SDX测试平台可以用相似的逻辑去支持PvP和DvP交易。</li>
@@ -759,19 +754,10 @@
 <div style="width:50%;margin:auto">
     <img src="/images/jura-project/dual-notary-1.png">
 </div>
-
 <div style="width:50%;margin:auto">
     <img src="/images/jura-project/dual-notary-2.png">
     <div style="text-align: center">图2 dual-notary signing机制</div>
 </div>
-
-
-
-
-
-
-
-
 
       
     </div>
