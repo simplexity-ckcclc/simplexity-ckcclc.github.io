@@ -428,7 +428,7 @@ Pinocchio 协议是针对 GGPR 论文的改进，在3.1节中也提到了实现�
       </tags>
   </entry>
   <entry>
-    <title>CBDC系列（3） - Jura项目(wCBDC跨境支付, 基于区块链的PvP &amp; DvP)</title>
+    <title>CBDC系列（3） - Jura项目(wCBDC跨境支付, 基于DLT的PvP &amp; DvP)</title>
     <url>//articles/jura-project/</url>
     <content><![CDATA[<p>Jura项目是BIS创新中心，Bank of France，Swiss National Bank在2021年合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用，并在同年12月公开发布研究报告。具体参见BIS的项目介绍<a href="https://www.bis.org/about/bisih/topics/cbdc/jura.htm">Project Jura - Cross-border settlement using wholesale CBDC</a>。</p>
 <div style="width:70%;margin:auto">
