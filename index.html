@@ -941,7 +941,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-09 17:21:28" itemprop="dateModified" datetime="2023-05-09T17:21:28+08:00">2023-05-09</time>
+                <time title="Modified: 2025-01-10 16:04:02" itemprop="dateModified" datetime="2025-01-10T16:04:02+08:00">2025-01-10</time>
               </span>
 
           <br>
@@ -950,14 +950,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>6 mins.</span>
             </span>
 
         </div>
@@ -969,15 +969,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          架构与策略在实践中检验和演进。实践出真知。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/retry-strategy/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h3 id="场景描述"><a class="markdownIt-Anchor" href="#场景描述"></a> 场景描述</h3>
+<p>系统需要每个小时启动多个定时任务，分别与若干个第三方系统进行交互，执行批处理任务。各个批处理定时任务具备强独立性，即第三方系统间相互独立，即A系统的失败不影响B系统的任务；同一系统各个批次的任务相互独立，即A系统0点的任务失败不影响1点的任务。批处理任务的实时性要求低，且存在一定的失败概率（原因可能来自本系统，也可能是第三方系统）。如果是因为系统bug，则此修复时间可能会相对较长。因而，容易积累大量的失败历史任务。失败的任务可以并且需要重试，同时重试不能影响当前时刻正常运行的任务。因为重试过程同样占用系统资源，因此需要限制每个小时重试的任务数。当存在大量的失败任务时，需要相应的调度策略来从中选择重试的任务。</p>
+<h3 id="策略一-平均主义"><a class="markdownIt-Anchor" href="#策略一-平均主义"></a> 策略一： 平均主义</h3>
+<h4 id="基本策略"><a class="markdownIt-Anchor" href="#基本策略"></a> 基本策略</h4>
+<p>轮询的方式，每个小时重试选择<code>updateTime</code>距今最久远的任务（重试的时候会更新<code>updateTime</code>）。同时设置重试任务的<code>createTime</code>阈值（例如最近一个月），早于此时间创建的任务将不再自动重试，需要人工介入。保证任务调度相对公平，每个任务重试的间隔大致相同，历史任务避免饥饿问题。</p>
+<h4 id="遇到问题"><a class="markdownIt-Anchor" href="#遇到问题"></a> 遇到问题</h4>
+<ol>
+<li>实际运行过程中发现此方案无法很好的应对系统抖动。当本系统恰好在正常任务调度时刻进行系统更新，导致本批次所有定时任务都失败。同时存在A系统因为其系统bug，每个批次都是失败状态。由于积压了大量的A系统的历史失败任务，并且优先重试最早的任务，导致本批次的所有任务被挤压到重试队列的最后。即先把A系统的历史任务都重试，导致A系统外的所有系统被影响，甚至可能需要等上若干天。间接破坏了系统间的独立性。</li>
+<li>极端情况下，当全局只有唯一失败任务，并且该任务理论上无法成功时，该任务仍然会被每小时重试，浪费系统资源。</li>
+</ol>
+<h3 id="策略二指数退避"><a class="markdownIt-Anchor" href="#策略二指数退避"></a> 策略二：指数退避</h3>
+<h4 id="改进思路"><a class="markdownIt-Anchor" href="#改进思路"></a> 改进思路</h4>
+<ol>
+<li>原则上，最近失败的更新鲜的任务应该是被调度重试的优先级更高，而且被重试的频率概率更高。</li>
+<li>对于历史失败任务，不再每个小时都尝试去重试，以减小系统压力。</li>
+</ol>
+<h4 id="具体方式"><a class="markdownIt-Anchor" href="#具体方式"></a> 具体方式</h4>
+<ol>
+<li>采用指数退避方式，退避间隔以2的指数增长，最大间隔32小时。例如，0点的任务，<strong>计划重试</strong>的时间依次为： 1点，3点，7点，15点，第二天7点（+16），（+32），（+32）， …。 在间隔内的其他时刻，例如2点，4点，5点等，不再尝试重试。</li>
+<li>对于每个失败任务，按照以下方式<strong>粗略计算</strong>优先级，由高到低排序选择。若当前时刻在下一次计划重试前，则计算所得的<code>priority</code>非正数，该任务需要被过滤掉不在当前时刻重试。</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">priority = (backoffToNow + 1) / (createToUpdate + 1)</span><br><span class="line"></span><br><span class="line">priority：优先级</span><br><span class="line">backoff：下一个计划重试时刻</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="若干简单案例"><a class="markdownIt-Anchor" href="#若干简单案例"></a> 若干简单案例</h4>
+<ol>
+<li>0点的任务，更新时间是1点（上次重试），当前时间是2点，下一个计划重试时间3点，计算出来 <code>p = (2-3+1) / (1-0+1) = 0</code>， 非正数，意味下一个计划调度时间在未来，当前时刻不尝试。</li>
+<li>当前时间2点，两个任务，第一个是0点的任务，计划1点重试，由于1点时候存在大量重试任务（例如0点批次所有系统都失败），重试名额有限没有被选择；第二个任务是1点的，计划2点重试，计算出来 <code>p1 = (2-1+1) / (1-0+1) = 1</code>，<code>p2 = (2-2+1) / (2-1+1) = 0.5</code>，任务1的优先级更高。虽然两个任务都是第一次调度，但任务1的计划时间更早，也就是滞后其计划重试时间更长。</li>
+<li>当前时间7点，两个任务，第一个是0点的任务，更新时间是3点（第二次重试），计划7点重试；第二个任务是4点的，更新时间是5点（第一次重试），也是计划7点重试，计算出来 <code>p1 = (7-7+1) / (3-0+1) = 0.25</code>，<code>p2 = (7-7+1) / (5-4+1) = 0.5</code>，任务2的优先级更高。虽然两个任务都是当前时刻计划重试，但任务2更新鲜，重试次数更少。</li>
+</ol>
+<ul>
+<li>以上仅仅是以简单的方式来选择任务，并非精确计算，有可能在更复杂的组合情况下优先级排序存在问题。**但基本上能保证在新鲜的任务在较短的时间内得到充分的尝试，历史任务得到的机会将会快速衰减。**由于所有任务采用相同的退避策略，仅仅是因为新鲜度导致退避间隔差异，可以认为仍然保留公平性。此方案更多强调应对系统的抖动，同时隐式的认为历史任务的价值随着时间的推移逐步的降低。</li>
+</ul>
+<h3 id="未来工作"><a class="markdownIt-Anchor" href="#未来工作"></a> 未来工作</h3>
+<p>考虑到存在个别系统的bug导致存在大量的失败任务，可引入公平队列，防止单个系统占据了绝大部分的系统资源。</p>
+
       
     </div>
 
