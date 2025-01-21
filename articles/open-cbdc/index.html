@@ -18,19 +18,19 @@
     var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：  论文 : A High Performance Payment Processing System Designed for Central Bank Digital Currenciesgithub仓库 : OpenCBDC    设计目标当前阶段1属于研究">
+  <meta name="description" content="基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：  论文 : A High Performance Payment Processing System Designed for Central Bank Digital Currencies github仓库 : OpenCBDC   设计目标 当前阶段1属于研">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CBDC系列（1） - OpenCBDC项目">
+<meta property="og:title" content="CBDC系列（1） - OpenCBDC项目(rCBDC)">
 <meta property="og:url" content="https://simplexity.cn/articles/open-cbdc/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：  论文 : A High Performance Payment Processing System Designed for Central Bank Digital Currenciesgithub仓库 : OpenCBDC    设计目标当前阶段1属于研究">
+<meta property="og:description" content="基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：  论文 : A High Performance Payment Processing System Designed for Central Bank Digital Currencies github仓库 : OpenCBDC   设计目标 当前阶段1属于研">
 <meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/opencbdc/tx-format.jpeg">
 <meta property="og:image" content="https://simplexity.cn/images/opencbdc/compact-tx.jpeg">
 <meta property="og:image" content="https://simplexity.cn/images/opencbdc/2PC-architecture.jpeg">
 <meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8">
 <meta property="article:published_time" content="2023-02-06T08:06:24.000Z">
-<meta property="article:modified_time" content="2023-11-30T07:55:49.726Z">
+<meta property="article:modified_time" content="2025-01-21T06:24:12.860Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="CBDC">
 <meta name="twitter:card" content="summary">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>CBDC系列（1） - OpenCBDC项目 | Simplexity</title>
+  <title>CBDC系列（1） - OpenCBDC项目(rCBDC) | Simplexity</title>
   
 
 
@@ -204,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CBDC系列（1） - OpenCBDC项目
+          CBDC系列（1） - OpenCBDC项目(rCBDC)
         </h1>
 
         <div class="post-meta">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-11-30 15:55:49" itemprop="dateModified" datetime="2023-11-30T15:55:49+08:00">2023-11-30</time>
+                <time title="Modified: 2025-01-21 14:24:12" itemprop="dateModified" datetime="2025-01-21T14:24:12+08:00">2025-01-21</time>
               </span>
 
           
@@ -260,34 +260,41 @@
       
         <p>基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：</p>
 <blockquote>
-<p>论文 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a>  </p>
+<p>论文 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>
+github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a></p>
 </blockquote>
-<h3 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h3><p>当前阶段1属于研究性质，更多是在于探索技术上的可能性，并不是一个即插即用的成熟方案。设计目标着眼于性能以及容错，同时保留足够的灵活性（不限定发行的方式，支持中央银行直接零售发行，也支持类似于数字人民币的批发-零售双层运营模式）。同时，对于其他的课题，例如隐私保护，风控，合规，监管，商业化等也没有深入讨论。（对于隐私保护，论文里提到最安全方式就是从交易源头开始尽可能的少收集数据，这个也在阶段1的设计考虑中。<em>当然，隐私保护与监管风控的目标在一定程度上是对立的。</em>）这些问题会在阶段2里阐述。</p>
-<h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><ol>
+<h3 id="设计目标"><a class="markdownIt-Anchor" href="#设计目标"></a> 设计目标</h3>
+<p>当前阶段1属于研究性质，更多是在于探索技术上的可能性，并不是一个即插即用的成熟方案。设计目标着眼于性能以及容错，同时保留足够的灵活性（不限定发行的方式，支持中央银行直接零售发行，也支持类似于数字人民币的批发-零售双层运营模式）。同时，对于其他的课题，例如隐私保护，风控，合规，监管，商业化等也没有深入讨论。（对于隐私保护，论文里提到最安全方式就是从交易源头开始尽可能的少收集数据，这个也在阶段1的设计考虑中。<em>当然，隐私保护与监管风控的目标在一定程度上是对立的。</em>）这些问题会在阶段2里阐述。</p>
+<h3 id="设计思想"><a class="markdownIt-Anchor" href="#设计思想"></a> 设计思想</h3>
+<ol>
 <li>UTXO模型。用户持有数字钱包，使用私钥签名的方式来消费。</li>
 <li>分层解耦。将交易的合法性验证和资金的存在性验证分离，只有合法性验证才需要交易的细节信息，最小化交易处理核心层的存储（不涉及用户个人信息等）。核心层简单的只做纯粹的资金交易（UTXO的生成和销毁），保证稳定性和性能。货币的扩展功能做在外层。</li>
 <li>基于UHS(Unspent funds Hash Set)和类似比特币交易的数据结构。兼容未来譬如类似地添加锁定脚本等，而无需修改UHS交易核心层的前提下实现扩展功能。</li>
 </ol>
 <span id="more"></span>
-<h3 id="账户模型-VS-UTXO模型"><a href="#账户模型-VS-UTXO模型" class="headerlink" title="账户模型 VS. UTXO模型"></a>账户模型 VS. UTXO模型</h3><ol>
+<h3 id="账户模型-vs-utxo模型"><a class="markdownIt-Anchor" href="#账户模型-vs-utxo模型"></a> 账户模型 VS. UTXO模型</h3>
+<ol>
 <li>UTXO有更好的执行并行度，账户模型需要锁定账户。OpenCBDC选择UTXO模型。</li>
 <li>账户模型更具易编程性。</li>
 <li><code>Account banlances are more fungible, which is an important property for money.</code></li>
 <li><code>It might be useful to consider an account balance data model which minimizes the amount of data stored in the transaction processor in the future.</code> 未来可能尝试对比账户模型。</li>
 <li>两种模型都支持账户模型式的用户界面UI。</li>
 </ol>
-<h3 id="UTXO数据结构"><a href="#UTXO数据结构" class="headerlink" title="UTXO数据结构"></a>UTXO数据结构</h3><p><code>utxo := (v,P,sn)</code>    </p>
+<h3 id="utxo数据结构"><a class="markdownIt-Anchor" href="#utxo数据结构"></a> UTXO数据结构</h3>
+<p><code>utxo := (v,P,sn)</code></p>
 <ol>
 <li><code>v</code>: value，金额。</li>
 <li><code>P(tx, wit)</code>: predicate. <code>tx</code>: 消费此UTXO的交易，<code>wit</code>: witness，见证。在支持数字签名的方案里<code>P</code>硬编码pk，并且<code>P</code>校验<code>w</code>包含该pk的签名。在只支持数字签名的方案里，<code>P</code>可以近似等同于<code>pk</code>。</li>
 <li><code>sn</code>: serial number，全局唯一的序列号，用于保证UTXO的唯一性，防止重放双花。<code>our system assigns each UTXO a serial number by deterministically hashing all the corresponding transaction’s inputs, as well as the output UTXO’s encumbrance, value, and its index among all outputs.</code> 铸币的<code>sn</code>选择为均匀分布随机数或者全局单调递增数。</li>
 <li>交易不具有延展性（non-malleable），可参考比特币，防双花。<code>we require signatures to cover all fields of uniquely-encoded transaction and derive UTXO serial numbers from the same fields (plus, output indexes).</code></li>
 </ol>
-<h3 id="交易系统的双层设计思想"><a href="#交易系统的双层设计思想" class="headerlink" title="交易系统的双层设计思想"></a>交易系统的双层设计思想</h3><ol>
-<li><code>transaction-local validation</code>交易合法性验证。主要校验数据结构，输入输出金额相等，签名等。无状态，计算密集型。生成UHS，即cryptographic commitments <code>h := H(v, P, sn)</code>。使用hash值代替交易本身，利用hash碰撞极低概率的特性。</li>
-<li><code>existence validation</code>交易引擎。存储UHS，执行实际的swap操作（UHS的增删，即对应着UTXO的生成销毁）。存储密集型。  </li>
+<h3 id="交易系统的双层设计思想"><a class="markdownIt-Anchor" href="#交易系统的双层设计思想"></a> 交易系统的双层设计思想</h3>
+<ol>
+<li><code>transaction-local validation</code>交易合法性验证。主要校验数据结构，输入输出金额相等，签名等。无状态，计算密集型。生成UHS，即cryptographic commitments <code>h := H(v, P, sn) </code>。使用hash值代替交易本身，利用hash碰撞极低概率的特性。</li>
+<li><code>existence validation</code>交易引擎。存储UHS，执行实际的swap操作（UHS的增删，即对应着UTXO的生成销毁）。存储密集型。</li>
 </ol>
-<h4 id="设计关键思考："><a href="#设计关键思考：" class="headerlink" title="设计关键思考："></a>设计关键思考：</h4><ul>
+<h4 id="设计关键思考"><a class="markdownIt-Anchor" href="#设计关键思考"></a> 设计关键思考：</h4>
+<ul>
 <li>按需弹性横向扩容。</li>
 <li>节省存储空间。交易引擎只存储32字节的hash值。</li>
 <li>弹性设计。交易引擎的UHS结构也可以用于账户模型。<code>The UHS makes no assumptions about what hashes represent, and this data structure is not limited to UTXOs; it could be applied to a digital currency with balances or some other application that requires atomically swapping hashes.</code> <em>账户模型下具体如何对应UHS的增删仍然有待观察，一种方式是账户模型下记账关联UTXO，由合法性验证sentinel来拆分合并UTXO</em></li>
@@ -295,32 +302,46 @@
 <li>编程性。并发处理下，UTXO相对账户模型具有一定的优势，账户模式需要锁定账户，UTXO锁定的粒度更小。但是，UTXO要实现复杂的智能合约难度更大，需要在后续智能合约触发使用UTXO时知道状态转移链，以及每个状态的UTXO才能构造交易。而账户模型仅仅需要账户标志。</li>
 <li>UTXO的获取。UTXO记录在用户本地，交易完成需要通知收发双发。用户丢失UTXO，或者更换设备UTXO转移失败，都需要恢复。但是当前设计下整个系统没有记录UTXO，需要第三方系统协助。</li>
 </ul>
-<h3 id="交易模型"><a href="#交易模型" class="headerlink" title="交易模型"></a>交易模型</h3><ul>
-<li><p>交易数据结构<br></p><div align="center" style="width:50%;margin:auto">
-  <img src="/images/opencbdc/tx-format.jpeg">
-</div><br>  UTXO的序列号<code>sn := (txid, idx). The first component, txid is the unique transaction identifier: the cryptographic hash of the Mint or Transfer transaction that created this UTXO. This hash covers all input UTXOs, output encumbrances and values. The second component, idx, is the particular output index, i.e., first, second, etc, output of the transaction.</code><p></p>
-</li>
-<li><p>交易引擎的存储及原子性swap处理<br><img src="/images/opencbdc/compact-tx.jpeg" alt=""></p>
-</li>
+<h3 id="交易模型"><a class="markdownIt-Anchor" href="#交易模型"></a> 交易模型</h3>
+<ul>
+<li>交易数据结构</li>
 </ul>
-<h3 id="用户体验及交互场景"><a href="#用户体验及交互场景" class="headerlink" title="用户体验及交互场景"></a>用户体验及交互场景</h3><ol>
+<div align="center" style="width:50%;margin:auto">
+    <img src="/images/opencbdc/tx-format.jpeg">
+</div>
+    UTXO的序列号`sn := (txid, idx). The first component, txid is the unique transaction identifier: the cryptographic hash of the Mint or Transfer transaction that created this UTXO. This hash covers all input UTXOs, output encumbrances and values. The second component, idx, is the particular output index, i.e., first, second, etc, output of the transaction.`
+<ul>
+<li>交易引擎的存储及原子性swap处理<br>
+<img src="/images/opencbdc/compact-tx.jpeg" alt=""></li>
+</ul>
+<h3 id="用户体验及交互场景"><a class="markdownIt-Anchor" href="#用户体验及交互场景"></a> 用户体验及交互场景</h3>
+<ol>
 <li>交互场景收发双方需要协商，发送方需要得到接收方的pk。接收者需要收到output utxo，并且确认这笔transfer交易成功，否则这笔资金有可能无法被使用。<code>The recipient should not consider a payment “complete” until they have received both a confirmation from the transaction processor and the full preimage data for their new outputs.</code></li>
-<li>非交互的交易场景，例如扫描静态二维码慈善捐款场景，交易系统先存储这些output，接收方后续查询。需要系统存储pk和utxo的对应关系，交易间的关系容易被追踪，有隐私泄露的隐患。  </li>
+<li>非交互的交易场景，例如扫描静态二维码慈善捐款场景，交易系统先存储这些output，接收方后续查询。需要系统存储pk和utxo的对应关系，交易间的关系容易被追踪，有隐私泄露的隐患。</li>
 </ol>
-<h4 id="交易系统确认方式"><a href="#交易系统确认方式" class="headerlink" title="交易系统确认方式"></a>交易系统确认方式</h4><ul>
+<h4 id="交易系统确认方式"><a class="markdownIt-Anchor" href="#交易系统确认方式"></a> 交易系统确认方式</h4>
+<ul>
 <li>交易执行成功后，交易系统对结果签名，返回发送方。发送方直接中继给接收方确认。</li>
 <li>构造交易时，交易结构增加<code>callback endpoint</code>。交易系统执行成功后，回调此endpoint通知接收方。此方案依赖于callback endpoint的可用性，暂时不可用时需要支持降级查询功能，增加了系统的存储需求，也就记录交易主体和交易本身的关联关系。<em>本方案里很关注隐私保护的考虑，也就是尽可能的减少交易可被追踪的可能性。此确认方式有所冲突</em>。</li>
 </ul>
-<h4 id="交易方式局限性"><a href="#交易方式局限性" class="headerlink" title="交易方式局限性"></a>交易方式局限性</h4><p>当前 <strong>无法</strong> 支持由收款方主动发起（例如代发工资，划扣生活缴费等场景），因为构造交易需要指定input utxo并且发送方签名，在缺少发送方的知识和私钥的情况下，难以构造合法交易。<em>账户模式以记账模式比较容易实现。</em></p>
-<h3 id="交易系统架构设计"><a href="#交易系统架构设计" class="headerlink" title="交易系统架构设计"></a>交易系统架构设计</h3><h4 id="1-全局有序方案"><a href="#1-全局有序方案" class="headerlink" title="1. 全局有序方案"></a>1. 全局有序方案</h4><p><strong><em>TBD</em></strong></p>
-<h4 id="2-两阶段提交方案"><a href="#2-两阶段提交方案" class="headerlink" title="2. 两阶段提交方案"></a>2. 两阶段提交方案</h4><p><img src="/images/opencbdc/2PC-architecture.jpeg" alt=""></p>
+<h4 id="交易方式局限性"><a class="markdownIt-Anchor" href="#交易方式局限性"></a> 交易方式局限性</h4>
+<p>当前 <strong>无法</strong> 支持由收款方主动发起（例如代发工资，划扣生活缴费等场景），因为构造交易需要指定input utxo并且发送方签名，在缺少发送方的知识和私钥的情况下，难以构造合法交易。<em>账户模式以记账模式比较容易实现。</em></p>
+<h3 id="交易系统架构设计"><a class="markdownIt-Anchor" href="#交易系统架构设计"></a> 交易系统架构设计</h3>
+<h4 id="1-全局有序方案"><a class="markdownIt-Anchor" href="#1-全局有序方案"></a> 1. 全局有序方案</h4>
+<p><em><strong>TBD</strong></em></p>
+<h4 id="2-两阶段提交方案"><a class="markdownIt-Anchor" href="#2-两阶段提交方案"></a> 2. 两阶段提交方案</h4>
+<p><img src="/images/opencbdc/2PC-architecture.jpeg" alt=""></p>
 <ul>
-<li>批量执行。两阶段执行结果是具备确定性的，批量内的交易可能会因为相互冲突导致部分失败。</li>
-<li><p>集群容错。每个组件都使用Raft协议保证数据一致性。</p>
-<p>  <em>工程实现上仍然还有很多细节需要考虑设计，极端场景，边缘场景等，这些无法在论文里展开详述。</em></p>
+<li>
+<p>批量执行。两阶段执行结果是具备确定性的，批量内的交易可能会因为相互冲突导致部分失败。</p>
+</li>
+<li>
+<p>集群容错。每个组件都使用Raft协议保证数据一致性。</p>
+<p><em>工程实现上仍然还有很多细节需要考虑设计，极端场景，边缘场景等，这些无法在论文里展开详述。</em></p>
 </li>
 </ul>
-<h3 id="未来的工作"><a href="#未来的工作" class="headerlink" title="未来的工作"></a>未来的工作</h3><ol>
+<h3 id="未来的工作"><a class="markdownIt-Anchor" href="#未来的工作"></a> 未来的工作</h3>
+<ol>
 <li>隐私保护，费用，风控，合规</li>
 <li>中间机构（例如商业银行）的作用</li>
 <li>离线支付</li>
@@ -328,8 +349,10 @@
 <li>丰富使用场景，提升用户体验。通知收发双方确认交易完成和隐私保护间的平衡</li>
 <li>提升系统性能（先消费input UTXO，延迟生成output UTXO）</li>
 </ol>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><ol>
-<li><p>CBDC领域里UTXO模型有局限性，某些场景下等同于账户模型。</p>
+<h3 id="思考"><a class="markdownIt-Anchor" href="#思考"></a> 思考</h3>
+<ol>
+<li>
+<p>CBDC领域里UTXO模型有局限性，某些场景下等同于账户模型。</p>
 <ul>
 <li>正如论文里提到的用户体验，如何将可用UTXO通知到用户，并且需要能支持查询，恢复。这就涉及到UTXO的存储和用户关系（可能是pk）的管理，这就类似于账户模型了。一旦pk关联的用户被获得，就完全退化为账户模型。</li>
 <li>目前难以实现由收款方主动发起且付款方一次授权后续无需参与的交易，因为前提是需要获取到付款方的可用UTXO。可以由货币发行方统一管理和记录，用户和UTXO的对应关系，但这一定程度上也等价于账户模型。或者授权第三方，这需要付款方及时将可用UTXO发送到第三方，保证充足的头寸。这些方案都需要将私钥托管。这就涉及到隐私保护和支付安全的问题，虽然可以通过签订协议，以及为不同的场景生成不同的密钥对来一定程度上保护。账户模型下，也可以通过开立专用账户达到同样的效果。</li>
@@ -337,9 +360,13 @@
 <li>类似账户模型的分级管理等风控手段，业务规则在UTXO模型下可能难以使用。</li>
 </ul>
 </li>
-<li><p>智能合约与UTXO结合更能达到对支付的有效控制。<br>UTXO模型下，智能合约的代码是内生在UTXO数据结构本身的（witness字段），类似于比特币里的锁定脚本，智能合约控制着UTXO是否能被消费。而相比之下账户模型下智能合约的执行和记账本身是分离的，理论上存在绕开智能合约直接改动账本的可能性。当然，witness字段必须尽可能的少占据空间，因此也限制了智能合约的复杂性，同时能够通过脚本语言做到图灵完备，或者简化的满足CBDC领域的需要，这点仍然有待更多的研究。</p>
+<li>
+<p>智能合约与UTXO结合更能达到对支付的有效控制。<br>
+UTXO模型下，智能合约的代码是内生在UTXO数据结构本身的（witness字段），类似于比特币里的锁定脚本，智能合约控制着UTXO是否能被消费。而相比之下账户模型下智能合约的执行和记账本身是分离的，理论上存在绕开智能合约直接改动账本的可能性。当然，witness字段必须尽可能的少占据空间，因此也限制了智能合约的复杂性，同时能够通过脚本语言做到图灵完备，或者简化的满足CBDC领域的需要，这点仍然有待更多的研究。</p>
 </li>
-<li><p>隐私和监管的平衡。<br>UTXO的隐私性更强，监管难度更大。由于用户理论上可以无限的自由生成公私钥对，并且生成的密钥对里无法反向推出用户信息。再结合混币器混淆等技术，UTXO的交易路径也很难被追踪，相比账户模型，其隐私保护的能力更强。同时从监管角度更难追踪交易流向。对于涉及到反诈骗反洗钱反恐怖融资等场景，监管当局对风险交易和账户及时的识别和处置风险难度很大，手段较为有限。账户模型下采用冻结账户和资金等方式则较为简单有效。当然，这也是一把双刃剑，在国际纷争中也很容易成为“制裁”的武器。</p>
+<li>
+<p>隐私和监管的平衡。<br>
+UTXO的隐私性更强，监管难度更大。由于用户理论上可以无限的自由生成公私钥对，并且生成的密钥对里无法反向推出用户信息。再结合混币器混淆等技术，UTXO的交易路径也很难被追踪，相比账户模型，其隐私保护的能力更强。同时从监管角度更难追踪交易流向。对于涉及到反诈骗反洗钱反恐怖融资等场景，监管当局对风险交易和账户及时的识别和处置风险难度很大，手段较为有限。账户模型下采用冻结账户和资金等方式则较为简单有效。当然，这也是一把双刃剑，在国际纷争中也很容易成为“制裁”的武器。</p>
 </li>
 </ol>
 <p>总而言之，当前金融系统采用账户模型，这一套运行体系已经很成熟了。要在货币领域转到UTXO的方式还缺少可以借鉴的成功案例，在讲求稳定的金融领域，这个目前还只能算是很初级的研究阶段，距离落地还有很长一段距离。当然，UTXO还是有很多优点，例如与智能合约的结合实现更有效的专款专用和监管。但可以确定的是，加密货币领域单纯的UTXO模型是无法完全适用于CBDC领域的。在当前的传统账户模型下，如何利用UTXO模型的优点，这是应该着力探索的方向，大概率是账户模型和UTXO的有机结合。至于OpenCBDC项目的第一阶段，尽管中心化系统，没有使用区块链，但是借鉴和组合了当前很多区块链和分布式应用领域的技术，本身并没有特别多的亮点，除了引发对CBDC的数据模型的思考，仅仅是因为其背景和宣称的实验室测试数据而受人关注。很多工程细节都没有考虑，这些在一定程度上肯定会影响系统的复杂度和性能。还是期待下一个阶段能有一些更有创新性或者更接近落地的成果。</p>
@@ -382,8 +409,8 @@
       <i class="fa fa-chevron-left"></i> WebAssembly 2.0新特性
     </a></div>
       <div class="post-nav-item">
-    <a href="/articles/digital-euro-tiered-model/" rel="next" title="CBDC系列（2） - 数字欧元研究报告（分层架构）浅析">
-      CBDC系列（2） - 数字欧元研究报告（分层架构）浅析 <i class="fa fa-chevron-right"></i>
+    <a href="/articles/digital-euro-tiered-model/" rel="next" title="CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析">
+      CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -443,7 +470,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text">设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A6%E6%88%B7%E6%A8%A1%E5%9E%8B-VS-UTXO%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">账户模型 VS. UTXO模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTXO%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">UTXO数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%8C%E5%B1%82%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">5.</span> <span class="nav-text">交易系统的双层设计思想</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%85%B3%E9%94%AE%E6%80%9D%E8%80%83%EF%BC%9A"><span class="nav-number">5.1.</span> <span class="nav-text">设计关键思考：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">交易模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E5%8F%8A%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF"><span class="nav-number">7.</span> <span class="nav-text">用户体验及交互场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E7%A1%AE%E8%AE%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">7.1.</span> <span class="nav-text">交易系统确认方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%96%B9%E5%BC%8F%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">7.2.</span> <span class="nav-text">交易方式局限性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.</span> <span class="nav-text">交易系统架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%A8%E5%B1%80%E6%9C%89%E5%BA%8F%E6%96%B9%E6%A1%88"><span class="nav-number">8.1.</span> <span class="nav-text">1. 全局有序方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%96%B9%E6%A1%88"><span class="nav-number">8.2.</span> <span class="nav-text">2. 两阶段提交方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">未来的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text">思考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text"> 设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text"> 设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A6%E6%88%B7%E6%A8%A1%E5%9E%8B-vs-utxo%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text"> 账户模型 VS. UTXO模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#utxo%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text"> UTXO数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%8C%E5%B1%82%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">5.</span> <span class="nav-text"> 交易系统的双层设计思想</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%85%B3%E9%94%AE%E6%80%9D%E8%80%83"><span class="nav-number">5.1.</span> <span class="nav-text"> 设计关键思考：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text"> 交易模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E5%8F%8A%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF"><span class="nav-number">7.</span> <span class="nav-text"> 用户体验及交互场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E7%A1%AE%E8%AE%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">7.1.</span> <span class="nav-text"> 交易系统确认方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%96%B9%E5%BC%8F%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">7.2.</span> <span class="nav-text"> 交易方式局限性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.</span> <span class="nav-text"> 交易系统架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%A8%E5%B1%80%E6%9C%89%E5%BA%8F%E6%96%B9%E6%A1%88"><span class="nav-number">8.1.</span> <span class="nav-text"> 1. 全局有序方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%96%B9%E6%A1%88"><span class="nav-number">8.2.</span> <span class="nav-text"> 2. 两阶段提交方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text"> 未来的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text"> 思考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

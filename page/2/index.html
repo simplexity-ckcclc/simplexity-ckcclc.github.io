@@ -196,7 +196,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/digital-euro-tiered-model/" class="post-title-link" itemprop="url">CBDC系列（2） - 数字欧元研究报告（分层架构）浅析</a>
+            <a href="/articles/digital-euro-tiered-model/" class="post-title-link" itemprop="url">CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析</a>
         </h2>
 
         <div class="post-meta">
@@ -215,7 +215,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-08 11:34:50" itemprop="dateModified" datetime="2023-05-08T11:34:50+08:00">2023-05-08</time>
+                <time title="Modified: 2025-01-21 14:24:43" itemprop="dateModified" datetime="2025-01-21T14:24:43+08:00">2025-01-21</time>
               </span>
 
           <br>
@@ -224,14 +224,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>10 mins.</span>
             </span>
 
         </div>
@@ -301,7 +301,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/open-cbdc/" class="post-title-link" itemprop="url">CBDC系列（1） - OpenCBDC项目</a>
+            <a href="/articles/open-cbdc/" class="post-title-link" itemprop="url">CBDC系列（1） - OpenCBDC项目(rCBDC)</a>
         </h2>
 
         <div class="post-meta">
@@ -320,7 +320,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-11-30 15:55:49" itemprop="dateModified" datetime="2023-11-30T15:55:49+08:00">2023-11-30</time>
+                <time title="Modified: 2025-01-21 14:24:12" itemprop="dateModified" datetime="2025-01-21T14:24:12+08:00">2025-01-21</time>
               </span>
 
           <br>
@@ -350,10 +350,13 @@
       
           <p>基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：</p>
 <blockquote>
-<p>论文 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a>  </p>
+<p>论文 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>
+github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a></p>
 </blockquote>
-<h3 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h3><p>当前阶段1属于研究性质，更多是在于探索技术上的可能性，并不是一个即插即用的成熟方案。设计目标着眼于性能以及容错，同时保留足够的灵活性（不限定发行的方式，支持中央银行直接零售发行，也支持类似于数字人民币的批发-零售双层运营模式）。同时，对于其他的课题，例如隐私保护，风控，合规，监管，商业化等也没有深入讨论。（对于隐私保护，论文里提到最安全方式就是从交易源头开始尽可能的少收集数据，这个也在阶段1的设计考虑中。<em>当然，隐私保护与监管风控的目标在一定程度上是对立的。</em>）这些问题会在阶段2里阐述。</p>
-<h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><ol>
+<h3 id="设计目标"><a class="markdownIt-Anchor" href="#设计目标"></a> 设计目标</h3>
+<p>当前阶段1属于研究性质，更多是在于探索技术上的可能性，并不是一个即插即用的成熟方案。设计目标着眼于性能以及容错，同时保留足够的灵活性（不限定发行的方式，支持中央银行直接零售发行，也支持类似于数字人民币的批发-零售双层运营模式）。同时，对于其他的课题，例如隐私保护，风控，合规，监管，商业化等也没有深入讨论。（对于隐私保护，论文里提到最安全方式就是从交易源头开始尽可能的少收集数据，这个也在阶段1的设计考虑中。<em>当然，隐私保护与监管风控的目标在一定程度上是对立的。</em>）这些问题会在阶段2里阐述。</p>
+<h3 id="设计思想"><a class="markdownIt-Anchor" href="#设计思想"></a> 设计思想</h3>
+<ol>
 <li>UTXO模型。用户持有数字钱包，使用私钥签名的方式来消费。</li>
 <li>分层解耦。将交易的合法性验证和资金的存在性验证分离，只有合法性验证才需要交易的细节信息，最小化交易处理核心层的存储（不涉及用户个人信息等）。核心层简单的只做纯粹的资金交易（UTXO的生成和销毁），保证稳定性和性能。货币的扩展功能做在外层。</li>
 <li>基于UHS(Unspent funds Hash Set)和类似比特币交易的数据结构。兼容未来譬如类似地添加锁定脚本等，而无需修改UHS交易核心层的前提下实现扩展功能。</li>
@@ -621,7 +624,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/bigdata-metadata-governance/" class="post-title-link" itemprop="url">数据治理（2） - 元数据管理Atlas</a>
+            <a href="/articles/bigdata-metadata-governance/" class="post-title-link" itemprop="url">大数据元数据管理工具Atlas</a>
         </h2>
 
         <div class="post-meta">
@@ -640,7 +643,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-19 15:27:11" itemprop="dateModified" datetime="2023-04-19T15:27:11+08:00">2023-04-19</time>
+                <time title="Modified: 2025-01-21 14:26:39" itemprop="dateModified" datetime="2025-01-21T14:26:39+08:00">2025-01-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -658,14 +661,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>4 mins.</span>
             </span>
 
         </div>
@@ -677,16 +680,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h3><ol>
-<li>支持主流数据源，例如正在用的hive（库，表，列，处理过程）以及sqoop（数据库，处理过程）。此外还有hbase，kafka等。<br>业务视角：</li>
+          <h3 id="pros"><a class="markdownIt-Anchor" href="#pros"></a> Pros</h3>
+<ol>
+<li>支持主流数据源，例如正在用的hive（库，表，列，处理过程）以及sqoop（数据库，处理过程）。此外还有hbase，kafka等。<br>
+业务视角：</li>
 <li>数据字典。有UI界面，可以查看到hive表的schema，表注释，分区字段，存储路径，创建/更新的时间及操作用户等审计日志。可以查看到hive表字段的类型，注释等。</li>
 <li>检索。可以根据表名，表注释，字段注释等进行模糊搜索，快速定位需要查找的表或者字段。</li>
-<li>自动实时采集。例如新建hive表，或者对已存在的hive进行修改，自动实时同步变更信息，无需人工维护更新字典及清洗逻辑<br>开发视角：</li>
+<li>自动实时采集。例如新建hive表，或者对已存在的hive进行修改，自动实时同步变更信息，无需人工维护更新字典及清洗逻辑<br>
+开发视角：</li>
 <li>血缘关系。维护表级和字段级的血缘关系，可以清楚看到表间上下游的关系，以及清洗的逻辑。当在表中发现有垃圾数据时，可以回溯到该数据是从上游哪个源头引入的。同时，如果需要修改已有的表，也可以看到会影响下游的哪些表。</li>
 <li>表有维护last access time，可以判断哪些表已经废弃，可用于对废弃表的清理</li>
 <li>标签体系，结合ranger（如果使用）做权限管理。可以在atlas对表或者字段打各类标签tag，例如对手机号phone字段标上“PII”个人隐私，在ranger里配置限制特定账号对打上PII标签的数据的读/写权限。</li>
 </ol>
-<h3 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h3><ol>
+<h3 id="cons"><a class="markdownIt-Anchor" href="#cons"></a> Cons</h3>
+<ol>
 <li>hive元数据来源于其定义，例如建表语句中的comment注释，当前在用的部分表是没有添加注释的，而且对于枚举值都不会列举出来，这样导致某些表/字段没有任何中文注释/描述，需要查找上下游来确定。在atlas UI界面上的表/字段都有description描述项（类似于备注），但目前没有找到直接在ui上更新该描述的方法，也不知道此描述从何而来。对于枚举项，仍然需要再另外维护文档。</li>
 <li>UI界面无法添加修改表的owner责任人。</li>
 <li>没有访问热度统计信息，无法用于区分冷热数据参考。</li>
@@ -695,7 +702,8 @@
 <li>部署需要引入额外的组件。hbase（用于存储元数据信息）， solr/es（用于搜索），kafka（用于自动同步更新元数据变更）。除了单独部署这些组件，atlas也提供内嵌hbase和solr的方式（多用于开发环境验证使用）。</li>
 <li>无数据预览，分区信息。需要结合其他工具，例如cdh套装里的hue。</li>
 </ol>
-<h3 id="竞品"><a href="#竞品" class="headerlink" title="竞品"></a>竞品</h3><ol>
+<h3 id="竞品"><a class="markdownIt-Anchor" href="#竞品"></a> 竞品</h3>
+<ol>
 <li>Linkedin Datahub是另一个常用的开源工具，具备数据字典，血缘关系，标签等，也可以自修改维护描述，责任人等。基于docker部署。atlas相对datahub成熟，参考资料较为丰富，与apache其他组件适配度更高些。demo： <a target="_blank" rel="noopener external nofollow noreferrer" href="https://demo.datahubproject.io/">https://demo.datahubproject.io/</a></li>
 </ol>
 

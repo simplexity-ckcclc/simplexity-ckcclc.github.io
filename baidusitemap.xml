@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://simplexity.cn//articles/bigdata-metadata-governance/</loc>
+    <lastmod>2025-01-21</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn//articles/digital-euro-tiered-model/</loc>
+    <lastmod>2025-01-21</lastmod>
+  </url>
+  <url>
+    <loc>https://simplexity.cn//articles/open-cbdc/</loc>
+    <lastmod>2025-01-21</lastmod>
+  </url>
+  <url>
     <loc>https://simplexity.cn//articles/zk-snark-paper/</loc>
     <lastmod>2025-01-13</lastmod>
   </url>
@@ -35,10 +47,6 @@
   <url>
     <loc>https://simplexity.cn//articles/ubin-phase-2/</loc>
     <lastmod>2023-12-29</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn//articles/open-cbdc/</loc>
-    <lastmod>2023-11-30</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn//articles/bigdata-data-governance/</loc>
@@ -78,10 +86,6 @@
   </url>
   <url>
     <loc>https://simplexity.cn//articles/bigdata-and-blockchain/</loc>
-    <lastmod>2023-05-08</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn//articles/digital-euro-tiered-model/</loc>
     <lastmod>2023-05-08</lastmod>
   </url>
   <url>
@@ -151,10 +155,6 @@
   <url>
     <loc>https://simplexity.cn//articles/privacy-on-chain/</loc>
     <lastmod>2023-04-20</lastmod>
-  </url>
-  <url>
-    <loc>https://simplexity.cn//articles/bigdata-metadata-governance/</loc>
-    <lastmod>2023-04-19</lastmod>
   </url>
   <url>
     <loc>https://simplexity.cn//articles/fabric-2-0-new-feature/</loc>

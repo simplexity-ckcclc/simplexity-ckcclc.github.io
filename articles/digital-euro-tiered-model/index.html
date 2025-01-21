@@ -20,7 +20,7 @@
 
   <meta name="description" content="基于欧央行ECB于2021年7月公开的技术研究报告Digital Euro experiment Combined feasibility – Tiered model 欧央行探索数字欧元技术实现可能性，关注记账账本，隐私与反洗钱，流通的限制，终端接入4个方面。从中心化向分布式渐变的方向，总共分为以下4个思路：  scale the existing : 基于当前TIPS（TARGET Insta">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CBDC系列（2） - 数字欧元研究报告（分层架构）浅析">
+<meta property="og:title" content="CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析">
 <meta property="og:url" content="https://simplexity.cn/articles/digital-euro-tiered-model/index.html">
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="基于欧央行ECB于2021年7月公开的技术研究报告Digital Euro experiment Combined feasibility – Tiered model 欧央行探索数字欧元技术实现可能性，关注记账账本，隐私与反洗钱，流通的限制，终端接入4个方面。从中心化向分布式渐变的方向，总共分为以下4个思路：  scale the existing : 基于当前TIPS（TARGET Insta">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://simplexity.cn/images/digital-euro-tiered-model/two-tiered-model.jpg">
 <meta property="og:image" content="https://simplexity.cn/images/digital-euro-tiered-model/composition-of-each-tier.jpg">
 <meta property="article:published_time" content="2023-03-21T03:21:27.000Z">
-<meta property="article:modified_time" content="2023-05-08T03:34:50.686Z">
+<meta property="article:modified_time" content="2025-01-21T06:24:43.776Z">
 <meta property="article:author" content="Travis Wong">
 <meta property="article:tag" content="CBDC">
 <meta name="twitter:card" content="summary">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>CBDC系列（2） - 数字欧元研究报告（分层架构）浅析 | Simplexity</title>
+  <title>CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析 | Simplexity</title>
   
 
 
@@ -202,7 +202,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CBDC系列（2） - 数字欧元研究报告（分层架构）浅析
+          CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析
         </h1>
 
         <div class="post-meta">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-08 11:34:50" itemprop="dateModified" datetime="2023-05-08T11:34:50+08:00">2023-05-08</time>
+                <time title="Modified: 2025-01-21 14:24:43" itemprop="dateModified" datetime="2025-01-21T14:24:43+08:00">2025-01-21</time>
               </span>
 
           
@@ -237,14 +237,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>10 mins.</span>
             </span>
 
         </div>
@@ -269,13 +269,15 @@
 <p>TARGET2 :  第二代泛欧实时全额自动清算系统（Trans-European Automated Real-time Gross settlement Express Transfer system）</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
+<h2 id="架构"><a class="markdownIt-Anchor" href="#架构"></a> 架构</h2>
+<ol>
 <li>数字欧元（DC）是欧央行的直接负债。</li>
 <li>二层系统满足互操作性，受监管中介机构（supervised intermediaries, 例如银行）负责面客，在该层为客户开户（基于账户体系）开钱包（基于价值体系）。统一应用编程接口（common API）方便外部接入，保留足够的弹性给将来的业务创新和解决方案。</li>
 </ol>
 <p><img src="/images/digital-euro-tiered-model/two-tiered-model.jpg" alt=""></p>
 <p><img src="/images/digital-euro-tiered-model/composition-of-each-tier.jpg" alt=""></p>
-<h3 id="发行过程"><a href="#发行过程" class="headerlink" title="发行过程"></a>发行过程</h3><ol>
+<h3 id="发行过程"><a class="markdownIt-Anchor" href="#发行过程"></a> 发行过程</h3>
+<ol>
 <li>TIPS在试验方案中临时充当一层系统。中介机构通过在TARGET2/CLM的清算账户向TIPS的清算账户转账。</li>
 <li>TIPS一层系统在相应的中介机构的DC账户生成对应数量的DC（3）。</li>
 <li>中介机构通过报文等通信手段，请求一层系统将其DC账户里的DC转移到二层运营系统的中转账户。（3-&gt;4a）</li>
@@ -283,30 +285,37 @@
 <li>二层系统的发行账户转移到二层系统里的中介机构账户。（4b-&gt;5）</li>
 <li>中介机构账户转移到客户账户。（5-&gt;6）</li>
 </ol>
-<h3 id="赎回过程"><a href="#赎回过程" class="headerlink" title="赎回过程"></a>赎回过程</h3><p>与发行镜像。</p>
-<h3 id="交易过程"><a href="#交易过程" class="headerlink" title="交易过程"></a>交易过程</h3><ol>
+<h3 id="赎回过程"><a class="markdownIt-Anchor" href="#赎回过程"></a> 赎回过程</h3>
+<p>与发行镜像。</p>
+<h3 id="交易过程"><a class="markdownIt-Anchor" href="#交易过程"></a> 交易过程</h3>
+<ol>
 <li>两个账户属于同一个运营系统的，则通过二层里的收付双方各自的中介机构的二层账户结算。</li>
 <li>跨运营系统的交易，付款人的DC账户先借记，其中介机构的二层账户贷记。然后该中介机构将DC转移到该二层运营系统的发行账户。然后此中转账户在一层内转移到收款方所在运营系统的中转账户，后续类似于发行过程。（评：引入中介机构账户的转发，从方案描述看，运营系统的发行账户不直接与客户账户发生联系，而必须通过中介机构账户。即使该运营系统的实体同时也是中介机构，也需要通过自身的中介机构账户。此举保证了账户的划分职能的单一性，值得学习）</li>
 </ol>
 <ul>
 <li>总的来看，二层<strong>运营系统</strong>与<strong>中介机构</strong>有一定的区别和独立性，运营系统偏向于技术，中介机构则更多关注业务。</li>
 </ul>
-<h2 id="主要结论"><a href="#主要结论" class="headerlink" title="主要结论"></a>主要结论</h2><h3 id="1-账本选择"><a href="#1-账本选择" class="headerlink" title="1. 账本选择"></a>1. 账本选择</h3><ol>
+<h2 id="主要结论"><a class="markdownIt-Anchor" href="#主要结论"></a> 主要结论</h2>
+<h3 id="1-账本选择"><a class="markdownIt-Anchor" href="#1-账本选择"></a> 1. 账本选择</h3>
+<ol>
 <li>欧央行负责发行，从而可以控制发行量和流通量，同时与数字欧元是欧央行的直接负债相符。</li>
 <li>数字欧元通过二层中介机构可以很容易与传统银行账户，商业票据等互换，涉及到中介机构在TARGET2的清算账户和一层DC账户。交易可以满足即时结算，如果是同运营系统则是本地结算，如果是跨系统，则是通过一层账户。</li>
 <li>二层运营系统不预设技术路线，足够弹性，二层可以发展各自的特色业务创新应用，已经采用不同的技术架构以及创新。可以是中心化账本，也可以是联盟链，私有链等分布式账本。</li>
 <li>全局的容错避免单点故障。一层的故障，不影响二层运营系统内的DC继续交易；单个二层运营系统的故障，也只限定在当前系统。</li>
 </ol>
-<h3 id="2-中介机构的角色"><a href="#2-中介机构的角色" class="headerlink" title="2. 中介机构的角色"></a>2. 中介机构的角色</h3><ol>
+<h3 id="2-中介机构的角色"><a class="markdownIt-Anchor" href="#2-中介机构的角色"></a> 2. 中介机构的角色</h3>
+<ol>
 <li>二层中介机构负责数字欧元的流通，用户的合规管理（KYC，AML，CFT）。技术上可以将合规规范编程到账户/钱包粒度。</li>
 <li>允许第三方提供账户/钱包增值服务。例如用户授权管理聚合多个账户/钱包，发起交易（钱包体系下管理私钥）。架构里统一的common API，使得第三方应用可以满足一处开发，到处适用，与账户/钱包的具体的归属运营系统无关。</li>
 <li>同时，中介机构可以代表其客户部署智能合约。与第2点提供了两种可编程方案，分别是common API + 第三方服务商，以及smart contract + 二层中介机构。</li>
 </ol>
-<h3 id="3-隐私与合规"><a href="#3-隐私与合规" class="headerlink" title="3. 隐私与合规"></a>3. 隐私与合规</h3><ol>
+<h3 id="3-隐私与合规"><a class="markdownIt-Anchor" href="#3-隐私与合规"></a> 3. 隐私与合规</h3>
+<ol>
 <li>隐私合规与余额，交易限额是相关的。有限的AML/KYC机制可以方便非本地居民使用DC，例如基于价值体系的匿名P2P支付交易。</li>
 <li>二层中介机构负责合规管理。在客户开户时，应该要做开户检查，保证用户在二层运营系统里账号/钱包的唯一性（或者是关联钱包等，将新开的账号钱包与用户已有账号关联起来）。这样避免用户通过多开账号来逃避限额，逃税等。这样的信息共享需要使用适当的隐私保护技术，符合GDPR保护条例。</li>
 </ol>
-<h3 id="4-限额"><a href="#4-限额" class="headerlink" title="4. 限额"></a>4. 限额</h3><ol>
+<h3 id="4-限额"><a class="markdownIt-Anchor" href="#4-限额"></a> 4. 限额</h3>
+<ol>
 <li>数字欧元可能会导致存款搬家。限制账户余额以及转出交易额是其中一个应对方案。同时也是有助于AML/CFT。</li>
 <li>账户分级，可以针对不同的账户设定差异化的限额。</li>
 <li>账户余额限制可能会导致在收款时超过限额。有两种方案可以解决：</li>
@@ -315,19 +324,22 @@
 <li>转账失败，返回错误信息。缺点是当收款人的余额是机密信息时，可能会暴露其隐私。</li>
 <li>DC账户绑定传统银行账户，超出限额部分自动转存到银行账户。缺点是增加结算过程的复杂性。</li>
 </ul>
-<h3 id="5-计息"><a href="#5-计息" class="headerlink" title="5. 计息"></a>5. 计息</h3><ol>
+<h3 id="5-计息"><a class="markdownIt-Anchor" href="#5-计息"></a> 5. 计息</h3>
+<ol>
 <li>警惕引入DC可能导致银行系统的去中介化，以及阻碍货币政策的传导。</li>
 <li>对于中介机构而言，如果DC参照支票不计息，则在负利率的时代，中介机构倾向于持有超量的DC来避免存款准备金的负利率影响，从而影响负利率的货币政策传导；如果DC参照存款准备金的负利率政策，则中介机构会避免持有DC，从而导致DC的流动性不足。</li>
 <li>提议的分层计息方案。对中介机构持有的DC设置阈值，低于阈值的部分视为现金不计息，高于阈值的部分视同存款准备金。</li>
 <li>对于终端用户，超过阈值的不计息或者正利率的付息，超过的部分则支付更低的利息，有可能是负利率。</li>
 <li><code>To complement this technical analysis, thorough impact assessments of a digital euro on the transmission of monetary policy should be conducted.</code> 以上仅仅是理论分析，具体的政策还需要深入研究。</li>
 </ol>
-<h3 id="6-可编程性"><a href="#6-可编程性" class="headerlink" title="6. 可编程性"></a>6. 可编程性</h3><ol>
+<h3 id="6-可编程性"><a class="markdownIt-Anchor" href="#6-可编程性"></a> 6. 可编程性</h3>
+<ol>
 <li>条件支付：例如DvP, PvP等</li>
 <li>货币的属性可编程： 例如利率，限额，收款方的黑白名单等</li>
 </ol>
 <p>总而言之，这个方案与公布出来的双层运营架构体系的思路很多地方类似，也不预设技术路线。从技术角度看，整个架构的各个角色，账户划分独立清晰，同时也保留最大限度的灵活性。最大的问题，可能还是在于如果处理好跟传统银行账户体系的关系，特别是涉及到计息，存款搬家，机构盈利可持续运营等。更多的政策性业务性研究，可以参看ECB在更早期2020年10月公开的研究报告<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.zentral-bank.eu/pub/pdf/other/Report_on_a_digital_euro~4d7268b458.en.pdf">Report on a digital euro</a>。此技术研究报告也是基于此的实验报告。</p>
-<h4 id="更多参考："><a href="#更多参考：" class="headerlink" title="更多参考："></a>更多参考：</h4><blockquote>
+<h4 id="更多参考"><a class="markdownIt-Anchor" href="#更多参考"></a> 更多参考：</h4>
+<blockquote>
 <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.ecb.europa.eu/paym/intro/news/html/ecb.mipnews221221.en.html">ECB publishes second progress report on the digital euro investigation phase</a></p>
 </blockquote>
 
@@ -362,8 +374,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/articles/open-cbdc/" rel="prev" title="CBDC系列（1） - OpenCBDC项目">
-      <i class="fa fa-chevron-left"></i> CBDC系列（1） - OpenCBDC项目
+    <a href="/articles/open-cbdc/" rel="prev" title="CBDC系列（1） - OpenCBDC项目(rCBDC)">
+      <i class="fa fa-chevron-left"></i> CBDC系列（1） - OpenCBDC项目(rCBDC)
     </a></div>
       <div class="post-nav-item">
     <a href="/articles/sc-oracle/" rel="next" title="智能合约预言机">
@@ -427,7 +439,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">发行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8E%E5%9B%9E%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">赎回过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">交易过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%BB%93%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">主要结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B4%A6%E6%9C%AC%E9%80%89%E6%8B%A9"><span class="nav-number">2.1.</span> <span class="nav-text">1. 账本选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%AD%E4%BB%8B%E6%9C%BA%E6%9E%84%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text">2. 中介机构的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%9A%90%E7%A7%81%E4%B8%8E%E5%90%88%E8%A7%84"><span class="nav-number">2.3.</span> <span class="nav-text">3. 隐私与合规</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%99%90%E9%A2%9D"><span class="nav-number">2.4.</span> <span class="nav-text">4. 限额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%AE%A1%E6%81%AF"><span class="nav-number">2.5.</span> <span class="nav-text">5. 计息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7"><span class="nav-number">2.6.</span> <span class="nav-text">6. 可编程性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E5%8F%82%E8%80%83%EF%BC%9A"><span class="nav-number">2.6.1.</span> <span class="nav-text">更多参考：</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text"> 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text"> 发行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8E%E5%9B%9E%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text"> 赎回过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text"> 交易过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%BB%93%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text"> 主要结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B4%A6%E6%9C%AC%E9%80%89%E6%8B%A9"><span class="nav-number">2.1.</span> <span class="nav-text"> 1. 账本选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%AD%E4%BB%8B%E6%9C%BA%E6%9E%84%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text"> 2. 中介机构的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%9A%90%E7%A7%81%E4%B8%8E%E5%90%88%E8%A7%84"><span class="nav-number">2.3.</span> <span class="nav-text"> 3. 隐私与合规</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%99%90%E9%A2%9D"><span class="nav-number">2.4.</span> <span class="nav-text"> 4. 限额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%AE%A1%E6%81%AF"><span class="nav-number">2.5.</span> <span class="nav-text"> 5. 计息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7"><span class="nav-number">2.6.</span> <span class="nav-text"> 6. 可编程性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E5%8F%82%E8%80%83"><span class="nav-number">2.6.1.</span> <span class="nav-text"> 更多参考：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
