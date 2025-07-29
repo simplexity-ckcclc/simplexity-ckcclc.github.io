@@ -4,11 +4,8 @@ https://simplexity.cn/articles/inthanon-lionrock-phase-2/
 https://simplexity.cn/articles/inthanon-lionrock-phase-1/
 https://simplexity.cn/articles/jura-project/
 https://simplexity.cn/articles/understanding-corda/
-https://simplexity.cn/articles/retry-strategy/
-https://simplexity.cn/articles/sc-event-listener/
 https://simplexity.cn/articles/sc-oracle/
 https://simplexity.cn/articles/digital-euro-tiered-model/
-https://simplexity.cn/articles/open-cbdc/
 https://simplexity.cn/articles/whats-new-in-wasm-2-0/
 https://simplexity.cn/articles/suptech-data-collection/
 https://simplexity.cn/articles/bigdata-metadata-governance/

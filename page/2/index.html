@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
 
@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="Simple is Complex">
 <meta property="og:locale">
-<meta property="article:author" content="Travis Wong">
+<meta property="article:author" content="Travis Huang">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://simplexity.cn/page/2/">
@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -182,332 +182,11 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/digital-euro-tiered-model/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/digital-euro-tiered-model/" class="post-title-link" itemprop="url">CBDC系列（2） - 数字欧元(rCBDC)研究报告（分层架构）浅析</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-03-21 11:21:27" itemprop="dateCreated datePublished" datetime="2023-03-21T11:21:27+08:00">2023-03-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-21 14:24:43" itemprop="dateModified" datetime="2025-01-21T14:24:43+08:00">2025-01-21</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>10 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>基于欧央行ECB于2021年7月公开的技术研究报告<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.banque-france.fr/sites/default/files/media/2021/08/02/821220_digital_euro_en.pdf">Digital Euro experiment Combined feasibility – Tiered model</a></p>
-<p>欧央行探索数字欧元技术实现可能性，关注记账账本，隐私与反洗钱，流通的限制，终端接入4个方面。从中心化向分布式渐变的方向，总共分为以下4个思路：</p>
-<ol>
-<li><em>scale the existing</em> : 基于当前TIPS（TARGET Instant Payment Settlement，零售快速支付系统），中心化管理</li>
-<li><em>combined feasibility</em> : 中心化系统结合分布式平台（例如分布式账本DLT）</li>
-<li><em>a new solutiion</em> : 基于区块链，固定面额的token价值模型</li>
-<li><em>bearer instrument</em> : 硬件支付设备，支持离线支付</li>
-</ol>
-<p>本方案是思路二 <em>combined feasility</em> 提出的分层架构，第一层是欧元系统运行的中心化账本，由欧央行通过欧元清算系统发行给直参；第二层则是由运营机构分发给直参，间参和个人或者公司等终端用户。这个方案带有试验性质，目的就是为后续的讨论和政策制定提供参考。</p>
-<blockquote>
-<p>TARGET2 :  第二代泛欧实时全额自动清算系统（Trans-European Automated Real-time Gross settlement Express Transfer system）</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/digital-euro-tiered-model/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/open-cbdc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/open-cbdc/" class="post-title-link" itemprop="url">CBDC系列（1） - OpenCBDC项目(rCBDC)</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-02-06 16:06:24" itemprop="dateCreated datePublished" datetime="2023-02-06T16:06:24+08:00">2023-02-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-21 14:24:12" itemprop="dateModified" datetime="2025-01-21T14:24:12+08:00">2025-01-21</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>5k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>17 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>基于2022年2月公开发布的OpenCBDC项目（Boston Fed &amp; MIT联合研究项目，也称Hamilton项目）资料：</p>
-<blockquote>
-<p>论文 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://eprint.iacr.org/2022/163.pdf">A High Performance Payment Processing System Designed for Central Bank Digital Currencies</a><br>
-github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mit-dci/opencbdc-tx">OpenCBDC</a></p>
-</blockquote>
-<h3 id="设计目标"><a class="markdownIt-Anchor" href="#设计目标"></a> 设计目标</h3>
-<p>当前阶段1属于研究性质，更多是在于探索技术上的可能性，并不是一个即插即用的成熟方案。设计目标着眼于性能以及容错，同时保留足够的灵活性（不限定发行的方式，支持中央银行直接零售发行，也支持类似于数字人民币的批发-零售双层运营模式）。同时，对于其他的课题，例如隐私保护，风控，合规，监管，商业化等也没有深入讨论。（对于隐私保护，论文里提到最安全方式就是从交易源头开始尽可能的少收集数据，这个也在阶段1的设计考虑中。<em>当然，隐私保护与监管风控的目标在一定程度上是对立的。</em>）这些问题会在阶段2里阐述。</p>
-<h3 id="设计思想"><a class="markdownIt-Anchor" href="#设计思想"></a> 设计思想</h3>
-<ol>
-<li>UTXO模型。用户持有数字钱包，使用私钥签名的方式来消费。</li>
-<li>分层解耦。将交易的合法性验证和资金的存在性验证分离，只有合法性验证才需要交易的细节信息，最小化交易处理核心层的存储（不涉及用户个人信息等）。核心层简单的只做纯粹的资金交易（UTXO的生成和销毁），保证稳定性和性能。货币的扩展功能做在外层。</li>
-<li>基于UHS(Unspent funds Hash Set)和类似比特币交易的数据结构。兼容未来譬如类似地添加锁定脚本等，而无需修改UHS交易核心层的前提下实现扩展功能。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/open-cbdc/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/whats-new-in-wasm-2-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/whats-new-in-wasm-2-0/" class="post-title-link" itemprop="url">WebAssembly 2.0新特性</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-15 16:20:13" itemprop="dateCreated datePublished" datetime="2022-09-15T16:20:13+08:00">2022-09-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-07-28 14:32:00" itemprop="dateModified" datetime="2023-07-28T14:32:00+08:00">2023-07-28</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>756</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>官网： <a target="_blank" rel="noopener external nofollow noreferrer" href="https://webassembly.github.io/spec/core/appendix/changes.html#change-history">Change History</a></p>
-<ol>
-<li><p>Multiple values</p>
-<ul>
-<li><em>Function types allow more than one result.</em><br>  适配go语言等函数多返回值的特性。</li>
-<li><em>Block types can be arbitrary function types.</em><br>  控制块带参数，适配C语言等内联函数的展开。Wasm1.0里调用内联函数使用的是<code>call</code>指令。</li>
-</ul>
-</li>
-<li><p>Reference types</p>
-<ul>
-<li><em>Added <code>funcref</code> and <code>externref</code> as new value types and respective.</em><br>表元素增加新类型。<blockquote>
-<p><code>externref</code> allows modules to hold references to objects provided by the host environment; in other words, you can pass a JavaScript object to your .wasm module. The .wasm module can’t really do much with the object via the type. What’s more important is that the module is holding a reference to a garbage collected object on the JavaScript heap. 持有外部引用，为将来wasm引入GC准备。 参看<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.oreilly.com/library/view/what-is-webassembly/9781492076902/ch04.html">Upcoming Features and Proposals</a></p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>Bulk memory </p>
-<ul>
-<li><em>New memory instructions: <code>memory.fill</code>, <code>memory.init</code>, <code>memory.copy</code>, <code>data.drop</code></em>.<br>对应C里的<code>memcpy</code>, <code>memmove</code>等，目的提高处理大块内存的性能。Wasm1.0里使用<code>load</code>, <code>store</code>指令操作内存，只能处理基本类型的数值。</li>
-</ul>
-</li>
-<li><p>Multiple table<br><em>coming soon</em></p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/suptech-data-collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -536,7 +215,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-05-27 15:52:18" itemprop="dateModified" datetime="2024-05-27T15:52:18+08:00">2024-05-27</time>
+                <time title="Modified: 2025-07-29 13:26:04" itemprop="dateModified" datetime="2025-07-29T13:26:04+08:00">2025-07-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -573,11 +252,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="一．监管采集系统"><a href="#一．监管采集系统" class="headerlink" title="一．监管采集系统"></a>一．监管采集系统</h3><p>BIS的Financial Stability Institute团队在2020年的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/fsi/publ/insights29.pdf">监管科技创新报告</a>里指出监管数据采集的过程：</p>
-<blockquote>
-<p>“First, financial institutions collect data from their business operations (ie their operational data, such as detailed data on mortgage loans extended to customers). Second, they map their operational data to the “input data”, which are the data elements needed to populate regulatory reports (eg outstanding loan amount, number of days past due, etc). 14 Third, they transform the input data to the required reporting data based on reporting instructions provided by financial authorities. Finally, required reporting data is transmitted to the financial authority.”</p>
-</blockquote>
-<p><img src="/images/suptech-data-collection/bis-reporting-process.jpg" alt=""></p>
+          他山之石，可以攻玉。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/suptech-data-collection/#more" rel="contents">
@@ -614,7 +289,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -624,7 +299,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/articles/bigdata-metadata-governance/" class="post-title-link" itemprop="url">数据治理（2）- 元数据管理工具Atlas</a>
+            <a href="/articles/bigdata-metadata-governance/" class="post-title-link" itemprop="url">数据治理（2） - 元数据管理Atlas</a>
         </h2>
 
         <div class="post-meta">
@@ -643,7 +318,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-21 14:27:28" itemprop="dateModified" datetime="2025-01-21T14:27:28+08:00">2025-01-21</time>
+                <time title="Modified: 2023-04-19 15:27:11" itemprop="dateModified" datetime="2023-04-19T15:27:11+08:00">2023-04-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -661,14 +336,14 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.1k</span>
+              <span></span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
+              <span>NaN:aN</span>
             </span>
 
         </div>
@@ -680,20 +355,16 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="pros"><a class="markdownIt-Anchor" href="#pros"></a> Pros</h3>
-<ol>
-<li>支持主流数据源，例如正在用的hive（库，表，列，处理过程）以及sqoop（数据库，处理过程）。此外还有hbase，kafka等。<br>
-业务视角：</li>
+          <h3 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h3><ol>
+<li>支持主流数据源，例如正在用的hive（库，表，列，处理过程）以及sqoop（数据库，处理过程）。此外还有hbase，kafka等。<br>业务视角：</li>
 <li>数据字典。有UI界面，可以查看到hive表的schema，表注释，分区字段，存储路径，创建/更新的时间及操作用户等审计日志。可以查看到hive表字段的类型，注释等。</li>
 <li>检索。可以根据表名，表注释，字段注释等进行模糊搜索，快速定位需要查找的表或者字段。</li>
-<li>自动实时采集。例如新建hive表，或者对已存在的hive进行修改，自动实时同步变更信息，无需人工维护更新字典及清洗逻辑<br>
-开发视角：</li>
+<li>自动实时采集。例如新建hive表，或者对已存在的hive进行修改，自动实时同步变更信息，无需人工维护更新字典及清洗逻辑<br>开发视角：</li>
 <li>血缘关系。维护表级和字段级的血缘关系，可以清楚看到表间上下游的关系，以及清洗的逻辑。当在表中发现有垃圾数据时，可以回溯到该数据是从上游哪个源头引入的。同时，如果需要修改已有的表，也可以看到会影响下游的哪些表。</li>
 <li>表有维护last access time，可以判断哪些表已经废弃，可用于对废弃表的清理</li>
 <li>标签体系，结合ranger（如果使用）做权限管理。可以在atlas对表或者字段打各类标签tag，例如对手机号phone字段标上“PII”个人隐私，在ranger里配置限制特定账号对打上PII标签的数据的读/写权限。</li>
 </ol>
-<h3 id="cons"><a class="markdownIt-Anchor" href="#cons"></a> Cons</h3>
-<ol>
+<h3 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h3><ol>
 <li>hive元数据来源于其定义，例如建表语句中的comment注释，当前在用的部分表是没有添加注释的，而且对于枚举值都不会列举出来，这样导致某些表/字段没有任何中文注释/描述，需要查找上下游来确定。在atlas UI界面上的表/字段都有description描述项（类似于备注），但目前没有找到直接在ui上更新该描述的方法，也不知道此描述从何而来。对于枚举项，仍然需要再另外维护文档。</li>
 <li>UI界面无法添加修改表的owner责任人。</li>
 <li>没有访问热度统计信息，无法用于区分冷热数据参考。</li>
@@ -702,8 +373,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 <li>部署需要引入额外的组件。hbase（用于存储元数据信息）， solr/es（用于搜索），kafka（用于自动同步更新元数据变更）。除了单独部署这些组件，atlas也提供内嵌hbase和solr的方式（多用于开发环境验证使用）。</li>
 <li>无数据预览，分区信息。需要结合其他工具，例如cdh套装里的hue。</li>
 </ol>
-<h3 id="竞品"><a class="markdownIt-Anchor" href="#竞品"></a> 竞品</h3>
-<ol>
+<h3 id="竞品"><a href="#竞品" class="headerlink" title="竞品"></a>竞品</h3><ol>
 <li>Linkedin Datahub是另一个常用的开源工具，具备数据字典，血缘关系，标签等，也可以自修改维护描述，责任人等。基于docker部署。atlas相对datahub成熟，参考资料较为丰富，与apache其他组件适配度更高些。demo： <a target="_blank" rel="noopener external nofollow noreferrer" href="https://demo.datahubproject.io/">https://demo.datahubproject.io/</a></li>
 </ol>
 
@@ -735,7 +405,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -855,7 +525,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -963,7 +633,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1057,7 +727,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1086,7 +756,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-19 17:57:13" itemprop="dateModified" datetime="2020-11-19T17:57:13+08:00">2020-11-19</time>
+                <time title="Modified: 2025-07-29 13:41:36" itemprop="dateModified" datetime="2025-07-29T13:41:36+08:00">2025-07-29</time>
               </span>
 
           <br>
@@ -1095,14 +765,14 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>7 mins.</span>
             </span>
 
         </div>
@@ -1114,7 +784,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
     <div class="post-body" itemprop="articleBody">
 
       
-          基于分布式身份的账户体系架构设计。
+          Some birds arent meant to be caged. Their feathers are just too bright.
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/did-account-system/#more" rel="contents">
@@ -1151,7 +821,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1257,10 +927,327 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/privacy-on-chain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/privacy-on-chain/" class="post-title-link" itemprop="url">链上隐私数据保护</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-04 17:15:10" itemprop="dateCreated datePublished" datetime="2020-11-04T17:15:10+08:00">2020-11-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-20 11:43:36" itemprop="dateModified" datetime="2023-04-20T11:43:36+08:00">2023-04-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。</p>
+<ol>
+<li><strong>短期内隐私数据</strong>。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于可变但是数值范围有限的数据，例如状态值，单价/数量等数值，则避免了统计学上破解。</li>
+<li><strong>长期固定隐私数据</strong>。例如身份证号码，企业社会信用代码等，该数据长期不变，存在若干年后由于量子计算或者相应的密码学被破解导致泄露（当然，随着破解方案的演进，加密方案也会相应的演进，但是对于链上的历史数据则极易受到新的破解方案的威胁）。因此，链上可以保存数值hash，具体的数据链下交换，使用链上的hash值作为验证。同时，对于数值类等取值空间有限的，可以针对每笔交易数据添加盐值后（同样通过链下交换），再做hash上链，避免彩虹表攻击。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/privacy-on-chain/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/mpc-terminology/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/mpc-terminology/" class="post-title-link" itemprop="url">安全多方计算MPC的若干个概念</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-20 15:20:52" itemprop="dateCreated datePublished" datetime="2020-10-20T15:20:52+08:00">2020-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-14 10:21:58" itemprop="dateModified" datetime="2022-01-14T10:21:58+08:00">2022-01-14</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>安全多方计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。</p>
+<p>参考资料：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://securecomputation.org/">A Pragmatic Introduction to Secure Multi-Party Computation</a></p>
+</blockquote>
+<h3 id="1-不经意传输（OT，Oblivious-Transfer）"><a href="#1-不经意传输（OT，Oblivious-Transfer）" class="headerlink" title="1. 不经意传输（OT，Oblivious Transfer）"></a>1. 不经意传输（OT，Oblivious Transfer）</h3><p><strong>目标如下</strong>：</p>
+<ol>
+<li>Sender提供可选参数(m0, m1)，但是不知道Receiver具体选择哪个。</li>
+<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值。例如，选择m0后，无法得知m1的值。<br><img src="/images/mpc-ot.jpg" alt=""></li>
+</ol>
+<div style='display: none'>
+1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
+1. Sender拥有两个消息，分别为m0, m1,并且生成两对密钥对（pub0, pri0）和（pub1, pri1）
+2. Receiver随机生成对称密钥k，以Receiver选择消息m0为例，用公钥pub0加密k，得到k0和k1，返回给Sender。
+3. Sender使用私钥（pri0，pri1）分别解密（k0，k1），得到（k0', k1'）。此时，Sender无法得知具体选择了哪个，满足条件（1）。对Receiver而言，其中k0'=k，k1'则是一串不明字符串。
+4. Sender使用对称密钥k0'和k1'分别对m0, m1加密，得到m0'， m1'，并回传给Receiver。
+5. Receiver可以用k对m0'解密，得到m0。另外，m1'则是不可解，满足条件（2）。
+</div>
+
+<p>参考资料：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/126396795">混淆电路介绍（一）不经意传输</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/mpc-terminology/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bigdata-and-blockchain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/bigdata-and-blockchain/" class="post-title-link" itemprop="url">大数据与区块链</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-25 16:04:38" itemprop="dateCreated datePublished" datetime="2020-07-25T16:04:38+08:00">2020-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-29 13:41:57" itemprop="dateModified" datetime="2025-07-29T13:41:57+08:00">2025-07-29</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          Some birds arent meant to be caged. Their feathers are just too bright.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/bigdata-and-blockchain/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1318,9 +1305,9 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+    <img class="site-author-image" itemprop="image" alt="Travis Huang"
       src="/images/avatar.jpeg">
-  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <p class="site-author-name" itemprop="name">Travis Huang</p>
   <div class="site-description" itemprop="description">Simple is Complex</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -1328,7 +1315,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1375,7 +1362,7 @@ github仓库 : <a target="_blank" rel="noopener external nofollow noreferrer" hr
   <span class="with-love">
     <i class="fa fa-registered"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+  <span class="author" itemprop="copyrightHolder">Travis Huang</span>
 </div>
 
         

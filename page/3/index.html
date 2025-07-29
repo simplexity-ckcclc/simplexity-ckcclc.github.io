@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
 
@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="Simple is Complex">
 <meta property="og:locale">
-<meta property="article:author" content="Travis Wong">
+<meta property="article:author" content="Travis Huang">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://simplexity.cn/page/3/">
@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -182,328 +182,11 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/privacy-on-chain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/privacy-on-chain/" class="post-title-link" itemprop="url">链上隐私数据保护</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-04 17:15:10" itemprop="dateCreated datePublished" datetime="2020-11-04T17:15:10+08:00">2020-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-20 11:43:36" itemprop="dateModified" datetime="2023-04-20T11:43:36+08:00">2023-04-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>由于区块链各参与方可能存在利益冲突，不愿意将私有数据上链，催生了链上隐私数据的需求。对于不同的隐私等级存在相应的处理方式。</p>
-<ol>
-<li><strong>短期内隐私数据</strong>。指的是易变数据，一定期限后该数据的价值降低，例如波动的商品成交价。因为密码学破解在可预见的短期内无法达成，可以认为安全风险很小，因此可以使用流行的对称加密/非对称加密的方式，密文上链，相关方使用链下方式或者链上方式交换密钥。甚至可以单笔交易更换密钥，这样对于可变但是数值范围有限的数据，例如状态值，单价/数量等数值，则避免了统计学上破解。</li>
-<li><strong>长期固定隐私数据</strong>。例如身份证号码，企业社会信用代码等，该数据长期不变，存在若干年后由于量子计算或者相应的密码学被破解导致泄露（当然，随着破解方案的演进，加密方案也会相应的演进，但是对于链上的历史数据则极易受到新的破解方案的威胁）。因此，链上可以保存数值hash，具体的数据链下交换，使用链上的hash值作为验证。同时，对于数值类等取值空间有限的，可以针对每笔交易数据添加盐值后（同样通过链下交换），再做hash上链，避免彩虹表攻击。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/privacy-on-chain/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/mpc-terminology/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/mpc-terminology/" class="post-title-link" itemprop="url">安全多方计算MPC的若干个概念</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-10-20 15:20:52" itemprop="dateCreated datePublished" datetime="2020-10-20T15:20:52+08:00">2020-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-14 10:21:58" itemprop="dateModified" datetime="2022-01-14T10:21:58+08:00">2022-01-14</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>安全多方计算（MPC）与可信计算环境（TEE），联邦学习（Federated Learning）是隐私计算领域的三个重要实现方式。</p>
-<p>参考资料：</p>
-<blockquote>
-<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://securecomputation.org/">A Pragmatic Introduction to Secure Multi-Party Computation</a></p>
-</blockquote>
-<h3 id="1-不经意传输（OT，Oblivious-Transfer）"><a href="#1-不经意传输（OT，Oblivious-Transfer）" class="headerlink" title="1. 不经意传输（OT，Oblivious Transfer）"></a>1. 不经意传输（OT，Oblivious Transfer）</h3><p><strong>目标如下</strong>：</p>
-<ol>
-<li>Sender提供可选参数(m0, m1)，但是不知道Receiver具体选择哪个。</li>
-<li>Receiver可以选择其中一个，但是不知道除此之外的其他参数值。例如，选择m0后，无法得知m1的值。<br><img src="/images/mpc-ot.jpg" alt=""></li>
-</ol>
-<div style='display: none'>
-1-ou-of-2的实现方案有多种，其中一个基于公私钥机制的实现方案：
-1. Sender拥有两个消息，分别为m0, m1,并且生成两对密钥对（pub0, pri0）和（pub1, pri1）
-2. Receiver随机生成对称密钥k，以Receiver选择消息m0为例，用公钥pub0加密k，得到k0和k1，返回给Sender。
-3. Sender使用私钥（pri0，pri1）分别解密（k0，k1），得到（k0', k1'）。此时，Sender无法得知具体选择了哪个，满足条件（1）。对Receiver而言，其中k0'=k，k1'则是一串不明字符串。
-4. Sender使用对称密钥k0'和k1'分别对m0, m1加密，得到m0'， m1'，并回传给Receiver。
-5. Receiver可以用k对m0'解密，得到m0。另外，m1'则是不可解，满足条件（2）。
-</div>
-
-<p>参考资料：</p>
-<blockquote>
-<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/126396795">混淆电路介绍（一）不经意传输</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://crypto.stanford.edu/pbc/notes/crypto/ot.html">Oblivious Transfer (OT)</a></p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/mpc-terminology/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/bigdata-and-blockchain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/bigdata-and-blockchain/" class="post-title-link" itemprop="url">大数据与区块链</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-25 16:04:38" itemprop="dateCreated datePublished" datetime="2020-07-25T16:04:38+08:00">2020-07-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-08 16:45:50" itemprop="dateModified" datetime="2023-05-08T16:45:50+08:00">2023-05-08</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          技术的融合与碰撞。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/bigdata-and-blockchain/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-2-0-new-feature/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -615,7 +298,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -723,7 +406,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -839,7 +522,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -954,7 +637,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1051,7 +734,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1154,7 +837,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1250,10 +933,403 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-pos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/consensus-pos/" class="post-title-link" itemprop="url">共识算法(3) - PoS</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-08 17:51:14" itemprop="dateCreated datePublished" datetime="2019-07-08T17:51:14+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-05-18 15:04:03" itemprop="dateModified" datetime="2023-05-18T15:04:03+08:00">2023-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>9 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="PoS-Proof-of-Stake权益证明-相对于PoW的优点："><a href="#PoS-Proof-of-Stake权益证明-相对于PoW的优点：" class="headerlink" title="PoS(Proof of Stake权益证明)相对于PoW的优点："></a>PoS(Proof of Stake权益证明)相对于PoW的优点：</h3><ol>
+<li>不需要消耗大量电力成本</li>
+<li>发动51%攻击成本更高（PoW矿池或者大量租用矿机集中算力发动攻击，或者快速算法，硬件升级带来的算力提升等，都可能会增加攻击风险。PoS需要收购全网51%的Token，并且持有者的权益在于所持有的Token也更大动力维护系统安全）<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://36kr.com/p/5173291">PoS为什么比PoW更能避免51%攻击？</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="PoS运行过程"><a href="#PoS运行过程" class="headerlink" title="PoS运行过程"></a>PoS运行过程</h3><ol>
+<li>质押stake，声明为验证节点（区别于全节点拥有出块的权利，会有一定的门槛，如持有stake量，占有比例，或者top n等条件，意在控制验证节点数量，缩小选举的范围以及达成bft共识的节点数）</li>
+<li>选举 （周期性选举，以之前已出块的值作为随机种子，选取下一周期的出块节点和顺序，选举算法包含Follow-the-Satoshi选择随机stake的持有节点和RR-BFT轮询算法）</li>
+<li>打包交易 （该论的出块节点从交易缓存池选择，通常为交易手续费高，时间早等，验证，包括签名，账户余额等。如果该论的出块节点没有出块，则跳过该论，并且惩罚）</li>
+<li>广播交易，确认（PoS分为基于链的PoS和BFT风格的PoS。在<strong>基于链的PoS</strong>中，最长链原则，随机算法选出验证者创建新区块，但是验证者要确保该块指向最长链，通常也需要一定数量的验证节点背书签名后上链。在<strong>BFT风格的PoS</strong>中，分配给验证者相对的权力，以RR的方式提出块并且给被提出的块投票，从而决定哪个块是新块，并在每一轮选出一个新块加入区块链。在每一轮中，每一个验证者都为某一特定的块进行投票，最后所有在线和诚实的验证者都将商量被给定的块是否可以添加到区块链中，并且意见不能改变）</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chainnews.com/articles/547932547984.htm">一文读懂 PoS 共识运行七大步骤</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/consensus-pos/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/understanding-ethereum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/understanding-ethereum/" class="post-title-link" itemprop="url">Ethereum概念理解</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-25 17:02:44" itemprop="dateCreated datePublished" datetime="2019-06-25T17:02:44+08:00">2019-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-05-16 15:31:02" itemprop="dateModified" datetime="2023-05-16T15:31:02+08:00">2023-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>18 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>必读：</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/White-Paper">Ethereum White Paper</a></strong></li>
+<li><strong><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></strong></li>
+</ul>
+</blockquote>
+<h2 id="Block-transaction-account-state-objects-and-Ethereum-tries"><a href="#Block-transaction-account-state-objects-and-Ethereum-tries" class="headerlink" title="Block, transaction, account state objects and Ethereum tries"></a>Block, transaction, account state objects and Ethereum tries</h2><p><img src="/images/understanding-ethereum/ethereum-all-structure.jpg" alt=""></p>
+<ul>
+<li><strong>The world state trie contains the mapping between addresses and account states.</strong> The hash of the root node of the world state trie is included in a block (in the stateRoot field) to represent the current state when that block was created. <strong>We only have one world state trie.</strong></li>
+<li><strong>The account storage trie contains the data associated to a smart contract.</strong> The hash of the root node of the Account storage trie is included in the sccount state (in the storageRoot field). <strong>We have one Account storage trie for each account.</strong></li>
+<li><strong>The transaction trie contains all the transactions included in a block.</strong> The hash of the root node of the Transaction trie is included in the block header (in the transactionsRoot field). <strong>We have one transaction trie per block.</strong></li>
+<li><strong>The transaction receipt trie contains all the transaction receipts for the transactions included in a block.</strong> The hash of the root node of the transaction receipts trie is included in also included in the block header (in the receiptsRoot field); <strong>We have one transaction receipts trie per block.</strong></li>
+</ul>
+<p>摘自: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lucassaldanha.com/ethereum-yellow-paper-walkthrough-2/">Merkle Tree and Ethereum Objects - Ethereum Yellow Paper Walkthrough (2/7)</a></p>
+<h2 id="Externally-owned-account-EOA-VS-Contract-account"><a href="#Externally-owned-account-EOA-VS-Contract-account" class="headerlink" title="Externally owned account(EOA) VS. Contract account"></a>Externally owned account(EOA) VS. Contract account</h2><p>两者都使用20字节的地址。EOA外部拥有账户是由用户通过公钥/私钥秘钥对控制的，通过以太坊客户端创建，由秘钥对生成的账户地址。而Contract account则是EOA通过调用创建合约的方法创建的账户，账户内包含合约代码，由调用方EOA的地址和调用方等nonce（该值针对EOA递增，目的为防止重放攻击）经过PLP编码和KEC散列生成账户地址。交易只能由EOA发起，目的方可以是EOA（常见的转账行为，交易transaction的data字段为空），也可以是合约账户（调用执行智能合约，一次调用中也可能包含跨合约调用，即合约账户到另一个合约账户，此时交易transaction的data字段存放的是合约调用的方法名，参数等二进制数据），还有合约部署（目的地址为0，交易transaction的data字段存放）。 </p>
+<p><img src="/images/understanding-ethereum/ethereum-account.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>nonce</strong></td>
+<td>A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account.</td>
+</tr>
+<tr>
+<td><strong>balance</strong></td>
+<td>A scalar value equal to the number of Wei owned by this address.</td>
+</tr>
+<tr>
+<td><strong>storageRoot</strong></td>
+<td>A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the 256-bit integer keys to the RLP-encoded 256-bit integer values.</td>
+</tr>
+<tr>
+<td><strong>codeHash</strong></td>
+<td>The hash of the EVM code of this account—this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>It is not the code that is executed on subsequent transactions sent to the contract. That code is returned by the initialization code. Essentially, the code in the data field is a program that is going to write a program that gets deployed as a smart contract.（部署字节码 + 合约字节码 + AUXDATA + Swarm hash） The standard initialization code generated by the Solidity compiler does the following:</p>
+<ol>
+<li>Runs the code in the contract’s constructor, setting storage values, etc.</li>
+<li>Copies the code for the rest of the contract into memory and returns it.  </li>
+</ol>
+</blockquote>
+<p>新部署的合约代码被打包提交到链上后，所有到运行节点都会执行data字段里的部署代码（特殊情况是部分节点只按需存储部分数据），其合约存在于各运行节点各自的EVM内，并且对应的地址都是一致，即地址与合约对应，保证后续的合约调用。合约代码存放在EVM的virtual rom内，code hash值为代码的哈希值，storage hash存放的是账户的MPT树的root hash。简之，部署合约三个步骤：1. 创建合约账户 2. 执行合约的初始化 3. 拷贝到virtual rom</p>
+<blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2017/12/29/how-ethereum-transactions-work/">How Ethereum Transactions Work</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://programtheblockchain.com/posts/2018/01/09/how-smart-contract-deployment-works/">How Smart Contract Deployment Works</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/understanding-ethereum/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/ethereum-design-rationale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/ethereum-design-rationale/" class="post-title-link" itemprop="url">Ethereum设计理念Design Rationale学习心得</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-12 16:21:55" itemprop="dateCreated datePublished" datetime="2019-06-12T16:21:55+08:00">2019-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-04 19:22:50" itemprop="dateModified" datetime="2021-12-04T19:22:50+08:00">2021-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blockchain/" itemprop="url" rel="index"><span itemprop="name">Blockchain</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文为Ethereum设计理念官方文档<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ethereum/wiki/wiki/Design-Rationale">Design Rationale</a>的阅读理解，并非完整的中文翻译，可参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ethfans.org/posts/510">中文翻译</a>。而这个官方文档阐述的是Ethereum演进过程中区别于传统加密货币之处，包含优点，一些有争议性的话题，以及各自的风险。</p>
+<h3 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h3><ol>
+<li><strong>三文治式的复杂度模型</strong>  </li>
+</ol>
+<ul>
+<li>尽量简单的底层结构（如核心共识算法）以及易于使用理解的接口层（developers and users）。复杂度在中间层（serialization and deserialization scripts, storage data structure models, the leveldb storage interface and the wire protocol, etc）。也就是，底层基本的核心思想维持稳定和简单，将易变的可替换的具体实现放在中间层。</li>
+<li>尽可能的包含底层概念，使得可以任意方式去组合。同时当剥离不必要的功能也能使底层运行得更有效率。</li>
+<li>核心层拒绝内嵌高层应用特性，而鼓励以合约的方式来模拟实现高层应用协议。</li>
+</ul>
+<ol>
+<li><p><strong>自由度</strong><br>保持”net neutrality”网络中性。对contracts or transactions没有先天的偏好性。通过设置费用引入激励。这里涉及到gas的概念，基本理念就是对需要计算和存储的操作需要付出代价。对计算，对存储的字节数等计算一个gas值，而每个发送方指定一个gas值所等值的Ether(即gas fee)，相乘得出为当前的交易费用。交易费用高的当然优先被确认。这就是所谓的将自由度交还给交易发起方，而Ethereum本身保持中性无偏好。引入计算和存储费用，也可以防止DOS攻击。</p>
+</li>
+<li><p><strong>高风险承受力</strong><br>可以接受高收益带来的高风险（例如出块速度提升50倍，共识效率等），意味着协议演进过程可能会变动较大</p>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/ethereum-design-rationale/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1311,9 +1387,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+    <img class="site-author-image" itemprop="image" alt="Travis Huang"
       src="/images/avatar.jpeg">
-  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <p class="site-author-name" itemprop="name">Travis Huang</p>
   <div class="site-description" itemprop="description">Simple is Complex</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -1321,7 +1397,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1368,7 +1444,7 @@
   <span class="with-love">
     <i class="fa fa-registered"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+  <span class="author" itemprop="copyrightHolder">Travis Huang</span>
 </div>
 
         

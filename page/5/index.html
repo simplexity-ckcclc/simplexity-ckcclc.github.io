@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
 
@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Simplexity">
 <meta property="og:description" content="Simple is Complex">
 <meta property="og:locale">
-<meta property="article:author" content="Travis Wong">
+<meta property="article:author" content="Travis Huang">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://simplexity.cn/page/5/">
@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -182,348 +182,11 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-orderer-kafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-orderer-kafka/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - orderer的kafka实现</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-07 15:17:56" itemprop="dateCreated datePublished" datetime="2019-03-07T15:17:56+08:00">2019-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:12:46" itemprop="dateModified" datetime="2023-04-27T17:12:46+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在instantiate（8）里提到，orderer总共有solo和kafka,etcdraft三种方式，并且介绍了单orderer节点的solo方式。这里继续补充介绍多orderer节点下采用的kafka方式。kafka实现的代码放在<code>orderer/consensus/kafka/chain.go</code>里，与solo一样实现了<code>orderer/common/broadcast/broadcast.go#Consenter</code>这个接口。在orderer的处理消息时<code>orderer/common/broadcast/broadcast.go#Handle</code>，调用了其<code>Order</code>方法。<br></p><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">Order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>)</span> <span class="title">error</span></span> {</span><br><span class="line">	<span class="keyword">return</span> chain.order(env, configSeq, <span class="keyword">int64</span>(<span class="number">0</span>))</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">order</span><span class="params">(env *cb.Envelope, configSeq <span class="keyword">uint64</span>, originalOffset <span class="keyword">int64</span>)</span> <span class="title">error</span></span> {</span><br><span class="line">    marshaledEnv, err := utils.Marshal(env)</span><br><span class="line">    <span class="keyword">if</span> !chain.enqueue(newNormalMessage(marshaledEnv, configSeq, originalOffset)) {</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"cannot enqueue"</span>)</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue accepts a message and returns true on acceptance, or false otheriwse.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *chainImpl)</span> <span class="title">enqueue</span><span class="params">(kafkaMsg *ab.KafkaMessage)</span> <span class="title">bool</span></span> {</span><br><span class="line">    <span class="keyword">select</span> {</span><br><span class="line">    <span class="keyword">case</span> &lt;-chain.startChan: <span class="comment">// The Start phase has completed</span></span><br><span class="line">        <span class="keyword">select</span> {</span><br><span class="line">        <span class="keyword">case</span> &lt;-chain.haltChan: <span class="comment">// The chain has been halted, stop here</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">// The post path</span></span><br><span class="line">            payload, err := utils.Marshal(kafkaMsg)</span><br><span class="line"></span><br><span class="line">            message := newProducerMessage(chain.channel, payload)</span><br><span class="line">            <span class="keyword">if</span> _, _, err = chain.producer.SendMessage(message); err != <span class="literal">nil</span> {</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        }</span><br><span class="line">    <span class="keyword">default</span>: <span class="comment">// Not ready yet</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProducerMessage</span><span class="params">(channel channel, pld []<span class="keyword">byte</span>)</span> *<span class="title">sarama</span>.<span class="title">ProducerMessage</span></span> {</span><br><span class="line">    <span class="keyword">return</span> &amp;sarama.ProducerMessage{</span><br><span class="line">        Topic: channel.topic(),</span><br><span class="line">        Key:   sarama.StringEncoder(strconv.Itoa(<span class="keyword">int</span>(channel.partition()))), </span><br><span class="line">        Value: sarama.ByteEncoder(pld),</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-<p>首先构建了消息实体<code>orderer/consensus/kafka/chain.go:KafkaMessage</code>，入参为传递的消息<code>cb.Envelope</code>，当前配置序列号<code>configSeq</code>，固定的<code>originalOffset</code>值为0(这个值的含义后面会提到，表示的是是否当前消息是重新发送重排，值为0则说明当前消息是新消息)。然后构建传递kafka消息<code>sarama.ProducerMessage</code>，这里kafka相关的使用第三方库<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Shopify/sarama">Shopify/sarama</a>。消息里指定了topic，由partition构建key，然后就是将刚才构建的消息作为payload。后面可以看到topic和partition都是channel的配置参数（初始化或者后面的更新）。这里可以看出，所有的kafka消息的key都是相同的，意味这所有消息都发送到同一个partition内，按照key的算法也就是<code>channel.partition()</code>。这里保证了单个orderer发出的envelop的有序性，但同时从全局来说，只使用一个partition，并没有充分利用kafka多partition的带来的高性能。然后使用<code>sarama.SyncProducer</code>发送消息<code>chain.producer.SendMessage</code>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-orderer-kafka/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/consensus-paxos-raft/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/consensus-paxos-raft/" class="post-title-link" itemprop="url">共识算法(1) - paxos & raft</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-06 19:49:27" itemprop="dateCreated datePublished" datetime="2019-03-06T19:49:27+08:00">2019-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-28 09:59:15" itemprop="dateModified" datetime="2020-10-28T09:59:15+08:00">2020-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consensus-Cryptography/" itemprop="url" rel="index"><span itemprop="name">Consensus & Cryptography</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>Paxos  </p>
-<p> 算法的介绍在wikipedia里解释很清楚，可以结合example里的例子加深理解。概括来说，paxos分为prepare和accept两个阶段，将角色分为proposer，acceptor和learner，最基本的标准是majority quorum。每次proposer以（sequence number n, value v）的形式向acceptor提议（n为每个proposer节点自行管理的单增值，注意，这里会有多个proposer在并行的提议）。如果将prepare request到最终accept视作一轮，那么最终accept的提议是来自n最高的proposer，但是v是在prepare阶段最早得到quorum accept的，因为acceptor收到prepare request作出这样的promise（即承诺不再accept比该proposal的n更小或相等的值），并且返回收到并回复的prepare request的值。</p>
-</li>
-</ol>
-<blockquote>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos (computer science) - wiki</a></li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://angus.nyc/2012/paxos-by-example/">Paxos By Example</a></li>
-</ul>
-</blockquote>
-<ol>
-<li><p>Raft</p>
-<p> 大致思路是，raft角色分为leader，follower和candidate（在leader election阶段）。每个leader的当选任期有全局统一且历史递增的term number。所有的写请求被路由或者follow重定向提交到leader，相当于将proposer缩减成唯一一个leader，leader给每个请求log entry添加index。整个过程也分为两个阶段，prepare阶段leader将log entry同步到所有follower，收到majority quorum回复同步后进入commit阶段，leader先commit本地，发送commit消息到follower，并且回复client。follower再commit本地执行，commit该index也意味着之前小于该index的消息都已同步并且全网一致。leader失败后则进入新一轮的选举（term值增加），最新最全数据的节点当选，新leader将其本地数据全网同步，follower相应补充或者剪枝，保证全局数据一致。</p>
-</li>
-</ol>
-<blockquote>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://raft.github.io/">The Raft Consensus Algorithm</a> : Raft的github page</li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://thesecretlivesofdata.com/raft/">Raft example</a> : 国外的动画，非常形象</li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://medium.freecodecamp.org/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d">Understanding the Raft consensus algorithm: an academic article summary</a></li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://infoq.cn/article/coreos-analyse-etcd">Raft 共识算法</a> ： 可以参看这篇etcd里介绍raft共识算法的节点异常情况</li>
-</ul>
-</blockquote>
-<ol>
-<li><p>综述</p>
-<p> paxos最早的理论基础，但是工程上实现难度比较大，所以zookeeper（07年）自己设计了zab。13年raft出现，借鉴了zab的设计思想，同时工程上相对paxos更容易实现和理解。这些算法大量用于分布式应用及组件设计，假设前提是没有恶意节点，但并不能解决拜占庭将军问题（Paxos可以针对性扩展为Byzantine Paxos）。</p>
-</li>
-</ol>
-<blockquote>
-<ul>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/52617675">分布式系统的基石：深入浅出共识算法</a> ： 共识算法的综述，涵盖了paxos，raft，zab</li>
-<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab+vs.+Paxos">Zab vs. Paxos</a></li>
-</ul>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-install-endorsor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
-      <meta itemprop="description" content="Simple is Complex">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simplexity">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/articles/fabric-source-chaincode-install-endorsor/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode install(2）endorsor的install流程</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-25 00:10:31" itemprop="dateCreated datePublished" datetime="2019-02-25T00:10:31+08:00">2019-02-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-27 17:08:09" itemprop="dateModified" datetime="2023-04-27T17:08:09+08:00">2023-04-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>endorsor端流程也一致，入口都是<code>core/endorser/endorser.go#ProcessProposal</code>,具体不再重复展开，可以参看instantiate(3)。主要的区别在于<code>core/endorser/endorser.go#callChaincode</code>里，(“lscc”, “deploy”)的<code>if</code>条件不再满足，不需要进入（回顾一下，这里主要是launch用户application chaincode的容器，执行application chaincode的Init方法等，在install阶段当然不需要）。真正的区别在于<code>lscc.go#Invoke</code>的<code>select-case</code>里，进入的是<code>INSTALL</code>分支（部署chaincode时进入的是<code>DEPLOY</code>分支）。INSTALL首先执行<code>lscc.policyChecker.CheckPolicyNoChannel(mgmt.Admins, sp)</code>检查策略，这部分以后详述。从名字也印证出install是不指定channel的。然后执行lscc的<code>executeInstall</code>方法.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/fabric-source-chaincode-install-endorsor/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-      </div>
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-install-peer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -628,7 +291,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -732,7 +395,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -837,7 +500,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -941,7 +604,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1045,7 +708,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1155,7 +818,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -1253,10 +916,322 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-peer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-source-chaincode-instantiate-peer/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(2) peer端的调用流程</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-23 15:36:22" itemprop="dateCreated datePublished" datetime="2019-02-23T15:36:22+08:00">2019-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-27 17:09:58" itemprop="dateModified" datetime="2023-04-27T17:09:58+08:00">2023-04-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>接下来具体执行<code>env, err := instantiate(cmd, cf)</code>，这里可以看到入参是<code>cobra.Command</code>和刚刚初始化的<code>ChaincodeCmdFactory</code>,结果是提交给Orderer的Envelope message<code>protos/common.Envelope</code>.</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instantiate the command via Endorser</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">instantiate</span><span class="params">(cmd *cobra.Command, cf *ChaincodeCmdFactory)</span> <span class="params">(*protcommon.Envelope, error)</span></span> {</span><br><span class="line"></span><br><span class="line">    spec, err := getChaincodeSpec(cmd)</span><br><span class="line">    cds, err := getChaincodeDeploymentSpec(spec, <span class="literal">false</span>)</span><br><span class="line">    creator, err := cf.Signer.Serialize()   </span><br><span class="line">    prop, _, err := utils.CreateDeployProposalFromCDS(channelID, cds, creator, policyMarshalled, []<span class="keyword">byte</span>(escc), []<span class="keyword">byte</span>(vscc), collectionConfigBytes)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signedProp *pb.SignedProposal</span><br><span class="line">    signedProp, err = utils.GetSignedProposal(prop, cf.Signer)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// instantiate is currently only supported for one peer</span></span><br><span class="line">    proposalResponse, err := cf.EndorserClients[<span class="number">0</span>].ProcessProposal(context.Background(), signedProp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> proposalResponse != <span class="literal">nil</span> {</span><br><span class="line">        <span class="comment">// assemble a signed transaction (it's an Envelope message)</span></span><br><span class="line">        env, err := utils.CreateSignedTx(prop, cf.Signer, proposalResponse)</span><br><span class="line">        <span class="keyword">return</span> env, <span class="literal">nil</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ol>
+<li><code>getChaincodeSpec</code>和<code>getChaincodeDeploymentSpec</code>从提交的command里获取相应的参数，检查以及设置参数（例如是否指定escc(endorsement system chaincode), vscc(verification system chaincode), ConstructorJSON 构造参数），进而构造chaincode描述结构体<code>pb.ChaincodeSpec</code>和部署结构体<code>pb.ChaincodeDeploymentSpec</code>。<br><code>pb.ChaincodeSpec</code>(cs)里指定了<code>ChaincodeSpec_Type</code>语言类型，默认为go，<code>ChaincodeID</code>，chaincode的标识（包括路径Path，名称Name，版本Version），以及Input（即ConstructorJSON 构造参数，初始化的值，命令行里-c参数值，例子里的’{“Args”:[“init”,”a”, “100”, “b”,”200”]}’）。<br><code>pb.ChaincodeDeploymentSpec</code>(cds)里包裹<code>ChaincodeSpec</code>，以及<code>CodePackage</code>，打包后用于安装部署的代码，<code>ExecEnv</code>，指定运行于同一系统中或者docker容器。<code>getChaincodeDeploymentSpec</code>入参区分是否当前是dev开发模式，而且是否需要构造CodePackage。构造打包是在install安装时进行的，后面分析install时详述。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-peer/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/fabric-source-chaincode-instantiate-initcmdfactory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/fabric-source-chaincode-instantiate-initcmdfactory/" class="post-title-link" itemprop="url">Fabric 1.4源码分析 - chaincode instantiate(1）peer端的初始化过程</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-23 15:35:09" itemprop="dateCreated datePublished" datetime="2019-02-23T15:35:09+08:00">2019-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-27 17:09:23" itemprop="dateModified" datetime="2023-04-27T17:09:23+08:00">2023-04-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hyperledger-Fabric/" itemprop="url" rel="index"><span itemprop="name">Hyperledger Fabric</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>推荐参考两个博客：  </p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/idsuf698987/article/details/74907281">fabric源码解析——序</a> : 国内同道的源码分析系列，模块化  </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chaindesk.cn/witbook/30/467">Hyperledger Fabric源码深度解析</a> : 对MSP，BCCSP的介绍到位 </li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blockchain-fabric.blogspot.com/">To know the internals of certain permissioned blockchain platform</a> : IBM员工，参与HF项目的概念总结文章系列</li>
+</ul>
+<p><em>选择peer chaincode instantiate作为开篇，是因为笔者学习官网过程中没有完全理解install与instantiate的区别，所以选择深入源码学习来加深理解</em></p>
+<p>官网<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html">Building Your First Network</a>例子中，命令为  </p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"</span><br></pre></td></tr></tbody></table></figure>
+<p>此前，需要先设置环境变量</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID="Org2MSP"</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br></pre></td></tr></tbody></table></figure>
+<p>客户端调用<code>peer chaincode instatiate</code>命令部署chaincode，代码在‘peer/chaincode/instantiate.go’这个文件下，命令关联的方法是<code>chaincodeDeploy</code>(使用了流行的第三方命令行cobra库，具体可自行学习)。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/fabric-source-chaincode-instantiate-initcmdfactory/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplexity.cn/articles/foreword/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Travis Huang">
+      <meta itemprop="description" content="Simple is Complex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simplexity">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/articles/foreword/" class="post-title-link" itemprop="url">起手式</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-23 14:59:28" itemprop="dateCreated datePublished" datetime="2019-02-23T14:59:28+08:00">2019-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-05-10 14:52:02" itemprop="dateModified" datetime="2023-05-10T14:52:02+08:00">2023-05-10</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h3><p>创建这个博客的缘由是今年在学习区块链的知识，想记录和分享下学习和进步的过程，为了随时可以翻看和补充修正。此外，记录下平时工作（大数据开发）过程中遇到的问题，踩过的坑。如果在这个基础上还能做到知识输出，或者能做到分享让大家互相学习和指正，那就算喜出望外了。</p>
+<h3 id="关于区块链"><a href="#关于区块链" class="headerlink" title="关于区块链"></a>关于区块链</h3><p>浪潮过去后才能看出谁在裸泳。区块链的热度去年随着韭菜风波过去后，进入技术的沉淀期。始终认为区块链只是一门技术，而且还是没有杀手级应用，还不成熟的技术，更不应该上升到信仰的高度。一项新技术在短期内会被高估，在长期则被低估。选择这个人少的方向，也意味着冒更大的风险，无从估计三年后的发展，也意味着可能会一直碌碌无为。我希望像竹子一样，用三年时间好好扎根沉淀，静待破土。<br></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/foreword/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
   </nav>
 
 
@@ -1314,9 +1289,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+    <img class="site-author-image" itemprop="image" alt="Travis Huang"
       src="/images/avatar.jpeg">
-  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <p class="site-author-name" itemprop="name">Travis Huang</p>
   <div class="site-description" itemprop="description">Simple is Complex</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -1324,7 +1299,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1371,7 +1346,7 @@
   <span class="with-love">
     <i class="fa fa-registered"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+  <span class="author" itemprop="copyrightHolder">Travis Huang</span>
 </div>
 
         

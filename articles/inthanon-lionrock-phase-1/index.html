@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
 
@@ -18,22 +18,18 @@
     var CONFIG = {"hostname":"simplexity.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Inthonan-LionRock项目是多边央行数字货币桥项目mBridge的前身，由BIS香港创新中心，泰国央行(BOT)，香港金管局(HKMA)合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用。Inthonan-LionRock项目阶段一早在2019年9月启动，2020年1月宣布结束，并且发布了项目的研究报告。本分析完全基于BIS官网公开的项目研究报告Inthanon-LionRoc">
+  <meta name="description" content="他山之石，可以攻玉。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CBDC系列（4） - Inthonan-LionRock项目阶段 I (wCBDC跨境支付)">
 <meta property="og:url" content="https://simplexity.cn/articles/inthanon-lionrock-phase-1/index.html">
 <meta property="og:site_name" content="Simplexity">
-<meta property="og:description" content="Inthonan-LionRock项目是多边央行数字货币桥项目mBridge的前身，由BIS香港创新中心，泰国央行(BOT)，香港金管局(HKMA)合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用。Inthonan-LionRock项目阶段一早在2019年9月启动，2020年1月宣布结束，并且发布了项目的研究报告。本分析完全基于BIS官网公开的项目研究报告Inthanon-LionRoc">
+<meta property="og:description" content="他山之石，可以攻玉。">
 <meta property="og:locale">
-<meta property="og:image" content="https://simplexity.cn/images/inthanon-lionrock-phase-1/topology.png">
-<meta property="og:image" content="https://simplexity.cn/images/inthanon-lionrock-phase-1/case-study-model.png">
-<meta property="og:image" content="https://simplexity.cn/images/inthanon-lionrock-phase-1/technical-design.png">
 <meta property="article:published_time" content="2023-08-31T11:47:59.000Z">
-<meta property="article:modified_time" content="2025-01-10T08:23:24.267Z">
-<meta property="article:author" content="Travis Wong">
+<meta property="article:modified_time" content="2025-07-29T05:24:19.172Z">
+<meta property="article:author" content="Travis Huang">
 <meta property="article:tag" content="CBDC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://simplexity.cn/images/inthanon-lionrock-phase-1/topology.png">
 
 <link rel="canonical" href="https://simplexity.cn/articles/inthanon-lionrock-phase-1/">
 
@@ -135,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -194,7 +190,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -222,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-10 16:23:24" itemprop="dateModified" datetime="2025-01-10T16:23:24+08:00">2025-01-10</time>
+                <time title="Modified: 2025-07-29 13:24:19" itemprop="dateModified" datetime="2025-07-29T13:24:19+08:00">2025-07-29</time>
               </span>
 
           
@@ -257,43 +253,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Inthonan-LionRock项目是多边央行数字货币桥项目mBridge的前身，由BIS香港创新中心，泰国央行(BOT)，香港金管局(HKMA)合作实验项目，意在研究批发型CBDC在跨境结算中发挥的作用。Inthonan-LionRock项目阶段一早在2019年9月启动，2020年1月宣布结束，并且发布了项目的研究报告。本分析完全基于BIS官网公开的项目研究报告<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bis.org/publ/othp40.pdf">Inthanon-LionRock : Leveraging Distributed Ledger Technology to Increase Efficiency in Cross-Border Payments</a>。虽然项目时间较为久远，但仍有参考学习意义。</p>
-<span id="more"></span>
-<p>该项目的技术平台也是选择R3的Corda，因此一些方案设计与前文介绍的<a href="https://simplexity.cn/articles/jura-project/">Jura项目</a>类似，而实际上本项目还更早。</p>
-<div style="width:70%;margin:auto">
-    <img src="/images/inthanon-lionrock-phase-1/topology.png">
-    <div style="text-align: center">图1 拓扑</div>
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="8a83924cf06b1fb7600a93f1aec740e6914cdc942fa30590aa9c3f5b58f41bce">3175488eedc729df0c7d358c640da99ee792a01e9181e4073c03516c42cd01dd6a75f168a9c859884f823a0ec7fb5bab9159a112819f8eac165700a5d799ca8af881bb29b176ec96718f075ac2a0c51fbce27ed031a38c89253df907ab5f6168b8211ba96b26b3bdb910647bc6c03ecbd093371793bc718bbf1e17ebcaad031988b3e65f5c6801e4a69e56503f27c27774c3fdb8247be20d74229ad24e87a8a748455c620b3a6ebc958415d9be2f0c9d6709eadd87cd0810f4608e2fd256f8445cec7c92958e99e80a8038a0c8578225837e9f3c62004ef46fac584ea393c80ec55949c73aa1621c27f9207b6dac62d1892f20974dad55cfaf7abbe71f5aa1ede7a068d2738d59918af414af603e88ad1a38ddd45b63eea4381c7cd8105c71ba22be6ba1ab471b37faaadeb515a0226293d01a461f9c3c2f20d4ca9f6f1fbb99a6f71f2df873799ef2323b17c8e02bd0695c85bc82b144143841a6b10a9438037143385df0986f0ca2aadc55393605c00609bffd9d543aa81673674c41f434e5849fbb4a00ff7443070d8a4f2c5b7d66d37272be224e653ae0bd17161c102f4f44e6963c1995713f7aeac4f7c53093207323a0520ccd1ef161953e4e03a8ebc3ace959ce21010f2b431ffdbac00e38da27caa228e1a79776b0bd27084b439188a97f18901cb385452be21e4f7c168b9dca14014932cc9d4cd61a6b3da822599762a469e58e32a170bae4ba3fbb601bb99557ec89516e5b2b59bed4150d25b9a928e0ce2102ed1d802cc19537147aaf27b278bbc6fa83a0ff17a09c4fb131bef188cdc6c6a936a391934302fde783952be785d2162b928b931662b3b196b9183dc8f3ec8018013c639bb72eb0d2f6ca0974a71f8d0d630888d0aee6a6e433901ef543415afbb52cc131b4fe0b0be5345f07fb727097b6bda5721a1f149cab613d235f6cb2af12f8ba697d460a921e702ada30b5d8355a9b61bd875293bf6afed459e2fb5dcd2252da175ebfdd118164b6de66bee6b71b42e53b98686f9673cc5badf51008bfea6465244a412d97a1ef75de78197928764d17588561aa485c77653ffe394892bac59c97c267b0044ef6d9bcbbd701cfc5f654635a6abd42d13b570e640e80312ac6f5f7f7e54374f33481df8340a631330dfe09cece4daca95eb98e56a6b2130fce179302c9f4fae86c77323cb03ef6f69897c530f8452d414188047b8a98cd313d492785de5afd563d691452314f73df92b9176de988a6054b718e58db3dde5bde0ca43848099fdd51e08c0b0411250c6ab086bd3129afaacaa79324883fd3e5bfcfaedce47f5e897d264a3ebc53523547003184287ce1b8c5ce98d2aa4a44e84d8edb6de0e373a9690a0823617438d64676dfca7a1ee573f8994cbb33dd25095b4da91e1bed7463c7eb229114d959e573e0090f94ae6055162fb0f5e2db8d7029de15069139fee45b8a0919076e1173843fc5798e4027645fbf68a9db0210b62bcde0fcf15410a66af1cd13bf5208cdf5465aaf9599b3d7c4dd4df1e860a1b246575ad38d90ba7d9253f291b569e7c2e56288a68412e2af58971a836fd77743176e0b6cbd7e5a20977de5a3c92473ac9339faabf909b208355a26b2aa7bfefe17fa094ad891a2015db229b9068593ebae50a2b7d62594186bc626b81898afe3a6fa1b88aed185a2f1a9fdb39d214af04038611945ca84efbec9d5201981bf7403f38931b99a6fa9f2340386a716422748ed452c5231fba158c430aa12b75505e2cd8f1721bc2bfec8a2b851e7b5ad781446d8bc37da05e8fa139e1e0680e8319a3691cdcf5ee71d476d25222ae530c96328a1953a36826601454958942c3516848a4c6e4b498abe1a30f003d63c77e62020a191e2db1b7e5dab2d95c29ea60d6e5cfb0b9b949aee56e781068484550585c92fff901a41a2b3ea98046d729d4f83f342e9c62f1047666c48d751b444bb110c903ffa226589b82872e1e3d2f6759fe4330273733c798706ae1af7f13557ba93c48159c223039aded10cd13cb59678fe6c4dd5209010e775ed618bf199b8cda8c1b47d61aed8ffd8eef92163eceb4155bd6252221653f910c4dcea2ed7ef858e60189e6cb60db791767b9d4cd8aa03377c78e28bd1f49696b2a4259a926d1f5426553eb86f1b9d1293015d6ae21addaae784f9901d521614f419627fc2586065ed896774f74da909831c17b7d91ce35339fbce876f94f2d674403e95f2bc4ae424af9e2d7908063457873e38518fa30e147b65a80383a3719d3e96d75c6048b0998adafa1f763b9522e4cf91b41969d768fa58a7071ba8470dffa0afde0c2b8163657175de3384b21e4c45ecbe67f6015452dee6d5813c8a35bdbfe1eaee8d40439c4eedc898bf289d346300976e26b0659e1c497bf24d88dadfa4408f21790ddc3c243f08e342bcf2a03b3f825e0606862b69beef73600ffb1d3c04fd0ec9d064c226eb18020c996f232aca565e86b2ed5c300ee9224a7850d78723fb6c166bcad216fbe438d9a389182ee7183c74ea2d03ad24d658afa9b2bb2a96fdebc444517284ff58403e5378362df008bf231cdd57bacbff11a93b50892e6012f0f6e57c3dbdd491d5f129c626746b45d746ad3ec7535d4219fa31c00bb6cf8138727da9204f207c1f31133eade6a719a62f9cb161b2a3d43838f6c0a0036f0832216bed8c243ec9a996c55fcb6cd43f5f97d95a730e11dea1099970e7031be8cbd498175ee8f1b8bc354e629f3f86b8fdc06765f2b61d79d833b8a723c6816ab05eff683f6e10d511708dc12ac7578085dfc674f5278f2ecc2ef05ed323f1eab3e9fdb110446e5dde3ad40c82cd87ef767523d907cad622bee905a75f63f0c0151913b897744206ecb2505bc2b5ca2e6e382f16daa249eb3f4bc39beb77603935006044042b09ce09c040bd932c257445f053a0861db0015912992008a3d35f0fd856679f12fa461905dfa983d6a416cabed8b643bc464816210a91f68b65f8dccc93ac2e3037a9039e7179549a6b939cf193b939939bfc43e9c01aced5f8c13dcd7e30da09344c5e11e35f1312be3016c24084977d4ac0b2e9cd9d8c5b5365bb28491326744b39228a6a98f42a8bd202f686b502915b5d6bacde76ba528614adff3c5f269c0a8e3a9361a455d8aca599b467e3217ee6e8bd125e5c1c33a95bdbd2e44e610f88f2835e33c0c0cdc2ffede22e7d94d866746ad8895319a715f5135c464a3dc934601817642bd475a6d39ddf9b1e48a42b81ee3e425aee1d6492d601ba73fa815c994745d5a733afc03c0aa18c787428f7e7934afb3be97e782f85e02cd0f69669d20a638bd2e606b0ab5f7b817e3d6c2c80b92760fefab2e2d63796bffbbc7cd9aef9cc36d9990df40b905e0330b7ece5622fa14496b59a43de16838f243dd83374547fa6fa3c29dafd28bb049851d3f370f0fd74b5cc9b40e9651fb1dc3029e51331092621e534d15068a8362c4808b9b328425767d48e0f3fd48757a0bf6a6f1d434b1d6fbd2091c40b2716c1a1010ca924c7f34300e448bed064cae68a1c6e1a319e3369b932c5f9957f517d43925af1257d13a52a15a23732eb2f207272e43bf927f31f2004569fd9fd63bac45115341612286ab950bf339dc525de07794c5af9da558158e73e68f280e537ef9b06e0207eaecbc408540d7d4aa254b0f9076598c6765e7cdfa7444598b5f0c92abc79eabe5d4d985bb4719c58b7b3298bcf7f52408f19b5fda9bf72d5f3929a0539f0fe879d40ec2d288973fa87fcae8d19986586a5ca9068c5ade9aa90fdc0c692c59b5b114c0238de20ec2df03d942f848a9ac0132ea80e922fdda185a220f19796dea09d756724c4d945d5c1e3425d2f3afa600cb630bd126410ff8054b5b4cd4ae92374a6c81bce111cde01be9d2f5afe080a00219b68ee5085f829b466218abe44ee3e32819dff72f50df0bf717ed993fc037d9fd6a61d4191eed19e529b7a995edea4ff22b09ea1376d703d9d8e18f2593bb5f4469ac2194fe6a0a841812f358a8da308d0b32546100067ce321bd9c39e9c435a9d50a3492002a58a07a54d87cfe4affdd64cf40ad9018a90d10a4772f7c82aff3d39dd329657a60eed1df8d65431992103f5a1a6f916e3667088cf494fdfded4fd050add52266c891a2d0ee868af1530a05a58d9024cd9034533130b643b8e0ab14c60d08422707640aecf432a912db3d327d02f0327ea78d227e8a14a1bc9ef93b25ecb92d0e8d3d05fc08bc5bbc2c1c1ff73886bc0cc8bdd4081554524f8008a9ded6285897d7f9f8cc26d4da7225461c892c62b375d7ed17d85bc2f50a6bb5b925896d64f65ce2327a81eba0c5d3c6c15a70a97fa4c6fcf98fc8a6b5bbc9a29dec65e4ab13520164bd1ead7b0e8f7c1d548713ff13817d4104754a14b626db1385771b0186bb4596de69f0720ed7e9cc2fc386ed352e44e772bf895e80c4b9395ecbf0158245abe6d4677c6246402bb19d2d36cbeb6c3a495aac57f53cb9522ceb6051fb399e4a083696ba3dfe124905be0fa7914d63304c813c4d2c1cdddddab345c941717d373e6ce1bc17ed10d39093527019d3d8d0a458b3664445edd08c05ed754829b6416178dbbc6c1110e3dc30ffef4bba67f73b01e86d5d22b2cef678acd478f8e5bf68f177f5c64a538852366e6a1c5252324d29f2246ecc81c3decbd4814d9b397f6e55feee173328b55bcf2da930997e3343b343dab05f59d73944f8e544717302939e18a15eaf01121ff3d3218f5f0d1788d99ce2ce2426d95d96329269a16d95fd52fc322dfb460744e0b8d44d11bb3633784b9cd692aef57629ce346080eb04de197b5f89b5b12f622c35b46356c9a00218bb030273d664c887540228778b3dffcd868394f90b34d9ea078645511e0033c6792b806c95fd570370ce59040ec6f9381d6a1cb444a8cf9a7eec656c3f67c07386c64751165519828d26c3bdecadf769f13507b668753f5903247c8ac2865a55391e95e83049fe9efee6de54301a9ca39c9b80439e95da4c365f0c94432c6b9c3b950a2dc2346faee56cc9dd1597b310e46e2dd2dc3b9e82957e7636dccc5b9fbd1d179ebd5694c5ec2a6f7897561583e2221cf2b35731ae543a3d715cc2c5220c662be7c9e19ecb576c09db932e2a57631fdd1d1f36cf3c96f2c91d31afe8f11d72ca9e8fc83566532b5d02fed2b85b643795eecff201fe40448a210137ce5812f8ba05f12e0e02b463eb6883d2d4fe2465c5828637d98ceb3c306dac9a1b10ae343ab252b39770e4418b6ff4113bd05293b2220fbec7b109b0ec7258cce79b926eae20d23f4e3ed48918ebe6ad470393306a6e1c09bd6bf08f3bfb894889ff8b7fa6588cb688a51ad2d265880cc126ae84b868f472de14c023d383440a8dab472ab69350f1c9a27859968bb4ec58c71fa6a874810760d3f8471277ae8953eb9d0ad9ef65a18d37dd0750853e4f207db160d7bfa3f246a5734822cc2f12632e8763ad917a1c880d8d92269cdd0aac19bff8a4d46f34275cccf6bde9e61c6d6da8f73a95fb3d5a0e68b0377ad1656e59a72ad55a4c2db69d1071eafbd791554a5997ff09a0784880c30b7e1b691eac04b85a340bf00cd1b809494d4aef4fd6a0efe05df983567d4a18b5ce636d2223bcd02ebca3be3e4a43e125cbaa65771af1a1b984cce27ffbc331bb7bb3375d0bcdc65ba4d0a6efb69d37bd2875089c9b3bdc3509ed4b0c31069434a6d4f16e2c891b61474c5ebe80a89699d525163f5e7db65b81b6099a32bde288b641ebbc084d5c1ebbfefc5103f69d66b6f8c07bb12a53f260e9a12b403ae093c5950c4fad5edf58016534b959db8dd633a8c4c1827acf57a19c7b0292f1d535027ba93540d2b94cf58090eaa73593e3ceff20ff2461ac221c5e637380750d75b6944befbeec6c72cfc6f3457253e37b7c6f6fd410ac0ae9e085712062f22ac42b801fa6cb3d2ea38a221a5c86819c1b3e8ad4f7e140638ba00e930127733439c1f88e5f7bdcd7512822ff7b8ff998baa8e873d96b59f0c41192889061552a6b807b43cb1047e19f5edef42834f2cadf10f595ff7725fca1dc9ab828a5427fcd10465f9fc21882d0e0d6933064b4a35da36ff4098746df6d948e5aeaac522fee40aeb9e8c6f0b1109d5a5ebd9e1f64642d0fcc6e40c4f980e42244f8c6d0372e1710a68bccb730bd426c56d500c90557c306daa66befbb15c9d2c4a7a4b23848c52fe7482cf9317397c7a2303178875d862997964e72094f64b4feac30b93656c50901d6d6da318e912545fd5febb813a3e811c7b8942c34fe6481b96bc73b20f6d39868ec5622953d65f5f1a9fa55fa4cc5c08b74cf50f9c65e54c2f1adbd280af34652ed834aa0892217664ceafb768c8bdfece1930fd7b877e38fb0a97826c65414e1b89f9fe777bf9c13861fd4757cbbc55a748059cc1b59edcf6db0abde81cc006a2a0e3405e859dae0f9d8888d4cdd5441b6566fee656e5545ec170799be78e0d051c3596bdd0ec46cb2988e80ebd541b53fdab411410210ae7bdb9fdc10e2add685d796a6fa4680477ae12026e6031eb46932d90014b8a7df351aa89200bb33e2e3a198c7a05450d07462474e542485718b1a50adccfc6dafeaa3b004aff71af2f3a83061388922885dc5b3954c23962b34fb97d8d9928c049c27c43f16bc82464e54cc664efb78aa5ceaaddd9f3410389cb647989c692c4912c504ee65f168c5b47de3ffab130fbd71996f5c46627ab49ef8eda3ed9dc84969909f235c369427ac32e05dc71aca44a6ddfaf70dd60180021b5069ab8f19984cd7224e93decce92801088996e64706cca4ead483b38abd0dfdbc226afb0151d229e3b7a986ab6beaded01182974c0c3a12cf425a1e9d9c3436b909fcc917e6baa437c5a3127afd3644802b43355080713beb733185eaf3a258e3e8e2e9405f8f9c0a6a6b19214c14b7c738740e21704f33e8883900168830b60fdb20710fe99a71d06d4b0abdb6258e3dfd495d6f85ec104d361dbf1266ca2ddb340cfae1a13426d1e34ea0943cff38a5fcab8f1ae1e48738336c865245f14618ca6f73a59c6de473f8db18f0a198f99a14858f367e19e6c14f5be3ce1e3f9247290ae41f1290cbd530bdc943143c5ff38c2803682fc608aed36544b89d409626a4e4186a14b626904d3807c5c7aef298e5eb31379969ce65d4762deffd208b1aba1fd3f4c792d9be23a45db8674501771c8e6c5819553d578150a0e7b498fb31a9df75f4bfbe3afb9fccbb0b9e669c0b07ae1b34225061c498a9f0f3124ae5d426987d2d44f38962aace3687f012afff215dc58ff8ec3a65266954f611946745c88668cb0f33957b02acb754754047c1a228e31bd43c80207de64167df7c0a23e91c348ce43a41de88ea050707b736479533e8a6467c279342557b9e56a28061fda6f21ff36173692c901e4600af0d830c373768311ffd8655d6032ec6899ed020feaa23b81e4b5c545bd5478bd7d0f6af7557232f0e42c70a0eaef61b70e4d5f8bf4ddafcf6eb5db0b9b6774bf2cb23b2a69aa313dcfe58a2ca585d463bd6d2b37f1048e23f8c40977d9a77bc5db645cfdccc999eab9d853d799d2b2ea8497e280cf81c7c57f08a02379090ae07290a992a3e2</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Post is cheap, show me the password</span>
+      </label>
+    </div>
+  </div>
 </div>
-<hr>
-<div style="width:70%;margin:auto">
-    <img src="/images/inthanon-lionrock-phase-1/case-study-model.png">
-    <div style="text-align: center">图2 场景案例</div>
-</div>
-<ol>
-<li>三个相互隔离和独立运营的网络。各个管辖区有各自的网络（Inthanon network and LionRock network），用于本币CBDC（即W-CBDC）的发行，注销，仅限本币管辖区内的银行接入。“corridor network”专用于跨境结算，使用特定的token(DR, Depository Receipt)做价值转移。运行在corridor的“operator node”是由BOT和HKMA联合共同管理（具体原因不明，而且如何做操作隔离和治理也没有看到更具体的说明），负责发行注销DR-THB和DR-HKD；提供清结算的流动性节约解决方案，死锁问题解决方案；以及合规监督。参与银行在本地网络及corridor上都有独立隔离节点，可以发起支付，以及管理各自的本币和外币的流动性。</li>
-<li>Corridor需要以下服务。W-CBDC和DR-CBDC间的兑换；合规监管；流动性补充；FX board rate的广播。可以由央行以外的角色提供（例如FX board rate的广播通常由外汇交易所提供）。</li>
-<li>项目加入了流动性管理，包括排队机制（商行流动不足，其发起交易按照优先级排队），多币种流动性节约机制（针对gridlock场景作周期性的触发净额结算，包括单向支付和FX），即时流动性补充（出现deadlock情况，只能通过流动性补充的方式。本币流动性可以通过本币网络兑换，外币则需要通过向外币流动性提供方借入外币，然后必须在当天日切前全额还款）。在corridor网络上有一个外币流动性提供方的角色，技术上是可插拔的接口方式实现，具体由哪个实体担任并没有限定和说明。</li>
-<li>与Jura类似，央行扮演了本币网络和corridor网络的网关角色实现互操作，负责W-CBDC和DR-CBDC的兑换。这里假设央行间是互信的。</li>
-<li>FX。支持Board Rate, Request for Quote(RFQ), Off-Corridor Arrangement三种方式。</li>
-<li>隐私。交易按照need-to-know的准则作广播；在流动性节约机制内（多方交易参与）使用隐私身份保证匿名。在Board Rate方式中，由operator搜集makers的竞价，居中撮合交易。taker直接和最终的maker进行点对点的双边交易，同时不知道其他maker的信息。</li>
-<li>合规监管。所有交易都实时的上报（需要notary节点见证），监管对象包括了交易本身，银行持有CBDC的数量，持有周期等。特别是针对本辖区外的本币流通有了更多的监管和控制手段，降低境外流通对本币央行职能的冲击。</li>
-</ol>
-<div style="width:70%;margin:auto">
-    <img src="/images/inthanon-lionrock-phase-1/technical-design.png">
-    <div style="text-align: center">图3 技术体系架构</div>
-</div>
-<ol start="8">
-<li>从技术体系架构看，Multi-asset Liquidity Saving Mechanism (MLSM)流动性节约功能是以插件的形式而并非智能合约的方式实现，推测这块是在央行节点的后台服务实现（因为交易信息都需要经过央行，只有央行才有全局的信息，并且该节点是共同治理的）。没有使用智能合约实现，一个可能是因为这个机制比较复杂，在链上使用智能合约效率不高；二是要识别交易双方身份，同时又需要在链上保证隐私性，这个一定程度上是矛盾的。</li>
-<li>可以允许除央行和商行外的实体加入corridor。例如FX board rate的广播服务，由外汇交易所提供的话，可以通过同样corda节点接入的方式。同时还有外币流动性提供方。</li>
-<li>排队机制。不确定是否在商行排队，但从净额结算的角度看，在商行排队无法通过MLSM的方式解决。若在商行排队（交易未曾发出，央行端/清结算组织无从知晓），则只能靠自身补充流动性（可以是兑换本币W-CBDC，借入外币，收到其他商行付款等方式）来解付。</li>
-</ol>
-<h5 id="名词解释"><a class="markdownIt-Anchor" href="#名词解释"></a> 名词解释</h5>
-<blockquote>
-<ol>
-<li>Gridlock : a situation where two or more queued transactions are resolvable with one or more net payments.</li>
-</ol>
-</blockquote>
-
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
     </div>
 
     
@@ -390,15 +361,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text"> 名词解释</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+    <img class="site-author-image" itemprop="image" alt="Travis Huang"
       src="/images/avatar.jpeg">
-  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <p class="site-author-name" itemprop="name">Travis Huang</p>
   <div class="site-description" itemprop="description">Simple is Complex</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -406,7 +376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -453,7 +423,7 @@
   <span class="with-love">
     <i class="fa fa-registered"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+  <span class="author" itemprop="copyrightHolder">Travis Huang</span>
 </div>
 
         

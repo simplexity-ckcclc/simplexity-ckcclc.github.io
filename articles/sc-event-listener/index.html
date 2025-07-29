@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
 
@@ -27,8 +27,8 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://simplexity.cn/images/sc-event-listener/topology.jpg">
 <meta property="article:published_time" content="2023-04-21T08:23:05.000Z">
-<meta property="article:modified_time" content="2023-05-10T03:26:59.890Z">
-<meta property="article:author" content="Travis Wong">
+<meta property="article:modified_time" content="2025-07-29T05:36:41.504Z">
+<meta property="article:author" content="Travis Huang">
 <meta property="article:tag" content="Smart Contract">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://simplexity.cn/images/sc-event-listener/topology.jpg">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>智能合约事件监听的解决方案 | Simplexity</title>
+  <title>智能合约事件监听的解决方案 | Simplexity</title><meta name="robots" content="noindex">
   
 
 
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">50</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -192,7 +192,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Travis Wong">
+      <meta itemprop="name" content="Travis Huang">
       <meta itemprop="description" content="Simple is Complex">
     </span>
 
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-10 11:26:59" itemprop="dateModified" datetime="2023-05-10T11:26:59+08:00">2023-05-10</time>
+                <time title="Modified: 2025-07-29 13:36:41" itemprop="dateModified" datetime="2025-07-29T13:36:41+08:00">2025-07-29</time>
               </span>
 
           
@@ -236,14 +236,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span></span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>NaN:aN</span>
+              <span>8 mins.</span>
             </span>
 
         </div>
@@ -257,11 +257,13 @@
       
         <p>合约里经常会包含有事件（event关键字），应用通过监听链上指定合约的指定事件，从而得到相应的数据触发相应的处理，也就是不同的系统不再需要链下的交互（api调用等），在这里链扮演了类似持久化的消息队列的角色。在多数场景下，对于链上事件，应用有着<strong>可以重复读，可以从指定块开始读，不能丢失事件</strong>等等的需求。应用监听智能合约事件，常见有主动轮询链节点和向链节点订阅推送的方式。当单个应用存在多个实例时，需要在各个实例间协调，避免对同一合约事件的重复处理。同时，当前监听实例一旦下线，对于该合约事件的处理需要由其他实例从当前位置接着消费（应用需要额外设计实现协调机制保证不丢事件不重复消费）。本方案将事件监听和消费协同的功能交给中间件及消息队列等组件。应用无需再额外实现实例间的协调机制，只需要负责从消息队列里消费就可以，保证消息at-least-once消费。一次注册，就可满足单应用多实例甚至多应用的共享。</p>
 <span id="more"></span>
-<h3 id="拓扑"><a href="#拓扑" class="headerlink" title="拓扑"></a>拓扑</h3><div align="center" style="width:75%;margin:auto">
+<h3 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h3>
+<div align="center" style="width:75%;margin:auto">
     <img src="/images/sc-event-listener/topology.jpg">  
 </div>
-
-<h3 id="聚合消费版"><a href="#聚合消费版" class="headerlink" title="聚合消费版"></a>聚合消费版</h3><h4 id="Zookeeper节点目录"><a href="#Zookeeper节点目录" class="headerlink" title="Zookeeper节点目录"></a>Zookeeper节点目录</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">monitor  </span><br><span class="line">    |_ nodes</span><br><span class="line">        |_ active (ephemeral节点，记录active monitor的信息，如ip，端口等)  </span><br><span class="line">    |_ events（永久节点）  </span><br><span class="line">        |_ foo（该节点记录对应的contract address，abi, event name等信息，唯一确定链上合约事件）    </span><br><span class="line">            |_ latsBlock(该事件最近已消费的区块高度)</span><br><span class="line">            |_ topic(对应的kafka topic名)</span><br><span class="line">        |_ bar  </span><br><span class="line">            |_ lastBlock</span><br><span class="line">            |_ topic</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="聚合消费版"><a class="markdownIt-Anchor" href="#聚合消费版"></a> 聚合消费版</h3>
+<h4 id="zookeeper节点目录"><a class="markdownIt-Anchor" href="#zookeeper节点目录"></a> Zookeeper节点目录</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">monitor  </span><br><span class="line">    |_ nodes</span><br><span class="line">        |_ active (ephemeral节点，记录active monitor的信息，如ip，端口等)  </span><br><span class="line">    |_ events（永久节点）  </span><br><span class="line">        |_ foo（该节点记录对应的contract address，abi, event name等信息，唯一确定链上合约事件）    </span><br><span class="line">            |_ latsBlock(该事件最近已消费的区块高度)</span><br><span class="line">            |_ topic(对应的kafka topic名)</span><br><span class="line">        |_ bar  </span><br><span class="line">            |_ lastBlock</span><br><span class="line">            |_ topic</span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li>各个monitor向zk的<code>monitor/nodes/active</code>节点注册选主，保证只有一个monitor是active。该active monitor负责获取链上合约事件，写入kafka。各个非active的monitor监听该zk节点，如果发现active monitor离线(zk节点消失)，则尝试注册，注册成功者成为新的active。有时候active monitor可能会有丢失心跳包等假死的现象，恢复连接后，需要重新注册，判断是否自己是否是active（这部分可以参考常用的zk抢主方案）。</li>
 <li>应用通过monitor（主从皆可）创建<code>event</code>节点，即创建特定链事件的监听任务。monitor需要判断zk里是否已经有该<code>event</code>，如果有，则返回已存在的错误码。如果没有，则在<code>events</code>节点下创建以该事件命名的节点，写入对应的链事件信息。如果应用不再需要监听该事件，可以删除监听任务，也即是从zk上删除该节点。（暂停/重新启动的功能机制较复杂，不展开详述）。从应用的角度，只需要注册一次，应用以及monitor重启后都无需重新注册。</li>
@@ -269,19 +271,23 @@
 <li>monitor采用pull的机制使用getLogs接口向链获取日志，（from, to）分别是（lastBlock+1, currentBlockHeight），发送到kafka后再更新zk的值。<strong>异常情况下（发送kafka成功，但是更新zk失败）可能会重复推送。在应用本身负责消息的去重处理。</strong></li>
 <li>对于某些事件需要按照上链时间的顺序处理的，需要设置kafka里的分区数为1，否则会在应用端乱序处理。</li>
 </ol>
-<h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><ol>
+<h4 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题：</h4>
+<ol>
 <li>此方案所有链上合约事件都是由单个active monitor处理，如果监听事件比较多的时候，压力过大容易成为瓶颈。不过，大多数情况下，由于monitor监听处理的速度要远远快于区块链出块的速度，大多数事件的lastBlock是相近的，monitor可以聚合获取区块事件，然后再区分不同的事件相应处理，不需要单独对每个事件向链节点单独获取。新创建的监听事件若指定从历史的fromBlock开始处理，可以单独维护消费任务线程，等追上主流消费进度后再merge监听任务。</li>
 </ol>
-<h3 id="单独消费版"><a href="#单独消费版" class="headerlink" title="单独消费版"></a>单独消费版</h3><h4 id="Zookeeper节点目录："><a href="#Zookeeper节点目录：" class="headerlink" title="Zookeeper节点目录："></a>Zookeeper节点目录：</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">monitor  </span><br><span class="line">    |_ nodes</span><br><span class="line">        |_ 0(顺序ephemeral节点，存放节点信息等，例如${ip1:port1}) </span><br><span class="line">        |_ 1(${ip2:port2}) </span><br><span class="line">    |_ events（永久节点）  </span><br><span class="line">        |_ foo</span><br><span class="line">            |_ active (ephemeral节点，记录active monitor的信息，如ip，端口等)   </span><br><span class="line">            |_ lastBlock</span><br><span class="line">            |_ topic</span><br><span class="line">        |_ bar</span><br><span class="line">            |_ active</span><br><span class="line">            |_ lastBlock</span><br><span class="line">            |_ topic</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="单独消费版"><a class="markdownIt-Anchor" href="#单独消费版"></a> 单独消费版</h3>
+<h4 id="zookeeper节点目录-2"><a class="markdownIt-Anchor" href="#zookeeper节点目录-2"></a> Zookeeper节点目录：</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">monitor  </span><br><span class="line">    |_ nodes</span><br><span class="line">        |_ 0(顺序ephemeral节点，存放节点信息等，例如${ip1:port1}) </span><br><span class="line">        |_ 1(${ip2:port2}) </span><br><span class="line">    |_ events（永久节点）  </span><br><span class="line">        |_ foo</span><br><span class="line">            |_ active (ephemeral节点，记录active monitor的信息，如ip，端口等)   </span><br><span class="line">            |_ lastBlock</span><br><span class="line">            |_ topic</span><br><span class="line">        |_ bar</span><br><span class="line">            |_ active</span><br><span class="line">            |_ lastBlock</span><br><span class="line">            |_ topic</span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li>每个事件都有各自的active monitor，分散处理压力。</li>
 <li>应用通过monitor创建监听任务时，该monitor同时把自己注册成该event的active实例。各个monitor监听<code>events</code>节点下的所有event的<code>active</code>节点（例如foo/active, bar/active），当<code>active</code>节点消失后（该monitor宕机或者下线），其他monitor抢主，新的active monitor接着消费。</li>
 </ol>
-<h4 id="问题：-1"><a href="#问题：-1" class="headerlink" title="问题："></a>问题：</h4><ol>
+<h4 id="问题-2"><a class="markdownIt-Anchor" href="#问题-2"></a> 问题：</h4>
+<ol>
 <li>在各个事件的active monitor分散的情况下，区块需要被每个monitor读取解析以获取各自负责的合约事件，造成不必要的重复读取（如果链本身有针对事件的bloom过滤器可减轻此影响）。</li>
 <li>极端情况下，例如所有应用恰好都通过同一个monitor创建监听任务，最终退化成前述的全局唯一active monitor。一种改进方式是，创建监听任务时monitor只负责创建<code>event</code>节点，但是并不把自己注册为active。所有的monitor需要监听<code>events</code>和<code>nodes</code>里所有节点，如果有新增/删除事件节点，或者节点动态加入/退出，需要执行rebalance重新分配（可以通过一个协调者来分配）。这个rebalance机制的可靠性实现会相当复杂。</li>
 </ol>
-
+<!-- flag of hidden posts -->
     </div>
 
     
@@ -311,16 +317,6 @@
 
 
         
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/articles/sc-oracle/" rel="prev" title="智能合约预言机">
-      <i class="fa fa-chevron-left"></i> 智能合约预言机
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/articles/retry-strategy/" rel="next" title="失败任务重试策略">
-      失败任务重试策略 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
       </footer>
     
   </article>
@@ -378,15 +374,15 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E6%89%91"><span class="nav-number">1.</span> <span class="nav-text">拓扑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E6%B6%88%E8%B4%B9%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">聚合消费版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zookeeper%E8%8A%82%E7%82%B9%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.</span> <span class="nav-text">Zookeeper节点目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E6%B6%88%E8%B4%B9%E7%89%88"><span class="nav-number">3.</span> <span class="nav-text">单独消费版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zookeeper%E8%8A%82%E7%82%B9%E7%9B%AE%E5%BD%95%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">Zookeeper节点目录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A-1"><span class="nav-number">3.2.</span> <span class="nav-text">问题：</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E6%89%91"><span class="nav-number">1.</span> <span class="nav-text"> 拓扑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E6%B6%88%E8%B4%B9%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text"> 聚合消费版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zookeeper%E8%8A%82%E7%82%B9%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.</span> <span class="nav-text"> Zookeeper节点目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text"> 问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E6%B6%88%E8%B4%B9%E7%89%88"><span class="nav-number">3.</span> <span class="nav-text"> 单独消费版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zookeeper%E8%8A%82%E7%82%B9%E7%9B%AE%E5%BD%95-2"><span class="nav-number">3.1.</span> <span class="nav-text"> Zookeeper节点目录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-2"><span class="nav-number">3.2.</span> <span class="nav-text"> 问题：</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Travis Wong"
+    <img class="site-author-image" itemprop="image" alt="Travis Huang"
       src="/images/avatar.jpeg">
-  <p class="site-author-name" itemprop="name">Travis Wong</p>
+  <p class="site-author-name" itemprop="name">Travis Huang</p>
   <div class="site-description" itemprop="description">Simple is Complex</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -394,7 +390,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -441,7 +437,7 @@
   <span class="with-love">
     <i class="fa fa-registered"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Travis Wong</span>
+  <span class="author" itemprop="copyrightHolder">Travis Huang</span>
 </div>
 
         
